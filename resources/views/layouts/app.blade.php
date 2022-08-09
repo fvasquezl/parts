@@ -29,9 +29,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
+                    @include('layouts.parttials.nav')
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -76,5 +74,7 @@
             @yield('content')
         </main>
     </div>
+
+    @stack('scripts')
 </body>
 </html>

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorekitRequest;
 use App\Http\Requests\UpdatekitRequest;
-use App\Models\kit;
+use App\Models\Category;
+use App\Models\Country;
+use App\Models\Kit;
+use App\Models\SubCategory;
+use App\Models\WorkCenter;
 
 class KitController extends Controller
 {
@@ -15,7 +19,7 @@ class KitController extends Controller
      */
     public function index()
     {
-        $kits = kit::latest()->paginate(5);
+        $kits = Kit::latest()->paginate(5);
 
         return view('kits.index',compact('kits'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -24,11 +28,17 @@ class KitController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        return view('kits.create',[
+            'kit' => new Kit,
+            'workCenters' => WorkCenter::all(),
+            'categories' => Category::all(),
+            'subCategories' => SubCategory::all(),
+            'countries' => Country::all()
+        ]);
     }
 
     /**

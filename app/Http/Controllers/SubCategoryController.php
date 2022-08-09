@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSubCategoryRequest;
 use App\Http\Requests\UpdateSubCategoryRequest;
 use App\Models\SubCategory;
+use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
@@ -13,9 +14,19 @@ class SubCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(isset($request->text)){
+            $subcategories = SubCategory::whereCategory_id($request->text)->get();
+            return response()->json([
+                    'list'=> $subcategories,
+                    'success' => true
+                ]);
+        }else{
+            return response()->json([
+                    'success' => false
+                ]);
+        }
     }
 
     /**
