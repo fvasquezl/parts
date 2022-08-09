@@ -99,7 +99,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            {{--Categories--}}
+                            {{--Categories and Subcategories--}}
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="category_id"
@@ -146,6 +146,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{--Product Serial Number and Country Origin--}}
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="productSerialNumber"
@@ -184,12 +185,13 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{--Date Manufactured and Is completed--}}
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dateManufactured"
                                            class="col-form-label text-md-end">{{ __('Date Manufactured') }}</label>
 
-                                    <input id="dateManufactured" type="text"
+                                    <input id="dateManufactured" type="date"
                                            class="form-control @error('dateManufactured') is-invalid @enderror"
                                            name="dateManufactured" value="{{ old('dateManufactured') }}" required
                                            autocomplete="dateManufactured" autofocus>
@@ -213,6 +215,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--Estimated Retail Price and Notes--}}
                             <div class="row mb-5">
                                 <div class="col-md-6">
                                     <label for="estimatedPriceRetail"

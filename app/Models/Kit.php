@@ -11,8 +11,21 @@ class Kit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','work_center_id','LCN','partsLCN','brand','model','category_id','sub_category_id','productSerialNumber',
-        'countryOrigin','dateManufactured','isComplete','estimatedRetailPrice','notes','user_id','kitImageUrl',
+        'work_center_id',
+        'LCN',
+        'partsLCN',
+        'brand',
+        'model',
+        'category_id',
+        'sub_category_id',
+        'productSerialNumber',
+        'countryOrigin',
+        'dateManufactured',
+        'isComplete',
+        'estimatedRetailPrice',
+        'notes',
+        'user_id',
+        'kitImageUrl',
     ];
 
     public function category(): BelongsTo
