@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{old('sub_category_id')}}
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -129,6 +130,13 @@
                                                class="col-form-label text-md-end">{{ __('Sub Category') }}</label>
                                         <select name="sub_category_id" aria-label="select subCategory" id="sub_category_id"
                                         class="form-select @error('sub_category_id') is-invalid @enderror">
+                                            @if (old('sub_category_id'))
+                                                @foreach ($subCategories as $subCategory)
+                                                    <option value="{{ $subCategory->id }}"
+                                                        {{ old('sub_category_id',$kit->category_id)==$subCategory->id ? 'selected':''}}>
+                                                        {{ $subCategory->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
 
                                         @error('sub_category_id')
@@ -276,4 +284,6 @@
         }).catch(error => console.log(error))
     })
 </script>
+
+
 @endpush
