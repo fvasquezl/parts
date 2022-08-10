@@ -9,6 +9,8 @@ use App\Models\Country;
 use App\Models\Kit;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class KitController extends Controller
 {
@@ -28,7 +30,7 @@ class KitController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -45,11 +47,15 @@ class KitController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StorekitRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(StorekitRequest $request)
+    public function store(StorekitRequest $request): RedirectResponse
     {
-        //
+        $kit =$request->createKit();
+        return redirect()
+            ->route('kits.create')
+            ->with('status', 'The Kit has been created successfully');
+//        return redirect()->route('kits.edit', $kit);
     }
 
     /**

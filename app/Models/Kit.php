@@ -9,24 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Kit extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'work_center_id',
-        'LCN',
-        'partsLCN',
-        'brand',
-        'model',
-        'category_id',
-        'sub_category_id',
-        'productSerialNumber',
-        'countryOrigin',
-        'dateManufactured',
-        'isComplete',
-        'estimatedRetailPrice',
-        'notes',
-        'user_id',
-        'kitImageUrl',
-    ];
+//    protected $table = 'vw_ProductCatalog';
+//    protected $primaryKey = 'ID';
+//    public $timestamps = false;
+    protected $guarded = [];
 
     public function category(): BelongsTo
     {

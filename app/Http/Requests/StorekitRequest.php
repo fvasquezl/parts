@@ -24,23 +24,22 @@ class StorekitRequest extends FormRequest
      */
     public function rules()
     {
+
         $rules = [
             'work_center_id'=>['required'],
-            'LCN'=>['required'],
-            'partsLCN'=>['required'],
-            'brand'=>['required'],
-            'model'=>['required'],
+            'LCN' => ['required', 'string', 'max:50'],
+            'partsLCN'=>['required','string', 'max:50'],
+            'brand'=>['required','string', 'max:50'],
+            'model'=>['required','string', 'max:50'],
             'category_id'=>['required'],
             'sub_category_id'=>['required'],
             'productSerialNumber'=>['required'],
-            'countryOrigin'=>['required'],
+            'country_id'=>['required'],
             'dateManufactured'=>['required'],
-            'isComplete'=>['required'],
             'estimatedRetailPrice'=>['required'],
-            'notes'=>['required'],
-            'user_id'=>['required'],
-            'kitImageUrl'=>['required'],
+            'notes'=>['sometimes'],
         ];
+
 
 //        if ($this->method() === 'PUT') {
 //
@@ -64,8 +63,30 @@ class StorekitRequest extends FormRequest
 
     public function createKit()
     {
-        $kit = Kit::create($this->all());
+        if (filled($this->isComplete)){
+            $this->isComplete=1;
+        }else{
+            $this->isComplete=0;
+        }
 
-        return $kit;
+        $kit = new Kit();
+        $kit->fill([
+            'work_center_id' => $this->work_center_id,
+            'LCN' => $this->LCN,
+            'partsLCN' => $this->partsLCN,
+            'brand' => $this->brand,
+            'model' => $this->model,
+            'category_id' => $this->category_id,
+            'sub_category_id' => $this->sub_category_id,
+            'productSerialNumber' => $this->productSerialNumber,
+            'country_id' => $this->country_id,
+            'dateManufactured' => $this->dateManufactured,
+            'isComplete' => $this->isComplete,
+            'estimatedRetailPrice' => $this->estimatedRetailPrice,
+            'notes' => $this->notes,
+            'User_id' => auth()->id(),
+            'kitImageUrl' => 'http://image.url'
+        ]);
+        $kit->save();
     }
 }
