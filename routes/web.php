@@ -26,7 +26,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Auth::routes();
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/subcategories',[CategorySubcategory::class,'index']);
-Route::resource('kits', KitController::class);
+Route::middleware('auth')
+    ->group(function () {
+        Route::post('/subcategories',[CategorySubcategory::class,'index']);
+        Route::resource('kits', KitController::class);
+    });
 
 //Route::resource('subcategories', SubCategoryController::class);

@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Kit extends Model
 {
     use HasFactory;
-//    protected $table = 'vw_ProductCatalog';
-//    protected $primaryKey = 'ID';
-//    public $timestamps = false;
+    protected $table = 'prt.PartsKitData';
+    protected $primaryKey = 'KitID';
+    public $timestamps = false;
     protected $guarded = [];
 
     public function category(): BelongsTo

@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Kits Creation')
+
+@section('content_header')
+    <h1>Kits</h1>
+@stop
 
 @section('content')
     <div class="container">
@@ -26,12 +31,12 @@
                                                class="col-form-label text-md-end">{{ __('Work Center') }}</label>
 
                                         <select name="work_center_id" aria-label="select workCenter"
-                                                class="form-select @error('work_center_id') is-invalid @enderror" >
+                                                class="form-control @error('work_center_id') is-invalid @enderror" >
                                             <option value="">--Select Work Center</option>
                                             @foreach ($workCenters as $workCenter)
-                                                <option value="{{ $workCenter->id }}"
-                                                    {{ old('work_center_id',$kit->work_center_id)==$workCenter->id ? 'selected':''}}>
-                                                    {{ $workCenter->name }}</option>
+                                                <option value="{{ $workCenter->WorkCenterID }}"
+                                                    {{ old('work_center_id',$kit->work_center_id)==$workCenter->WorkCenterID ? 'selected':''}}>
+                                                    {{ $workCenter->WorkCenterName }}</option>
                                             @endforeach
                                         </select>
 
@@ -108,12 +113,12 @@
                                                class="col-form-label text-md-end">{{ __('Category') }}</label>
 
                                         <select name="category_id" aria-label="select category" id="category_id"
-                                                class="form-select @error('category_id') is-invalid @enderror">
+                                                class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">--Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ old('category_id',$kit->category_id)==$category->id ? 'selected':''}}>
-                                                    {{ $category->name }}</option>
+                                                <option value="{{ $category->CategoryID }}"
+                                                    {{ old('category_id',$kit->category_id)==$category->CategoryID ? 'selected':''}}>
+                                                    {{ $category->CategoryName }}</option>
                                             @endforeach
 
                                         </select>
@@ -129,12 +134,12 @@
                                         <label for="sub_category_id"
                                                class="col-form-label text-md-end">{{ __('Sub Category') }}</label>
                                         <select name="sub_category_id" aria-label="select subCategory" id="sub_category_id"
-                                        class="form-select @error('sub_category_id') is-invalid @enderror">
+                                        class="form-control @error('sub_category_id') is-invalid @enderror">
                                             @if (old('sub_category_id'))
                                                 @foreach ($subCategories as $subCategory)
-                                                    <option value="{{ $subCategory->id }}"
-                                                        {{ old('sub_category_id',$kit->category_id)==$subCategory->id ? 'selected':''}}>
-                                                        {{ $subCategory->name }}</option>
+                                                    <option value="{{ $subCategory->SubCategoryID }}"
+                                                        {{ old('sub_category_id',$kit->category_id)==$subCategory->SubCategoryID ? 'selected':''}}>
+                                                        {{ $subCategory->SubCategoryName }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -169,12 +174,12 @@
                                                class="col-form-label text-md-end">{{ __('Country Origin') }}</label>
 
                                         <select name="country_id" aria-label="select country"
-                                                class="form-select @error('country_id') is-invalid @enderror" >
+                                                class="form-control @error('country_id') is-invalid @enderror" >
                                             <option value="">--Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}"
-                                                    {{ old('country_id',$kit->country_id)==$country->id ? 'selected':''}}>
-                                                    {{ $country->name }}</option>
+                                                <option value="{{ $country->CountryID }}"
+                                                    {{ old('country_id',$kit->country_id)==$country->CountryID ? 'selected':''}}>
+                                                    {{ $country->CountryName }}</option>
                                             @endforeach
                                         </select>
 
@@ -260,30 +265,28 @@
     </div>
 @endsection
 
-@push('scripts')
-<script>
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    document.getElementById('category_id').addEventListener('change', (e)=>{
-        fetch('/subcategories', {
-            method: 'POST',
-            body: JSON.stringify({text: e.target.value}),
-            headers:{
-                "Content-Type": "application/json",
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-            }
-        }).then(response=>{
-            return response.json()
-        }).then(data =>{
-            let options = "";
-            for (let i in data.list){
-                options += '<option value="'+data.list[i].id+'">'+data.list[i].name+'</option>';
-            }
-            document.getElementById('sub_category_id').innerHTML = options
-        }).catch(error => console.log(error))
-    })
-</script>
-
-
-@endpush
+@section('js')
+    <script>
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        document.getElementById('category_id').addEventListener('change', (e)=>{
+            fetch('/subcategories', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:{
+                    "Content-Type": "application/json",
+                    "Accept": "application/json, text-plain, */*",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-TOKEN": token
+                }
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                let options = "";
+                for (let i in data.list){
+                    options += '<option value="'+data.list[i].id+'">'+data.list[i].name+'</option>';
+                }
+                document.getElementById('sub_category_id').innerHTML = options
+            }).catch(error => console.log(error))
+        })
+    </script>
+@stop

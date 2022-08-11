@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
+    protected $table = 'prt.PartCategories';
+    protected $primaryKey = 'PartCategoryID';
+    public $timestamps = false;
+    protected $guarded = [];
 
     public function subCategory(): HasMany
     {

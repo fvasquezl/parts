@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class SubCategory extends Model
 {
     use HasFactory;
+    protected $table = 'prt.PartSubCategories';
+    protected $primaryKey = 'PartSubCategoryID';
+    public $timestamps = false;
+    protected $guarded = [];
 
     public function category(): BelongsTo
     {

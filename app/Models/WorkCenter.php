@@ -10,6 +10,11 @@ class WorkCenter extends Model
 {
     use HasFactory;
 
+    protected $table = 'prt.WorkCenters';
+    protected $primaryKey = 'WorkCenterID';
+    public $timestamps = false;
+    protected $guarded = [];
+
     public function kits(): HasMany
     {
         return $this->hasMany(Kit::class);

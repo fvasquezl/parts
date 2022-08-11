@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Country extends Model
 {
     use HasFactory;
+    protected $table = 'prt.Countries';
+    protected $primaryKey = 'CountryID';
+    public $timestamps = false;
+    protected $guarded = [];
 
     public function kits(): HasMany
     {

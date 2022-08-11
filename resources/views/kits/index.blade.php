@@ -1,4 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Kits</h1>
+@stop
 
 @section('content')
     <div class="row">
@@ -49,4 +55,7 @@
 
     {!! $kits->links() !!}
 @endsection
+
+
+
 
