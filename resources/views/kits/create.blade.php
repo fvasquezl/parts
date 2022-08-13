@@ -116,8 +116,8 @@
                                                 class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">--Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->CategoryID }}"
-                                                    {{ old('category_id',$kit->category_id)==$category->CategoryID ? 'selected':''}}>
+                                                <option value="{{ $category->PartCategoryID }}"
+                                                    {{ old('category_id',$kit->category_id)==$category->PartCategoryID ? 'selected':''}}>
                                                     {{ $category->CategoryName }}</option>
                                             @endforeach
 
@@ -137,8 +137,8 @@
                                         class="form-control @error('sub_category_id') is-invalid @enderror">
                                             @if (old('sub_category_id'))
                                                 @foreach ($subCategories as $subCategory)
-                                                    <option value="{{ $subCategory->SubCategoryID }}"
-                                                        {{ old('sub_category_id',$kit->category_id)==$subCategory->SubCategoryID ? 'selected':''}}>
+                                                    <option value="{{ $subCategory->PartSubCategoryID }}"
+                                                        {{ old('sub_category_id',$kit->category_id)==$subCategory->PartSubCategoryID ? 'selected':''}}>
                                                         {{ $subCategory->SubCategoryName }}</option>
                                                 @endforeach
                                             @endif
@@ -283,7 +283,7 @@
             }).then(data =>{
                 let options = "";
                 for (let i in data.list){
-                    options += '<option value="'+data.list[i].id+'">'+data.list[i].name+'</option>';
+                    options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
                 }
                 document.getElementById('sub_category_id').innerHTML = options
             }).catch(error => console.log(error))

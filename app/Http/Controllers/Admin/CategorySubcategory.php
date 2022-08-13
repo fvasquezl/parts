@@ -12,7 +12,7 @@ class CategorySubcategory extends Controller
     public function index(Request $request): JsonResponse
     {
         if(isset($request->text)){
-            $subcategories = Subcategory::where('category_id', $request->text)->get();
+            $subcategories = Subcategory::where('PartCategoryID', $request->text)->get();
             return response()->json([
                 'list'=> $subcategories,
                 'success' => true
