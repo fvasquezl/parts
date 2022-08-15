@@ -8,7 +8,14 @@
 
 @section('content')
 
+
 <div class="container-fluid">
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> {{ session('status') }}!</h5>
+        </div>
+    @endif
     <div class="row">
         <div class="col-lg-12 my-3">
             <div class="card mb-4 shadow-sm card-outline card-primary">
@@ -61,25 +68,25 @@
                                 <td>{{$kit->country->CountryName}}</td>
                                 <td>{{$kit->DateManufactured}}</td>
                                 <td>
-{{--                                    <a href="{{ route('kit',$kit) }}" class="btn btn-sm btn-default"--}}
-{{--                                       target="_blank">--}}
-{{--                                        <i class="fas fa-eye"></i>--}}
-{{--                                    </a>--}}
-                                    @can('update', $kit)
-                                        <a href="{{ route('kit.edit',$kit) }}" class="btn btn-sm btn-info">
+                                    <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"
+                                       target="_blank">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+{{--                                    @can('update', $kit)--}}
+                                        <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                    @endcan
+{{--                                    @endcan--}}
 
-                                    @can('delete',$kit)
-                                        <form  method="POST" action="{{ route('kit.destroy', $kit) }}"
+{{--                                    @can('delete',$kit)--}}
+                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"
                                                style="display:inline">
                                             @csrf @method('DELETE')
                                             <button class="btn btn-sm btn-danger"
                                                     onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">
                                                 <i class="fas fa-trash-alt"></i></button>
                                         </form>
-                                    @endcan
+{{--                                    @endcan--}}
                                 </td>
                             </tr>
                         @endforeach

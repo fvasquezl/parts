@@ -52,7 +52,7 @@ class KitController extends Controller
     {
         $kit =$request->createKit();
         return redirect()
-            ->route('kits.create')
+            ->route('kits.index')
             ->with('status', 'The Kit has been created successfully');
 //        return redirect()->route('kits.edit', $kit);
     }

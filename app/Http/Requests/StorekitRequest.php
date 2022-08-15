@@ -36,7 +36,6 @@ class StorekitRequest extends FormRequest
             'productSerialNumber'=>['required'],
             'country_id'=>['required'],
             'dateManufactured'=>['required'],
-            'estimatedRetailPrice'=>['required'],
             'notes'=>['sometimes'],
         ];
 
@@ -63,11 +62,11 @@ class StorekitRequest extends FormRequest
 
     public function createKit()
     {
-        if (filled($this->isCompleted)){
-            $this->isCompleted=1;
-        }else{
-            $this->isCompleted=0;
-        }
+//        if (filled($this->isCompleted)){
+//            $this->isCompleted=1;
+//        }else{
+//            $this->isCompleted=0;
+//        }
 
         $kit = new Kit();
         $kit->fill([
@@ -80,8 +79,8 @@ class StorekitRequest extends FormRequest
             'ProductSerialNumber' => $this->productSerialNumber,
             'CountryID' => $this->country_id,
             'DateManufactured' => $this->dateManufactured,
-            'IsCompleted' => $this->isCompleted,
-            'EstimatedRetailPrice' => $this->estimatedRetailPrice,
+//            'IsCompleted' => $this->isCompleted,
+//            'EstimatedRetailPrice' => $this->estimatedRetailPrice,
             'UserID' => auth()->id(),
             'PartSubCategoryID' => $this->sub_category_id,
             'Comments' => $this->notes,

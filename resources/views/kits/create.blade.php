@@ -184,8 +184,7 @@
 
                                         @error('country_id')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
                                 </div>
@@ -202,38 +201,7 @@
 
                                         @error('dateManufactured')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mt-3">&nbsp;</div>
-                                        <div class="form-check mt-1">
-                                            <input class="form-check-input" type="checkbox" name="isCompleted"
-                                                   id="isCompleted" {{ old('isCompleted') ? 'checked' : '' }}>
-
-                                            <label class="form-check-label" for="isCompleted">
-                                                {{ __('Is Completed') }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{--Estimated Retail Price and Notes--}}
-                                <div class="row mb-5">
-                                    <div class="col-md-6">
-                                        <label for="estimatedRetailPrice"
-                                               class="col-form-label text-md-end">{{ __('Estimated Retail Price') }}</label>
-
-                                        <input id="estimatedRetailPrice" type="number"
-                                               class="form-control @error('estimatedRetailPrice') is-invalid @enderror"
-                                               name="estimatedRetailPrice" value="{{ old('estimatedRetailPrice') }}"
-                                                autocomplete="estimatedRetailPrice" autofocus>
-
-                                        @error('estimatedRetailPrice')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
 
@@ -287,5 +255,10 @@
                 document.getElementById('sub_category_id').innerHTML = options
             }).catch(error => console.log(error))
         })
+    </script>
+
+    <script>
+        console.log(document.getElementById('LCN').value)
+       document.getElementById('partsLCN').value = document.getElementById('LCN').setAttribute('valie',Mivalue)
     </script>
 @stop
