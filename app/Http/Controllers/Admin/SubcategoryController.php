@@ -7,7 +7,7 @@ use App\Models\SubCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class CategorySubcategory extends Controller
+class SubcategoryController extends Controller
 {
     public function index(Request $request): JsonResponse
     {

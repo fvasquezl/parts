@@ -255,10 +255,27 @@
                 document.getElementById('sub_category_id').innerHTML = options
             }).catch(error => console.log(error))
         })
-    </script>
 
-    <script>
-        console.log(document.getElementById('LCN').value)
-       document.getElementById('partsLCN').value = document.getElementById('LCN').setAttribute('valie',Mivalue)
+
+        document.getElementById('LCN').addEventListener('change', (e)=>{
+            fetch('/lcn', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:{
+                    "Content-Type": "application/json",
+                    "Accept": "application/json, text-plain, */*",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-TOKEN": token
+                }
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                console.log(data)
+                document.getElementById('partsLCN').setAttribute('value',data.fields.partsLcn)
+                 document.getElementById('brand').setAttribute('value',data.fields.brand)
+                 document.getElementById('model').setAttribute('value',data.fields.model)
+            }).catch(error => console.log(error))
+        })
+
     </script>
 @stop
