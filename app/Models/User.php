@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function kits(): HasMany
     {
-        return $this->hasMany(Kit::class);
+        return $this->hasMany(Kit::class,'UserID','id');
     }
 
 }

@@ -7,54 +7,105 @@
 @stop
 
 @section('content')
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Kits List</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('kits.create') }}"> Create New Kit</a>
+        <div class="col-lg-12 my-3">
+            <div class="card mb-4 shadow-sm card-outline card-primary">
+                <div class="card-header ">
+                    <h3 class="card-title mt-1">
+                        Kits Listing
+                    </h3>
+                    <div class="card-tools">
+
+{{--                        @can('create',$kits->first())--}}
+
+                        <a class="btn btn-primary" href="{{ route('kits.create') }}">
+                            <i class="fa fa-plus"></i> Create Kit
+                        </a>
+{{--                        @endcan--}}
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-striped table-hover table-bordered" id="kitsTable">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>WorkCenter</th>
+                            <th>LCN</th>
+                            <th>Kit LCN</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Serial Number</th>
+                            <th>Country</th>
+                            <th>Manufactured At</th>
+
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($kits as $kit)
+                            <tr>
+                                <td>{{$kit->KitID}}</td>
+                                <td>{{$kit->workCenter->WorkCenterName}}</td>
+                                <td>{{$kit->LCN}}</td>
+                                <td>{{$kit->KitLCN}}</td>
+                                <td>{{$kit->Brand}}</td>
+                                <td>{{$kit->Model}}</td>
+                                <td>{{$kit->category->CategoryName}}</td>
+                                <td>{{$kit->subCategory->SubCategoryName}}</td>
+                                <td>{{$kit->ProductSerialNumber}}</td>
+                                <td>{{$kit->country->CountryName}}</td>
+                                <td>{{$kit->DateManufactured}}</td>
+                                <td>
+{{--                                    <a href="{{ route('kit',$kit) }}" class="btn btn-sm btn-default"--}}
+{{--                                       target="_blank">--}}
+{{--                                        <i class="fas fa-eye"></i>--}}
+{{--                                    </a>--}}
+                                    @can('update', $kit)
+                                        <a href="{{ route('kit.edit',$kit) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endcan
+
+                                    @can('delete',$kit)
+                                        <form  method="POST" action="{{ route('kit.destroy', $kit) }}"
+                                               style="display:inline">
+                                            @csrf @method('DELETE')
+                                            <button class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">
+                                                <i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
-    <table class="table table-bordered">
-        <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Details</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($kits as $kit)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $kit->name }}</td>
-                <td>{{ $kit->detail }}</td>
-                <td>
-                    <form action="{{ route('kits.destroy',$kit->id) }}" method="POST">
-
-                        <a class="btn btn-info" href="{{ route('kits.show',$kit->id) }}">Show</a>
-
-                        <a class="btn btn-primary" href="{{ route('kits.edit',$kit->id) }}">Edit</a>
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table>
-
-    {!! $kits->links() !!}
 @endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+@stop
+
+@section('js')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#kitsTable').DataTable();
+        });
+    </script>
+@stop
 
 
 

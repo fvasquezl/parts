@@ -63,29 +63,29 @@ class StorekitRequest extends FormRequest
 
     public function createKit()
     {
-        if (filled($this->isComplete)){
-            $this->isComplete=1;
+        if (filled($this->isCompleted)){
+            $this->isCompleted=1;
         }else{
-            $this->isComplete=0;
+            $this->isCompleted=0;
         }
 
         $kit = new Kit();
         $kit->fill([
-            'work_center_id' => $this->work_center_id,
+            'WorkCenterID' => $this->work_center_id,
             'LCN' => $this->LCN,
-            'partsLCN' => $this->partsLCN,
-            'brand' => $this->brand,
-            'model' => $this->model,
-            'category_id' => $this->category_id,
-            'sub_category_id' => $this->sub_category_id,
-            'productSerialNumber' => $this->productSerialNumber,
-            'country_id' => $this->country_id,
-            'dateManufactured' => $this->dateManufactured,
-            'isComplete' => $this->isComplete,
-            'estimatedRetailPrice' => $this->estimatedRetailPrice,
-            'notes' => $this->notes,
-            'User_id' => auth()->id(),
-            'kitImageUrl' => 'http://image.url'
+            'KitLCN' => $this->partsLCN,
+            'Brand' => $this->brand,
+            'Model' => $this->model,
+            'PartCategoryID' => $this->category_id,
+            'ProductSerialNumber' => $this->productSerialNumber,
+            'CountryID' => $this->country_id,
+            'DateManufactured' => $this->dateManufactured,
+            'IsCompleted' => $this->isCompleted,
+            'EstimatedRetailPrice' => $this->estimatedRetailPrice,
+            'UserID' => auth()->id(),
+            'PartSubCategoryID' => $this->sub_category_id,
+            'Comments' => $this->notes,
+            'kitImage' => 'http://image.url'
         ]);
         $kit->save();
     }

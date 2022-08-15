@@ -17,14 +17,13 @@ class KitController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $kits = Kit::latest()->paginate(5);
+        $kits = Kit::latest()->paginate(10);
 
-        return view('kits.index',compact('kits'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('kits.index',compact('kits'));
     }
 
     /**

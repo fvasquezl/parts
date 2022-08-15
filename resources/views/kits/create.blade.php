@@ -2,12 +2,11 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h1>Kits</h1>
+    <h2>Kits</h2>
 @stop
 
 @section('content')
     <div class="container">
-        {{old('sub_category_id')}}
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -211,7 +210,7 @@
                                     <div class="col-md-6">
                                         <div class="mt-3">&nbsp;</div>
                                         <div class="form-check mt-1">
-                                            <input class="form-check-input" type="checkbox" name="isComplete"
+                                            <input class="form-check-input" type="checkbox" name="isCompleted"
                                                    id="isCompleted" {{ old('isCompleted') ? 'checked' : '' }}>
 
                                             <label class="form-check-label" for="isCompleted">

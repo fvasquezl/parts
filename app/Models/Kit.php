@@ -16,27 +16,27 @@ class Kit extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'PartCategoryID','PartCategoryID');
     }
 
     public function subCategory(): BelongsTo
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsTo(SubCategory::class,'PartSubCategoryID','PartSubCategoryID');
     }
 
     public function workCenter(): BelongsTo
     {
-        return $this->belongsTo(WorkCenter::class);
+        return $this->belongsTo(WorkCenter::class,'WorkCenterID','WorkCenterID');
     }
 
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class,'CountryID','CountryID');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'UserID','id');
     }
 
 }
