@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Kit;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class StorekitRequest extends FormRequest
 {
@@ -37,6 +38,7 @@ class StorekitRequest extends FormRequest
             'country_id'=>['required'],
             'dateManufactured'=>['required'],
             'notes'=>['sometimes'],
+            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];
 
 
@@ -62,12 +64,6 @@ class StorekitRequest extends FormRequest
 
     public function createKit()
     {
-//        if (filled($this->isCompleted)){
-//            $this->isCompleted=1;
-//        }else{
-//            $this->isCompleted=0;
-//        }
-
         $kit = new Kit();
         $kit->fill([
             'WorkCenterID' => $this->work_center_id,
@@ -84,8 +80,19 @@ class StorekitRequest extends FormRequest
             'UserID' => auth()->id(),
             'PartSubCategoryID' => $this->sub_category_id,
             'Comments' => $this->notes,
-            'kitImage' => 'http://image.url'
+            'KitImage' => 'http://test/',
         ]);
         $kit->save();
+
+        $path = Storage::disk('s3')->putFileAs(
+            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
+        );
+
+        Storage::disk('s3')->setVisibility($path,'public');
+
+        $kit->KitImage = Storage::disk('s3')->url($path);
+        $kit->save();
+
+
     }
 }

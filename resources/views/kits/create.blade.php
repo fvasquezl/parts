@@ -21,7 +21,7 @@
 
                         @endif
 
-                            <form method="POST" action="{{ route('kits.store') }}">
+                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row mb-3">
@@ -30,7 +30,7 @@
                                                class="col-form-label text-md-end">{{ __('Work Center') }}</label>
 
                                         <select name="work_center_id" aria-label="select workCenter"
-                                                class="form-control @error('work_center_id') is-invalid @enderror" >
+                                                class="select2 form-control @error('work_center_id') is-invalid @enderror" >
                                             <option value="">--Select Work Center</option>
                                             @foreach ($workCenters as $workCenter)
                                                 <option value="{{ $workCenter->WorkCenterID }}"
@@ -67,7 +67,7 @@
 
                                         <input id="partsLCN" type="text"
                                                class="form-control @error('partsLCN') is-invalid @enderror" name="partsLCN"
-                                               value="{{ old('partsLCN') }}"  autocomplete="partsLCN" autofocus>
+                                               value="{{ old('partsLCN') }}"  autocomplete="partsLCN" autofocus readonly>
 
                                         @error('partsLCN')
                                         <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
 
                                         <input id="brand" type="text"
                                                class="form-control @error('brand') is-invalid @enderror" name="brand"
-                                               value="{{ old('brand') }}"  autocomplete="brand" autofocus>
+                                               value="{{ old('brand') }}"  autocomplete="brand" autofocus readonly>
 
                                         @error('brand')
                                         <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
 
                                         <input id="model" type="text"
                                                class="form-control @error('model') is-invalid @enderror" name="model"
-                                               value="{{ old('model') }}"  autocomplete="model" autofocus>
+                                               value="{{ old('model') }}"  autocomplete="model" autofocus readonly>
 
                                         @error('model')
                                         <span class="invalid-feedback" role="alert">
@@ -112,7 +112,7 @@
                                                class="col-form-label text-md-end">{{ __('Category') }}</label>
 
                                         <select name="category_id" aria-label="select category" id="category_id"
-                                                class="form-control @error('category_id') is-invalid @enderror">
+                                                class="select2 form-control @error('category_id') is-invalid @enderror">
                                             <option value="">--Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->PartCategoryID }}"
@@ -205,18 +205,35 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label for="notes" class="form-label">Notes</label>
-                                        <textarea name=notes class="form-control @error('notes') is-invalid @enderror" id="notes"
-                                                  placeholder="Add notes" rows="3">{!! old('notes', $kit->notes) !!}</textarea>
+                                    <div class="col-md-6 mt-2">
+                                        <label for="kitImage" class="form-label">Kit Image</label>
+                                        <input type="file" class="form-control @error('kitImage') is-invalid @enderror"
+                                               name="kitImage"  value="{{ old('kitImage') }}">
 
-                                        @error('notes')
+                                        @error('kitImage')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
+
                                 </div>
+
+                                <div class="row mb-3">
+                                    <label for="notes" class="form-label">Notes</label>
+                                    <textarea name=notes class="form-control @error('notes') is-invalid @enderror" id="notes"
+                                              placeholder="Add notes" rows="3">{!! old('notes', $kit->notes) !!}</textarea>
+
+                                    @error('notes')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+
+
+
+
+
 
                                 <div class="row">
                                     <button type="submit" class="btn btn-block btn-primary">
@@ -232,19 +249,27 @@
     </div>
 @endsection
 
+
+@section('css')
+
+@stop
+
 @section('js')
+
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
+
         document.getElementById('category_id').addEventListener('change', (e)=>{
             fetch('/subcategories', {
                 method: 'POST',
                 body: JSON.stringify({text: e.target.value}),
-                headers:{
-                    "Content-Type": "application/json",
-                    "Accept": "application/json, text-plain, */*",
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRF-TOKEN": token
-                }
+                headers:headers
             }).then(response=>{
                 return response.json()
             }).then(data =>{
@@ -256,17 +281,11 @@
             }).catch(error => console.log(error))
         })
 
-
         document.getElementById('LCN').addEventListener('change', (e)=>{
             fetch('/lcn', {
                 method: 'POST',
                 body: JSON.stringify({text: e.target.value}),
-                headers:{
-                    "Content-Type": "application/json",
-                    "Accept": "application/json, text-plain, */*",
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRF-TOKEN": token
-                }
+                headers:headers
             }).then(response=>{
                 return response.json()
             }).then(data =>{
@@ -276,6 +295,8 @@
                  document.getElementById('model').setAttribute('value',data.fields.model)
             }).catch(error => console.log(error))
         })
+
+
 
     </script>
 @stop
