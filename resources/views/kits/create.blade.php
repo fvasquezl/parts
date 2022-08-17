@@ -205,35 +205,18 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6 mt-2">
-                                        <label for="kitImage" class="form-label">Kit Image</label>
-                                        <input type="file" class="form-control @error('kitImage') is-invalid @enderror"
-                                               name="kitImage"  value="{{ old('kitImage') }}">
 
-                                        @error('kitImage')
+                                    <div class="col-md-6 mt-2">
+                                        <label for="notes" class="form-label">Notes</label>
+                                        <textarea name=notes class="form-control @error('notes') is-invalid @enderror" id="notes"
+                                                  placeholder="Add notes" rows="3">{!! old('notes', $kit->notes) !!}</textarea>
+
+                                        @error('notes')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
-
                                 </div>
-
-                                <div class="row mb-3">
-                                    <label for="notes" class="form-label">Notes</label>
-                                    <textarea name=notes class="form-control @error('notes') is-invalid @enderror" id="notes"
-                                              placeholder="Add notes" rows="3">{!! old('notes', $kit->notes) !!}</textarea>
-
-                                    @error('notes')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
-
-
-
-
-
-
 
                                 <div class="row">
                                     <button type="submit" class="btn btn-block btn-primary">

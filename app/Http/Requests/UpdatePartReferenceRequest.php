@@ -13,7 +13,7 @@ class UpdatePartReferenceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdatePartReferenceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'PartName' =>  ['required', 'string', 'max:50'],
+//            'PartValue' =>  ['required'],
+            'PartWeight' =>  ['required','numeric','between:0,999.99'],
+            'PartRef1' =>  ['required', 'string', 'max:50'],
+            'PartRef2' => ['sometimes'],
+            'PartRef3' =>  ['sometimes'],
         ];
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePartReferenceRequest;
 use App\Http\Requests\UpdatePartReferenceRequest;
 use App\Models\PartReference;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class PartReferenceController extends Controller
 {
@@ -53,24 +56,58 @@ class PartReferenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PartReference  $partReference
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\PartReference  $part
+     * @return Application|Factory|View
      */
-    public function edit(PartReference $partReference)
+    public function edit(PartReference $part)
     {
-        //
+        $kitID = $part->KitID;
+
+        $totalParts = PartReference::where('KitID',$kitID)->count();
+        $editParts = PartReference::where('KitID',$kitID)->where('Created',false)->count();
+        $editPart = ($totalParts - $editParts)+1;
+
+        return view('parts.edit',[
+            'part' => $part,
+            'totalParts' => $totalParts,
+            'editPart' => $editPart
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdatePartReferenceRequest  $request
-     * @param  \App\Models\PartReference  $partReference
+     * @param  \App\Models\PartReference  $part
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePartReferenceRequest $request, PartReference $partReference)
+    public function update(UpdatePartReferenceRequest $request, PartReference $part)
     {
-        //
+        if(isset($request['PartValue'])){
+            if ($request['PartValue'] == 'on'){
+                $part->PartValue = 1;
+            }
+            else{
+                $part->PartValue = 0;
+            }
+        }
+
+//        $part->PartValue = $request['PartValue'];
+        $part->PartWeight = $request['PartWeight'];
+        $part->PartRef1 = $request['PartRef1'];
+        $part->PartRef2 = $request['PartRef2'];
+        $part->PartRef3 = $request['PartRef3'];
+        $part->Created = 1;
+        $part->save();
+
+        $kit = $part->KitID;
+        $partRest = PartReference::where('KitID',$kit)->where('Created',0)->first();
+
+
+        if ($partRest) {
+            return redirect()->route('parts.edit',$partRest);
+        }
+        return redirect()->route('kits.create');
     }
 
     /**

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PartReference extends Model
 {
     use HasFactory;
+
+    protected $table = 'prt.PartReferences';
+    protected $primaryKey = 'PartID';
+    public $timestamps = false;
+    protected $guarded = [];
 }

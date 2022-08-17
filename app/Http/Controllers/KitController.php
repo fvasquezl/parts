@@ -7,6 +7,8 @@ use App\Http\Requests\UpdatekitRequest;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
+use App\Models\PartList;
+use App\Models\PartReference;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
 use Illuminate\Contracts\Foundation\Application;
@@ -51,9 +53,32 @@ class KitController extends Controller
     public function store(StorekitRequest $request): RedirectResponse
     {
         $kit =$request->createKit();
-        return redirect()
-            ->route('kits.index')
-            ->with('status', 'The Kit has been created successfully');
+
+        $parts = PartList::select('PartName')
+            ->where('PartCategoryID',$kit->PartCategoryID)
+            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
+            ->get();
+
+        if(!$parts){
+            return redirect()->route('kits.index');
+        }
+
+        foreach($parts as $part){
+            PartReference::create([
+                'kitID' => $kit->KitID,
+                'PartName' => $part->PartName,
+                'PartValue' => 0,
+                'PartRef1' => '',
+                'Created' => 0
+            ]);
+        }
+
+        $firstPart = PartReference::where('KitID',$kit->KitID)->first();
+
+        return redirect()->route('parts.edit',$firstPart->PartID);
+//        return redirect()
+//            ->route('kits.index')
+//            ->with('status', 'The Kit has been created successfully');
 //        return redirect()->route('kits.edit', $kit);
     }
 

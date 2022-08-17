@@ -38,7 +38,7 @@ class StorekitRequest extends FormRequest
             'country_id'=>['required'],
             'dateManufactured'=>['required'],
             'notes'=>['sometimes'],
-            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+//            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];
 
 
@@ -84,15 +84,16 @@ class StorekitRequest extends FormRequest
         ]);
         $kit->save();
 
-        $path = Storage::disk('s3')->putFileAs(
-            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
-        );
+//        $path = Storage::disk('s3')->putFileAs(
+//            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
+//        );
+//
+//        Storage::disk('s3')->setVisibility($path,'public');
+//
+//        $kit->KitImage = Storage::disk('s3')->url($path);
+     //   $kit->save();
 
-        Storage::disk('s3')->setVisibility($path,'public');
-
-        $kit->KitImage = Storage::disk('s3')->url($path);
-        $kit->save();
-
+        return $kit;
 
     }
 }
