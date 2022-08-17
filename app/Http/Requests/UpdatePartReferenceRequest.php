@@ -27,7 +27,7 @@ class UpdatePartReferenceRequest extends FormRequest
             'PartName' =>  ['required', 'string', 'max:50'],
 //            'PartValue' =>  ['required'],
             'PartWeight' =>  ['required','numeric','between:0,999.99'],
-            'PartRef1' =>  ['required', 'string', 'max:50'],
+            'PartRef1' =>  ['sometimes'],
             'PartRef2' => ['sometimes'],
             'PartRef3' =>  ['sometimes'],
         ];

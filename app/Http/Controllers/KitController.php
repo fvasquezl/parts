@@ -69,7 +69,6 @@ class KitController extends Controller
                 'kitID' => $kit->KitID,
                 'PartName' => $part->PartName,
                 'PartValue' => 0,
-                'PartRef1' => '',
                 'Created' => 0
             ]);
         }
