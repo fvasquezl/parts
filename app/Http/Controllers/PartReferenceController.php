@@ -70,7 +70,8 @@ class PartReferenceController extends Controller
         return view('parts.edit',[
             'part' => $part,
             'totalParts' => $totalParts,
-            'editPart' => $editPart
+            'editPart' => $editPart,
+            'kitID' => $kitID
         ]);
     }
 
@@ -107,7 +108,8 @@ class PartReferenceController extends Controller
         if ($partRest) {
             return redirect()->route('parts.edit',$partRest);
         }
-        return redirect()->route('kits.create');
+        return redirect()->route('kits.create')
+            ->with('status','All parts has been created successfully');
     }
 
     /**

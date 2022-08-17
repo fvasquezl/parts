@@ -23,7 +23,7 @@ class KitController extends Controller
      */
     public function index()
     {
-        $kits = Kit::latest()->paginate(10);
+        $kits = Kit::paginate(15);
 
         return view('kits.index',compact('kits'));
     }
@@ -59,8 +59,9 @@ class KitController extends Controller
             ->where('PartSubCategoryID',$kit->PartSubCategoryID)
             ->get();
 
-        if(!$parts){
-            return redirect()->route('kits.index');
+        if(count($parts) == 0){
+            return redirect()->route('kits.index')
+                ->with('info', 'The Kit has been created Without Parts');
         }
 
         foreach($parts as $part){
@@ -75,7 +76,8 @@ class KitController extends Controller
 
         $firstPart = PartReference::where('KitID',$kit->KitID)->first();
 
-        return redirect()->route('parts.edit',$firstPart->PartID);
+        return redirect()->route('parts.edit',$firstPart->PartID)
+            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
 //        return redirect()
 //            ->route('kits.index')
 //            ->with('status', 'The Kit has been created successfully');

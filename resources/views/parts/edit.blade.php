@@ -2,23 +2,25 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h2>Edit Part {{$editPart}}/{{$totalParts}}</h2>
+    <h2>Kit {{$kitID}}, Creating Part No {{$editPart}}/{{$totalParts}}</h2>
 @stop
 
 @section('content')
     <div class="container">
+        @if (session('status'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('status') }}
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
+
                 <div class="card">
                     <div class="card-header">{{ __('Kits')}}</div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
+
 
 
                         <form method="POST" action="{{ route('parts.update',$part) }}">
