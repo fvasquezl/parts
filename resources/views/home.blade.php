@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-    asdasd
+    <p>Welcome to the Kits-Parts website.</p>
+
 @stop
 
 @section('css')
