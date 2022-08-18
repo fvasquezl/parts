@@ -23,7 +23,7 @@ class KitController extends Controller
      */
     public function index()
     {
-        $kits = Kit::paginate(15);
+        $kits = Kit::get();
 
         return view('kits.index',compact('kits'));
     }
