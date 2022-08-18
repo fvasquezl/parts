@@ -54,7 +54,7 @@ class KitController extends Controller
     {
         $kit =$request->createKit();
 
-        $parts = PartList::select('PartName')
+        $parts = PartList::select('PartName','IsRequired')
             ->where('PartCategoryID',$kit->PartCategoryID)
             ->where('PartSubCategoryID',$kit->PartSubCategoryID)
             ->get();
@@ -68,8 +68,8 @@ class KitController extends Controller
             PartReference::create([
                 'kitID' => $kit->KitID,
                 'PartName' => $part->PartName,
-                'PartValue' => 0,
-                'Created' => 0
+                'Created' => 0,
+                'IsRequired' => $part->IsRequired,
             ]);
         }
 

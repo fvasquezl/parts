@@ -125,6 +125,9 @@
                                 </div>
                             </div>
 
+                            <input name="IsRequired" type="hidden" value="{{$part->IsRequired}}">
+
+
                             <div class="row">
                                 <button type="submit" class="btn btn-block btn-primary">
                                     {{ __('Create') }}
