@@ -16,7 +16,7 @@
 <body onload="window.print()">
 
     <div class="d-flex flex-column min-vh-100  align-items-center mt-1">
-        {!! QrCode::size(50)->generate($lcn);!!}
+        {!! QrCode::size(40)->generate($lcn);!!}
         <div>{{$lcn}}</div>
     </div>
 
