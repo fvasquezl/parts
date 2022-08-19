@@ -75,9 +75,9 @@
                                 <td>{{$kit->country->CountryName}}</td>
                                 <td>{{$kit->DateManufactured}}</td>
                                 <td>
-                                    <a href="#" class="qrcode btn btn-sm btn-dark">
+                                    <button class="qrcode btn btn-sm btn-dark">
                                         <i class="fas fa-print"></i>
-                                    </a>
+                                    </button>
 
                                     <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"
                                        target="_blank">
