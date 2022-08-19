@@ -13,6 +13,7 @@
 <div class="visible-print text-center">
     {!! QrCode::size(100)->generate($lcn); !!}
 </div>
+<div class="text-center">{{$lcn}}</div>
 
 </body>
 </html>

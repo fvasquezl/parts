@@ -75,8 +75,7 @@
                                 <td>{{$kit->country->CountryName}}</td>
                                 <td>{{$kit->DateManufactured}}</td>
                                 <td>
-                                    <a href="{{ route('qrcode',$kit) }}" class="btn btn-sm btn-dark"
-                                       target="_blank">
+                                    <a href="#" class="qrcode btn btn-sm btn-dark">
                                         <i class="fas fa-print"></i>
                                     </a>
 
@@ -109,7 +108,7 @@
         </div>
     </div>
 </div>
-
+<iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
 @endsection
 
 @section('css')
@@ -121,9 +120,18 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready( function () {
-            $('#kitsTable').DataTable({
+            let table = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
             });
+
+            $('#kitsTable tbody').on('click', '.qrcode', function () {
+                let data = table.row($(this).parents('tr')).data();
+                let id = data[0];
+                let url = "{{route('qrcode',':id')}}"
+                url = url.replace(':id',id);
+                document.getElementById('printf').src = url;
+            });
+
         });
     </script>
 @stop

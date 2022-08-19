@@ -32,13 +32,6 @@ Route::middleware('auth')
         Route::resource('kits', KitController::class);
         Route::post('/lcn',[LcnController::class,'index']);
         Route::post('/subcategories',[SubcategoryController::class,'index']);
-
         Route::resource('parts', PartReferenceController::class);
-
-//        Route::get('qrcode/{lcn}', function ($lcn) {
-//            return QrCode::size(300)->generate($lcn);
-//        })->name('qrcode');
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
     });
-
-//Route::resource('subcategories', SubCategoryController::class);
