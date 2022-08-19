@@ -75,6 +75,11 @@
                                 <td>{{$kit->country->CountryName}}</td>
                                 <td>{{$kit->DateManufactured}}</td>
                                 <td>
+                                    <a href="{{ route('qrcode',$kit) }}" class="btn btn-sm btn-dark"
+                                       target="_blank">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+
                                     <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"
                                        target="_blank">
                                         <i class="fas fa-eye"></i>
@@ -86,13 +91,13 @@
 {{--                                    @endcan--}}
 
 {{--                                    @can('delete',$kit)--}}
-                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"
-                                               style="display:inline">
-                                            @csrf @method('DELETE')
-                                            <button class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">
-                                                <i class="fas fa-trash-alt"></i></button>
-                                        </form>
+{{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
+{{--                                               style="display:inline">--}}
+{{--                                            @csrf @method('DELETE')--}}
+{{--                                            <button class="btn btn-sm btn-danger"--}}
+{{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
+{{--                                                <i class="fas fa-trash-alt"></i></button>--}}
+{{--                                        </form>--}}
 {{--                                    @endcan--}}
                                 </td>
                             </tr>
@@ -116,7 +121,9 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready( function () {
-            $('#kitsTable').DataTable();
+            $('#kitsTable').DataTable({
+                order: [[0, 'desc']],
+            });
         });
     </script>
 @stop

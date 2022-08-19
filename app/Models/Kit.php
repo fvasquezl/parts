@@ -11,7 +11,7 @@ class Kit extends Model
     use HasFactory;
     protected $table = 'prt.PartsKitData';
     protected $primaryKey = 'KitID';
-    public $timestamps = false;
+//    public $timestamps = false;
     protected $guarded = [];
 
     public function category(): BelongsTo

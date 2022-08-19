@@ -23,7 +23,7 @@ class KitController extends Controller
      */
     public function index()
     {
-        $kits = Kit::get();
+        $kits = Kit::latest()->get();
 
         return view('kits.index',compact('kits'));
     }
@@ -91,7 +91,7 @@ class KitController extends Controller
      */
     public function show(kit $kit)
     {
-        //
+        return view('kits.show',compact('kit'));
     }
 
     /**
