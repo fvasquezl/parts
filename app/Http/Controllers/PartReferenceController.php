@@ -99,6 +99,7 @@ class PartReferenceController extends Controller
         $part->PartRef2 = $request['PartRef2'];
         $part->PartRef3 = $request['PartRef3'];
         $part->Created = 1;
+        $part->UserID = auth()->id();
         $part->save();
 
         $kit = $part->KitID;
@@ -108,7 +109,7 @@ class PartReferenceController extends Controller
         if ($partRest) {
             return redirect()->route('parts.edit',$partRest);
         }
-        return redirect()->route('kits.create')
+        return redirect()->route('kits.index')
             ->with('status','All parts has been created successfully');
     }
 

@@ -91,7 +91,8 @@ class KitController extends Controller
      */
     public function show(kit $kit)
     {
-        return view('kits.show',compact('kit'));
+        $parts = PartReference::where('KitID',80)->get();
+        return view('kits.show',compact('kit','parts'));
     }
 
     /**

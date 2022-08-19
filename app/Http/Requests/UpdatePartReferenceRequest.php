@@ -34,9 +34,6 @@ class UpdatePartReferenceRequest extends FormRequest
             $rules['PartWeight'] = ['required','numeric','between:0,999.99'];
         }
 
-
-
-
         return $rules;
 
     }
