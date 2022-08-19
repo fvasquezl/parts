@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Kit;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class StorekitRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class StorekitRequest extends FormRequest
 
         $rules = [
             'work_center_id'=>['required'],
-            'LCN' => ['required', 'string', 'max:50'],
+            'LCN' => ['required',Rule::unique('sqlsrv.prt.PartsKitData')],
             'partsLCN'=>['required','string', 'max:50'],
             'brand'=>['required','string', 'max:50'],
             'model'=>['required','string', 'max:50'],

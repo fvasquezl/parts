@@ -57,7 +57,7 @@
                             <th>Country</th>
                             <th>Manufactured At</th>
 
-                            <th>Acciones</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>

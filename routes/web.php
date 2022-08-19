@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\LcnController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\PartReferenceController;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +36,7 @@ Route::middleware('auth')
         Route::resource('parts', PartReferenceController::class);
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
     });
+
+Route::prefix('/admin')->middleware('auth', 'role:admin')->group(function () {
+    Route::resource('users', UsersController::class);
+});

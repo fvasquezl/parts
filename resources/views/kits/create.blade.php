@@ -2,7 +2,7 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h2>Kits</h2>
+    <h2>Kits Creation</h2>
 @stop
 
 @section('content')
@@ -177,7 +177,7 @@
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->CountryID }}"
                                                     {{ old('country_id',$kit->country_id)==$country->CountryID ? 'selected':''}}>
-                                                    {{ $country->CountryName }}</option>
+                                                    {{ $country->CountryName}}</option>
                                             @endforeach
                                         </select>
 
