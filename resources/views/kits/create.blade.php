@@ -30,7 +30,7 @@
 
                                         <select name="work_center_id" aria-label="select workCenter"
                                                 class="select2 form-control @error('work_center_id') is-invalid @enderror" >
-                                            <option value="">--Select Work Center</option>
+                                           
                                             @foreach ($workCenters as $workCenter)
                                                 <option value="{{ $workCenter->WorkCenterID }}"
                                                     {{ old('work_center_id',$kit->work_center_id)==$workCenter->WorkCenterID ? 'selected':''}}>
@@ -112,7 +112,7 @@
 
                                         <select name="category_id" aria-label="select category" id="category_id"
                                                 class="select2 form-control @error('category_id') is-invalid @enderror">
-                                            <option value="">--Select Category</option>
+					    
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->PartCategoryID }}"
                                                     {{ old('category_id',$kit->category_id)==$category->PartCategoryID ? 'selected':''}}>
@@ -246,6 +246,21 @@
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         }
+        document.getElementById('category_id').addEventListener('load', (e)=>{
+            fetch('/subcategories', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                let options = "";
+                for (let i in data.list){
+                    options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
+                }
+                document.getElementById('sub_category_id').innerHTML = options
+            }).catch(error => console.log(error))
+        })
 
         document.getElementById('category_id').addEventListener('change', (e)=>{
             fetch('/subcategories', {
