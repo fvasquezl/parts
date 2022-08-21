@@ -5,11 +5,18 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\kit;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use phpDocumentor\Reflection\Types\True_;
 
 class KitPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user ,$hability)
+    {
+        if ($user->isAdmin()){
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +25,8 @@ class KitPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
+//        return  $user->role =='admin';
     }
 
     /**
@@ -30,7 +38,7 @@ class KitPolicy
      */
     public function view(User $user, kit $kit)
     {
-        //
+        return true;
     }
 
     /**

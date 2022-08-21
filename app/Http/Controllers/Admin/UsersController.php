@@ -42,6 +42,7 @@ class UsersController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
         User::create($request->all());
 
         return redirect()->route('users.index')
@@ -79,6 +80,7 @@ class UsersController extends Controller
      */
     public function update(StoreUserRequest $request, User $user): RedirectResponse
     {
+
         $user->update($request->all());
 
         return redirect()->route('users.index')

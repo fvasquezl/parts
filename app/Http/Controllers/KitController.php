@@ -11,6 +11,7 @@ use App\Models\PartList;
 use App\Models\PartReference;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
+use http\Client\Curl\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 
@@ -23,7 +24,14 @@ class KitController extends Controller
      */
     public function index()
     {
-        $kits = Kit::latest()->get();
+
+        if(auth()->user()->role == 'employee'){
+            $kits = Kit::where('UserID',auth()->id())->latest()->get();
+
+        }else{
+            $kits = Kit::latest()->get();
+        };
+
 
         return view('kits.index',compact('kits'));
     }
@@ -70,28 +78,27 @@ class KitController extends Controller
                 'PartName' => $part->PartName,
                 'Created' => 0,
                 'IsRequired' => $part->IsRequired,
+                'UserID' =>auth()->id()
             ]);
         }
 
-        $firstPart = PartReference::where('KitID',$kit->KitID)->first();
+        $firstPart = $kit->parts->first();
 
-        return redirect()->route('parts.edit',$firstPart->PartID)
+        return redirect()->route('parts.edit',$firstPart)
             ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
-//        return redirect()
-//            ->route('kits.index')
-//            ->with('status', 'The Kit has been created successfully');
-//        return redirect()->route('kits.edit', $kit);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\kit  $kit
+     * @param  \App\Models\Kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function show(kit $kit)
+    public function show(Kit $kit)
     {
-        $parts = PartReference::where('KitID',80)->get();
+        $parts = $kit->parts;
+//        $parts = PartReference::where('KitID',80)->get();
         return view('kits.show',compact('kit','parts'));
     }
 
@@ -113,7 +120,7 @@ class KitController extends Controller
      * @param  \App\Models\kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatekitRequest $request, kit $kit)
+    public function update(UpdatekitRequest $request, Kit $kit)
     {
         //
     }
@@ -124,7 +131,7 @@ class KitController extends Controller
      * @param  \App\Models\kit  $kit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(kit $kit)
+    public function destroy(Kit $kit)
     {
         //
     }

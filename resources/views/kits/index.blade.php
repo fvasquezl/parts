@@ -83,6 +83,8 @@
                                        target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
+
+
 {{--                                    @can('update', $kit)--}}
                                         <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
                                             <i class="fas fa-edit"></i>

@@ -61,7 +61,7 @@ class PartReferenceController extends Controller
      */
     public function edit(PartReference $part)
     {
-        $kitID = $part->KitID;
+        $kitID = $part->kit->KitID;
 
         $totalParts = PartReference::where('KitID',$kitID)->count();
         $editParts = PartReference::where('KitID',$kitID)->where('Created',false)->count();
@@ -94,7 +94,7 @@ class PartReferenceController extends Controller
         }
 
 //        $part->PartValue = $request['PartValue'];
-        $part->PartWeight = $request['PartWeight'];
+        $part->PartWeightOZ = $request['PartWeight'];
         $part->PartRef1 = $request['PartRef1'];
         $part->PartRef2 = $request['PartRef2'];
         $part->PartRef3 = $request['PartRef3'];

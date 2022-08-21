@@ -59,4 +59,9 @@ class User extends Authenticatable
         return $this->hasMany(Kit::class,'UserID','id');
     }
 
+    public function isAdmin()
+    {
+        return $this->role = 'admin';
+    }
+
 }

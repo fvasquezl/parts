@@ -30,7 +30,7 @@
 
                                         <select name="work_center_id" aria-label="select workCenter"
                                                 class="select2 form-control @error('work_center_id') is-invalid @enderror" >
-                                           
+
                                             @foreach ($workCenters as $workCenter)
                                                 <option value="{{ $workCenter->WorkCenterID }}"
                                                     {{ old('work_center_id',$kit->work_center_id)==$workCenter->WorkCenterID ? 'selected':''}}>
@@ -112,7 +112,7 @@
 
                                         <select name="category_id" aria-label="select category" id="category_id"
                                                 class="select2 form-control @error('category_id') is-invalid @enderror">
-					    
+
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->PartCategoryID }}"
                                                     {{ old('category_id',$kit->category_id)==$category->PartCategoryID ? 'selected':''}}>
@@ -173,7 +173,6 @@
 
                                         <select name="country_id" aria-label="select country"
                                                 class="form-control @error('country_id') is-invalid @enderror" >
-                                            <option value="">--Select Country</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->CountryID }}"
                                                     {{ old('country_id',$kit->country_id)==$country->CountryID ? 'selected':''}}>
@@ -246,10 +245,12 @@
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         }
-        document.getElementById('category_id').addEventListener('load', (e)=>{
+
+        window.addEventListener("load", function() {
+            let e =document.getElementById('category_id');
             fetch('/subcategories', {
                 method: 'POST',
-                body: JSON.stringify({text: e.target.value}),
+                body: JSON.stringify({text: e.value}),
                 headers:headers
             }).then(response=>{
                 return response.json()
@@ -260,7 +261,26 @@
                 }
                 document.getElementById('sub_category_id').innerHTML = options
             }).catch(error => console.log(error))
-        })
+        });
+
+        function getData(e){
+            fetch('/subcategories', {
+                method: 'POST',
+                body: JSON.stringify({text: e.value}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                let options = "";
+                for (let i in data.list){
+                    options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
+                }
+                document.getElementById('sub_category_id').innerHTML = options
+            }).catch(error => console.log(error))
+        }
+
+
+
 
         document.getElementById('category_id').addEventListener('change', (e)=>{
             fetch('/subcategories', {
@@ -278,6 +298,9 @@
             }).catch(error => console.log(error))
         })
 
+
+
+
         document.getElementById('LCN').addEventListener('change', (e)=>{
             fetch('/lcn', {
                 method: 'POST',
@@ -294,6 +317,23 @@
         })
 
 
+
+        // const form = document.querySelector('form')
+        // form.onsubmit = (e) => {
+        //     e.preventDefault()
+        //     const confirmSubmit = confirm('Are you sure you want to submit this form?');
+        //     if (confirmSubmit) {
+        //         console.log('submitted')
+        //     }
+        // }
+
+        {{--$('#kitsTable tbody').on('click', '.qrcode', function () {--}}
+        {{--    let data = table.row($(this).parents('tr')).data();--}}
+        {{--    let id = data[0];--}}
+        {{--    let url = "{{route('qrcode',':id')}}"--}}
+        {{--    url = url.replace(':id',id);--}}
+        {{--    document.getElementById('printf').src = url;--}}
+        {{--});--}}
 
     </script>
 @stop

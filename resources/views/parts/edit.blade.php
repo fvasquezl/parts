@@ -70,7 +70,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="PartWeight"
-                                           class="col-form-label text-md-end">{{ __('Part Weight') }}</label>
+                                           class="col-form-label text-md-end">{{ __('Part Weight (oz)') }}</label>
 
                                     <input id="PartWeight" type="number" step="0.01"
                                            class="form-control @error('PartWeight') is-invalid @enderror" name="PartWeight"

@@ -285,7 +285,7 @@ return [
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'can'  =>  'isAdmin'
         ],
         [
             'text'        => 'pages',
@@ -293,12 +293,14 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
+            'can'  =>  'isAdmin'
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'Users',
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-users',
+            'can'  =>  'isAdmin'
         ],
         [
             'text' => 'Kits',
@@ -309,6 +311,7 @@ return [
             'text' => 'Parts',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-puzzle-piece',
+            'can'  =>  'isAdmin'
         ],
         [
             'text'    => 'multilevel',
@@ -347,23 +350,9 @@ return [
                     'url'  => '#',
                 ],
             ],
+            'can'  =>  'isAdmin'
         ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+
     ],
 
     /*

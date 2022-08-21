@@ -37,6 +37,7 @@ Route::middleware('auth')
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
     });
 
+
 Route::prefix('/admin')->middleware('auth', 'role:admin')->group(function () {
     Route::resource('users', UsersController::class);
 });

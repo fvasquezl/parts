@@ -89,6 +89,22 @@
                                 @enderror
                             </div>
 
+                            <div class="row mb-4">
+                                <label for="password_confirmation"
+                                       class="col-form-label text-md-end">{{ __('Password Confirmation') }}</label>
+
+                                <input id="password_confirmation" type="password"
+                                       class="form-control @error('password_confirmation') is-invalid @enderror"
+                                       name="password_confirmation" value="{{ old('password_confirmation') }}"
+                                       autocomplete="password_confirmation" autofocus>
+
+{{--                                @error('password_confirmation')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                @enderror--}}
+                            </div>
+
 
                             <div class="row">
                                 <button type="submit" class="btn btn-block btn-primary">
