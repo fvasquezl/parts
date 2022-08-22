@@ -64,28 +64,6 @@ class KitController extends Controller
     {
         $kit =$request->createKit();
 
-//        $parts = PartList::select('PartName','IsRequired')
-//            ->where('PartCategoryID',$kit->PartCategoryID)
-//            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
-//            ->get();
-//
-//        if(count($parts) == 0){
-//            return redirect()->route('kits.index')
-//                ->with('info', 'The Kit has been created Without Parts');
-//        }
-//
-//        foreach($parts as $part){
-//            PartReference::create([
-//                'kitID' => $kit->KitID,
-//                'PartName' => $part->PartName,
-//                'Created' => 0,
-//                'IsRequired' => $part->IsRequired,
-//                'UserID' =>auth()->id()
-//            ]);
-//        }
-//
-//        $firstPart = $kit->parts->first();
-
         return redirect()->route('kit-parts.edit',$kit)
             ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
 
@@ -99,14 +77,8 @@ class KitController extends Controller
      */
     public function show(Kit $kit): View|Factory|Application
     {
-
-        $parts = PartList::select('PartName','IsRequired')
-            ->where('PartCategoryID',$kit->PartCategoryID)
-            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
-            ->get();
-
-//        $parts = PartReference::where('KitID',80)->get();
-        return view('kit-part.show',compact('kit','parts'));
+        $parts = $kit->parts;
+        return view('kits.show',compact('kit','parts'));
     }
 
     /**

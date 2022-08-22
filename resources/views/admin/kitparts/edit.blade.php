@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Kit Show')
+@section('title', 'Kit Parts')
 
 @section('content_header')
     <h1>Show Kit number {{$kit->KitID}}</h1>
@@ -38,7 +38,6 @@
                                             </label>
                                         </div>
                                     </div>
-{{--                                    <input name ="{{$part->PartName}}" value="{{$part->IsRequired}}"/>--}}
                                 </div>
 
                             @endforeach

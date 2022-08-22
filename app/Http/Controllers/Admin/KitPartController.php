@@ -19,7 +19,6 @@ class KitPartController extends Controller
             ->where('PartSubCategoryID',$kit->PartSubCategoryID)
             ->get();
 
-//        $parts = PartReference::where('KitID',80)->get();
         return view('admin.kitparts.edit',compact('kit','parts'));
 
     }

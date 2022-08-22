@@ -16,9 +16,9 @@ class QrCodeController extends Controller
      */
     public function print(Kit $kit)
     {
-        $lcn = $kit->LCN;
-
-        return view('qrcode.print',compact('lcn'));
+        $kitlcn = $kit->KitLCN;
+        $parts = $kit->parts()->get(['PartName']);
+        return view('qrcode.print',compact('kitlcn','parts'));
 
     }
 }
