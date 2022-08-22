@@ -13,7 +13,8 @@
             width: 2in;
             /*margin: 1in .1in;*/
         }
-        .label{
+
+        .label {
             /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
             width: 2.025in; /* plus .6 inches from padding */
             height: 1in; /* plus .125 inches from padding */
@@ -21,32 +22,46 @@
             margin-right: 0in; /* the gutter */
 
             float: left;
+            font-size: x-small;
+            /*font-size: xx-small*/
 
             /*text-align: center;*/
             /*overflow: hidden;*/
 
             /*outline: 1px dotted; !* outline doesn't occupy space like border does *!*/
         }
-        .page-break  {
+
+        .page-break {
             clear: left;
-            display:block;
-            page-break-after:always;
+            display: block;
+            page-break-after: always;
         }
     </style>
 </head>
 
 <body onload="window.print()">
 <div class="label">
-@foreach ($parts as $part)
-        <span class="font-mono float-left"><i class="fas fa-check-square"></i>{{$part->PartName}}</span>
-
-@endforeach
+    @foreach ($prn['label1'] as $label)
+        <div class="font-mono float-left"><i class="fas fa-check-square"></i>{{$label->PartName}}</div>
+    @endforeach
 </div>
+
+
 <div class="page-break"></div>
-    <div class="label">
-        <span class="float-left">{{$kitlcn}}</span>
-        <span class="float-left"> {!! QrCode::size(40)->generate($kitlcn);!!}</span>
-    </div>
+<div class="label">
+    @if ($prn['label2'])
+        @foreach ($prn['label2'] as $label)
+            <div class="font-mono float-left"><i class="fas fa-check-square"></i>{{$label->PartName}}</div>
+        @endforeach
+    @endif
+</div>
+
+<div class="page-break"></div>
+
+<div class="label">
+    <span class="float-left">{{$kitlcn}}</span>
+    <span class="float-left"> {!! QrCode::size(40)->generate($kitlcn);!!}</span>
+</div>
 
 </body>
 </html>

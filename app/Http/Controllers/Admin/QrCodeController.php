@@ -18,7 +18,22 @@ class QrCodeController extends Controller
     {
         $kitlcn = $kit->KitLCN;
         $parts = $kit->parts()->get(['PartName']);
-        return view('qrcode.print',compact('kitlcn','parts'));
+        $prn=[];
+
+
+        if (count($parts) <= 4){
+            $prn['label1'] = $parts->take(4)->get();
+        }
+
+        if (count($parts)>4){
+            $prn['label1'] = $parts->take(4);
+            $prn['label2'] = $parts->last()->take(4)->get();
+        }
+
+
+
+
+        return view('qrcode.print',compact('kitlcn','prn'));
 
     }
 }
