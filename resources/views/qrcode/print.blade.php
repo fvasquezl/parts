@@ -9,19 +9,41 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet"/>
 
     <style>
-        body,html {
-            height: 100%;
+        body {
+            width: 2in;
+            /*margin: 1in .1in;*/
+        }
+        .label{
+            /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
+            width: 2.025in; /* plus .6 inches from padding */
+            height: 1in; /* plus .125 inches from padding */
+            /*padding: .125in .3in 0;*/
+            margin-right: 0in; /* the gutter */
+
+            float: left;
+
+            /*text-align: center;*/
+            /*overflow: hidden;*/
+
+            /*outline: 1px dotted; !* outline doesn't occupy space like border does *!*/
+        }
+        .page-break  {
+            clear: left;
+            display:block;
+            page-break-after:always;
         }
     </style>
 </head>
 
 <body onload="window.print()">
-
+<div class="label">
 @foreach ($parts as $part)
-    <span class="font-mono float-left"><i class="fas fa-check-square"></i>{{$part->PartName}}</span>
+        <span class="font-mono float-left"><i class="fas fa-check-square"></i>{{$part->PartName}}</span>
+
 @endforeach
-<br/>
-    <div>
+</div>
+<div class="page-break"></div>
+    <div class="label">
         <span class="float-left">{{$kitlcn}}</span>
         <span class="float-left"> {!! QrCode::size(40)->generate($kitlcn);!!}</span>
     </div>
