@@ -28,17 +28,17 @@ class StorekitRequest extends FormRequest
     {
 
         $rules = [
-            'work_center_id'=>['required'],
-            'LCN' => ['required',Rule::unique('sqlsrv.prt.PartsKitData')],
-            'partsLCN'=>['required','string', 'max:50'],
-            'brand'=>['required','string', 'max:50'],
-            'model'=>['required','string', 'max:50'],
-            'category_id'=>['required'],
-            'sub_category_id'=>['required'],
-            'productSerialNumber'=>['required'],
-            'country_id'=>['required'],
-            'dateManufactured'=>['required'],
-            'notes'=>['sometimes'],
+            'WorkCenterID'=>['required'],
+            'LCN' => ['required',Rule::unique('sqlsrv.prt.PartsKitData')->ignore($this->kit)],
+            'KitLCN'=>['required','string', 'max:50'],
+            'Brand'=>['required','string', 'max:50'],
+            'Model'=>['required','string', 'max:50'],
+            'PartCategoryID'=>['required'],
+            'PartSubCategoryID'=>['required'],
+            'ProductSerialNumber'=>['required'],
+            'CountryID'=>['required'],
+            'DateManufactured'=>['required'],
+            'Comments'=>['sometimes'],
 //            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];
 
@@ -67,6 +67,40 @@ class StorekitRequest extends FormRequest
     {
         $kit = new Kit();
         $kit->fill([
+            'WorkCenterID' => $this->WorkCenterID,
+            'LCN' => $this->LCN,
+            'KitLCN' => $this->KitLCN,
+            'Brand' => $this->Brand,
+            'Model' => $this->Model,
+            'PartCategoryID' => $this->PartCategoryID,
+            'ProductSerialNumber' => $this->ProductSerialNumber,
+            'CountryID' => $this->CountryID,
+            'DateManufactured' => $this->DateManufactured,
+//            'IsCompleted' => $this->isCompleted,
+//            'EstimatedRetailPrice' => $this->estimatedRetailPrice,
+            'UserID' => auth()->id(),
+            'PartSubCategoryID' => $this->PartSubCategoryID,
+            'Comments' => $this->Comments,
+            'KitImage' => 'http://test/',
+        ]);
+        $kit->save();
+
+//        $path = Storage::disk('s3')->putFileAs(
+//            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
+//        );
+//
+//        Storage::disk('s3')->setVisibility($path,'public');
+//
+//        $kit->KitImage = Storage::disk('s3')->url($path);
+     //   $kit->save();
+
+        return $kit;
+
+    }
+
+    public function updateKit($kit)
+    {
+        $kit->fill([
             'WorkCenterID' => $this->work_center_id,
             'LCN' => $this->LCN,
             'KitLCN' => $this->partsLCN,
@@ -84,17 +118,5 @@ class StorekitRequest extends FormRequest
             'KitImage' => 'http://test/',
         ]);
         $kit->save();
-
-//        $path = Storage::disk('s3')->putFileAs(
-//            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
-//        );
-//
-//        Storage::disk('s3')->setVisibility($path,'public');
-//
-//        $kit->KitImage = Storage::disk('s3')->url($path);
-     //   $kit->save();
-
-        return $kit;
-
     }
 }

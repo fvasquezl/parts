@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\KitPartController;
 use App\Http\Controllers\Admin\LcnController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\SubcategoryController;
@@ -35,6 +36,8 @@ Route::middleware('auth')
         Route::post('/subcategories',[SubcategoryController::class,'index']);
         Route::resource('parts', PartReferenceController::class);
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
+        Route::get('/kit-parts/{kit}/edit',[KitPartController::class,'edit'])->name('kit-parts.edit');
+        Route::patch('/kit-parts/{kit}',[KitPartController::class,'update'])->name('kit-parts.update');
     });
 
 

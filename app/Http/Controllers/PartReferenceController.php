@@ -63,6 +63,7 @@ class PartReferenceController extends Controller
     {
         $kitID = $part->kit->KitID;
 
+
         $totalParts = PartReference::where('KitID',$kitID)->count();
         $editParts = PartReference::where('KitID',$kitID)->where('Created',false)->count();
         $editPart = ($totalParts - $editParts)+1;
@@ -80,7 +81,7 @@ class PartReferenceController extends Controller
      *
      * @param  \App\Http\Requests\UpdatePartReferenceRequest  $request
      * @param  \App\Models\PartReference  $part
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdatePartReferenceRequest $request, PartReference $part)
     {
@@ -124,3 +125,6 @@ class PartReferenceController extends Controller
         //
     }
 }
+
+
+

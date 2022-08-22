@@ -25,7 +25,7 @@ class UpdatePartReferenceRequest extends FormRequest
     {
         $rules = [
             'PartName' =>  ['required', 'string', 'max:50'],
-            'PartRef1' =>  ['sometimes'],
+            'PartRef1' =>  ['required'],
             'PartRef2' => ['sometimes'],
             'PartRef3' =>  ['sometimes'],
         ];

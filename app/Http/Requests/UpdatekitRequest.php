@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatekitRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdatekitRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,18 @@ class UpdatekitRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'work_center_id'=>['required'],
+            'LCN' => ['required',Rule::unique('sqlsrv.prt.PartsKitData')->ignore($this->kit)],
+            'partsLCN'=>['required','string', 'max:50'],
+            'brand'=>['required','string', 'max:50'],
+            'model'=>['required','string', 'max:50'],
+            'category_id'=>['required'],
+            'sub_category_id'=>['required'],
+            'productSerialNumber'=>['required'],
+            'country_id'=>['required'],
+            'dateManufactured'=>['required'],
+            'notes'=>['sometimes'],
+//            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];
     }
 }

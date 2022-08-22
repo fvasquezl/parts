@@ -13,6 +13,8 @@ use App\Models\SubCategory;
 use App\Models\WorkCenter;
 use http\Client\Curl\User;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class KitController extends Controller
@@ -20,7 +22,7 @@ class KitController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -39,7 +41,7 @@ class KitController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -62,30 +64,30 @@ class KitController extends Controller
     {
         $kit =$request->createKit();
 
-        $parts = PartList::select('PartName','IsRequired')
-            ->where('PartCategoryID',$kit->PartCategoryID)
-            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
-            ->get();
+//        $parts = PartList::select('PartName','IsRequired')
+//            ->where('PartCategoryID',$kit->PartCategoryID)
+//            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
+//            ->get();
+//
+//        if(count($parts) == 0){
+//            return redirect()->route('kits.index')
+//                ->with('info', 'The Kit has been created Without Parts');
+//        }
+//
+//        foreach($parts as $part){
+//            PartReference::create([
+//                'kitID' => $kit->KitID,
+//                'PartName' => $part->PartName,
+//                'Created' => 0,
+//                'IsRequired' => $part->IsRequired,
+//                'UserID' =>auth()->id()
+//            ]);
+//        }
+//
+//        $firstPart = $kit->parts->first();
 
-        if(count($parts) == 0){
-            return redirect()->route('kits.index')
-                ->with('info', 'The Kit has been created Without Parts');
-        }
-
-        foreach($parts as $part){
-            PartReference::create([
-                'kitID' => $kit->KitID,
-                'PartName' => $part->PartName,
-                'Created' => 0,
-                'IsRequired' => $part->IsRequired,
-                'UserID' =>auth()->id()
-            ]);
-        }
-
-        $firstPart = $kit->parts->first();
-
-        return redirect()->route('parts.edit',$firstPart)
-            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
+        return redirect()->route('kit-parts.edit',$kit)
+            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
 
     }
 
@@ -93,24 +95,35 @@ class KitController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Kit  $kit
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Kit $kit)
+    public function show(Kit $kit): View|Factory|Application
     {
-        $parts = $kit->parts;
+
+        $parts = PartList::select('PartName','IsRequired')
+            ->where('PartCategoryID',$kit->PartCategoryID)
+            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
+            ->get();
+
 //        $parts = PartReference::where('KitID',80)->get();
-        return view('kits.show',compact('kit','parts'));
+        return view('kit-part.show',compact('kit','parts'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\kit  $kit
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function edit(kit $kit)
+    public function edit(kit $kit): View|Factory|Application
     {
-        //
+        return view('kits.edit',[
+            'kit' => $kit,
+            'workCenters' => WorkCenter::all(),
+            'categories' => Category::all(),
+            'subCategories' => SubCategory::all(),
+            'countries' => Country::all()
+        ]);
     }
 
     /**
@@ -122,7 +135,7 @@ class KitController extends Controller
      */
     public function update(UpdatekitRequest $request, Kit $kit)
     {
-        //
+
     }
 
     /**
