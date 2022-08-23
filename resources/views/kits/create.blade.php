@@ -20,7 +20,7 @@
 
                     <div class="card-body">
 
-                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm">
                                 @csrf
 
                                 <div class="row mb-3">
@@ -318,9 +318,26 @@
 
         })
 
-        jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
+        // jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
+        //     if (e.keyCode == 13) {
+        //         e.preventDefault();
+        //     }
+        // });
+        // $('#myForm').on('keyup keypress', function(e) {
+        //     let keyCode = e.keyCode || e.which;
+        //     let tag = e.target.id
+        //     if (keyCode === 13 && tag !== 'LCN') {
+        //         console.log("Enter prevented")
+        //         e.preventDefault();
+        //         return false;
+        //     }
+        // });
+
+        $('#form').find('.LCN').keypress(function(e){
+            if ( e.which === 13 ) // Enter key = keycode 13
+            {
+                $(this).next().focus();  //Use whatever selector necessary to focus the 'next' input
+                return false;
             }
         });
 
