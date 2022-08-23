@@ -12,28 +12,27 @@ class QrCodeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function print(Kit $kit)
     {
         $kitlcn = $kit->KitLCN;
-        $parts = $kit->parts()->get(['PartName']);
-        $prn=[];
-
+        $parts = $kit->parts()->get()->pluck('PartName')->toArray();
+        $label1=0;
+        $label2=0;
 
         if (count($parts) <= 4){
-            $prn['label1'] = $parts->take(4)->get();
+            $label1 = $parts;
         }
 
-        if (count($parts)>4){
-            $prn['label1'] = $parts->take(4);
-            $prn['label2'] = $parts->last()->take(4)->get();
+        if (count($parts) >4){
+            $label1 = array_slice($parts, 0, 4);
+            array_splice( $parts,0,4);
+            $label2 = $parts;
         }
 
 
-
-
-        return view('qrcode.print',compact('kitlcn','prn'));
+        return view('qrcode.print',compact('kitlcn','label1','label2'));
 
     }
 }

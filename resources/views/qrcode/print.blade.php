@@ -22,7 +22,7 @@
             margin-right: 0in; /* the gutter */
 
             float: left;
-            font-size: small;
+            /*font-size: small;*/
             /*font-size: xx-small*/
 
             /*text-align: center;*/
@@ -40,22 +40,21 @@
 </head>
 
 <body onload="window.print()">
+
 <div class="label">
-    @foreach ($prn['label1'] as $label)
-        <div class="font-mono float-left"><i class="fas fa-check-square"></i>{{$label->PartName}}</div>
+    @foreach ($label1 as $label)
+        <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
     @endforeach
 </div>
 
-
-<div class="page-break"></div>
-<div class="label">
-    @if ($prn['label2'])
-        @foreach ($prn['label2'] as $label)
-            <div class="font-mono float-left"><i class="fas fa-check-square"></i>{{$label->PartName}}</div>
+@if ($label2)
+    <div class="page-break"></div>
+    <div class="label">
+        @foreach ($label2 as $label)
+            <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
         @endforeach
-    @endif
-</div>
-
+    </div>
+@endif
 <div class="page-break"></div>
 
 <div class="label">
