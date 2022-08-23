@@ -318,12 +318,12 @@
 
         })
 
-        // jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
-        //     console.log(e.keyCode)
-        //     if (e.keyCode == 13) {
-        //         e.preventDefault();
-        //     }
-        // });
+        jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
+            console.log(e.keyCode)
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
         // $('#myForm').on('keyup keypress', function(e) {
         //     let keyCode = e.keyCode || e.which;
         //     let tag = e.target.id
@@ -334,14 +334,14 @@
         //     }
         // });
 
-        $('#form').find('.LCN').keypress(function(e){
-            console.log(e.which)
-            if ( e.which === 13 ) // Enter key = keycode 13
-            {
-                $(this).next().focus();  //Use whatever selector necessary to focus the 'next' input
-                return false;
-            }
-        });
+        // $('#form').find('.LCN').keypress(function(e){
+        //     console.log(e.which)
+        //     if ( e.which === 13 ) // Enter key = keycode 13
+        //     {
+        //         $(this).next().focus();  //Use whatever selector necessary to focus the 'next' input
+        //         return false;
+        //     }
+        // });
 
 
 
