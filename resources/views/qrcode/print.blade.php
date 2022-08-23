@@ -22,7 +22,7 @@
             margin-right: 0in; /* the gutter */
 
             float: left;
-            font-size: x-small;
+            font-size: small;
             /*font-size: xx-small*/
 
             /*text-align: center;*/
