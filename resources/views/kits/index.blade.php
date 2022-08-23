@@ -47,8 +47,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Actions</th>
-                            <th>WorkCenter</th>
                             <th>LCN</th>
+                            <th>WorkCenter</th>
                             <th>Kit LCN</th>
                             <th>Brand</th>
                             <th>Model</th>
@@ -91,8 +91,8 @@
                                     {{--                                        </form>--}}
                                     {{--                                    @endcan--}}
                                 </td>
-                                <td>{{$kit->workCenter->WorkCenterName}}</td>
                                 <td>{{$kit->LCN}}</td>
+                                <td>{{$kit->workCenter->WorkCenterName}}</td>
                                 <td>{{$kit->KitLCN}}</td>
                                 <td>{{$kit->Brand}}</td>
                                 <td>{{$kit->Model}}</td>
