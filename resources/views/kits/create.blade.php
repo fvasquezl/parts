@@ -302,7 +302,6 @@
 
         document.getElementById('LCN').addEventListener('change', (e)=>{
             e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
-
             fetch('/lcn', {
                 method: 'POST',
                 body: JSON.stringify({text: e.target.value}),
@@ -314,8 +313,16 @@
                 document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
                  document.getElementById('Brand').setAttribute('value',data.fields.brand)
                  document.getElementById('Model').setAttribute('value',data.fields.model)
+                document.getElementById("ProductSerialNumber").focus();
             }).catch(error => console.log(error))
+
         })
+
+        jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
 
 
 
