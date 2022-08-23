@@ -17,6 +17,9 @@ class QrCodeController extends Controller
     public function print(Kit $kit)
     {
         $kitlcn = $kit->KitLCN;
+        $brand = $kit->Brand;
+        $model  = $kit->Model;
+
         $parts = $kit->parts()->get()->pluck('PartName')->toArray();
         $label1=0;
         $label2=0;
@@ -32,7 +35,7 @@ class QrCodeController extends Controller
         }
 
 
-        return view('qrcode.print',compact('kitlcn','label1','label2'));
+        return view('qrcode.print',compact('kitlcn','brand','model','label1','label2'));
 
     }
 }

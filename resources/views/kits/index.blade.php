@@ -46,6 +46,7 @@
                         <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Actions</th>
                             <th>WorkCenter</th>
                             <th>LCN</th>
                             <th>Kit LCN</th>
@@ -56,24 +57,13 @@
                             <th>Serial Number</th>
                             <th>Country</th>
                             <th>Manufactured At</th>
-
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($kits as $kit)
                             <tr>
+
                                 <td>{{$kit->KitID}}</td>
-                                <td>{{$kit->workCenter->WorkCenterName}}</td>
-                                <td>{{$kit->LCN}}</td>
-                                <td>{{$kit->KitLCN}}</td>
-                                <td>{{$kit->Brand}}</td>
-                                <td>{{$kit->Model}}</td>
-                                <td>{{$kit->category->CategoryName}}</td>
-                                <td>{{$kit->subCategory->SubCategoryName}}</td>
-                                <td>{{$kit->ProductSerialNumber}}</td>
-                                <td>{{$kit->country->CountryName}}</td>
-                                <td>{{$kit->DateManufactured}}</td>
                                 <td>
                                     <button class="qrcode btn btn-sm btn-dark">
                                         <i class="fas fa-print"></i>
@@ -85,22 +75,33 @@
                                     </a>
 
 
-{{--                                    @can('update', $kit)--}}
-                                        <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-{{--                                    @endcan--}}
+                                    {{--                                    @can('update', $kit)--}}
+                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    {{--                                    @endcan--}}
 
-{{--                                    @can('delete',$kit)--}}
-{{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
-{{--                                               style="display:inline">--}}
-{{--                                            @csrf @method('DELETE')--}}
-{{--                                            <button class="btn btn-sm btn-danger"--}}
-{{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
-{{--                                                <i class="fas fa-trash-alt"></i></button>--}}
-{{--                                        </form>--}}
-{{--                                    @endcan--}}
+                                    {{--                                    @can('delete',$kit)--}}
+                                    {{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
+                                    {{--                                               style="display:inline">--}}
+                                    {{--                                            @csrf @method('DELETE')--}}
+                                    {{--                                            <button class="btn btn-sm btn-danger"--}}
+                                    {{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
+                                    {{--                                                <i class="fas fa-trash-alt"></i></button>--}}
+                                    {{--                                        </form>--}}
+                                    {{--                                    @endcan--}}
                                 </td>
+                                <td>{{$kit->workCenter->WorkCenterName}}</td>
+                                <td>{{$kit->LCN}}</td>
+                                <td>{{$kit->KitLCN}}</td>
+                                <td>{{$kit->Brand}}</td>
+                                <td>{{$kit->Model}}</td>
+                                <td>{{$kit->category->CategoryName}}</td>
+                                <td>{{$kit->subCategory->SubCategoryName}}</td>
+                                <td>{{$kit->ProductSerialNumber}}</td>
+                                <td>{{$kit->country->CountryName}}</td>
+                                <td>{{$kit->DateManufactured}}</td>
+
                             </tr>
                         @endforeach
                         </tbody>

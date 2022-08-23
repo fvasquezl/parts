@@ -23,6 +23,7 @@ class LcnController extends Controller
 
     public function getFields($text): array
     {
+
         $query = \DB::select("SELECT Brand, Model FROM [PartsProcessing].[prt].[sp_GetLCNData]('$text')")[0];
 
         return $fields = [

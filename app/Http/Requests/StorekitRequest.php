@@ -6,6 +6,7 @@ use App\Models\Kit;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class StorekitRequest extends FormRequest
 {
@@ -68,7 +69,7 @@ class StorekitRequest extends FormRequest
         $kit = new Kit();
         $kit->fill([
             'WorkCenterID' => $this->WorkCenterID,
-            'LCN' => $this->LCN,
+            'LCN' =>  $this->LCN,
             'KitLCN' => $this->KitLCN,
             'Brand' => $this->Brand,
             'Model' => $this->Model,

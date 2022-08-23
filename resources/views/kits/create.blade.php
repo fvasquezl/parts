@@ -300,8 +300,9 @@
 
 
 
-
         document.getElementById('LCN').addEventListener('change', (e)=>{
+            e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
+
             fetch('/lcn', {
                 method: 'POST',
                 body: JSON.stringify({text: e.target.value}),

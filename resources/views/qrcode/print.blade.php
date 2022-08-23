@@ -22,7 +22,7 @@
             margin-right: 0in; /* the gutter */
 
             float: left;
-            /*font-size: small;*/
+            font-size: small;
             /*font-size: xx-small*/
 
             /*text-align: center;*/
@@ -58,8 +58,34 @@
 <div class="page-break"></div>
 
 <div class="label">
-    <span class="float-left">{{$kitlcn}}</span>
-    <span class="float-left"> {!! QrCode::size(40)->generate($kitlcn);!!}</span>
+    <table>
+        <tr>
+            <td>
+                {!! QrCode::size(40)->generate($kitlcn);!!}
+            </td>
+            <td>
+                <ul>
+                    <li>{{$kitlcn}}</li>
+                    <li>{{$brand}}</li>
+                    <li>{{$model}}</li>
+                </ul>
+            </td>
+
+        </tr>
+
+    </table>
+{{--    <div class="float-left">--}}
+{{--        <ul>--}}
+{{--            <li>{{$kitlcn}}</li>--}}
+{{--            <li>{{$brand}}</li>--}}
+{{--            <li>{{$model}}</li>--}}
+{{--        </ul>--}}
+{{--    </div>--}}
+
+{{--    <span class="float-left">{{$kitlcn}}</span>--}}
+{{--    <span class="float-left">{{$brand}}</span>--}}
+{{--    <span class="float-left">{{$model}}</span>--}}
+{{--    <span class="float-left"> {!! QrCode::size(40)->generate($kitlcn);!!}</span>--}}
 </div>
 
 </body>
