@@ -324,6 +324,7 @@
                 e.preventDefault();
             }
         });
+
         // $('#myForm').on('keyup keypress', function(e) {
         //     let keyCode = e.keyCode || e.which;
         //     let tag = e.target.id

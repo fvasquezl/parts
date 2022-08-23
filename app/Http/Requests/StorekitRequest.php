@@ -36,9 +36,9 @@ class StorekitRequest extends FormRequest
             'Model'=>['required','string', 'max:50'],
             'PartCategoryID'=>['required'],
             'PartSubCategoryID'=>['required'],
-            'ProductSerialNumber'=>['required'],
+            'ProductSerialNumber'=>['sometimes'],
             'CountryID'=>['required'],
-            'DateManufactured'=>['required'],
+            'DateManufactured'=>['sometimes'],
             'Comments'=>['sometimes'],
 //            'kitImage' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ];

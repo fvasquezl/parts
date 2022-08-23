@@ -36,18 +36,18 @@
                                     </span>
                                     <span class="description">{{$part->DateCreated}}</span>
                                 </div>
-                                <p class="text-md">Part Weight:
-                                    <b class="d-inline">{{$part->PartWeight?? 'No Weight'}}</b>
+                                <p class="text-md">Part Weight Oz:
+                                    <b class="d-inline">{{$part->PartWeightOz}} </b>
                                 </p>
 
                                 <p class="text-md">Part Reference 1:
-                                    <b class="d-inline">{{$part->PartRef1?? 'No Reference'}}</b>
+                                    <b class="d-inline">{{$part->PartRef1}}</b>
                                 </p>
                                 <p class="text-md">Part Reference 2:
-                                    <b class="d-inline">{{$part->PartRef2 ?? 'No Reference'}}</b>
+                                    <b class="d-inline">{{$part->PartRef2 }}</b>
                                 </p>
                                 <p class="text-md">Part Reference 3:
-                                    <b class="d-inline">{{($part->PartRef3) ?? 'No Reference'}}</b>
+                                    <b class="d-inline">{{($part->PartRef3)}}</b>
                                 </p>
                                 <p>
                                     <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> image</a>

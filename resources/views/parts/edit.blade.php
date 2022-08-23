@@ -41,30 +41,30 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="PartValue" class="col-form-label text-md-end">{{ __('PartValue') }}</label>
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label for="PartValue" class="col-form-label text-md-end">{{ __('PartValue') }}</label>--}}
 
 
 
-                                    <div class="form-check mt-1">
-                                        <input class="form-check-input" type="checkbox" name="PartValue"
-                                               id="PartValue" {{ old('PartValue') ? 'checked' : '' }}>
+{{--                                    <div class="form-check mt-1">--}}
+{{--                                        <input class="form-check-input" type="checkbox" name="PartValue"--}}
+{{--                                               id="PartValue" {{ old('PartValue') ? 'checked' : '' }}>--}}
 
-                                        <label class="form-check-label" for="PartValue">
-                                            {{ __('Has Part') }}
-                                        </label>
-                                    </div>
+{{--                                        <label class="form-check-label" for="PartValue">--}}
+{{--                                            {{ __('Has Part') }}--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
 
 
 {{--                                    <input id="PartValue" type="text" class="form-control @error('PartValue') is-invalid @enderror"--}}
 {{--                                           name="PartValue" value="{{ old('PartValue',$part->PartValue) }}"  autocomplete="PartValue" autofocus>--}}
 
-                                    @error('PartValue')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+{{--                                    @error('PartValue')--}}
+{{--                                    <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
 
                             </div>
                             <div class="row mb-3">
