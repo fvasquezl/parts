@@ -76,9 +76,9 @@
 
 
                                     {{--                                    @can('update', $kit)--}}
-                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+{{--                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">--}}
+{{--                                        <i class="fas fa-edit"></i>--}}
+{{--                                    </a>--}}
                                     {{--                                    @endcan--}}
 
                                     {{--                                    @can('delete',$kit)--}}
@@ -116,15 +116,19 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
+
 @stop
 
 @section('js')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
     <script>
         $(document).ready( function () {
             let table = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
+                responsive: true
             });
 
             $('#kitsTable tbody').on('click', '.qrcode', function () {
