@@ -51,7 +51,7 @@
                                         <label for="LCN" class="col-form-label text-md-end">{{ __('LCN') }}</label>
 
                                         <input id="LCN" type="text" class="form-control @error('LCN') is-invalid @enderror"
-                                               name="LCN" value="{{ old('LCN') }}"  autocomplete="LCN" autofocus>
+                                               name="LCN" value="{{ old('LCN') }}"  autocomplete="off" autofocus >
 
                                         @error('LCN')
                                         <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
 
                                         <input id="KitLCN" type="text"
                                                class="form-control @error('KitLCN') is-invalid @enderror" name="KitLCN"
-                                               value="{{ old('KitLCN') }}"  autocomplete="KitLCN" autofocus readonly>
+                                               value="{{ old('KitLCN') }}"  autocomplete="off" autofocus readonly>
 
                                         @error('KitLCN')
                                         <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
 
                                         <input id="Brand" type="text"
                                                class="form-control @error('Brand') is-invalid @enderror" name="Brand"
-                                               value="{{ old('Brand') }}"  autocomplete="Brand" autofocus readonly>
+                                               value="{{ old('Brand') }}"  autocomplete="off" autofocus readonly>
 
                                         @error('Brand')
                                         <span class="invalid-feedback" role="alert">
@@ -95,7 +95,7 @@
 
                                         <input id="Model" type="text"
                                                class="form-control @error('Model') is-invalid @enderror" name="Model"
-                                               value="{{ old('Model') }}"  autocomplete="Model" autofocus readonly>
+                                               value="{{ old('Model') }}"  autocomplete="off" autofocus readonly>
 
                                         @error('Model')
                                         <span class="invalid-feedback" role="alert">
@@ -158,7 +158,7 @@
                                         <input id="ProductSerialNumber" type="text"
                                                class="form-control @error('ProductSerialNumber') is-invalid @enderror"
                                                name="ProductSerialNumber" value="{{ old('ProductSerialNumber') }}"
-                                               autocomplete="ProductSerialNumber" autofocus>
+                                               autocomplete="off" autofocus>
 
                                         @error('ProductSerialNumber')
                                         <span class="invalid-feedback" role="alert">

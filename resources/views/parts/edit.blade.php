@@ -32,7 +32,7 @@
                                     <label for="PartName" class="col-form-label text-md-end">{{ __('PartName') }}</label>
 
                                     <input id="PartName" type="text" class="form-control @error('PartName') is-invalid @enderror"
-                                           name="PartName" value="{{ old('PartName',$part->PartName) }}"  autocomplete="PartName" autofocus readonly>
+                                           name="PartName" value="{{ old('PartName',$part->PartName) }}"  autocomplete="off" autofocus readonly>
 
                                     @error('PartName')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
 
 
 {{--                                    <input id="PartValue" type="text" class="form-control @error('PartValue') is-invalid @enderror"--}}
-{{--                                           name="PartValue" value="{{ old('PartValue',$part->PartValue) }}"  autocomplete="PartValue" autofocus>--}}
+{{--                                           name="PartValue" value="{{ old('PartValue',$part->PartValue) }}"  autocomplete="offe" autofocus>--}}
 
 {{--                                    @error('PartValue')--}}
 {{--                                    <span class="invalid-feedback" role="alert">--}}
@@ -87,7 +87,7 @@
 
                                     <input id="PartRef1" type="text"
                                            class="form-control @error('PartRef1') is-invalid @enderror" name="PartRef1"
-                                           value="{{ old('PartRef1') }}"  autocomplete="PartRef1" autofocus >
+                                           value="{{ old('PartRef1') }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef1')
                                     <span class="invalid-feedback" role="alert">
@@ -102,7 +102,7 @@
 
                                     <input id="PartRef2" type="text"
                                            class="form-control @error('PartRef2') is-invalid @enderror" name="PartRef2"
-                                           value="{{ old('PartRef2') }}"  autocomplete="PartRef2" autofocus >
+                                           value="{{ old('PartRef2') }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef2')
                                     <span class="invalid-feedback" role="alert">
@@ -115,7 +115,7 @@
 
                                     <input id="PartRef3" type="text"
                                            class="form-control @error('PartRef3') is-invalid @enderror" name="PartRef3"
-                                           value="{{ old('PartRef3') }}"  autocomplete="PartRef3" autofocus >
+                                           value="{{ old('PartRef3') }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef3')
                                     <span class="invalid-feedback" role="alert">
@@ -149,47 +149,34 @@
 
 @section('js')
 
-{{--    <script>--}}
-{{--        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');--}}
-{{--        let headers = {--}}
-{{--            "Content-Type": "application/json",--}}
-{{--            "Accept": "application/json, text-plain, */*",--}}
-{{--            "X-Requested-With": "XMLHttpRequest",--}}
-{{--            "X-CSRF-TOKEN": token--}}
-{{--        }--}}
+    <script>
+        document.querySelector('input[name="PartRef1"]').addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("PartRef2").focus();
+            }
+        });
 
-{{--        document.getElementById('category_id').addEventListener('change', (e)=>{--}}
-{{--            fetch('/subcategories', {--}}
-{{--                method: 'POST',--}}
-{{--                body: JSON.stringify({text: e.target.value}),--}}
-{{--                headers:headers--}}
-{{--            }).then(response=>{--}}
-{{--                return response.json()--}}
-{{--            }).then(data =>{--}}
-{{--                let options = "";--}}
-{{--                for (let i in data.list){--}}
-{{--                    options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';--}}
-{{--                }--}}
-{{--                document.getElementById('sub_category_id').innerHTML = options--}}
-{{--            }).catch(error => console.log(error))--}}
-{{--        })--}}
-
-{{--        document.getElementById('LCN').addEventListener('change', (e)=>{--}}
-{{--            fetch('/lcn', {--}}
-{{--                method: 'POST',--}}
-{{--                body: JSON.stringify({text: e.target.value}),--}}
-{{--                headers:headers--}}
-{{--            }).then(response=>{--}}
-{{--                return response.json()--}}
-{{--            }).then(data =>{--}}
-{{--                console.log(data)--}}
-{{--                document.getElementById('partsLCN').setAttribute('value',data.fields.partsLcn)--}}
-{{--                document.getElementById('brand').setAttribute('value',data.fields.brand)--}}
-{{--                document.getElementById('model').setAttribute('value',data.fields.model)--}}
-{{--            }).catch(error => console.log(error))--}}
-{{--        })--}}
+        document.querySelector('input[name="PartRef2"]').addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("PartRef3").focus();
+            }
+        });
+        // document.querySelector('input[name="PartRef3"]').addEventListener("keyup", (e) => {
+        //     if (e.key === "Enter") {
+        //         document.getElementById("PartRef3").focus();
+        //     }
+        // });
 
 
+        $(document).ready(function() {
+            $(window).keydown(function(event){
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
 
-{{--    </script>--}}
+
+    </script>
 @stop
