@@ -37,6 +37,14 @@
             display: block;
             page-break-after: always;
         }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li:before {
+            content: '✅';
+        }
     </style>
 </head>
 
@@ -44,17 +52,27 @@
 
 @if($label1)
     <div class="label">
-        @foreach ($label1 as $label)
-            <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
-        @endforeach
+        <ul>
+            @foreach ($label1 as $label)
+                <li>&nbsp;{{$label}}</li>
+            @endforeach
+        </ul>
+{{--        @foreach ($label1 as $label)--}}
+{{--            <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>--}}
+{{--        @endforeach--}}
     </div>
 
     @if ($label2)
         <div class="page-break"></div>
         <div class="label">
-            @foreach ($label2 as $label)
-                <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
-            @endforeach
+            <ul>
+                @foreach ($label2 as $label)
+                    <li>&nbsp;{{$label}}</li>
+                @endforeach
+            </ul>
+{{--            @foreach ($label2 as $label)--}}
+{{--                <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>--}}
+{{--            @endforeach--}}
         </div>
     @endif
     <div class="page-break"></div>
@@ -63,14 +81,17 @@
 <div class="label">
     <table>
         <tr>
+            <td colspan="2" class="text-right">.</td>
+        </tr>
+        <tr>
             <td>
                 {!! QrCode::size(40)->generate($kitlcn);!!}
             </td>
             <td>
-                <ul>
-                    <li>{{$kitlcn}}</li>
-                    <li>{{$brand}}</li>
-                    <li>{{$model}}</li>
+                <ul><br>
+                    <li>&nbsp;{{$kitlcn}}</li>
+                    <li>&nbsp;{{$brand}}</li>
+                    <li>&nbsp;{{$model}}</li>
                 </ul>
             </td>
 
