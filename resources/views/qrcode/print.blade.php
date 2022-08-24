@@ -38,13 +38,13 @@
             page-break-after: always;
         }
 
-        ul {
-            list-style: none;
-        }
+        /*ul {*/
+        /*    list-style: none;*/
+        /*}*/
 
-        ul li:before {
-            content: '🗹';
-        }
+        /*ul li:before {*/
+        /*    content: '🗹';*/
+        /*}*/
     </style>
 </head>
 
@@ -89,9 +89,9 @@
             </td>
             <td class="text-left">
                 <ul><br>
-                    <li>&nbsp;{{$kitlcn}}</li>
-                    <li>&nbsp;{{$brand}}</li>
-                    <li>&nbsp;{{$model}}</li>
+                    <li>{{$kitlcn}}</li>
+                    <li>{{$brand}}</li>
+                    <li>{{$model}}</li>
                 </ul>
             </td>
 
