@@ -43,7 +43,7 @@
         }
 
         ul li:before {
-            content: '✅';
+            content: '🗹';
         }
     </style>
 </head>
@@ -80,14 +80,12 @@
 
 <div class="label">
     <table>
-        <tr>
-            <td colspan="2" class="text-right">.</td>
-        </tr>
+
         <tr>
             <td>
                 {!! QrCode::size(40)->generate($kitlcn);!!}
             </td>
-            <td>
+            <td class="text-left">
                 <ul><br>
                     <li>&nbsp;{{$kitlcn}}</li>
                     <li>&nbsp;{{$brand}}</li>
