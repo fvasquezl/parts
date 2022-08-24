@@ -20,6 +20,7 @@
             height: 1in; /* plus .125 inches from padding */
             /*padding: .125in .3in 0;*/
             margin-right: 0in; /* the gutter */
+            margin-top: 0.1in ;
 
             float: left;
             font-size: small;
@@ -41,21 +42,23 @@
 
 <body onload="window.print()">
 
-<div class="label">
-    @foreach ($label1 as $label)
-        <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
-    @endforeach
-</div>
-
-@if ($label2)
-    <div class="page-break"></div>
+@if($label1)
     <div class="label">
-        @foreach ($label2 as $label)
+        @foreach ($label1 as $label)
             <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
         @endforeach
     </div>
+
+    @if ($label2)
+        <div class="page-break"></div>
+        <div class="label">
+            @foreach ($label2 as $label)
+                <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>
+            @endforeach
+        </div>
+    @endif
+    <div class="page-break"></div>
 @endif
-<div class="page-break"></div>
 
 <div class="label">
     <table>

@@ -24,6 +24,7 @@ class QrCodeController extends Controller
         $label1=0;
         $label2=0;
 
+
         if (count($parts) <= 4){
             $label1 = $parts;
         }
