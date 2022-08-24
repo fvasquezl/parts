@@ -20,7 +20,7 @@
 
                     <div class="card-body">
 
-                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm">
+                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm" onsubmit="return false">
                                 @csrf
 
                                 <div class="row mb-3">
@@ -280,8 +280,6 @@
         }
 
 
-
-
         document.getElementById('PartCategoryID').addEventListener('change', (e)=>{
             fetch('/subcategories', {
                 method: 'POST',
@@ -318,50 +316,21 @@
 
         })
 
-        jQuery( 'form' ).bind( 'keypress keydown keyup', function(e) {
-            console.log(e.keyCode)
-            if (e.keyCode == 13) {
-                e.preventDefault();
-            }
-        });
-
-        // $('#myForm').on('keyup keypress', function(e) {
-        //     let keyCode = e.keyCode || e.which;
-        //     let tag = e.target.id
-        //     if (keyCode === 13 && tag !== 'LCN') {
-        //         console.log("Enter prevented")
-        //         e.preventDefault();
-        //         return false;
+        // $('#LCN').keypress(function(event){
+        //     var keycode = (event.keyCode ? event.keyCode : event.which);
+        //     if(keycode == '13'){
+        //         alert('You pressed a "enter" key in textbox');
         //     }
+        //     //Stop the event from propogation to other handlers
+        //     //If this line will be removed, then keypress event handler attached
+        //     //at document level will also be triggered
+        //     event.stopPropagation();
         // });
-
-        // $('#form').find('.LCN').keypress(function(e){
-        //     console.log(e.which)
-        //     if ( e.which === 13 ) // Enter key = keycode 13
-        //     {
-        //         $(this).next().focus();  //Use whatever selector necessary to focus the 'next' input
-        //         return false;
-        //     }
-        // });
-
-
-
-        // const form = document.querySelector('form')
-        // form.onsubmit = (e) => {
+        //
+        // document.getElementById("myForm").addEventListener("submit", function(e){
         //     e.preventDefault()
-        //     const confirmSubmit = confirm('Are you sure you want to submit this form?');
-        //     if (confirmSubmit) {
-        //         console.log('submitted')
-        //     }
-        // }
+        // });
 
-        {{--$('#kitsTable tbody').on('click', '.qrcode', function () {--}}
-        {{--    let data = table.row($(this).parents('tr')).data();--}}
-        {{--    let id = data[0];--}}
-        {{--    let url = "{{route('qrcode',':id')}}"--}}
-        {{--    url = url.replace(':id',id);--}}
-        {{--    document.getElementById('printf').src = url;--}}
-        {{--});--}}
 
     </script>
 @stop
