@@ -15,12 +15,12 @@
         @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
+                <div class="card shadow-sm card-outline card-primary">
                     <div class="card-header">{{ __('Kits') }}</div>
 
                     <div class="card-body">
 
-                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm" onsubmit="return false">
+                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm" >
                                 @csrf
 
                                 <div class="row mb-3">
@@ -263,21 +263,21 @@
             }).catch(error => console.log(error))
         });
 
-        function getData(e){
-            fetch('/subcategories', {
-                method: 'POST',
-                body: JSON.stringify({text: e.value}),
-                headers:headers
-            }).then(response=>{
-                return response.json()
-            }).then(data =>{
-                let options = "";
-                for (let i in data.list){
-                    options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
-                }
-                document.getElementById('PartSubCategoryID').innerHTML = options
-            }).catch(error => console.log(error))
-        }
+        // function getData(e){
+        //     fetch('/subcategories', {
+        //         method: 'POST',
+        //         body: JSON.stringify({text: e.value}),
+        //         headers:headers
+        //     }).then(response=>{
+        //         return response.json()
+        //     }).then(data =>{
+        //         let options = "";
+        //         for (let i in data.list){
+        //             options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
+        //         }
+        //         document.getElementById('PartSubCategoryID').innerHTML = options
+        //     }).catch(error => console.log(error))
+        // }
 
 
         document.getElementById('PartCategoryID').addEventListener('change', (e)=>{
@@ -298,23 +298,53 @@
 
 
 
-        document.getElementById('LCN').addEventListener('change', (e)=>{
-            e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
-            fetch('/lcn', {
-                method: 'POST',
-                body: JSON.stringify({text: e.target.value}),
-                headers:headers
-            }).then(response=>{
-                return response.json()
-            }).then(data =>{
-                console.log(data)
-                document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
-                 document.getElementById('Brand').setAttribute('value',data.fields.brand)
-                 document.getElementById('Model').setAttribute('value',data.fields.model)
-                document.getElementById("ProductSerialNumber").focus();
-            }).catch(error => console.log(error))
+        // document.getElementById('LCN').addEventListener('change', (e)=>{
+        //     e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
+        //     fetch('/lcn', {
+        //         method: 'POST',
+        //         body: JSON.stringify({text: e.target.value}),
+        //         headers:headers
+        //     }).then(response=>{
+        //         return response.json()
+        //     }).then(data =>{
+        //         console.log(data)
+        //         document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
+        //          document.getElementById('Brand').setAttribute('value',data.fields.brand)
+        //          document.getElementById('Model').setAttribute('value',data.fields.model)
+        //         document.getElementById("ProductSerialNumber").focus();
+        //     }).catch(error => console.log(error))
+        //
+        // })
 
-        })
+        document.querySelector('input[name="LCN"]').addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
+                fetch('/lcn', {
+                            method: 'POST',
+                            body: JSON.stringify({text: e.target.value}),
+                            headers:headers
+                        }).then(response=>{
+                            return response.json()
+                        }).then(data =>{
+                            console.log(data)
+                            document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
+                             document.getElementById('Brand').setAttribute('value',data.fields.brand)
+                             document.getElementById('Model').setAttribute('value',data.fields.model)
+                            document.getElementById("ProductSerialNumber").focus();
+                        }).catch(error => console.log(error))
+            }
+        });
+
+
+        $(document).ready(function() {
+            $(window).keydown(function(event){
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+
 
         // $('#LCN').keypress(function(event){
         //     var keycode = (event.keyCode ? event.keyCode : event.which);
