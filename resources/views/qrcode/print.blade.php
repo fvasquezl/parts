@@ -38,44 +38,41 @@
             page-break-after: always;
         }
 
-        /*ul {*/
-        /*    list-style: none;*/
-        /*}*/
-
-        /*ul li:before {*/
-        /*    content: '🗹';*/
-        /*}*/
+        ul {
+            width: 200px;
+            overflow: hidden;
+            padding: 5px;
+        }
+        li {
+            float: left;
+            display: inline;
+            border-bottom: 1px  ;
+            border-right: 2px;
+        }
+        #double li {
+            width: 45%;
+        }
+        #double li:nth-child(odd) {
+            border-right:  1px ;
+        }
+        #double li:nth-child(even) {
+            margin-left: 5px;
+        }
     </style>
 </head>
 
 <body onload="window.print()">
 
-@if($label1)
+@if($parts)
     <div class="label">
-        <ul>
-            @foreach ($label1 as $label)
-                <li>&nbsp;{{$label}}</li>
+        <ul id="double">
+            @foreach ($parts as $id => $name)
+                <li>
+                    {{$name}}
+                </li>
             @endforeach
         </ul>
-{{--        @foreach ($label1 as $label)--}}
-{{--            <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>--}}
-{{--        @endforeach--}}
     </div>
-
-    @if ($label2)
-        <div class="page-break"></div>
-        <div class="label">
-            <ul>
-                @foreach ($label2 as $label)
-                    <li>&nbsp;{{$label}}</li>
-                @endforeach
-            </ul>
-{{--            @foreach ($label2 as $label)--}}
-{{--                <div class="font-mono float-left"><i class="fas fa-check-square"></i>&nbsp;{{$label}}</div>--}}
-{{--            @endforeach--}}
-        </div>
-    @endif
-    <div class="page-break"></div>
 @endif
 
 <div class="label">

@@ -21,22 +21,22 @@ class QrCodeController extends Controller
         $model  = $kit->Model;
 
         $parts = $kit->parts()->get()->pluck('PartName')->toArray();
-        $label1=0;
-        $label2=0;
+//        $labels=0;
+//        $label2=0;
+//
+//
+//        if (count($parts) <= 4){
+//            $label1 = $parts;
+//        }
+//
+//        if (count($parts) >4){
+//            $label1 = array_slice($parts, 0, 4);
+//            array_splice( $parts,0,4);
+//            $label2 = $parts;
+//        }
 
 
-        if (count($parts) <= 4){
-            $label1 = $parts;
-        }
-
-        if (count($parts) >4){
-            $label1 = array_slice($parts, 0, 4);
-            array_splice( $parts,0,4);
-            $label2 = $parts;
-        }
-
-
-        return view('qrcode.print',compact('kitlcn','brand','model','label1','label2'));
+        return view('qrcode.print',compact('kitlcn','brand','model','parts'));
 
     }
 }
