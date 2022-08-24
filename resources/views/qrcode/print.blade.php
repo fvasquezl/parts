@@ -80,7 +80,9 @@
 
 <div class="label">
     <table>
-
+        <tr>
+            <td colspan="2">.</td>
+        </tr>
         <tr>
             <td>
                 {!! QrCode::size(40)->generate($kitlcn);!!}
