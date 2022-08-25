@@ -76,9 +76,9 @@
 
 
                                     {{--                                    @can('update', $kit)--}}
-{{--                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">--}}
-{{--                                        <i class="fas fa-edit"></i>--}}
-{{--                                    </a>--}}
+                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     {{--                                    @endcan--}}
 
                                     {{--                                    @can('delete',$kit)--}}
@@ -100,7 +100,7 @@
                                 <td>{{$kit->subCategory->SubCategoryName}}</td>
                                 <td>{{$kit->ProductSerialNumber}}</td>
                                 <td>{{$kit->country->CountryName}}</td>
-                                <td>{{$kit->DateManufactured}}</td>
+                                <td>{{$kit->getDateManufactured()}}</td>
 
                             </tr>
                         @endforeach

@@ -2,7 +2,7 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h2>Kit {{$kitID}}, Creating Part No {{$editPart}}/{{$totalParts}}</h2>
+    <h2>Kit {{$kitID}}, "{{$part->PartName}}"-{{$editPart}}/{{$totalParts}}</h2>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
             <div class="col-md-8">
 
                 <div class="card">
-                    <div class="card-header">{{ __('Kits')}}</div>
+                    <div class="card-header">{{ __('Kit - ').$part->PartName}}</div>
 
                     <div class="card-body">
 
@@ -41,31 +41,6 @@
                                     @enderror
                                 </div>
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <label for="PartValue" class="col-form-label text-md-end">{{ __('PartValue') }}</label>--}}
-
-
-
-{{--                                    <div class="form-check mt-1">--}}
-{{--                                        <input class="form-check-input" type="checkbox" name="PartValue"--}}
-{{--                                               id="PartValue" {{ old('PartValue') ? 'checked' : '' }}>--}}
-
-{{--                                        <label class="form-check-label" for="PartValue">--}}
-{{--                                            {{ __('Has Part') }}--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-
-
-{{--                                    <input id="PartValue" type="text" class="form-control @error('PartValue') is-invalid @enderror"--}}
-{{--                                           name="PartValue" value="{{ old('PartValue',$part->PartValue) }}"  autocomplete="offe" autofocus>--}}
-
-{{--                                    @error('PartValue')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
-
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -73,8 +48,8 @@
                                            class="col-form-label text-md-end">{{ __('Part Weight (oz)') }}</label>
 
                                     <input id="PartWeight" type="number" step="0.01"
-                                           class="form-control @error('PartWeight') is-invalid @enderror" name="PartWeight"
-                                           value="{{ old('PartWeight') }}"   >
+                                           class="form-control @error('PartWeightOz') is-invalid @enderror" name="PartWeightOz"
+                                           value="{{ old('PartWeightOz',$part->PartWeightOz) }}"   >
 
                                     @error('PartWeight')
                                     <span class="invalid-feedback" role="alert">
@@ -87,7 +62,7 @@
 
                                     <input id="PartRef1" type="text"
                                            class="form-control @error('PartRef1') is-invalid @enderror" name="PartRef1"
-                                           value="{{ old('PartRef1') }}"  autocomplete="off" autofocus >
+                                           value="{{ old('PartRef1',$part->PartRef1) }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef1')
                                     <span class="invalid-feedback" role="alert">
@@ -102,7 +77,7 @@
 
                                     <input id="PartRef2" type="text"
                                            class="form-control @error('PartRef2') is-invalid @enderror" name="PartRef2"
-                                           value="{{ old('PartRef2') }}"  autocomplete="off" autofocus >
+                                           value="{{ old('PartRef2',$part->PartRef2) }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef2')
                                     <span class="invalid-feedback" role="alert">
@@ -115,7 +90,7 @@
 
                                     <input id="PartRef3" type="text"
                                            class="form-control @error('PartRef3') is-invalid @enderror" name="PartRef3"
-                                           value="{{ old('PartRef3') }}"  autocomplete="off" autofocus >
+                                           value="{{ old('PartRef3',$part->PartRef3) }}"  autocomplete="off" autofocus >
 
                                     @error('PartRef3')
                                     <span class="invalid-feedback" role="alert">
@@ -130,7 +105,7 @@
 
                             <div class="row">
                                 <button type="submit" class="btn btn-block btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Save Part') }}
                                 </button>
                             </div>
 

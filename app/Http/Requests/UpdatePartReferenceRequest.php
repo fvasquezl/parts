@@ -31,7 +31,7 @@ class UpdatePartReferenceRequest extends FormRequest
         ];
 
          if ($this->IsRequired == '1'){
-            $rules['PartWeight'] = ['required','numeric','between:0,999.99'];
+            $rules['PartWeightOz'] = ['required','numeric','between:0,999.99'];
         }
 
         return $rules;

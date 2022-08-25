@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,8 @@ class Kit extends Model
     protected $primaryKey = 'KitID';
 //    public $timestamps = false;
     protected $guarded = [];
+
+    protected $dates = ['DateManufactured'];
 
     public function category(): BelongsTo
     {
@@ -43,6 +46,17 @@ class Kit extends Model
     public function parts(): HasMany
     {
         return $this->hasMany(PartReference::class, 'KitID','KitID');
+    }
+
+
+//    public function setDateManufactured($value)
+//    {
+//        $this->attributes['DateManufactured'] = Carbon::createFromFormat()
+//    }
+
+    public function getDateManufactured() {
+
+        return $this->DateManufactured->format('m/d/Y');
     }
 
 }

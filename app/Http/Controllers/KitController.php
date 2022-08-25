@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorekitRequest;
 use App\Http\Requests\UpdatekitRequest;
+use App\Http\Resources\KitResource;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
@@ -16,6 +17,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class KitController extends Controller
 {
@@ -24,11 +27,11 @@ class KitController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
 
         if(auth()->user()->role == 'employee'){
-            $kits = Kit::where('UserID',auth()->id())->latest()->get();
+            $kits = KitResource::collection(Kit::where('UserID',auth()->id())->latest()->get());
 
         }else{
             $kits = Kit::latest()->get();
@@ -43,7 +46,7 @@ class KitController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
         return view('kits.create',[
             'kit' => new Kit,
@@ -57,7 +60,7 @@ class KitController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorekitRequest  $request
+     * @param StorekitRequest $request
      * @return RedirectResponse
      */
     public function store(StorekitRequest $request): RedirectResponse
@@ -72,19 +75,19 @@ class KitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kit  $kit
+     * @param Kit $kit
      * @return Application|Factory|View
      */
     public function show(Kit $kit): View|Factory|Application
     {
-        $parts = $kit->parts;
+        $parts = $kit->parts()->orderby('PartName')->get();
         return view('kits.show',compact('kit','parts'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\kit  $kit
+     * @param Kit $kit
      * @return Application|Factory|View
      */
     public function edit(kit $kit): View|Factory|Application
@@ -101,20 +104,24 @@ class KitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatekitRequest  $request
-     * @param  \App\Models\kit  $kit
-     * @return \Illuminate\Http\Response
+     * @param StorekitRequest $request
+     * @param Kit $kit
+     * @return RedirectResponse
      */
-    public function update(UpdatekitRequest $request, Kit $kit)
+    public function update(StorekitRequest $request, Kit $kit): RedirectResponse
     {
 
+        $request->updateKit($kit);
+
+        return redirect()->route('kit-parts-update.edit',$kit)
+            ->with('status', 'The Kit has been updated, successfully, now we will update each part that compose it');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\kit  $kit
-     * @return \Illuminate\Http\Response
+     * @param Kit $kit
+     * @return Response
      */
     public function destroy(Kit $kit)
     {

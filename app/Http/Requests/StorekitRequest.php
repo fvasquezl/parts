@@ -44,22 +44,6 @@ class StorekitRequest extends FormRequest
         ];
 
 
-//        if ($this->method() === 'PUT') {
-//
-//            $rules['SKU'] = ['sometimes'];
-//            $rules['LanguageID'] = ['sometimes'];
-//            $rules['Title80'] = ['required', 'string', 'max:80'];
-//            $rules['Title200'] = ['required', 'string', 'max:200'];
-//            $rules['Bullet1'] = ['required', 'string', 'max:200'];
-//            $rules['Bullet2'] = ['required', 'string', 'max:200'];
-//            $rules['Bullet3'] = ['required', 'string', 'max:200'];
-//            $rules['Bullet4'] = ['required', 'string', 'max:200'];
-//            $rules['Bullet5'] = ['required', 'string', 'max:200'];
-//            $rules['ShortDescription'] = ['required', 'string', 'max:500'];
-//            $rules['Description'] = ['required', 'string', 'max:2000'];
-//            $rules['SearchTerms'] = ['required', 'string', 'max:200'];
-//        }
-
         return $rules;
     }
 
@@ -86,38 +70,30 @@ class StorekitRequest extends FormRequest
         ]);
         $kit->save();
 
-//        $path = Storage::disk('s3')->putFileAs(
-//            $kit->KitID, $this->kitImage, $kit->KitID.'-kit.jpg'
-//        );
-//
-//        Storage::disk('s3')->setVisibility($path,'public');
-//
-//        $kit->KitImage = Storage::disk('s3')->url($path);
-     //   $kit->save();
-
         return $kit;
 
     }
 
     public function updateKit($kit)
     {
-        $kit->fill([
-            'WorkCenterID' => $this->work_center_id,
-            'LCN' => $this->LCN,
-            'KitLCN' => $this->partsLCN,
-            'Brand' => $this->brand,
-            'Model' => $this->model,
-            'PartCategoryID' => $this->category_id,
-            'ProductSerialNumber' => $this->productSerialNumber,
-            'CountryID' => $this->country_id,
-            'DateManufactured' => $this->dateManufactured,
-//            'IsCompleted' => $this->isCompleted,
-//            'EstimatedRetailPrice' => $this->estimatedRetailPrice,
+       $kit->fill([
+            'WorkCenterID' => $this->WorkCenterID,
+            'LCN' =>  $this->LCN,
+            'KitLCN' => $this->KitLCN,
+            'Brand' => $this->Brand,
+            'Model' => $this->Model,
+            'PartCategoryID' => $this->PartCategoryID,
+            'ProductSerialNumber' => $this->ProductSerialNumber,
+            'CountryID' => $this->CountryID,
+            'DateManufactured' => $this->DateManufactured,
             'UserID' => auth()->id(),
-            'PartSubCategoryID' => $this->sub_category_id,
-            'Comments' => $this->notes,
+            'PartSubCategoryID' => $this->PartSubCategoryID,
+            'Comments' => $this->Comments,
             'KitImage' => 'http://test/',
         ]);
-        $kit->save();
+
+
+       $kit->save();
+
     }
 }
