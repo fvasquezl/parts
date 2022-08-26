@@ -195,7 +195,7 @@
 
                                     <input id="DateManufactured" type="text"
                                            class="form-control @error('DateManufactured') is-invalid @enderror"
-                                           name="DateManufactured" value="{{ old('DateManufactured',$kit->DateManufactured->format('Y-m-d')) }}"
+                                           name="DateManufactured" value="{{ old('DateManufactured',$kit->getDateManufactured()) }}"
                                            autocomplete="DateManufactured" autofocus>
 
                                     @error('DateManufactured')
