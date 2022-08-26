@@ -17,13 +17,31 @@
             <div class="col-md-8">
 
                 <div class="card">
-                    <div class="card-header">{{ __('Kit - ').$part->PartName}}</div>
+                    <div class="card-header ">
+                        <h3 class="card-title mt-1">
+                            {{ __('Kit - ').$part->PartName}}
+                        </h3>
+                        <div class="card-tools">
+
+                            {{--                        @can('create',$kits->first())--}}
+
+{{--                            <a class="btn btn-primary" href="{{ route('kits.create') }}">--}}
+{{--                                <i class="fa fa-plus"></i> Create Kit--}}
+{{--                            </a>--}}
+                            {{--                        @endcan--}}
+                            @if( ! $part->IsRequired )
+                            <b>Press [ESC] to SKIP</b>
+                            @endif
+                        </div>
+                    </div>
+
+{{--                    <div class="card-header"> </div>--}}
 
                     <div class="card-body">
 
 
 
-                        <form method="POST" action="{{ route('parts.update',$part) }}">
+                        <form method="POST" action="{{ route('parts.update',$part) }}" id="myForm">
                             @method('PATCH')
                             @csrf
 
@@ -101,13 +119,29 @@
                             </div>
 
                             <input name="IsRequired" type="hidden" value="{{$part->IsRequired}}">
+                            <input name="isSkipped" id="isSkipped" type="hidden" value="0">
 
 
-                            <div class="row">
-                                <button type="submit" class="btn btn-block btn-primary">
-                                    {{ __('Save Part') }}
-                                </button>
-                            </div>
+                            @if ($part->IsRequired)
+                                <div class="row">
+                                    <button type="submit" class="btn btn-block btn-primary">
+                                        {{ __('Save Part') }}
+                                    </button>
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-block btn-primary">
+                                            {{ __('Save Part') }}
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-block btn-danger skip-btn">
+                                            {{ __('Skip') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
 
                         </form>
                     </div>
@@ -150,6 +184,20 @@
                     return false;
                 }
             });
+        });
+
+        $(document).on('keydown', function(event) {
+            if (event.key == "Escape") {
+                document.getElementById("isSkipped").value = 1;
+                document.getElementById("myForm").submit();
+            }
+        });
+
+
+        $(document).on('click', '.skip-btn', function (e) {
+            e.stopPropagation();
+            document.getElementById("isSkipped").value = 1;
+            document.getElementById("myForm").submit();
         });
 
 

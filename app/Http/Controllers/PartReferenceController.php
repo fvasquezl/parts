@@ -94,15 +94,20 @@ class PartReferenceController extends Controller
             }
         }
 
-//        $part->PartValue = $request['PartValue'];
-        $part->PartWeightOZ = $request['PartWeightOz'];
-        $part->PartRef1 = $request['PartRef1'];
-        $part->PartRef2 = $request['PartRef2'];
-        $part->PartRef3 = $request['PartRef3'];
-        $part->Created = 1;
-        $part->UserID = auth()->id();
-        $part->save();
+        if($request['isSkipped']){
+            $part->delete();
+        }else {
+            $part->PartValue = $request['PartValue'];
+            $part->PartWeightOZ = $request['PartWeightOz'];
+            $part->PartRef1 = $request['PartRef1'];
+            $part->PartRef2 = $request['PartRef2'];
+            $part->PartRef3 = $request['PartRef3'];
+            $part->Created = 1;
+            $part->UserID = auth()->id();
+            $part->save();
+        }
 
+//
         $kit = $part->KitID;
         $partRest = PartReference::where('KitID',$kit)->where('Created',0)->first();
 

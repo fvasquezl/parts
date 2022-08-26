@@ -23,35 +23,35 @@ class KitPartController extends Controller
 
     }
 
-    public function update(Request $request, Kit $kit)
+    public function update(Kit $kit)
     {
-        $request->validate([
-            'parts' => 'required|array|min:1'
-        ]);
+//        $request->validate([
+//            'parts' => 'required|array|min:1'
+//        ]);
 
-        $partlist = PartList::select('PartName','IsRequired')
-            ->where('PartCategoryID',$kit->PartCategoryID)
-            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
-            ->get()->mapWithKeys(function($item){
-                return [$item['PartName'] => $item['IsRequired']];
-            })->toArray();
-
-
-        $kit->parts()->delete();
-
-       foreach ($request->parts as $partname => $value){
-
-           $kit->parts()->create([
-               'PartName' => $partname,
-               'Created' => 0,
-               'IsRequired' => $partlist[$partname],
-               'UserID' =>auth()->id()
-           ]);
-       }
-        $firstPart = $kit->parts->first();
-
-        return redirect()->route('parts.edit',$firstPart)
-            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
+//        $partlist = PartList::select('PartName','IsRequired')
+//            ->where('PartCategoryID',$kit->PartCategoryID)
+//            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
+//            ->get()->mapWithKeys(function($item){
+//                return [$item['PartName'] => $item['IsRequired']];
+//            })->toArray();
+//
+//
+//        $kit->parts()->delete();
+//
+//       foreach ($partlist as $partname){
+//
+//           $kit->parts()->create([
+//               'PartName' => $partname['PartName'],
+//               'Created' => 0,
+//               'IsRequired' => $partname['IsRequired'],
+//               'UserID' =>auth()->id()
+//           ]);
+//       }
+//        $firstPart = $kit->parts->first();
+//
+//        return redirect()->route('parts.edit',$firstPart)
+//            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
 
     }
 

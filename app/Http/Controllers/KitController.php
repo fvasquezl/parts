@@ -8,6 +8,7 @@ use App\Http\Resources\KitResource;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
+use App\Models\PartList;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
 use Illuminate\Contracts\Foundation\Application;
@@ -16,17 +17,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Yajra\DataTables\Exceptions\Exception;
 
 class KitController extends Controller
 {
 
-    /**
-     * @throws Exception
-     */
     public function index(Request $request): View|Factory|\Illuminate\Http\JsonResponse|Application
     {
-//        if ($request->json()){  to see raw data
+//        if ($request->json()){  to see rag
         if ($request->ajax()){
             if(auth()->user()->role == 'employee'){
                 $data = Kit::query()->where('UserID',auth()->id())->latest()->get();
@@ -94,8 +91,35 @@ class KitController extends Controller
     {
         $kit =$request->createKit();
 
-        return redirect()->route('kit-parts.edit',$kit)
-            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
+        $partlist = PartList::select('PartName','IsRequired')
+            ->where('PartCategoryID',$kit->PartCategoryID)
+            ->where('PartSubCategoryID',$kit->PartSubCategoryID)
+            ->get()->mapWithKeys(function($item){
+                return [$item['PartName'] => $item['IsRequired']];
+            })->toArray();
+
+
+
+
+        $kit->parts()->delete();
+
+        foreach ($partlist as $partname => $value){
+
+            $kit->parts()->create([
+                'PartName' => $partname,
+                'Created' => 0,
+                'IsRequired' => $value,
+                'UserID' =>auth()->id()
+            ]);
+        }
+        $firstPart = $kit->parts->first();
+
+        return redirect()->route('parts.edit',$firstPart)
+            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
+
+
+//        return redirect()->route('kit-parts.update',$kit)
+//            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
 
     }
 

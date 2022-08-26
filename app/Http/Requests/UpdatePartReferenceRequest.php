@@ -25,13 +25,14 @@ class UpdatePartReferenceRequest extends FormRequest
     {
         $rules = [
             'PartName' =>  ['required', 'string', 'max:50'],
-            'PartRef1' =>  ['required'],
+            'PartRef1' =>  ['sometimes'],
             'PartRef2' => ['sometimes'],
             'PartRef3' =>  ['sometimes'],
         ];
 
          if ($this->IsRequired == '1'){
             $rules['PartWeightOz'] = ['required','numeric','between:0,999.99'];
+            $rules['PartRef1'] = ['required'];
         }
 
         return $rules;
