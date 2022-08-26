@@ -8,35 +8,32 @@ use App\Http\Resources\KitResource;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
-use App\Models\PartList;
-use App\Models\PartReference;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
-use http\Client\Curl\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Yajra\DataTables\Exceptions\Exception;
 
 class KitController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View|\Illuminate\Http\JsonResponse
+     * @throws Exception
      */
     public function index(Request $request): View|Factory|\Illuminate\Http\JsonResponse|Application
     {
-
-        if ($request->ajax()) {
+//        if ($request->json()){  to see raw data
+        if ($request->ajax()){
             if(auth()->user()->role == 'employee'){
                 $data = Kit::query()->where('UserID',auth()->id())->latest()->get();
 
             }else{
                 $data = Kit::query()->latest()->get();
-            }
+            };
 
             return datatables($data)
                 ->addIndexColumn()
@@ -66,9 +63,7 @@ class KitController extends Controller
                     return $data->KitID;
                 })
                 ->toJson();
-
         }
-
 
         return view('kits.index');
     }

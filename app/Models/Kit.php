@@ -55,8 +55,9 @@ class Kit extends Model
 //    }
 
     public function getDateManufactured() {
-
-        return $this->DateManufactured->format('m/d/Y');
+        if($this->DateManufactured){
+            return $this->DateManufactured->format('m/d/Y');
+        }
     }
 
 }
