@@ -51,8 +51,7 @@ class KitController extends Controller
                 })
                 ->addColumn('Actions', function(){
                     $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
-                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-sm btn-info edit-btn"><i class="fas fa-edit"></button>';
+                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
                 ->rawColumns(['Actions'])
