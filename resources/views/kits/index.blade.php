@@ -59,52 +59,52 @@
                             <th>Manufactured At</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($kits as $kit)
-                            <tr>
+{{--                        <tbody>--}}
+{{--                        @foreach($kits as $kit)--}}
+{{--                            <tr>--}}
 
-                                <td>{{$kit->KitID}}</td>
-                                <td>
-                                    <button class="qrcode btn btn-sm btn-dark">
-                                        <i class="fas fa-print"></i>
-                                    </button>
+{{--                                <td>{{$kit->KitID}}</td>--}}
+{{--                                <td>--}}
+{{--                                    <button class="qrcode btn btn-sm btn-dark">--}}
+{{--                                        <i class="fas fa-print"></i>--}}
+{{--                                    </button>--}}
 
-                                    <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"
-                                       target="_blank">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+{{--                                    <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"--}}
+{{--                                       target="_blank">--}}
+{{--                                        <i class="fas fa-eye"></i>--}}
+{{--                                    </a>--}}
 
 
-                                    {{--                                    @can('update', $kit)--}}
-                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    {{--                                    @endcan--}}
+{{--                                    --}}{{--                                    @can('update', $kit)--}}
+{{--                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">--}}
+{{--                                        <i class="fas fa-edit"></i>--}}
+{{--                                    </a>--}}
+{{--                                    --}}{{--                                    @endcan--}}
 
-                                    {{--                                    @can('delete',$kit)--}}
-                                    {{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
-                                    {{--                                               style="display:inline">--}}
-                                    {{--                                            @csrf @method('DELETE')--}}
-                                    {{--                                            <button class="btn btn-sm btn-danger"--}}
-                                    {{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
-                                    {{--                                                <i class="fas fa-trash-alt"></i></button>--}}
-                                    {{--                                        </form>--}}
-                                    {{--                                    @endcan--}}
-                                </td>
-                                <td>{{$kit->LCN}}</td>
-                                <td>{{$kit->workCenter->WorkCenterName}}</td>
-                                <td>{{$kit->KitLCN}}</td>
-                                <td>{{$kit->Brand}}</td>
-                                <td>{{$kit->Model}}</td>
-                                <td>{{$kit->category->CategoryName}}</td>
-                                <td>{{$kit->subCategory->SubCategoryName}}</td>
-                                <td>{{$kit->ProductSerialNumber}}</td>
-                                <td>{{$kit->country->CountryName}}</td>
-                                <td>{{$kit->getDateManufactured()}}</td>
+{{--                                    --}}{{--                                    @can('delete',$kit)--}}
+{{--                                    --}}{{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
+{{--                                    --}}{{--                                               style="display:inline">--}}
+{{--                                    --}}{{--                                            @csrf @method('DELETE')--}}
+{{--                                    --}}{{--                                            <button class="btn btn-sm btn-danger"--}}
+{{--                                    --}}{{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
+{{--                                    --}}{{--                                                <i class="fas fa-trash-alt"></i></button>--}}
+{{--                                    --}}{{--                                        </form>--}}
+{{--                                    --}}{{--                                    @endcan--}}
+{{--                                </td>--}}
+{{--                                <td>{{$kit->LCN}}</td>--}}
+{{--                                <td>{{$kit->workCenter->WorkCenterName}}</td>--}}
+{{--                                <td>{{$kit->KitLCN}}</td>--}}
+{{--                                <td>{{$kit->Brand}}</td>--}}
+{{--                                <td>{{$kit->Model}}</td>--}}
+{{--                                <td>{{$kit->category->CategoryName}}</td>--}}
+{{--                                <td>{{$kit->subCategory->SubCategoryName}}</td>--}}
+{{--                                <td>{{$kit->ProductSerialNumber}}</td>--}}
+{{--                                <td>{{$kit->country->CountryName}}</td>--}}
+{{--                                <td>{{$kit->getDateManufactured()}}</td>--}}
 
-                            </tr>
-                        @endforeach
-                        </tbody>
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
+{{--                        </tbody>--}}
                     </table>
                 </div>
             </div>
@@ -117,26 +117,65 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
-
 @stop
 
 @section('js')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
+
     <script>
+        let $kitsTable;
         $(document).ready( function () {
-            let table = $('#kitsTable').DataTable({
-                order: [[0, 'desc']],
-                responsive: true
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
-            $('#kitsTable tbody').on('click', '.qrcode', function () {
-                let data = table.row($(this).parents('tr')).data();
-                let id = data[0];
+            let $kitsTable = $('#kitsTable').DataTable({
+                order: [[0, 'desc']],
+                responsive: true,
+                serverSide: true,
+                ajax: "{{route('kits.index')}}",
+                columns: [
+                    {data: 'KitID',name: 'KitID'},
+                    {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
+                    {data: 'LCN',name: 'LCN'},
+                    {data: 'WorkCenter',name: 'WorkCenter'},
+                    {data: 'KitLCN',name: 'KitLCN'},
+                    {data: 'Brand',name: 'Brand'},
+                    {data: 'Model',name: 'Model'},
+                    {data: 'CategoryName',name: 'CategoryName'},
+                    {data: 'SubCategoryName',name: 'SubCategoryName'},
+                    {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
+                    {data: 'Country',name: 'Country'},
+                    {data: 'DateManufactured',name: 'DateManufactured'}
+                ]
+            });
+
+
+            $(document).on('click', '.qrcode', function (e) {
+                e.stopPropagation();
+                let $tr = $(this).closest('tr');
+                let rowId = $tr.attr('ID');
                 let url = "{{route('qrcode',':id')}}"
-                url = url.replace(':id',id);
+                url = url.replace(':id',rowId);
                 document.getElementById('printf').src = url;
+            });
+
+            $(document).on('click', '.show-btn', function (e) {
+                e.stopPropagation();
+                let $tr = $(this).closest('tr');
+                let rowId = $tr.attr('ID');
+                $(location).attr('href', 'kits/'+rowId);
+            });
+
+            $(document).on('click', '.edit-btn', function (e) {
+                e.stopPropagation();
+                let $tr = $(this).closest('tr');
+                let rowId = $tr.attr('ID');
+                $(location).attr('href', 'kits/'+rowId+'/edit');
             });
 
         });

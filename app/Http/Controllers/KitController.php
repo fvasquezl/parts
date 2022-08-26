@@ -25,20 +25,52 @@ class KitController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return Application|Factory|View|\Illuminate\Http\JsonResponse
      */
-    public function index(): View|Factory|Application
+    public function index(Request $request): View|Factory|\Illuminate\Http\JsonResponse|Application
     {
 
-        if(auth()->user()->role == 'employee'){
-            $kits = KitResource::collection(Kit::where('UserID',auth()->id())->latest()->get());
+        if ($request->ajax()) {
+            if(auth()->user()->role == 'employee'){
+                $data = Kit::query()->where('UserID',auth()->id())->latest()->get();
 
-        }else{
-            $kits = Kit::latest()->get();
-        };
+            }else{
+                $data = Kit::query()->latest()->get();
+            }
+
+            return datatables($data)
+                ->addIndexColumn()
+                ->editColumn('WorkCenter', function($kit) {
+                    return $kit->workCenter->WorkCenterName;
+                })
+                ->editColumn('DateManufactured', function($kit) {
+                    return $kit->getDateManufactured();
+                })
+                ->editColumn('CategoryName', function($kit) {
+                    return $kit->category->CategoryName;
+                })
+                ->editColumn('SubCategoryName', function($kit) {
+                    return $kit->subCategory->SubCategoryName;
+                })
+                ->editColumn('Country', function($kit) {
+                    return $kit->country->CountryName;
+                })
+                ->addColumn('Actions', function(){
+                    $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
+                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-info edit-btn"><i class="fas fa-edit"></button>';
+                    return $btns;
+                })
+                ->rawColumns(['Actions'])
+                ->setRowId(function ($data) {
+                    return $data->KitID;
+                })
+                ->toJson();
+
+        }
 
 
-        return view('kits.index',compact('kits'));
+        return view('kits.index');
     }
 
     /**
