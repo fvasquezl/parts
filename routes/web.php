@@ -6,8 +6,11 @@ use App\Http\Controllers\Admin\LcnController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\BoxController;
+use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\PartReferenceController;
+use App\Http\Controllers\ShelveController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -31,6 +34,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')
     ->group(function () {
         Route::resource('kits', KitController::class);
+        Route::resource('boxes', BoxController::class);
+        Route::resource('shelves', ShelveController::class);
+        Route::resource('fill-box', FillBoxController::class);
+
         Route::post('/lcn',[LcnController::class,'index']);
         Route::post('/subcategories',[SubcategoryController::class,'index']);
         Route::resource('parts', PartReferenceController::class);

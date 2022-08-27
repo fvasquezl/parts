@@ -68,7 +68,7 @@
 
                                     <div class="col-md-6">
                                         <label for="KitLCN"
-                                               class="col-form-label text-md-end">{{ __('Parts LCN') }}</label>
+                                               class="col-form-label text-md-end">{{ __('Kit LCN') }}</label>
 
                                         <input id="KitLCN" type="text"
                                                class="form-control @error('KitLCN') is-invalid @enderror" name="KitLCN"
@@ -333,7 +333,7 @@
                             return response.json()
                         }).then(data =>{
                             console.log(data)
-                            document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
+                             document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
                              document.getElementById('Brand').setAttribute('value',data.fields.brand)
                              document.getElementById('Model').setAttribute('value',data.fields.model)
                             document.getElementById("ProductSerialNumber").focus();

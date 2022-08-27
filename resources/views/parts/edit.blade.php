@@ -125,7 +125,7 @@
                                     <label for="PartWeight"
                                            class="col-form-label text-md-end">{{ __('Part Weight (oz)') }}</label>
 
-                                    <input id="PartWeight" type="number" step="0.01"
+                                    <input id="PartWeight" type="number" step="1"
                                            class="form-control @error('PartWeightOz') is-invalid @enderror" name="PartWeightOz"
                                            value="{{ old('PartWeightOz',$part->PartWeightOz) }}"   >
 

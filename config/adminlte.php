@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Kits|Parts',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -308,9 +308,22 @@ return [
             'icon' => 'fas fa-fw fa-layer-group',
         ],
         [
-            'text' => 'Parts',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-puzzle-piece',
+            'text' => 'Boxes',
+            'url'  => 'boxes',
+            'icon' => 'fas fa-fw fa-box',
+            'can'  =>  'isAdmin'
+        ],
+        [
+            'text' => 'Shelves',
+            'url'  => 'shelves',
+            'icon' => 'fas fa-fw fa-dolly',
+            'can'  =>  'isAdmin'
+        ],
+
+        [
+            'text' => 'Fill Box',
+            'url'  => 'fill-box',
+            'icon' => 'fas fa-fw fa-fill',
             'can'  =>  'isAdmin'
         ],
         [

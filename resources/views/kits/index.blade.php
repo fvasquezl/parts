@@ -7,8 +7,6 @@
 @stop
 
 @section('content')
-
-
     <div class="container-fluid">
         @if (session('status'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
