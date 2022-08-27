@@ -106,6 +106,7 @@ class KitController extends Controller
 
             $kit->parts()->create([
                 'PartName' => $partname,
+                'PartWeightOz' => 0,
                 'Created' => 0,
                 'IsRequired' => $value,
                 'UserID' =>auth()->id()

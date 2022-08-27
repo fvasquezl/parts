@@ -16,8 +16,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-sm card-outline card-primary">
-                    <div class="card-header">{{ __('Kits') }}</div>
-
+                    <div class="card-header ">
+                        <h3 class="card-title mt-1">
+                            {{ __('Kits')}}
+                        </h3>
+                        <div class="card-tools">
+                            <b>Press [F12] to SAVE</b>
+                        </div>
+                    </div>
                     <div class="card-body">
 
                             <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm" >
@@ -218,7 +224,7 @@
 
                                 <div class="row">
                                     <button type="submit" class="btn btn-block btn-primary">
-                                        {{ __('Create') }}
+                                        {{ __('Create [F12]') }}
                                     </button>
                                 </div>
 
@@ -360,6 +366,24 @@
         // document.getElementById("myForm").addEventListener("submit", function(e){
         //     e.preventDefault()
         // });
+
+        window.onhelp = function() {
+            return false;
+        };
+
+        window.onkeydown = evt => {
+            switch (evt.keyCode) {
+                //F12
+                case 123:
+                    document.getElementById("myForm").submit();
+                    break;
+                default:
+                    return true;
+            }
+            //Returning false overrides default browser event
+            return false;
+        };
+
 
 
     </script>
