@@ -23,7 +23,7 @@ class FillBoxController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +34,7 @@ class FillBoxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return back()->with('status','The Box needs to save');
     }
 
     /**

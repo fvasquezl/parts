@@ -29,15 +29,18 @@
                 <div class="card-body" id="mainForm">
                     <div class="row mb-3">
                         <div class="col-md-6">
+                            <form method="POST" action="{{ route('fill-box.store') }}" id="myForm">
+                                @csrf
                             <label for="BoxID" class="col-form-label text-md-end">{{ __('Scan Box') }}</label>
                             <input id="BoxID" type="text" class="form-control" name="BoxID" autofocus>
 
                             <label for="Kit" class="col-form-label text-md-end">{{ __('Scan Kits') }}</label>
                             <input id="Kit" type="text" class="form-control" name="Kit" disabled>
-                            <form id="myForm">
+
                             <div id="newRow"></div>
                             </form>
                         </div>
+
                         <div class="col-md-6 mt-5">
                             <label for="BoxID" class="col-form-label text-md-end">{{ __('Use the QR "RemoveKit" To remove Las KIT') }}</label>
                             <label for="BoxID" class="col-form-label text-md-end">{{ __('Use the QR "SubmitBox" To Save the Box') }}</label>
@@ -59,6 +62,9 @@
     <script>
         document.querySelector('input[name="BoxID"]').addEventListener("keyup", (e) => {
             if (e.key === "Enter") {
+
+                // 'Se necesita validar la caja'
+
                 e.currentTarget.setAttribute("disabled","disabled");
                 document.getElementById("Kit").removeAttribute("disabled");
                 document.getElementById("Kit").focus();
@@ -66,11 +72,14 @@
         });
 
 
-
         document.querySelector('#Kit').addEventListener("keyup", (e) => {
             if (e.key === "Enter") {
                 let value = e.target.value;
                 e.target.value = '';
+
+
+                // Se necesita validar el KIT
+
 
                 switch(value) {
                     case 'RemoveKit':
@@ -101,7 +110,11 @@
             document.getElementById("BoxID").value = '';
             document.getElementById("BoxID").focus();
             document.getElementById("Kit").setAttribute("disabled","disabled");
+
+            let form= document.getElementById("myForm");
+            form.submit()
         }
+
 
 
         $(document).ready(function() {
