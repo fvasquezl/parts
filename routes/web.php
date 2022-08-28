@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LcnController;
 use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ValidateController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
@@ -45,6 +46,9 @@ Route::middleware('auth')
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
         Route::get('qrcode/box/{box}', [QrCodeController::class,'box'])->name('qrcode.box');
         Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf');
+
+        Route::post('validate/box', [ValidateController::class,'box'])->name('validate.box');
+//        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
 
         Route::get('/kit-parts/{kit}/edit',[KitPartController::class,'edit'])->name('kit-parts.edit');
         Route::patch('/kit-parts/{kit}',[KitPartController::class,'update'])->name('kit-parts.update');

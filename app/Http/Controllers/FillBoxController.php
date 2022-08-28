@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Box;
+use App\Models\BoxContent;
+use App\Models\Kit;
 use Illuminate\Http\Request;
 
 class FillBoxController extends Controller
@@ -34,7 +37,40 @@ class FillBoxController extends Controller
      */
     public function store(Request $request)
     {
-        return back()->with('status','The Box needs to save');
+        $boxId = $request->BoxID;
+        $kits = $request->KitID;
+
+//        $box = Box::where('box_id',$boxId)->first();
+
+        try {
+            $box = Box::where('box_id',$boxId)->first();
+        } catch(\Illuminate\Database\QueryException $ex){
+            $response = $ex->getMessage();
+            return back()->with('danger','The box doesnt exists');
+        }
+
+
+        foreach ($kits as $kit_id){
+            $kit = Kit::where('KitLCN',$kit_id)->first();
+            if ($kit === null) {
+                return back()->with('danger','The kit '.$kit_id.' information doesnt exists');
+            }
+        }
+
+
+        foreach ($kits as $kit){
+            BoxContent::create([
+                'box_id' => $boxId,
+                'kit_id' => Kit::where('KitLCN',$kit)->first()->KitID
+            ]);
+        }
+
+        return back()->with('status','The Box saved');
+
+
+        /// Un SP que valide que la caja exista, que no tenga kits
+        /// UN SP que valide que el kit esista, que no este asignado a otra caja
+        ///     que devuelva su id a partir del QR
     }
 
     /**
