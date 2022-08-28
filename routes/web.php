@@ -10,7 +10,7 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\PartReferenceController;
-use App\Http\Controllers\ShelveController;
+use App\Http\Controllers\ShelfController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -35,13 +35,16 @@ Route::middleware('auth')
     ->group(function () {
         Route::resource('kits', KitController::class);
         Route::resource('boxes', BoxController::class);
-        Route::resource('shelves', ShelveController::class);
+        Route::resource('shelves', ShelfController::class);
         Route::resource('fill-box', FillBoxController::class);
 
         Route::post('/lcn',[LcnController::class,'index']);
         Route::post('/subcategories',[SubcategoryController::class,'index']);
         Route::resource('parts', PartReferenceController::class);
+
         Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
+        Route::get('qrcode/box/{box}', [QrCodeController::class,'box'])->name('qrcode.box');
+        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf');
 
         Route::get('/kit-parts/{kit}/edit',[KitPartController::class,'edit'])->name('kit-parts.edit');
         Route::patch('/kit-parts/{kit}',[KitPartController::class,'update'])->name('kit-parts.update');

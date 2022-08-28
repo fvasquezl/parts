@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shelve;
+use App\Models\Shelf;
 use Illuminate\Http\Request;
 
-class ShelveController extends Controller
+class ShelfController extends Controller
 {
 
     public function index(Request $request)
     {
 
         if ($request->ajax()){
-            $data = Shelve::query();
+            $data = Shelf::query();
 
             return datatables($data)
                 ->addIndexColumn()
@@ -21,7 +21,7 @@ class ShelveController extends Controller
                 })
 
                 ->addColumn('actions', function(){
-                    $btns = '<button class="btn btn-sm btn-success create_btn"><i class="fas fa-pen"></i></button>
+                    $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
@@ -53,7 +53,12 @@ class ShelveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $box = new Shelf;
+        $box->save();
+
+        if($request->json()){
+            return $box;
+        }
     }
 
     /**

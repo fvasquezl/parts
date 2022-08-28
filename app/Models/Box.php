@@ -22,4 +22,13 @@ class Box extends Model
         }
     }
 
+    public function getIsActive() {
+        return $this->is_active ? 'yes': 'no';
+//        if($this->is_active){
+//            return true;
+//        }else{
+//
+//        }
+    }
+
 }

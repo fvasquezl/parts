@@ -13,15 +13,17 @@ class BoxController extends Controller
 
         if ($request->ajax()){
             $data = Box::query();
-
             return datatables($data)
                 ->addIndexColumn()
                 ->editColumn('date_created', function($box) {
                     return $box->getDateCreated();
                 })
+                ->editColumn('is_active', function($box) {
+                    return $box->getIsActive();
+                })
 
                 ->addColumn('actions', function(){
-                    $btns = '<button class="btn btn-sm btn-success create_btn"><i class="fas fa-pen"></i></button>
+                    $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
@@ -53,7 +55,14 @@ class BoxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $box = new Box;
+        $box->description= 'Requested At :'. now();;
+        $box->is_active = 1;
+        $box->save();
+
+        if($request->json()){
+            return $box;
+        }
     }
 
     /**

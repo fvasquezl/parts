@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shelve extends Model
+class Shelf extends Model
 {
     use HasFactory;
     protected $table = 'bin.Shelves';
     protected $primaryKey = 'shelf_id';
 //    public $timestamps = false;
     protected $guarded = [];
- protected $dates = ['DateCreated'];
+    protected $dates = ['DateCreated'];
 
 
     public function getCreatedAt() {

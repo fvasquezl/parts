@@ -23,20 +23,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 my-3">
-                <div class="card mb-4 shadow-sm card-outline card-primary">
+                <div class="card mb-4 shadow-sm card-outline card-success">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
                             Shelves Listing
                         </h3>
                         <div class="card-tools">
-                            <a class="btn btn-primary" href="{{ route('shelves.create') }}">
-                                <i class="fa fa-plus"></i> Create Shelf
-                            </a>
+                            <button class="btn btn-success" id="create_shelf" ><i class="fa fa-plus"></i> Create Shelf</button>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-striped table-hover table-bordered" id="boxTable">
+                        <table class="table table-striped table-hover table-bordered" id="shelfTable">
                             <thead>
                             <tr>
                                 <th>Shelf ID</th>
@@ -65,7 +63,15 @@
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
 
     <script>
-        let $boxTable;
+        let $shelfTable;
+
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
@@ -73,7 +79,7 @@
                 }
             });
 
-            let $boxTable = $('#boxTable').DataTable({
+            let $shelfTable = $('#shelfTable').DataTable({
                 responsive: true,
                 serverSide: true,
                 ajax: "{{route('shelves.index')}}",
@@ -89,26 +95,46 @@
                 e.stopPropagation();
                 let $tr = $(this).closest('tr');
                 let rowId = $tr.attr('ID');
-                let url = "{{route('qrcode',':id')}}"
+                let url = "{{route('qrcode.shelf',':id')}}"
                 url = url.replace(':id',rowId);
                 document.getElementById('printf').src = url;
             });
 
-            $(document).on('click', '.show-btn', function (e) {
-                e.stopPropagation();
-                let $tr = $(this).closest('tr');
-                let rowId = $tr.attr('ID');
-                $(location).attr('href', 'box/'+rowId);
-            });
-
-            $(document).on('click', '.edit-btn', function (e) {
-                e.stopPropagation();
-                let $tr = $(this).closest('tr');
-                let rowId = $tr.attr('ID');
-                $(location).attr('href', 'box/'+rowId+'/edit');
-            });
+            // $(document).on('click', '.show-btn', function (e) {
+            //     e.stopPropagation();
+            //     let $tr = $(this).closest('tr');
+            //     let rowId = $tr.attr('ID');
+            //     $(location).attr('href', 'shelf/'+rowId);
+            // });
+            //
+            // $(document).on('click', '.edit-btn', function (e) {
+            //     e.stopPropagation();
+            //     let $tr = $(this).closest('tr');
+            //     let rowId = $tr.attr('ID');
+            //     $(location).attr('href', 'shelf/'+rowId+'/edit');
+            // });
 
         });
+
+        document.getElementById('create_shelf').addEventListener('click',function (){
+            fetch('shelves', {
+                method: 'POST',
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                printQr(data.shelf_id)
+                $('#shelfTable').DataTable().ajax.reload();
+
+            }).catch(error => console.log(error))
+        })
+        function printQr(id) {
+            let url = "{{route('qrcode.shelf',':id')}}"
+            url = url.replace(':id',id);
+            document.getElementById('printf').src = url;
+        }
+
+
     </script>
 @stop
 

@@ -23,16 +23,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 my-3">
-                <div class="card mb-4 shadow-sm card-outline card-primary">
+                <div class="card mb-4 shadow-sm card-outline card-info">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
                             Box Listing
                         </h3>
                         <div class="card-tools">
-                            <a class="btn btn-primary" href="{{ route('boxes.create') }}">
-                                <i class="fa fa-plus"></i> Create Box
-                            </a>
-
+                            <button class="btn btn-primary" id="create_box" ><i class="fa fa-plus"></i> Create Box</button>
                         </div>
                     </div>
 
@@ -56,6 +53,7 @@
         </div>
     </div>
 
+
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
 @stop
 
@@ -71,12 +69,20 @@
 
     <script>
         let $boxTable;
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
+
         $(document).ready( function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
 
             let $boxTable = $('#boxTable').DataTable({
                 responsive: true,
@@ -93,30 +99,48 @@
                 ]
             });
 
-
             $(document).on('click', '.qrcode', function (e) {
                 e.stopPropagation();
                 let $tr = $(this).closest('tr');
                 let rowId = $tr.attr('ID');
-                let url = "{{route('qrcode',':id')}}"
+                let url = "{{route('qrcode.box',':id')}}"
                 url = url.replace(':id',rowId);
                 document.getElementById('printf').src = url;
             });
 
-            $(document).on('click', '.show-btn', function (e) {
-                e.stopPropagation();
-                let $tr = $(this).closest('tr');
-                let rowId = $tr.attr('ID');
-                $(location).attr('href', 'box/'+rowId);
-            });
-
-            $(document).on('click', '.edit-btn', function (e) {
-                e.stopPropagation();
-                let $tr = $(this).closest('tr');
-                let rowId = $tr.attr('ID');
-                $(location).attr('href', 'box/'+rowId+'/edit');
-            });
+            // $(document).on('click', '.show-btn', function (e) {
+            //     e.stopPropagation();
+            //     let $tr = $(this).closest('tr');
+            //     let rowId = $tr.attr('ID');
+            //     $(location).attr('href', 'box/'+rowId);
+            // });
+            //
+            // $(document).on('click', '.edit-btn', function (e) {
+            //     e.stopPropagation();
+            //     let $tr = $(this).closest('tr');
+            //     let rowId = $tr.attr('ID');
+            //     $(location).attr('href', 'box/'+rowId+'/edit');
+            // });
 
         });
+
+        document.getElementById('create_box').addEventListener('click',function (){
+            fetch('boxes', {
+                method: 'POST',
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                printQr(data.box_id)
+                $('#boxTable').DataTable().ajax.reload();
+
+            }).catch(error => console.log(error))
+        })
+        function printQr(id) {
+            let url = "{{route('qrcode.box',':id')}}"
+            url = url.replace(':id',id);
+            document.getElementById('printf').src = url;
+        }
+
     </script>
 @stop
