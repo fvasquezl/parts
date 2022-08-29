@@ -14,10 +14,10 @@
     - SHELF -
 </div>
 <div class="visible-print text-center">
-    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate($shelf->shelf_id)}}
+    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate('SHELF'.$shelf->shelf_id)}}
 </div>
 <div class="text-center">
-{{$shelf->shelf_id}}
+{{'SHELF'.$shelf->shelf_id}}
 </div>
 </body>
 </html>

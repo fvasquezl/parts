@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddInvController;
 use App\Http\Controllers\Admin\KitPartController;
 use App\Http\Controllers\Admin\KitPartUpdateController;
 use App\Http\Controllers\Admin\LcnController;
@@ -38,6 +39,10 @@ Route::middleware('auth')
         Route::resource('boxes', BoxController::class);
         Route::resource('shelves', ShelfController::class);
         Route::resource('fill-box', FillBoxController::class);
+        Route::resource('add-inv', AddInvController::class);
+
+
+
 
         Route::post('/lcn',[LcnController::class,'index']);
         Route::post('/subcategories',[SubcategoryController::class,'index']);

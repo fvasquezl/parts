@@ -311,13 +311,13 @@ return [
             'text' => 'Boxes',
             'url'  => 'boxes',
             'icon' => 'fas fa-fw fa-box',
-            'can'  =>  'isAdmin'
+
         ],
         [
             'text' => 'Shelves',
             'url'  => 'shelves',
             'icon' => 'fas fa-fw fa-dolly',
-            'can'  =>  'isAdmin'
+
         ],
 
         [
@@ -327,36 +327,16 @@ return [
             'can'  =>  'isAdmin'
         ],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Inventory',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Add Inv',
+                    'url'  => 'add-inv/create',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text'  => 'Remove Inv',
+                    'url'   => '#',
                 ],
                 [
                     'text' => 'level_one',
