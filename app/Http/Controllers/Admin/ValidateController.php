@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Box;
+use App\Models\BoxContent;
 use App\Models\Kit;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -22,7 +24,7 @@ class ValidateController extends Controller
         }
 
         return response()->json([
-           'err' => 'false',
+           'err' => 'There are an error with the information',
         ]);
     }
     public function box($data)
@@ -38,7 +40,7 @@ class ValidateController extends Controller
         }
 
         return response()->json(
-            'false'
+            'There an error with the Box Information'
         );
 
 
@@ -47,16 +49,28 @@ class ValidateController extends Controller
     {
 
         $kit = Kit::where('KitLCN',$data)->first();
-        if ($kit){
-            return response()->json([
-                'id' => $kit->KitID,
-                'type' => 'kit',
-                'created_at' => $kit->created_at
-            ]);
+
+        try {
+            $exists = BoxContent::where('kit_id',$kit->KitID)->first();
+        } catch (Exception $e) {
+
+            return false;
         }
 
+
+        if ($exists == null) {
+            if ($kit){
+                return response()->json([
+                    'id' => $kit->KitID,
+                    'type' => 'kit',
+                    'created_at' => $kit->created_at
+                ]);
+            }
+        }
+
+
         return response()->json(
-            'false'
+            'This Kit Exists on the table',
         );
     }
 }

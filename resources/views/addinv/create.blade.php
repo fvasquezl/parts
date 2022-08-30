@@ -62,9 +62,9 @@
 @stop
 
 @section('js')
-    // BOX10022
-    // MTC7ST0799-KIT
-    // MTBACT0284-KIT
+{{--    // BOX10022--}}
+{{--    // MTC7ST0799-KIT--}}
+{{--    // MTBACT0284-KIT--}}
     <script>
         let aux='';
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -77,14 +77,22 @@
 
         async function postData(box,kits){
 
+            let uniqueKits =getUniqueListBy(kits, 'id')
+
             const response = await fetch('/add-inv',{
                 method: 'POST',
-                body: JSON.stringify({box:box.id,kits:kits}),
+                body: JSON.stringify({box:box.id,kits:uniqueKits}),
                 headers:headers
             })
             const data = await response.json()
+
+
             console.log(data)
 
+        }
+
+        function getUniqueListBy(arr, key) {
+            return [...new Map(arr.map(item => [item[key], item])).values()]
         }
 
 
@@ -99,7 +107,7 @@
             console.log(data)
             const {id,type,created_at} = data
             if(!id){
-                document.getElementById('message').innerHTML = 'Check The Information'
+                document.getElementById('message').innerHTML = data
             }else {
                 if(i===0 && type !== 'box'){
                     document.getElementById('message').innerHTML = 'You need to add a box first'
@@ -110,9 +118,11 @@
                         if (i >= 2 && id === box.id && created_at === box.created_at && type === 'box') {
                             document.getElementById('message').innerHTML = 'Submited'
                             await postData(box,kits)
-                            box.id=''
-                            box.created_at =''
-                            kits =[];
+
+                            location.reload();
+                            // box.id=''
+                            // box.created_at =''
+                            // kits =[];
                         }else{
                             if (i === 0 && type === 'box') {
                                 box.id = id
@@ -163,9 +173,6 @@
             }
 
         });
-
-
-
 
 
     </script>
