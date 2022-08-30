@@ -14,7 +14,7 @@
     - BOX -
 </div>
 <div class="visible-print text-center">
-    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate('Box'.$box->box_id)}}
+    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate('BOX'.$box->box_id)}}
 </div>
 <div class="text-center">
 {{'BOX'.$box->box_id}}

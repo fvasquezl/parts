@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BoxContent;
+use App\Models\Kit;
 use Illuminate\Http\Request;
 
 class AddInvController extends Controller
@@ -23,7 +25,7 @@ class AddInvController extends Controller
      */
     public function create()
     {
-        return 'yes';
+        return view('addinv.create');
     }
 
     /**
@@ -34,7 +36,22 @@ class AddInvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $box = $request->box;
+        $kits = $request->kits;
+
+
+        foreach ($kits as $kit){
+            BoxContent::create([
+                'box_id' => $box,
+                'kit_id' => $kit['id']
+            ]);
+        }
+
+        return response()->json([
+            'box' => $box,
+            'kits' =>$kits
+        ]);
+
     }
 
     /**

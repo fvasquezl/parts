@@ -44,6 +44,7 @@ Route::middleware('auth')
 
 
 
+
         Route::post('/lcn',[LcnController::class,'index']);
         Route::post('/subcategories',[SubcategoryController::class,'index']);
         Route::resource('parts', PartReferenceController::class);
@@ -52,7 +53,8 @@ Route::middleware('auth')
         Route::get('qrcode/box/{box}', [QrCodeController::class,'box'])->name('qrcode.box');
         Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf');
 
-        Route::post('validate/box', [ValidateController::class,'box'])->name('validate.box');
+        Route::post('validate/box-kits', [ValidateController::class,'box_kits'])->name('validate.box');
+
 //        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
 
         Route::get('/kit-parts/{kit}/edit',[KitPartController::class,'edit'])->name('kit-parts.edit');
