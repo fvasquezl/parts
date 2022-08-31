@@ -343,7 +343,7 @@ return [
                     'url'  => '#',
                 ],
             ],
-            'can'  =>  'isAdmin'
+
         ],
 
     ],
