@@ -23,9 +23,9 @@ class ValidateController extends Controller
             return $this->box($request->data);
         }
 
-        return response()->json([
-           'err' => 'There are an error with the information',
-        ]);
+        return response()->json(
+            'There are an error with the information',
+        );
     }
     public function box($data)
     {

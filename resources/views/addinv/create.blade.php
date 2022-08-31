@@ -33,6 +33,7 @@
                         {{ __('Add Inv ')}}
                     </h3>
                     <div class="card-tools">
+                        <button class="btn btn-info btn-sm" id="reset">Reset</button>
                     </div>
                 </div>
 
@@ -62,9 +63,7 @@
 @stop
 
 @section('js')
-{{--    // BOX10022--}}
-{{--    // MTC7ST0799-KIT--}}
-{{--    // MTBACT0284-KIT--}}
+
     <script>
         let aux='';
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -172,6 +171,10 @@
 
             }
 
+        });
+
+        document.getElementById('reset').addEventListener("click", (e) => {
+            location.reload();
         });
 
 
