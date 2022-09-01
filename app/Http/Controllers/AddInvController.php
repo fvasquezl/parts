@@ -32,13 +32,12 @@ class AddInvController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $box = $request->box;
         $kits = $request->kits;
-
 
         foreach ($kits as $kit){
             BoxContent::create([
@@ -47,10 +46,9 @@ class AddInvController extends Controller
             ]);
         }
 
-        return response()->json([
-            'box' => $box,
-            'kits' =>$kits
-        ]);
+        return response()->json(
+            'The Information has been saved Successfully'
+        );
 
     }
 

@@ -4,73 +4,48 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Box;
-use App\Models\BoxContent;
 use App\Models\Kit;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ValidateController extends Controller
 {
 
-    public function box_kits(Request $request)
+    public function box(Request $request)
     {
-        if(Str::substr($request->data, -3) == 'KIT'){
-            return $this->kit($request->data);
-        }
-
-        if(Str::substr($request->data, 0,3) == 'BOX'){
-            return $this->box($request->data);
-        }
-
-        return response()->json(
-            'There are an error with the information',
-        );
-    }
-    public function box($data)
-    {
-        $id = Str::substr($data, 3);
+        $id = Str::substr($request->data, 3);
         $box = Box::whereBox_id($id)->first();
         if ($box){
             return response()->json([
                 'id' => $box->box_id,
-                'type' => 'box',
-                'created_at' => $box->created_at
+                'name' => 'BOX'.$box->box_id,
             ]);
         }
-
         return response()->json(
-            'There an error with the Box Information'
+            'There an error with the BOX Information'
         );
-
-
     }
-    public function kit($data)
+
+    public function kit(Request $request)
     {
+        $kit = Kit::where('KitLCN',$request->data)->first();
 
-        $kit = Kit::where('KitLCN',$data)->first();
+        $request['kit_id'] = $kit->KitID;
+        $request->validate([
+            "kit_id" => Rule::unique('sqlsrv.bin.BoxContent')
+        ]);
 
-        try {
-            $exists = BoxContent::where('kit_id',$kit->KitID)->first();
-        } catch (Exception $e) {
-
-            return false;
-        }
-
-
-        if ($exists == null) {
             if ($kit){
                 return response()->json([
                     'id' => $kit->KitID,
-                    'type' => 'kit',
-                    'created_at' => $kit->created_at
+                    'name' => $kit->KitLCN,
                 ]);
             }
-        }
-
 
         return response()->json(
-            'This Kit Exists on the table',
+            'There an error with the KIT Information',
         );
     }
+
 }

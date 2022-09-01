@@ -41,14 +41,15 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
 
-                                <label for="el" class="col-form-label text-md-end">{{ __('Scan') }}</label>
-                                <input id="el" type="text" class="form-control" name="el" autofocus>
+                            <label for="el" class="col-form-label text-md-end">{{ __('Scan') }}</label>
+                            <input id="el" type="text" class="form-control" name="el" autofocus>
+                            <div class="mt-2">
+                                <ul id="message"></ul>
 
+                            </div>
                         </div>
 
-                        <div class="col-md-6 mt-5">
-                            <p id="message"></p>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -75,103 +76,112 @@
         }
 
         async function postData(box,kits){
-
-            let uniqueKits =getUniqueListBy(kits, 'id')
-
+            try {
             const response = await fetch('/add-inv',{
                 method: 'POST',
-                body: JSON.stringify({box:box.id,kits:uniqueKits}),
+                body: JSON.stringify({box:box.id,kits:kits}),
                 headers:headers
             })
-            const data = await response.json()
 
-
-            console.log(data)
-
+                const data = await response.json()
+                return data
+            }
+            catch(err) {
+                console.log(err);
+                addElementList(`Error: ${err}`)
+            }
         }
 
-        function getUniqueListBy(arr, key) {
-            return [...new Map(arr.map(item => [item[key], item])).values()]
+
+        async function getData(value,url){
+            try {
+                const response = await fetch(`${url}`,{
+                    method: 'POST',
+                    body: JSON.stringify({data:value}),
+                    headers:headers
+                })
+                const data = await response.json()
+                return data
+
+            }
+            catch(err) {
+                console.log(err);
+                addElementList(`Error: ${err}`)
+            }
         }
 
 
+        let box = {};
+        let kits =[]
 
-        async function getData(value){
-            const response = await fetch('/validate/box-kits',{
-                method: 'POST',
-                body: JSON.stringify({data:value}),
-                headers:headers
-            })
-            const data = await response.json()
-            console.log(data)
-            const {id,type,created_at} = data
-            if(!id){
-                document.getElementById('message').innerHTML = data
-            }else {
-                if(i===0 && type !== 'box'){
-                    document.getElementById('message').innerHTML = 'You need to add a box first'
-                }else {
-                    if (i === 1 && type === 'box') {
-                        document.getElementById('message').innerHTML = 'Need add kits'
-                    }else{
-                        if (i >= 2 && id === box.id && created_at === box.created_at && type === 'box') {
-                            document.getElementById('message').innerHTML = 'Submited'
-                            await postData(box,kits)
+        document.querySelector('input[name="el"]').addEventListener("keyup", (e) => {
+            // BOX10016   MTC68T0573-KIT  MTC8UT0197-KIT  MTBACT0284-KIT  MTC7ST0799-KIT
+            let myValue = e.target.value;
 
-                            location.reload();
-                            // box.id=''
-                            // box.created_at =''
-                            // kits =[];
+
+            if (e.key === "Enter") {
+
+                getKitData()
+                async function getKitData() {
+                    if(!box.id)
+                        await getData(myValue,'/validate/box').then(
+                            data => {
+                                if (!data.errors) {
+                                    box = {'id': data.id, 'name': data.name}
+                                    addElementList(`Box: ${data.name}`)
+                                }else{
+                                    addElementList(`Error: ${data.message}`)
+                                }
+                            }
+                        );
+                    else{
+                        if (myValue !== box.name) {
+                            if (!kits.some(code => code.name === myValue)){
+                                await getData(myValue,'/validate/kit').then(
+                                    data => {
+                                        if (!data.errors) {
+                                            kits.push({'id':data.id,'name':data.name})
+                                            addElementList(`Kit: ${data.name}`)
+                                        }else{
+                                            addElementList(`Error: ${data.message}`)
+                                        }
+                                    }
+                                );
+                            }
                         }else{
-                            if (i === 0 && type === 'box') {
-                                box.id = id
-                                box.created_at = created_at
-                                document.getElementById('message').innerHTML = 'Box ' + box.id
-                                i++
-                            } else {
-                                kits[j] = Object.create(kit)
-                                kits[j].id = id
-                                kits[j].created_at = created_at
-                                document.getElementById('message').innerHTML = 'Kit ' + kits[j].id
-                                i++
-                                j++
+                            if (kits.length < 1){
+                                addElementList('Msg: Need add Kit first')
+                            }else{
+                                addElementList('msg: Submitting...')
+                                await postData(box,kits,'/validate/kit').then(
+                                    data => {
+                                        if (!data.errors){
+                                            addElementList(`Msg: ${data}`)
+                                        }else {
+                                            addElementList(`Error: ${data.errors}`)
+                                        }
+                                    }
+                                )
+                                await new Promise(r => setTimeout(r, 1000));
+                                location.reload();
                             }
                         }
                     }
                 }
             }
+
+        });
+
+
+        function addElementList(content) {
+            const ul = document.getElementById("message");
+            const li = document.createElement("li");
+            li.appendChild(document.createTextNode(content));
+            ul.appendChild(li);
             document.getElementById('el').value = ''
             document.getElementById('el').focus()
         }
 
-
-        let box = {
-            id:null,
-            created_at:null
-        };
-        const kit = {
-            id:null,
-            created_at:null
-        };
-        let kits =[]
-        let i=0
-        let j=0
-
-
-        document.querySelector('input[name="el"]').addEventListener("keyup", (e) => {
-
-            let myValue = e.target.value;
-            if (e.key === "Enter") {
-
-                getKitData()
-                async function getKitData() {
-                    await getData(myValue)
-                }
-
-
-            }
-
-        });
 
         document.getElementById('reset').addEventListener("click", (e) => {
             location.reload();
