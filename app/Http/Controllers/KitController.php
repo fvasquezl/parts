@@ -16,7 +16,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+
 
 class KitController extends Controller
 {
@@ -50,8 +50,9 @@ class KitController extends Controller
                     return $kit->country->CountryName;
                 })
                 ->addColumn('Actions', function(){
-                    $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
-                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
+                    $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
+                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>
+                         <button class="btn btn-sm btn-danger del-btn"><i class="fas fa-trash"></i></button>';
                     return $btns;
                 })
                 ->rawColumns(['Actions'])
@@ -172,10 +173,19 @@ class KitController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Kit $kit
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Kit $kit)
     {
-        //
+
+         \DB::select("EXEC [prt].[sp_NukeKit] $kit->KitID" );
+
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ueeeee'
+        ], 200);
     }
 }
+

@@ -22,7 +22,7 @@
         @endif
 
         <div class="row">
-            <div class="col-lg-12 my-3">
+            <div class="col-lg-12 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
@@ -30,17 +30,14 @@
                         </h3>
                         <div class="card-tools">
 
-                            {{--                        @can('create',$kits->first())--}}
-
                             <a class="btn btn-primary" href="{{ route('kits.create') }}">
                                 <i class="fa fa-plus"></i> Create Kit
                             </a>
-                            {{--                        @endcan--}}
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-striped table-hover table-bordered" id="kitsTable">
+                        <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -54,55 +51,9 @@
                                 <th>Subcategory</th>
                                 <th>Serial Number</th>
                                 <th>Country</th>
-                                <th>Manufactured At</th>
+                                <th>Manuf. At</th>
                             </tr>
                             </thead>
-                            {{--                        <tbody>--}}
-                            {{--                        @foreach($kits as $kit)--}}
-                            {{--                            <tr>--}}
-
-                            {{--                                <td>{{$kit->KitID}}</td>--}}
-                            {{--                                <td>--}}
-                            {{--                                    <button class="qrcode btn btn-sm btn-dark">--}}
-                            {{--                                        <i class="fas fa-print"></i>--}}
-                            {{--                                    </button>--}}
-
-                            {{--                                    <a href="{{ route('kits.show',$kit) }}" class="btn btn-sm btn-default"--}}
-                            {{--                                       target="_blank">--}}
-                            {{--                                        <i class="fas fa-eye"></i>--}}
-                            {{--                                    </a>--}}
-
-
-                            {{--                                    --}}{{--                                    @can('update', $kit)--}}
-                            {{--                                    <a href="{{ route('kits.edit',$kit) }}" class="btn btn-sm btn-info">--}}
-                            {{--                                        <i class="fas fa-edit"></i>--}}
-                            {{--                                    </a>--}}
-                            {{--                                    --}}{{--                                    @endcan--}}
-
-                            {{--                                    --}}{{--                                    @can('delete',$kit)--}}
-                            {{--                                    --}}{{--                                        <form  method="POST" action="{{ route('kits.destroy', $kit) }}"--}}
-                            {{--                                    --}}{{--                                               style="display:inline">--}}
-                            {{--                                    --}}{{--                                            @csrf @method('DELETE')--}}
-                            {{--                                    --}}{{--                                            <button class="btn btn-sm btn-danger"--}}
-                            {{--                                    --}}{{--                                                    onclick="return confirm('¿Estas seguro de eliminar esta publicacion?')">--}}
-                            {{--                                    --}}{{--                                                <i class="fas fa-trash-alt"></i></button>--}}
-                            {{--                                    --}}{{--                                        </form>--}}
-                            {{--                                    --}}{{--                                    @endcan--}}
-                            {{--                                </td>--}}
-                            {{--                                <td>{{$kit->LCN}}</td>--}}
-                            {{--                                <td>{{$kit->workCenter->WorkCenterName}}</td>--}}
-                            {{--                                <td>{{$kit->KitLCN}}</td>--}}
-                            {{--                                <td>{{$kit->Brand}}</td>--}}
-                            {{--                                <td>{{$kit->Model}}</td>--}}
-                            {{--                                <td>{{$kit->category->CategoryName}}</td>--}}
-                            {{--                                <td>{{$kit->subCategory->SubCategoryName}}</td>--}}
-                            {{--                                <td>{{$kit->ProductSerialNumber}}</td>--}}
-                            {{--                                <td>{{$kit->country->CountryName}}</td>--}}
-                            {{--                                <td>{{$kit->getDateManufactured()}}</td>--}}
-
-                            {{--                            </tr>--}}
-                            {{--                        @endforeach--}}
-                            {{--                        </tbody>--}}
                         </table>
                     </div>
                 </div>
@@ -115,12 +66,15 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
+
+
 @stop
 
 @section('js')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         let $kitsTable;
@@ -134,7 +88,8 @@
             let $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
                 responsive: true,
-                serverSide: true,
+
+                scrollY: "53vh",
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'KitID',name: 'KitID'},
@@ -149,6 +104,12 @@
                     {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
                     {data: 'Country',name: 'Country'},
                     {data: 'DateManufactured',name: 'DateManufactured'}
+                ],
+                columnDefs: [
+                    {
+                        targets: [1],width: 100
+                    }
+
                 ]
             });
 
@@ -176,7 +137,53 @@
                 $(location).attr('href', 'kits/'+rowId+'/edit');
             });
 
+            $(document).on('click', '.del-btn', function (e) {
+
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                let $tr = $(this).closest('tr');
+                let rowId = $tr.attr('ID');
+                let url = 'kits/'+rowId;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        let request = $.ajax({
+                            url: url,
+                            type: 'delete',
+                            dataType: 'json',
+                        });
+                        request.done(function (data) {
+                            Swal.fire(
+                                'Deleted!',
+                                data.message,
+                                'success'
+                            );
+                            $kitsTable.draw();
+                        });
+                        request.fail(function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire('Failed!', "There was something wrong", "warning");
+                        });
+                    }
+                });
+
+
+                // e.stopPropagation();
+                // let $tr = $(this).closest('tr');
+                // let rowId = $tr.attr('ID');
+                // $(location).attr('href', 'kits/'+rowId+'/edit');
+            });
         });
+
+
     </script>
 @stop
 
