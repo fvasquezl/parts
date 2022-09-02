@@ -128,7 +128,7 @@
                             data => {
                                 if (!data.errors) {
                                     box = {'id': data.id, 'name': data.name}
-                                    addElementList(`Box: ${data.name}`)
+                                    addElementList(`Adding to ${data.name}`)
                                 }else{
                                     addElementList(`Error: ${data.message}`)
                                 }
@@ -141,20 +141,20 @@
                                     data => {
                                         if (!data.errors) {
                                             kits.push({'id':data.id,'name':data.name})
-                                            addElementList(`Kit: ${data.name}`)
+                                            addElementList(`Adding Kit ${data.name} to BOX${box.id}`)
                                         }else{
                                             addElementList(`Error: ${data.message}`)
                                         }
                                     }
                                 );
                             }else{
-                                addElementList(`Msg: This Kit has been added`)
+                                addElementList(`Msg: Kit already scanned.`)
                             }
                         }else{
                             if (kits.length < 1){
-                                addElementList('Msg: Need add Kit first')
+                                addElementList('Msg: Need to add kit first.')
                             }else{
-                                addElementList('msg: Submitting...')
+                                addElementList('msg: Processing...')
                                 await postData(box,kits,'/validate/kit').then(
                                     data => {
                                         if (!data.errors){

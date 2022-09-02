@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorekitRequest;
 use App\Http\Requests\UpdatekitRequest;
 use App\Http\Resources\KitResource;
+use App\Models\BoxContent;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
@@ -34,21 +35,29 @@ class KitController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->editColumn('WorkCenter', function ($kit) {
-                    return $kit->workCenter->WorkCenterName;
+                ->addColumn('BoxID', function ($box) {
+
+                    if ($mbox = BoxContent::select('box_id')->where('kit_id',$box->KitID)->first()) {
+                        return 'BOX'.$mbox->box_id;
+                    }else{
+                        return 'No BOX Yet';
+                    }
                 })
-                ->editColumn('DateManufactured', function ($kit) {
-                    return $kit->getDateManufactured();
-                })
-                ->editColumn('CategoryName', function ($kit) {
-                    return $kit->category->CategoryName;
-                })
-                ->editColumn('SubCategoryName', function ($kit) {
-                    return $kit->subCategory->SubCategoryName;
-                })
-                ->editColumn('Country', function ($kit) {
-                    return $kit->country->CountryName;
-                })
+//                ->editColumn('WorkCenter', function ($kit) {
+//                    return $kit->workCenter->WorkCenterName;
+//                })
+//                ->editColumn('DateManufactured', function ($kit) {
+//                    return $kit->getDateManufactured();
+//                })
+//                ->editColumn('CategoryName', function ($kit) {
+//                    return $kit->category->CategoryName;
+//                })
+//                ->editColumn('SubCategoryName', function ($kit) {
+//                    return $kit->subCategory->SubCategoryName;
+//                })
+//                ->editColumn('Country', function ($kit) {
+//                    return $kit->country->CountryName;
+//                })
                 ->addColumn('Actions', function () {
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';

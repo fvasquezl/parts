@@ -40,18 +40,19 @@
                         <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Actions</th>
-                                <th>LCN</th>
-                                <th>WorkCenter</th>
                                 <th>Kit LCN</th>
+                                <th>BoxID</th>
+                                <th>Actions</th>
+{{--                                <th>LCN</th>--}}
+{{--                                <th>WorkCenter</th>--}}
+{{--                                <th>Kit LCN</th>--}}
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>Category</th>
-                                <th>Subcategory</th>
-                                <th>Serial Number</th>
-                                <th>Country</th>
-                                <th>Manuf. At</th>
+{{--                                <th>Category</th>--}}
+{{--                                <th>Subcategory</th>--}}
+{{--                                <th>Serial Number</th>--}}
+{{--                                <th>Country</th>--}}
+{{--                                <th>Manuf. At</th>--}}
                             </tr>
                             </thead>
                         </table>
@@ -92,18 +93,20 @@
                 scrollY: "53vh",
                 ajax: "{{route('kits.index')}}",
                 columns: [
-                    {data: 'KitID',name: 'KitID'},
-                    {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
-                    {data: 'LCN',name: 'LCN'},
-                    {data: 'WorkCenter',name: 'WorkCenter'},
                     {data: 'KitLCN',name: 'KitLCN'},
+
+                     {data: 'BoxID',name: 'BoxID'},
+                    {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
+                    // {data: 'LCN',name: 'LCN'},
+                    // {data: 'WorkCenter',name: 'WorkCenter'},
+
                     {data: 'Brand',name: 'Brand'},
                     {data: 'Model',name: 'Model'},
-                    {data: 'CategoryName',name: 'CategoryName'},
-                    {data: 'SubCategoryName',name: 'SubCategoryName'},
-                    {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
-                    {data: 'Country',name: 'Country'},
-                    {data: 'DateManufactured',name: 'DateManufactured'}
+                    // {data: 'CategoryName',name: 'CategoryName'},
+                    // {data: 'SubCategoryName',name: 'SubCategoryName'},
+                    // {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
+                    // {data: 'Country',name: 'Country'},
+                    // {data: 'DateManufactured',name: 'DateManufactured'}
                 ],
                 columnDefs: [
                     {

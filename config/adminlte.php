@@ -278,22 +278,56 @@ return [
         ],
 
         // Sidebar items:
+//        [
+//            'type' => 'sidebar-menu-search',
+//            'text' => 'search',
+//        ],
+//        [
+//            'text' => 'blog',
+//            'url'  => 'admin/blog',
+//            'can'  =>  'isAdmin'
+//        ],
+//        [
+//            'text'        => 'pages',
+//            'url'         => 'admin/pages',
+//            'icon'        => 'far fa-fw fa-file',
+//            'label'       => 4,
+//            'label_color' => 'success',
+//            'can'  =>  'isAdmin'
+//        ],
+        ['header' => 'OPERATIONS'],
+
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Kits',
+            'url'  => 'kits',
+            'icon' => 'fas fa-fw fa-layer-group',
         ],
+
+
+//        [
+//            'text' => 'Fill Box',
+//            'url'  => 'fill-box',
+//            'icon' => 'fas fa-fw fa-fill',
+//            'can'  =>  'isAdmin'
+//        ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  =>  'isAdmin'
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-            'can'  =>  'isAdmin'
+            'text'    => 'Inventory',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Add Inv',
+                    'url'  => 'add-inv/create',
+                ],
+                [
+                    'text'  => 'Remove Inv',
+                    'url'   => 'rem-inv',
+                ],
+//                [
+//                    'text' => 'level_one',
+//                    'url'  => '#',
+//                ],
+            ],
+
         ],
         ['header' => 'account_settings'],
         [
@@ -301,11 +335,6 @@ return [
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-users',
             'can'  =>  'isAdmin'
-        ],
-        [
-            'text' => 'Kits',
-            'url'  => 'kits',
-            'icon' => 'fas fa-fw fa-layer-group',
         ],
         [
             'text' => 'Boxes',
@@ -319,33 +348,6 @@ return [
             'icon' => 'fas fa-fw fa-dolly',
 
         ],
-
-        [
-            'text' => 'Fill Box',
-            'url'  => 'fill-box',
-            'icon' => 'fas fa-fw fa-fill',
-            'can'  =>  'isAdmin'
-        ],
-        [
-            'text'    => 'Inventory',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Add Inv',
-                    'url'  => 'add-inv/create',
-                ],
-                [
-                    'text'  => 'Remove Inv',
-                    'url'   => 'rem-inv',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-
-        ],
-
     ],
 
     /*

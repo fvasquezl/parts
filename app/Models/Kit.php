@@ -49,6 +49,10 @@ class Kit extends Model
     }
 
 
+    ///RElacionar Kit con BoxContent y
+    /// PartKitsData necesita estar relacionado con BoxContent
+
+
 //    public function setDateManufactured($value)
 //    {
 //        $this->attributes['DateManufactured'] = Carbon::createFromFormat()
