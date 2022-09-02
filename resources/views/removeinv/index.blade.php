@@ -3,7 +3,7 @@
 @section('title', 'AddInv')
 
 @section('content_header')
-    <h1>Add Inventory</h1>
+    <h1>Remove Inventory</h1>
 @stop
 
 @section('content')
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
-                        {{ __('Add Inv ')}}
+                        {{ __('Remove Inventory')}}
                     </h3>
                     <div class="card-tools">
                         <button class="btn btn-info btn-sm" id="reset">Reset</button>
@@ -41,15 +41,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
 
-                            <label for="el" class="col-form-label text-md-end">{{ __('Scan') }}</label>
+                            <label for="el" class="col-form-label text-md-end">{{ __('Scan Kit') }}</label>
                             <input id="el" type="text" class="form-control" name="el" autofocus>
                             <div class="mt-2">
                                 <ul id="message"></ul>
 
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -64,7 +62,7 @@
 @stop
 
 @section('js')
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let aux='';
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -75,13 +73,12 @@
             "X-CSRF-TOKEN": token
         }
 
-        async function postData(box,kits){
+        async function deleteData(url){
             try {
-            const response = await fetch('/add-inv',{
-                method: 'POST',
-                body: JSON.stringify({box:box.id,kits:kits}),
-                headers:headers
-            })
+                const response = await fetch(`${url}`,{
+                    method: 'DELETE',
+                    headers:headers
+                })
 
                 const data = await response.json()
                 return data
@@ -111,68 +108,57 @@
         }
 
 
-        let box = {};
-        let kits =[]
+        let kit = {};
 
         document.querySelector('input[name="el"]').addEventListener("keyup", (e) => {
-            // BOX10016   MTC68T0573-KIT  MTC8UT0197-KIT  MTBACT0284-KIT  MTC7ST0799-KIT
+            // MTC8CT1016-KIT
             let myValue = e.target.value;
-
 
             if (e.key === "Enter") {
 
                 getKitData()
                 async function getKitData() {
-                    if(!box.id)
-                        await getData(myValue,'/validate/box').then(
-                            data => {
-                                if (!data.errors) {
-                                    box = {'id': data.id, 'name': data.name}
-                                    addElementList(`Box: ${data.name}`)
-                                }else{
-                                    addElementList(`Error: ${data.message}`)
-                                }
-                            }
-                        );
-                    else{
-                        if (myValue !== box.name) {
-                            if (!kits.some(code => code.name === myValue)){
-                                await getData(myValue,'/validate/kit').then(
-                                    data => {
-                                        if (!data.errors) {
-                                            kits.push({'id':data.id,'name':data.name})
-                                            addElementList(`Kit: ${data.name}`)
-                                        }else{
-                                            addElementList(`Error: ${data.message}`)
-                                        }
-                                    }
-                                );
+                    await getData(myValue,'/validate/kit').then(
+                        data => {
+                            if (!data.errors) {
+                                kit = {'id': data.id, 'name': data.name}
+                                addElementList(`Kit: ${data.name}`)
                             }else{
-                                addElementList(`Msg: This Kit has been added`)
+                                addElementList(`Error: ${data.message}`)
                             }
-                        }else{
-                            if (kits.length < 1){
-                                addElementList('Msg: Need add Kit first')
-                            }else{
-                                addElementList('msg: Submitting...')
-                                await postData(box,kits,'/validate/kit').then(
+                        }
+                    );
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            deleteKit()
+                            async function deleteKit() {
+                            await deleteData(`/kits/${kit.id}`).then(
                                     data => {
                                         if (!data.errors){
-                                            addElementList(`Msg: ${data}`)
+                                            Swal.fire(
+                                                'Deleted!',
+                                                data.message,
+                                                'success'
+                                            );
                                         }else {
-                                            addElementList(`Error: ${data.errors}`)
+                                            Swal.fire('Failed!', `${data.errors}`, "warning");
                                         }
                                     }
                                 )
-                                await new Promise(r => setTimeout(r, 1000));
-                                location.reload();
                             }
                         }
-                    }
+                    });
+
                 }
-
             }
-
         });
 
 
@@ -193,5 +179,6 @@
 
     </script>
 @stop
+
 
 

@@ -51,8 +51,7 @@ class KitController extends Controller
                 })
                 ->addColumn('Actions', function(){
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
-                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>
-                         <button class="btn btn-sm btn-danger del-btn"><i class="fas fa-trash"></i></button>';
+                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
                 ->rawColumns(['Actions'])
@@ -178,14 +177,13 @@ class KitController extends Controller
     public function destroy(Kit $kit)
     {
 
-         \DB::select("EXEC [prt].[sp_NukeKit] $kit->KitID" );
-
-
+     $ret =   \DB::select("EXEC [prt].[sp_NukeKit] $kit->KitID;" );
 
         return response()->json([
-            'success' => true,
-            'message' => 'ueeeee'
+            'success' => $ret,
+            'message' => $ret
         ], 200);
     }
 }
 
+//message	"SQLSTATE[IMSSP]: The active result for the query contains no fields. (SQL: EXEC [prt].[sp_NukeKit] 26)"

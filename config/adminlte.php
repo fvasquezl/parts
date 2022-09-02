@@ -336,7 +336,7 @@ return [
                 ],
                 [
                     'text'  => 'Remove Inv',
-                    'url'   => '#',
+                    'url'   => 'rem-inv',
                 ],
                 [
                     'text' => 'level_one',

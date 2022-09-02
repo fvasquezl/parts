@@ -12,6 +12,7 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\PartReferenceController;
+use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -40,6 +41,7 @@ Route::middleware('auth')
         Route::resource('shelves', ShelfController::class);
         Route::resource('fill-box', FillBoxController::class);
         Route::resource('add-inv', AddInvController::class);
+        Route::resource('rem-inv', RemoveInvController::class);
 
 
 

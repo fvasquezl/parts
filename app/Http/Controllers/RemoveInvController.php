@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\BoxContent;
 use App\Models\Kit;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AddInvController extends Controller
+class RemoveInvController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View|Application
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
-        //
+        return view('removeinv.index');
     }
 
     /**
@@ -25,38 +28,18 @@ class AddInvController extends Controller
      */
     public function create()
     {
-        return view('addinv.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $box = $request->box;
-        $kits = $request->kits;
 
-        foreach ($kits as $kit){
-
-            if($boxContent =BoxContent::where('kit_id', $kit)->first()){
-                 $boxContent->update([
-                         'box_id' => $box
-                     ]);
-
-            }else{
-                BoxContent::create([
-                    'box_id' => $box,
-                    'kit_id' => $kit['id']
-                ]);
-            }
-        }
-
-        return response()->json(
-            'The Information has been saved Successfully'
-        );
 
     }
 

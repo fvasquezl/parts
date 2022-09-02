@@ -7,7 +7,7 @@ use App\Models\Box;
 use App\Models\Kit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+
 
 class ValidateController extends Controller
 {
@@ -31,17 +31,12 @@ class ValidateController extends Controller
     {
         $kit = Kit::where('KitLCN',$request->data)->first();
 
-        $request['kit_id'] = $kit->KitID;
-        $request->validate([
-            "kit_id" => Rule::unique('sqlsrv.bin.BoxContent')
-        ]);
-
-            if ($kit){
-                return response()->json([
-                    'id' => $kit->KitID,
-                    'name' => $kit->KitLCN,
-                ]);
-            }
+        if ($kit){
+            return response()->json([
+                'id' => $kit->KitID,
+                'name' => $kit->KitLCN,
+            ]);
+        }
 
         return response()->json(
             'There an error with the KIT Information',
