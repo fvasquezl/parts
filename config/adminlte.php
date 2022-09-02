@@ -340,13 +340,13 @@ return [
             'text' => 'Boxes',
             'url'  => 'boxes',
             'icon' => 'fas fa-fw fa-box',
-
+            'can'  =>  'isAdmin'
         ],
         [
             'text' => 'Shelves',
             'url'  => 'shelves',
             'icon' => 'fas fa-fw fa-dolly',
-
+            'can'  =>  'isAdmin'
         ],
     ],
 

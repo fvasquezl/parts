@@ -16,6 +16,9 @@ class ShelfController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
+                ->editColumn('shelf_id', function($shelf) {
+                    return 'SHELF'.$shelf->shelf_id;
+                })
                 ->editColumn('created_at', function($shelf) {
                     return $shelf->getCreatedAt();
                 })

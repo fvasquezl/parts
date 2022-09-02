@@ -15,6 +15,9 @@ class BoxController extends Controller
             $data = Box::query();
             return datatables($data)
                 ->addIndexColumn()
+                ->editColumn('box_id', function($box) {
+                    return 'BOX'.$box->box_id;
+                })
                 ->editColumn('date_created', function($box) {
                     return $box->getDateCreated();
                 })
