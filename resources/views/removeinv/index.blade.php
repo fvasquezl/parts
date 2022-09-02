@@ -3,7 +3,7 @@
 @section('title', 'AddInv')
 
 @section('content_header')
-    <h1>Remove Inventory</h1>
+    <h1>Remove Kit From Inventory</h1>
 @stop
 
 @section('content')
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
-                        {{ __('Remove Inventory')}}
+                        {{ __('Remove Kits From Inventory')}}
                     </h3>
                     <div class="card-tools">
                         <button class="btn btn-info btn-sm" id="reset">Reset</button>
@@ -142,21 +142,24 @@
                             async function deleteKit() {
                             await deleteData(`/kits/${kit.id}`).then(
                                     data => {
-                                        if (!data.errors){
+                                        if (data.success !== '0'){
                                             Swal.fire(
                                                 'Deleted!',
                                                 data.message,
                                                 'success'
-                                            );
+                                            ).then(()=>{
+                                                location.reload()
+                                            });
                                         }else {
-                                            Swal.fire('Failed!', `${data.errors}`, "warning");
+                                            Swal.fire('Failed!', "elements No found").then(()=>{
+                                                location.reload()
+                                            });
                                         }
                                     }
                                 )
                             }
                         }
                     });
-
                 }
             }
         });
