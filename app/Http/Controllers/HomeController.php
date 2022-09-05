@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kit;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,37 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+
+        $perday = DB::table('prt.PartsKitData')
+            ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
+            ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::yesterday(), Carbon::now()])
+            ->groupBy("prt.users.name")
+            ->get();
+
+        $perweek = DB::table('prt.PartsKitData')
+            ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
+            ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(7), Carbon::now()])
+            ->groupBy("prt.users.name")
+            ->get();
+
+        $permonth = DB::table('prt.PartsKitData')
+            ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
+            ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(30), Carbon::now()])
+            ->groupBy("prt.users.name")
+            ->get();
+
+        $lifetime = DB::table('prt.PartsKitData')
+            ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
+            ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
+            ->groupBy("prt.users.name")
+            ->get();
+
+
+
+        return view('home',compact('perday','perweek','permonth','lifetime'));
     }
 }
