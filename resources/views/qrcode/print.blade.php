@@ -82,7 +82,7 @@
         </tr>
         <tr>
             <td>
-                {!! QrCode::size(40)->generate($kitlcn);!!}
+                {!! QrCode::size(60)->generate($kitlcn);!!}
             </td>
             <td class="text-left">
                 <ul><br>
