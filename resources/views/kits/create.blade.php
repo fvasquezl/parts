@@ -198,9 +198,9 @@
                                         <label for="DateManufactured"
                                                class="col-form-label text-md-end">{{ __('Date Manufactured') }}</label>
 
-                                        <input id="DateManufactured" type="date"
+                                        <input id="DateManufactured" type="month"
                                                class="form-control @error('DateManufactured') is-invalid @enderror"
-                                               name="DateManufactured" value="{{ old('DateManufactured') }}"
+                                               name="DateManufactured" value="{{ old('DateManufactured') }}" min="2015-01"
                                                autocomplete="DateManufactured" autofocus>
 
                                         @error('DateManufactured')
@@ -349,6 +349,7 @@
                     return false;
                 }
             });
+
         });
 
 
