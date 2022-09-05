@@ -20,7 +20,7 @@
             height: 1in; /* plus .125 inches from padding */
             /*padding: .125in .3in 0;*/
             margin-right: 0in; /* the gutter */
-            margin-top: 0.1in ;
+            margin-top: 0.2in ;
 
             float: left;
             font-size: small;
@@ -39,7 +39,7 @@
         }
 
         ul {
-            width: 200px;
+            width: 250px;
             overflow: hidden;
             padding: 5px;
         }
@@ -91,7 +91,6 @@
                     <li>{{$model}}</li>
                 </ul>
             </td>
-
         </tr>
 
     </table>
