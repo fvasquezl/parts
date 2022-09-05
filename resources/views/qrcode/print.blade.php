@@ -20,7 +20,7 @@
             height: 1in; /* plus .125 inches from padding */
             /*padding: .125in .3in 0;*/
             margin-right: 0in; /* the gutter */
-            margin-top: 0.2in ;
+            margin-top: 0.3in ;
 
             float: left;
             font-size: small;
