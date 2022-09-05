@@ -40,6 +40,7 @@
                         <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
                             <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Kit LCN</th>
                                 <th>BoxID</th>
                                 <th>Actions</th>
@@ -52,7 +53,7 @@
 {{--                                <th>Subcategory</th>--}}
 {{--                                <th>Serial Number</th>--}}
 {{--                                <th>Country</th>--}}
-{{--                                <th>Manuf. At</th>--}}
+                                <th>Url</th>
                             </tr>
                             </thead>
                         </table>
@@ -93,6 +94,7 @@
                 scrollY: "53vh",
                 ajax: "{{route('kits.index')}}",
                 columns: [
+                    {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
 
                      {data: 'BoxID',name: 'BoxID'},
@@ -106,13 +108,20 @@
                     // {data: 'SubCategoryName',name: 'SubCategoryName'},
                     // {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
                     // {data: 'Country',name: 'Country'},
-                    // {data: 'DateManufactured',name: 'DateManufactured'}
+                    {data: 'url',name: 'url'}
                 ],
                 columnDefs: [
                     {
-                        targets: [1],width: 100
-                    }
+                        targets: [0],
+                        searchable: true,
+                        visible: false,
 
+                    },
+                    {
+                        targets: [6],
+                        searchable: true,
+                        visible: false
+                    }
                 ]
             });
 
