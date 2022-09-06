@@ -282,11 +282,12 @@ return [
 //            'type' => 'sidebar-menu-search',
 //            'text' => 'search',
 //        ],
-//        [
-//            'text' => 'blog',
-//            'url'  => 'admin/blog',
+        [
+            'text' => 'Dashboard',
+            'url'  => 'home',
+            'icon' => 'fas fa-tachometer-alt',
 //            'can'  =>  'isAdmin'
-//        ],
+        ],
 //        [
 //            'text'        => 'pages',
 //            'url'         => 'admin/pages',

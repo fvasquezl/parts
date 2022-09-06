@@ -16,7 +16,10 @@ class Kit extends Model
 //    public $timestamps = false;
     protected $guarded = [];
 
-    protected $dates = ['DateManufactured'];
+    protected $dates = [
+        'DateManufactured',
+        'created_at'
+    ];
 
     public function category(): BelongsTo
     {

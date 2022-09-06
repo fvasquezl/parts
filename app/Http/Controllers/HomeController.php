@@ -32,21 +32,21 @@ class HomeController extends Controller
         $perday = DB::table('prt.PartsKitData')
             ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
             ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
-            ->whereBetween('prt.PartsKitData.created_at', [Carbon::yesterday(), Carbon::now()])
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today(), Carbon::tomorrow()])
             ->groupBy("prt.users.name")
             ->get();
 
         $perweek = DB::table('prt.PartsKitData')
             ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
             ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
-            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(7), Carbon::now()])
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(7), Carbon::tomorrow()])
             ->groupBy("prt.users.name")
             ->get();
 
         $permonth = DB::table('prt.PartsKitData')
             ->select("prt.users.name",DB::raw("count(prt.PartsKitData.KitID) as QtyCaptured"))
             ->leftJoin('prt.users', 'prt.PartsKitData.UserID', '=', 'prt.users.id')
-            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(30), Carbon::now()])
+            ->whereBetween('prt.PartsKitData.created_at', [Carbon::today()->subDays(30), Carbon::tomorrow()])
             ->groupBy("prt.users.name")
             ->get();
 
