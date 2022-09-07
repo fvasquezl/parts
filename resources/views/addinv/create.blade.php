@@ -38,6 +38,18 @@
                 </div>
 
                 <div class="card-body" id="mainForm">
+                    <p>
+                        Pasos (Steps):
+                        - Escanea el código QR de la caja para agregar kits
+                        /Scan the box QR code to add kits
+
+                        - Escanea el código QR del KIT para añadirlo a la caja
+                        /Scan the KIT QR code to add it to the box
+
+                        - Una vez hecho esto, escanee la caja para cerrar la caja.
+                        /Once done, scan the box to close the box.
+                    </p>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
 
