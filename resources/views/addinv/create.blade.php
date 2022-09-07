@@ -39,19 +39,19 @@
 
                 <div class="card-body" id="mainForm">
 
-                       <h2>Pasos (Steps):</h2>
+                       <h3>Pasos (Steps):</h3>
                     <ul>
                         <li>
                             Escanea el código QR de la caja para agregar kits.<br>
-                            /Scan the box QR code to add kits<
+                            Scan the box QR code to add kits
                         </li>
                         <li>
                             Escanea el código QR del KIT para añadirlo a la caja.<br>
-                            /Scan the KIT QR code to add it to the box
+                            Scan the KIT QR code to add it to the box
                         </li>
                         <li>
                             Una vez hecho esto, escanee la caja para cerrar la caja.<br>
-                            /Once done, scan the box to close the box.
+                            Once done, scan the box to close the box.
                         </li>
                     </ul>
 
