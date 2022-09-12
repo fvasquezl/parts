@@ -44,7 +44,7 @@
                                 <th>Kit LCN</th>
                                 <th>BoxID</th>
                                 <th>Actions</th>
-{{--                                <th>LCN</th>--}}
+{{--                                <th>No. Parts</th>--}}
 {{--                                <th>WorkCenter</th>--}}
 {{--                                <th>Kit LCN</th>--}}
                                 <th>Brand</th>
@@ -54,6 +54,7 @@
 {{--                                <th>Serial Number</th>--}}
 {{--                                <th>Country</th>--}}
                                 <th>Url</th>
+                                <th>Keywords</th>
                             </tr>
                             </thead>
                         </table>
@@ -89,9 +90,9 @@
 
             let $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
-                responsive: true,
-
+                // responsive: true,
                 scrollY: "53vh",
+                scrollX: true,
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'KitID',name: 'KitID'},
@@ -99,7 +100,7 @@
 
                      {data: 'BoxID',name: 'BoxID'},
                     {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
-                    // {data: 'LCN',name: 'LCN'},
+                    // {data: 'Parts',name: 'Parts'},
                     // {data: 'WorkCenter',name: 'WorkCenter'},
 
                     {data: 'Brand',name: 'Brand'},
@@ -108,13 +109,14 @@
                     // {data: 'SubCategoryName',name: 'SubCategoryName'},
                     // {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
                     // {data: 'Country',name: 'Country'},
-                    {data: 'url',name: 'url'}
+                    {data: 'url',name: 'url'},
+                    {data: 'Keywords',name: 'Keywords'}
                 ],
                 columnDefs: [
                     {
                         targets: [0],
                         searchable: true,
-                        visible: false,
+                        // visible: false,
 
                     },
                     {

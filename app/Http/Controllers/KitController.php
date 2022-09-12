@@ -35,16 +35,19 @@ class KitController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->addColumn('BoxID', function ($box) {
+                ->addColumn('BoxID', function ($kit) {
 
-                    if ($mbox = BoxContent::select('box_id')->where('kit_id',$box->KitID)->first()) {
-                        return 'BOX'.$mbox->box_id;
+                    $mkit = $kit->boxContent()->first();
+
+                    if($mkit){
+                        return 'BOX'.$mkit->box_id;
                     }else{
                         return 'No BOX Yet';
                     }
+
                 })
-//                ->editColumn('WorkCenter', function ($kit) {
-//                    return $kit->workCenter->WorkCenterName;
+//                ->editColumn('Parts', function ($kit) {
+//                    return $kit->parts()->where('created',true)->count();
 //                })
 //                ->editColumn('DateManufactured', function ($kit) {
 //                    return $kit->getDateManufactured();

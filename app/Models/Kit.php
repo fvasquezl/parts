@@ -51,6 +51,11 @@ class Kit extends Model
         return $this->hasMany(PartReference::class, 'KitID','KitID');
     }
 
+    public function boxContent(): HasMany
+    {
+        return $this->hasMany(BoxContent::class,'kit_id','KitID');
+    }
+
 
     ///RElacionar Kit con BoxContent y
     /// PartKitsData necesita estar relacionado con BoxContent

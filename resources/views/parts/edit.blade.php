@@ -122,14 +122,14 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="PartWeight"
+                                    <label for="PartWeightOz"
                                            class="col-form-label text-md-end">{{ __('Part Weight (oz)') }}</label>
 
-                                    <input id="PartWeight" type="number" step="1"
+                                    <input id="PartWeightOz" type="number" step="1"
                                            class="form-control @error('PartWeightOz') is-invalid @enderror" name="PartWeightOz"
                                            value="{{ old('PartWeightOz',$part->PartWeightOz) }}"   >
 
-                                    @error('PartWeight')
+                                    @error('PartWeightOz')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -179,6 +179,7 @@
 @section('js')
 
     <script>
+
         document.querySelector('input[name="PartRef1"]').addEventListener("keyup", (e) => {
             if (e.key === "Enter") {
                 document.getElementById("PartRef2").focus();
