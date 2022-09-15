@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Box;
 use App\Models\Kit;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -29,18 +30,40 @@ class ValidateController extends Controller
 
     public function kit(Request $request)
     {
-        $kit = Kit::where('KitLCN',$request->data)->first();
+        if(Str::substr($request->data,-4) !== '-KIT'){
+             $request->data = $request->data.'-KIT';
+        };
 
-        if ($kit){
-            return response()->json([
-                'id' => $kit->KitID,
-                'name' => $kit->KitLCN,
-            ]);
+        try {
+            $kit = Kit::where('KitLCN',$request->data)->first();
+        } catch (Exception $e) {
+
+            $message = $e->getMessage();
+            var_dump('Exception Message: '. $message);
+
+            $code = $e->getCode();
+            var_dump('Exception Code: '. $code);
+
+            $string = $e->__toString();
+            var_dump('Exception String: '. $string);
+
+            exit;
         }
 
-        return response()->json(
-            'There an error with the KIT Information',
-        );
+
+        return response()->json([
+            'id' => $kit->KitID,
+            'name' => $kit->KitLCN,
+        ]);
+
+//
+//        if ($kit){
+//
+//        }
+//
+//        return response()->json(
+//            'There an error with the KIT Information',
+//        );
     }
 
 }

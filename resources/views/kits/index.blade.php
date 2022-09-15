@@ -44,17 +44,12 @@
                                 <th>Kit LCN</th>
                                 <th>BoxID</th>
                                 <th>Actions</th>
-{{--                                <th>No. Parts</th>--}}
-{{--                                <th>WorkCenter</th>--}}
-{{--                                <th>Kit LCN</th>--}}
                                 <th>Brand</th>
                                 <th>Model</th>
-{{--                                <th>Category</th>--}}
-{{--                                <th>Subcategory</th>--}}
-{{--                                <th>Serial Number</th>--}}
-{{--                                <th>Country</th>--}}
+{{--                                <th># Parts</th>--}}
                                 <th>Url</th>
                                 <th>Keywords</th>
+                                <th>Captured By</th>
                             </tr>
                             </thead>
                         </table>
@@ -92,25 +87,20 @@
                 order: [[0, 'desc']],
                 // responsive: true,
                 scrollY: "53vh",
-                scrollX: true,
+                // scrollX: true,
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
 
-                     {data: 'BoxID',name: 'BoxID'},
+                    {data: 'BoxID',name: 'BoxID'},
                     {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
-                    // {data: 'Parts',name: 'Parts'},
-                    // {data: 'WorkCenter',name: 'WorkCenter'},
-
                     {data: 'Brand',name: 'Brand'},
                     {data: 'Model',name: 'Model'},
-                    // {data: 'CategoryName',name: 'CategoryName'},
-                    // {data: 'SubCategoryName',name: 'SubCategoryName'},
-                    // {data: 'ProductSerialNumber',name: 'ProductSerialNumber'},
-                    // {data: 'Country',name: 'Country'},
+                    // {data: 'Parts',name: 'Parts'},
                     {data: 'url',name: 'url'},
-                    {data: 'Keywords',name: 'Keywords'}
+                    {data: 'Keywords',name: 'Keywords'},
+                    {data: 'CapturedBy',name: 'CapturedBy'},
                 ],
                 columnDefs: [
                     {

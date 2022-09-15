@@ -3,7 +3,7 @@
 @section('title', 'AddInv')
 
 @section('content_header')
-    <h1>Remove Kit From Inventory</h1>
+    <h1>Remove Kit from Inventory</h1>
 @stop
 
 @section('content')
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
-                        {{ __('Remove Kits From Inventory')}}
+                        {{ __('Remove Kits from Inventory')}}
                     </h3>
                     <div class="card-tools">
                         <button class="btn btn-info btn-sm" id="reset">Reset</button>
@@ -41,7 +41,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
 
-                            <label for="el" class="col-form-label text-md-end">{{ __('Scan Kit') }}</label>
+                            <label for="el" class="col-form-label text-md-end">{{ __('Scan KitLCN') }}</label>
                             <input id="el" type="text" class="form-control" name="el" autofocus>
                             <div class="mt-2">
                                 <ul id="message"></ul>
@@ -112,54 +112,58 @@
 
         document.querySelector('input[name="el"]').addEventListener("keyup", (e) => {
             // MTC8CT1016-KIT
-            let myValue = e.target.value;
+            // let myValue = e.target.value;
 
             if (e.key === "Enter") {
-
+                e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','')
                 getKitData()
                 async function getKitData() {
-                    await getData(myValue,'/validate/kit').then(
+                    await getData(e.target.value,'/validate/kit').then(
                         data => {
-                            if (!data.errors) {
+                            console.log(data.exception);
+                            if (!data.exception) {
                                 kit = {'id': data.id, 'name': data.name}
                                 addElementList(`Kit: ${data.name}`)
+
+                                Swal.fire({
+                                    title: `Are you sure?`,
+                                    text: `Delete ${data.name}`,
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                    if (result.value) {
+                                        deleteKit()
+                                        async function deleteKit() {
+                                            await deleteData(`/kits/${kit.id}`).then(
+                                                data => {
+                                                    if (data.success){
+                                                        Swal.fire(
+                                                            'Deleted!',
+                                                            data.message,
+                                                            'success'
+                                                        ).then(()=>{
+                                                            location.reload()
+                                                        });
+                                                    }else {
+                                                        Swal.fire('Failed!', "elements No found").then(()=>{
+                                                            location.reload()
+                                                        });
+                                                    }
+                                                }
+                                            )
+                                        }
+                                    }
+                                });
+
                             }else{
                                 addElementList(`Error: ${data.message}`)
                             }
                         }
                     );
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.value) {
-                            deleteKit()
-                            async function deleteKit() {
-                            await deleteData(`/kits/${kit.id}`).then(
-                                    data => {
-                                        if (data.success !== '0'){
-                                            Swal.fire(
-                                                'Deleted!',
-                                                data.message,
-                                                'success'
-                                            ).then(()=>{
-                                                location.reload()
-                                            });
-                                        }else {
-                                            Swal.fire('Failed!', "elements No found").then(()=>{
-                                                location.reload()
-                                            });
-                                        }
-                                    }
-                                )
-                            }
-                        }
-                    });
+
                 }
             }
         });
@@ -182,6 +186,4 @@
 
     </script>
 @stop
-
-
 

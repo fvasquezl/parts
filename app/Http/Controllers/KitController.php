@@ -12,11 +12,13 @@ use App\Models\Kit;
 use App\Models\PartList;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 class KitController extends Controller
@@ -55,12 +57,12 @@ class KitController extends Controller
 //                ->editColumn('CategoryName', function ($kit) {
 //                    return $kit->category->CategoryName;
 //                })
-//                ->editColumn('SubCategoryName', function ($kit) {
-//                    return $kit->subCategory->SubCategoryName;
-//                })
-//                ->editColumn('Country', function ($kit) {
-//                    return $kit->country->CountryName;
-//                })
+                ->editColumn('CapturedBy', function ($kit) {
+                    return $kit->user->name;
+                })
+                ->editColumn('Keywords', function ($kit) {
+                    return Str::limit($kit->Keywords,30,$end='...');
+                })
                 ->addColumn('Actions', function () {
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
@@ -186,17 +188,27 @@ class KitController extends Controller
      */
     public function destroy(Kit $kit)
     {
+        try {
+            $ret = \DB::select("EXEC [prt].[sp_NukeKit] $kit->KitID;");
+            dd($ret);
 
-        $ret = \DB::select("EXEC [prt].[sp_NukeKit]'$kit->KitLCN';");
+        } catch (Exception $e) {
 
-        if ($ret) {
-            return response()->json([
-                'success' => $ret[0]->Exists,
-            ], 200);
-        } else {
-            return response()->json([
-                'error' => "There are an error with the KIT",
-            ]);
+            $message = $e->getMessage();
+            var_dump('Exception Message: '. $message);
+
+            $code = $e->getCode();
+            var_dump('Exception Code: '. $code);
+
+            $string = $e->__toString();
+            var_dump('Exception String: '. $string);
+
+            exit;
         }
+
+        return response()->json([
+            'message' => 'The Kit has been deleted successfully',
+        ], 200);
+
     }
 }
