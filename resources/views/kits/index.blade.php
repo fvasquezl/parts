@@ -46,10 +46,11 @@
                                 <th>Actions</th>
                                 <th>Brand</th>
                                 <th>Model</th>
-{{--                                <th># Parts</th>--}}
+                                <th># Parts</th>
                                 <th>Url</th>
                                 <th>Keywords</th>
                                 <th>Captured By</th>
+                                <th>Created At</th>
                             </tr>
                             </thead>
                         </table>
@@ -92,15 +93,16 @@
                 columns: [
                     {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
-
                     {data: 'BoxID',name: 'BoxID'},
                     {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
                     {data: 'Brand',name: 'Brand'},
                     {data: 'Model',name: 'Model'},
-                    // {data: 'Parts',name: 'Parts'},
+                    {data: 'Parts',name: 'Parts'},
                     {data: 'url',name: 'url'},
                     {data: 'Keywords',name: 'Keywords'},
                     {data: 'CapturedBy',name: 'CapturedBy'},
+                    {data: 'created_at',name: 'Created_at'},
+
                 ],
                 columnDefs: [
                     {
@@ -110,7 +112,7 @@
 
                     },
                     {
-                        targets: [6],
+                        targets: [7],
                         searchable: true,
                         visible: false
                     }

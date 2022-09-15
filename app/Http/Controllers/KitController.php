@@ -48,15 +48,15 @@ class KitController extends Controller
                     }
 
                 })
-//                ->editColumn('Parts', function ($kit) {
-//                    return $kit->parts()->where('created',true)->count();
-//                })
+                ->editColumn('Parts', function ($kit) {
+                    return $kit->parts()->where('created',true)->count();
+                })
 //                ->editColumn('DateManufactured', function ($kit) {
 //                    return $kit->getDateManufactured();
 //                })
-//                ->editColumn('CategoryName', function ($kit) {
-//                    return $kit->category->CategoryName;
-//                })
+                ->editColumn('created_at', function ($kit) {
+                    return $kit->created_at->toDateTimeString();
+                })
                 ->editColumn('CapturedBy', function ($kit) {
                     return $kit->user->name;
                 })
@@ -189,7 +189,7 @@ class KitController extends Controller
     public function destroy(Kit $kit)
     {
         try {
-            $ret = \DB::select("EXEC [prt].[sp_NukeKit]'$kit->KitLCN';");
+            $ret = \DB::select("EXEC [prt].[sp_NukeKit2]'$kit->KitLCN';");
         } catch (Exception $e) {
 
             $message = $e->getMessage();
