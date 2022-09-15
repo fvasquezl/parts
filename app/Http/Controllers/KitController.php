@@ -189,9 +189,7 @@ class KitController extends Controller
     public function destroy(Kit $kit)
     {
         try {
-            $ret = \DB::select("EXEC [prt].[sp_NukeKit] $kit->KitID;");
-            dd($ret);
-
+            $ret = \DB::select("EXEC [prt].[sp_NukeKit]'$kit->KitLCN';");
         } catch (Exception $e) {
 
             $message = $e->getMessage();
@@ -207,8 +205,11 @@ class KitController extends Controller
         }
 
         return response()->json([
-            'message' => 'The Kit has been deleted successfully',
+            'success' => 'The Kit has been deleted successfully',
         ], 200);
 
     }
 }
+
+//MTC99T0391
+//MTC99T0391-KIT

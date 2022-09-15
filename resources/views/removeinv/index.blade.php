@@ -142,7 +142,7 @@
                                                     if (data.success){
                                                         Swal.fire(
                                                             'Deleted!',
-                                                            data.message,
+                                                            data.success,
                                                             'success'
                                                         ).then(()=>{
                                                             location.reload()

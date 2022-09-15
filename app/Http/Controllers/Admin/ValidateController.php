@@ -34,6 +34,10 @@ class ValidateController extends Controller
              $request->data = $request->data.'-KIT';
         };
 
+        $validated = $request->validate([
+            'KitLCN' => 'exists',
+        ]);
+
         try {
             $kit = Kit::where('KitLCN',$request->data)->first();
         } catch (Exception $e) {
