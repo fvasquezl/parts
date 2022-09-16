@@ -26,13 +26,13 @@ class KitController extends Controller
 
     public function index(Request $request): View|Factory|\Illuminate\Http\JsonResponse|Application
     {
-//        if ($request->json()){  to see rag
+
         if ($request->ajax()) {
             if (auth()->user()->role == 'employee') {
-                $data = Kit::query()->where('UserID', auth()->id())->latest()->get();
+                $data = Kit::query()->where('UserID', auth()->id())->get();
 
             } else {
-                $data = Kit::query()->latest()->get();
+                $data = Kit::query();
             };
 
             return datatables($data)
@@ -51,9 +51,6 @@ class KitController extends Controller
                 ->editColumn('Parts', function ($kit) {
                     return $kit->parts()->where('created',true)->count();
                 })
-//                ->editColumn('DateManufactured', function ($kit) {
-//                    return $kit->getDateManufactured();
-//                })
                 ->editColumn('created_at', function ($kit) {
                     return $kit->created_at->toDateTimeString();
                 })
@@ -77,6 +74,8 @@ class KitController extends Controller
 
         return view('kits.index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.

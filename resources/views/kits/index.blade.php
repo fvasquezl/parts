@@ -84,13 +84,15 @@
                 }
             });
 
+
             let $kitsTable = $('#kitsTable').DataTable({
-                order: [[0, 'desc']],
-                // responsive: true,
-                scrollY: "53vh",
+                 'order': [[0, 'desc']],
+                 'processing': true,
+                 'serverSide':true,
+                 'scrollY': "53vh",
                 // scrollX: true,
-                ajax: "{{route('kits.index')}}",
-                columns: [
+                'ajax': "{{route('kits.index')}}",
+                'columns': [
                     {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
                     {data: 'BoxID',name: 'BoxID'},
