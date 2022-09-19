@@ -49,7 +49,7 @@
                                 <th># Parts</th>
                                 <th>Url</th>
                                 <th>Keywords</th>
-                                <th>Captured By</th>
+                                <th>CapturedBy</th>
                                 <th>Created At</th>
                             </tr>
                             </thead>
@@ -84,15 +84,14 @@
                 }
             });
 
-
             let $kitsTable = $('#kitsTable').DataTable({
-                 'order': [[0, 'desc']],
-                 'processing': true,
-                 'serverSide':true,
-                 'scrollY': "53vh",
-                // scrollX: true,
-                'ajax': "{{route('kits.index')}}",
-                'columns': [
+                 order: [[0, 'desc']],
+                 processing: true,
+                 serverSide:true,
+                 scrollY: "53vh",
+
+                ajax: "{{route('kits.index')}}",
+                columns: [
                     {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
                     {data: 'BoxID',name: 'BoxID'},
@@ -114,9 +113,18 @@
 
                     },
                     {
+                        targets: [6],
+                        searchable: false,
+                        // visible: false,
+                    },
+                    {
                         targets: [7],
                         searchable: true,
                         visible: false
+                    },
+                    {
+                        targets: [9],
+                        searchable: false,
                     }
                 ]
             });

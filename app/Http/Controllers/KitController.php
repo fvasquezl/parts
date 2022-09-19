@@ -28,6 +28,7 @@ class KitController extends Controller
     {
 
         if ($request->ajax()) {
+
             if (auth()->user()->role == 'employee') {
                 $data = Kit::query()->where('UserID', auth()->id())->get();
 
