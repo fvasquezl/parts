@@ -94,14 +94,14 @@
                 columns: [
                     {data: 'KitID',name: 'KitID'},
                     {data: 'KitLCN',name: 'KitLCN'},
-                    {data: 'BoxID',name: 'BoxID'},
+                    {data: 'boxContent.box_id',name: 'boxContent.box_id'},
                     {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
                     {data: 'Brand',name: 'Brand'},
                     {data: 'Model',name: 'Model'},
                     {data: 'Parts',name: 'Parts'},
                     {data: 'url',name: 'url'},
                     {data: 'Keywords',name: 'Keywords'},
-                    {data: 'CapturedBy',name: 'CapturedBy'},
+                    {data: 'user.name',name: 'user.name'},
                     {data: 'created_at',name: 'Created_at'},
 
                 ],
@@ -122,10 +122,10 @@
                         searchable: true,
                         visible: false
                     },
-                    {
-                        targets: [9],
-                        searchable: false,
-                    }
+                    // {
+                    //     targets: [9],
+                    //     searchable: true,
+                    // }
                 ]
             });
 

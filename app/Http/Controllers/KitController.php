@@ -33,30 +33,34 @@ class KitController extends Controller
                 $data = Kit::query()->where('UserID', auth()->id())->get();
 
             } else {
-                $data = Kit::query();
+                $data = Kit::with('user','boxContent')->select('prt.PartsKitData.*');
             };
 
             return datatables($data)
                 ->addIndexColumn()
-                ->addColumn('BoxID', function ($kit) {
-
-                    $mkit = $kit->boxContent()->first();
-
-                    if($mkit){
-                        return 'BOX'.$mkit->box_id;
-                    }else{
-                        return 'No BOX Yet';
-                    }
-
+//                ->addColumn('BoxID', function ($kit) {
+//
+//                    $mkit = $kit->boxContent()->first();
+//
+//                    if($mkit){
+//                        return 'BOX'.$mkit->box_id;
+//                    }else{
+//                        return 'No BOX Yet';
+//                    }
+//
+//                })
+                ->editColumn('boxContent.box_id', function ($kit) {
+                   if($kit->boxContent->isEmpty()){
+                     return 'No Box Yet';
+                   }else{
+                       return $kit->boxContent->first()->box_id;
+                   }
                 })
                 ->editColumn('Parts', function ($kit) {
                     return $kit->parts()->where('created',true)->count();
                 })
                 ->editColumn('created_at', function ($kit) {
                     return $kit->created_at->toDateTimeString();
-                })
-                ->editColumn('CapturedBy', function ($kit) {
-                    return $kit->user->name;
                 })
                 ->editColumn('Keywords', function ($kit) {
                     return Str::limit($kit->Keywords,30,$end='...');
