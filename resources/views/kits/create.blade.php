@@ -87,7 +87,7 @@
 
                                         <input id="Brand" type="text"
                                                class="form-control @error('Brand') is-invalid @enderror" name="Brand"
-                                               value="{{ old('Brand') }}"  autocomplete="off" autofocus readonly>
+                                               value="{{ old('Brand') }}"  autocomplete="off" autofocus>
 
                                         @error('Brand')
                                         <span class="invalid-feedback" role="alert">
@@ -101,7 +101,7 @@
 
                                         <input id="Model" type="text"
                                                class="form-control @error('Model') is-invalid @enderror" name="Model"
-                                               value="{{ old('Model') }}"  autocomplete="off" autofocus readonly>
+                                               value="{{ old('Model') }}"  autocomplete="off" autofocus >
 
                                         @error('Model')
                                         <span class="invalid-feedback" role="alert">
@@ -303,25 +303,6 @@
         })
 
 
-
-        // document.getElementById('LCN').addEventListener('change', (e)=>{
-        //     e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
-        //     fetch('/lcn', {
-        //         method: 'POST',
-        //         body: JSON.stringify({text: e.target.value}),
-        //         headers:headers
-        //     }).then(response=>{
-        //         return response.json()
-        //     }).then(data =>{
-        //         console.log(data)
-        //         document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
-        //          document.getElementById('Brand').setAttribute('value',data.fields.brand)
-        //          document.getElementById('Model').setAttribute('value',data.fields.model)
-        //         document.getElementById("ProductSerialNumber").focus();
-        //     }).catch(error => console.log(error))
-        //
-        // })
-
         document.querySelector('input[name="LCN"]').addEventListener("keyup", (e) => {
             if (e.key === "Enter") {
                 e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
@@ -336,8 +317,19 @@
                              document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
                              document.getElementById('Brand').setAttribute('value',data.fields.brand)
                              document.getElementById('Model').setAttribute('value',data.fields.model)
-                            document.getElementById("ProductSerialNumber").focus();
+                            document.getElementById("Brand").focus();
                         }).catch(error => console.log(error))
+            }
+        });
+
+        document.querySelector('input[name="Brand"]').addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("Model").focus();
+            }
+        });
+        document.querySelector('input[name="Model"]').addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("ProductSerialNumber").focus();
             }
         });
 

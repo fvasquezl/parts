@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ValidateController;
 use App\Http\Controllers\BoxController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
+use App\Http\Controllers\KitsDataController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
@@ -43,6 +44,7 @@ Route::middleware('auth')
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
 
+        Route::get('/kits-data',[KitsDataController::class,'index'])->name('kits-data.index');
 
 
 

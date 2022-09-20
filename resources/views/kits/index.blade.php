@@ -85,24 +85,24 @@
             });
 
             let $kitsTable = $('#kitsTable').DataTable({
-                 order: [[0, 'desc']],
-                 processing: true,
-                 serverSide:true,
-                 scrollY: "53vh",
+                order: [[0, 'desc']],
+                processing: true,
+                serverSide: true,
+                scrollY: "53vh",
 
                 ajax: "{{route('kits.index')}}",
                 columns: [
-                    {data: 'KitID',name: 'KitID'},
-                    {data: 'KitLCN',name: 'KitLCN'},
-                    {data: 'boxContent.box_id',name: 'boxContent.box_id'},
+                    {data: 'KitID', name: 'KitID'},
+                    {data: 'KitLCN', name: 'KitLCN'},
+                    {data: 'BoxName', name: 'BoxName'},
                     {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
-                    {data: 'Brand',name: 'Brand'},
-                    {data: 'Model',name: 'Model'},
-                    {data: 'Parts',name: 'Parts'},
-                    {data: 'url',name: 'url'},
-                    {data: 'Keywords',name: 'Keywords'},
-                    {data: 'user.name',name: 'user.name'},
-                    {data: 'created_at',name: 'Created_at'},
+                    {data: 'Brand', name: 'Brand'},
+                    {data: 'Model', name: 'Model'},
+                    {data: 'NoOfParts', name: 'NoOfParts'},
+                    {data: 'url', name: 'url'},
+                    {data: 'Keywords', name: 'Keywords'},
+                    {data: 'name', name: 'name'},
+                    {data: 'created_at', name: 'Created_at'},
 
                 ],
                 columnDefs: [
@@ -122,10 +122,6 @@
                         searchable: true,
                         visible: false
                     },
-                    // {
-                    //     targets: [9],
-                    //     searchable: true,
-                    // }
                 ]
             });
 

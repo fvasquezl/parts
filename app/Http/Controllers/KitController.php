@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorekitRequest;
 use App\Http\Requests\UpdatekitRequest;
 use App\Http\Resources\KitResource;
-use App\Models\BoxContent;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Kit;
+use App\Models\KitsData;
 use App\Models\PartList;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
@@ -16,54 +16,44 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 
 class KitController extends Controller
 {
 
-    public function index(Request $request): View|Factory|\Illuminate\Http\JsonResponse|Application
+    /**
+     * @param Request $request
+     * @return Application|Factory|View|JsonResponse
+     * @throws \Yajra\DataTables\Exceptions\Exception
+     */
+    public function index(Request $request)
     {
 
         if ($request->ajax()) {
 
             if (auth()->user()->role == 'employee') {
-                $data = Kit::query()->where('UserID', auth()->id())->get();
+                $data = KitsData::query()->where('UserID', auth()->id())->get();
 
             } else {
-                $data = Kit::with('user','boxContent')->select('prt.PartsKitData.*');
-            };
+                $data = KitsData::query();
+            }
 
             return datatables($data)
                 ->addIndexColumn()
-//                ->addColumn('BoxID', function ($kit) {
-//
-//                    $mkit = $kit->boxContent()->first();
-//
-//                    if($mkit){
-//                        return 'BOX'.$mkit->box_id;
-//                    }else{
-//                        return 'No BOX Yet';
-//                    }
-//
-//                })
-                ->editColumn('boxContent.box_id', function ($kit) {
-                   if($kit->boxContent->isEmpty()){
-                     return 'No Box Yet';
-                   }else{
-                       return $kit->boxContent->first()->box_id;
-                   }
-                })
-                ->editColumn('Parts', function ($kit) {
-                    return $kit->parts()->where('created',true)->count();
-                })
-                ->editColumn('created_at', function ($kit) {
-                    return $kit->created_at->toDateTimeString();
+                ->editColumn('BoxName', function ($kit) {
+                    if(!$kit->BoxName){
+                        return 'No Box Yet';
+                    }
+                    return $kit->BoxName;
                 })
                 ->editColumn('Keywords', function ($kit) {
-                    return Str::limit($kit->Keywords,30,$end='...');
+                    if(!$kit->Keywords){
+                        return 'No Keywords Yet';
+                    }
+                    return $kit->Keywords;
                 })
                 ->addColumn('Actions', function () {
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
