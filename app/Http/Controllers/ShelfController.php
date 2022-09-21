@@ -52,15 +52,19 @@ class ShelfController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Shelf
      */
     public function store(Request $request)
     {
-        $box = new Shelf;
-        $box->save();
+        $shelf = new Shelf;
+        $shelf->save();
+
+        $shelf->update([
+            'shelf_name' => 'SHELF'.$shelf->shelf_id
+        ]);
 
         if ($request->json()) {
-            return $box;
+            return $shelf;
         }
     }
 

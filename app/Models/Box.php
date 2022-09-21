@@ -17,7 +17,7 @@ class Box extends Model
 
 
 
-    public function shelf(): BelongsTo
+    public function shelf()
     {
         return $this->belongsTo(Shelf::class,'shelf_id','shelf_id');
     }

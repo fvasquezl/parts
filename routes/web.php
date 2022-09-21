@@ -42,9 +42,15 @@ Route::middleware('auth')
         Route::resource('fill-box', FillBoxController::class);
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
-        Route::resource('add-box-shelf', BoxShelfController::class);
 
 
+        Route::resource('boxShelf', BoxShelfController::class)
+            ->only([
+                'index', 'update'
+            ])
+            ->parameters([
+            'boxShelf' => 'shelf'
+        ]);
 
 
 

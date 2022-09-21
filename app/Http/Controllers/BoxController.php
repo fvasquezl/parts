@@ -63,6 +63,10 @@ class BoxController extends Controller
         $box->is_active = 1;
         $box->save();
 
+        $box->update([
+            'box_name' => 'BOX'.$box->box_id
+        ]);
+
         if($request->json()){
             return $box;
         }

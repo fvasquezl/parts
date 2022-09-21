@@ -325,9 +325,10 @@ return [
                 ],
                 [
                     'text' => 'Add BOX to SHELF',
-                    'url'  => 'add-box-shelf',
+                    'url'  => 'boxShelf',
                 ],
             ],
+            'can'  =>  'isAdmin'
 
         ],
         ['header' => 'account_settings'],

@@ -2,115 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Box;
+use App\Models\Shelf;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory as FactoryAlias;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Throwable;
 
 class BoxShelfController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|FactoryAlias|View
      */
     public function index()
     {
-        return view('box-shelf.index');
+        return view('boxShelf.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Shelf  $shelf
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function update(Request $request, Shelf $shelf)
     {
-        $shelf = $request->shelf;
-        $boxes = $request->boxes;
+       foreach ($request->boxes as $boxObj){
+           try {
+               Box::find($boxObj['box_id'])->update([
+                   'shelf_id'=> $shelf->shelf_id
+               ]);
+           } catch (Throwable $e) {
+               return response()->json(
+                    $e
+               );
+           }
 
-        foreach ($boxes as $box){
-
-            if($boxContent =BoxContent::where('kit_id', $kit)->first()){
-                $boxContent->update([
-                    'box_id' => $box
-                ]);
-
-            }else{
-                BoxContent::create([
-                    'box_id' => $box,
-                    'kit_id' => $kit['id']
-                ]);
-            }
-        }
+       }
 
         return response()->json(
             'The Information has been saved Successfully'
         );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function validateBox(Request $request)
-    {
-        //
-    }
 }

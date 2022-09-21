@@ -27,7 +27,7 @@
 
         <div class="col-md-8">
 
-            <div class="card">
+            <div class="card card-outline card-primary">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
                         {{ __('Add Box to Shelf ') }}
@@ -42,11 +42,11 @@
                     <h3>Pasos (Steps):</h3>
                     <ul>
                         <li>
-                            Escanea el código QR de la SHELF para agregar CAJAS.<br>
+                            Escanea el código QR de SHELF para agregar CAJAS.<br>
                             Scan the SHELF QR code to add BOXEs
                         </li>
                         <li>
-                            Escanea el código QR del CAJA para añadirlo a la SHELF.<br>
+                            Escanea el código QR de la CAJA para añadirlo al SHELF.<br>
                             Scan the BOX QR code to add it to the SHELF
                         </li>
                         <li>
@@ -92,12 +92,11 @@
             "X-CSRF-TOKEN": token
         }
 
-        async function postData(box, kits, url) {
+        async function postData(boxes, url) {
             try {
                 const response = await fetch(`${url}`, {
-                    method: 'POST',
+                    method: 'PUT',
                     body: JSON.stringify({
-                        shelf: shelf,
                         boxes: boxes
                     }),
                     headers: headers
@@ -178,7 +177,7 @@
                                  addElementList('Msg: Need to add box first.')
                             } else {
                                 addElementList('msg: Processing...')
-                                await postData(shelf, boxes, 'add-box-shelf').then(
+                                await postData(boxes, `boxShelf/${shelf.shelf_id}`).then(
                                     data => {
                                         if (!data.errors) {
                                             addElementList(`Msg: ${data}`)

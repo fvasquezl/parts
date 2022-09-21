@@ -3,7 +3,7 @@
 @section('title', 'AddInv')
 
 @section('content_header')
-    <h1>Add Inventory</h1>
+    <h1>Add KIT to BOX</h1>
 @stop
 
 @section('content')
@@ -27,10 +27,10 @@
 
         <div class="col-md-8">
 
-            <div class="card">
+            <div class="card card-outline card-warning">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
-                        {{ __('Add Inv ')}}
+                        {{ __('Add Kit To Box ')}}
                     </h3>
                     <div class="card-tools">
                         <button class="btn btn-info btn-sm" id="reset">Reset</button>
