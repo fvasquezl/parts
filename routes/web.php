@@ -9,14 +9,13 @@ use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\ValidateController;
 use App\Http\Controllers\BoxController;
+use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
-use App\Http\Controllers\KitsDataController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use Illuminate\Support\Facades\Route;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,31 +42,36 @@ Route::middleware('auth')
         Route::resource('fill-box', FillBoxController::class);
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
-
-        Route::get('/kits-data',[KitsDataController::class,'index'])->name('kits-data.index');
-
+        Route::resource('add-box-shelf', BoxShelfController::class);
 
 
 
-        Route::post('/lcn',[LcnController::class,'index']);
-        Route::post('/subcategories',[SubcategoryController::class,'index']);
+
+
+        Route::post('/lcn', [LcnController::class, 'index']);
+        Route::post('/subcategories', [SubcategoryController::class, 'index']);
         Route::resource('parts', PartReferenceController::class);
 
-        Route::get('qrcode/{kit}', [QrCodeController::class,'print'])->name('qrcode');
-        Route::get('qrcode/box/{box}', [QrCodeController::class,'box'])->name('qrcode.box');
-        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf');
+        Route::get('qrcode/{kit}', [QrCodeController::class, 'print'])->name('qrcode');
+        Route::get('qrcode/box/{box}', [QrCodeController::class, 'box'])->name('qrcode.box');
+        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class, 'shelf'])->name('qrcode.shelf');
 
-        Route::post('validate/box-kits', [ValidateController::class,'box_kits'])->name('validate.box-kits');
+        Route::post('validate/box-kits', [ValidateController::class, 'box_kits'])->name('validate.box-kits');
 
-        Route::post('validate/box', [ValidateController::class,'box'])->name('validate.box');
-        Route::post('validate/kit', [ValidateController::class,'kit'])->name('validate.kit');
-//        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
+        Route::post('validate/box', [ValidateController::class, 'box'])->name('validate.box');
+        Route::post('validate/boxes', [ValidateController::class, 'boxes'])->name('validate.boxes');
+        Route::post('validate/shelf', [ValidateController::class, 'shelf'])->name('validate.shelf');
 
-        Route::get('/kit-parts/{kit}/edit',[KitPartController::class,'edit'])->name('kit-parts.edit');
-        Route::patch('/kit-parts/{kit}',[KitPartController::class,'update'])->name('kit-parts.update');
 
-        Route::get('/kit-parts-update/{kit}/edit',[KitPartUpdateController::class,'edit'])->name('kit-parts-update.edit');
-        Route::patch('/kit-parts-update/{kit}',[KitPartUpdateController::class,'update'])->name('kit-parts-update.update');
+        Route::post('validate/kit', [ValidateController::class, 'kit'])->name('validate.kit');
+
+        //        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
+
+        Route::get('/kit-parts/{kit}/edit', [KitPartController::class, 'edit'])->name('kit-parts.edit');
+        Route::patch('/kit-parts/{kit}', [KitPartController::class, 'update'])->name('kit-parts.update');
+
+        Route::get('/kit-parts-update/{kit}/edit', [KitPartUpdateController::class, 'edit'])->name('kit-parts-update.edit');
+        Route::patch('/kit-parts-update/{kit}', [KitPartUpdateController::class, 'update'])->name('kit-parts-update.update');
     });
 
 

@@ -16,6 +16,12 @@ class Box extends Model
     protected $dates = ['date_created'];
 
 
+
+    public function shelf(): BelongsTo
+    {
+        return $this->belongsTo(Shelf::class,'shelf_id','shelf_id');
+    }
+
     public function getDateCreated() {
         if($this->date_created){
             return $this->date_created->format('m/d/Y');

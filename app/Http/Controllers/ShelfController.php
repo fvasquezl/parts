@@ -11,19 +11,19 @@ class ShelfController extends Controller
     public function index(Request $request)
     {
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $data = Shelf::query();
 
             return datatables($data)
                 ->addIndexColumn()
-                ->editColumn('shelf_id', function($shelf) {
-                    return 'SHELF'.$shelf->shelf_id;
+                ->editColumn('shelf_id', function ($shelf) {
+                    return 'SHELF' . $shelf->shelf_id;
                 })
-                ->editColumn('created_at', function($shelf) {
+                ->editColumn('created_at', function ($shelf) {
                     return $shelf->getCreatedAt();
                 })
 
-                ->addColumn('actions', function(){
+                ->addColumn('actions', function () {
                     $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
@@ -59,7 +59,7 @@ class ShelfController extends Controller
         $box = new Shelf;
         $box->save();
 
-        if($request->json()){
+        if ($request->json()) {
             return $box;
         }
     }
@@ -70,7 +70,7 @@ class ShelfController extends Controller
      * @param  \App\Models\Shelve  $shelve
      * @return \Illuminate\Http\Response
      */
-    public function show(Shelve $shelve)
+    public function show(Shelf $shelve)
     {
         //
     }
@@ -81,9 +81,9 @@ class ShelfController extends Controller
      * @param  \App\Models\Shelve  $shelve
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shelve $shelve)
+    public function edit(Shelf $shelve)
     {
-        return view('shelve.index',$shelve);
+        return view('shelve.index', $shelve);
     }
 
     /**
@@ -93,7 +93,7 @@ class ShelfController extends Controller
      * @param  \App\Models\Shelve  $shelve
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shelve $shelve)
+    public function update(Request $request, Shelf $shelve)
     {
         //
     }
@@ -104,7 +104,7 @@ class ShelfController extends Controller
      * @param  \App\Models\Shelve  $shelve
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shelve $shelve)
+    public function destroy(Shelf $shelve)
     {
         //
     }

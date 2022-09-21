@@ -198,10 +198,10 @@
                                         <label for="DateManufactured"
                                                class="col-form-label text-md-end">{{ __('Date Manufactured') }}</label>
 
-                                        <input id="DateManufactured" type="month"
-                                               class="form-control @error('DateManufactured') is-invalid @enderror"
-                                               name="DateManufactured" value="{{ old('DateManufactured') }}" min="2015-01"
-                                               autocomplete="DateManufactured" autofocus>
+                                            <input id="DateManufactured" type="month"
+                                                   class="form-control @error('DateManufactured') is-invalid @enderror"
+                                                   name="DateManufactured" value="{{ old('DateManufactured') }}" min="2015-01"
+                                                   autocomplete="DateManufactured" autofocus>
 
                                         @error('DateManufactured')
                                         <span class="invalid-feedback" role="alert">
@@ -233,6 +233,7 @@
                 </div>
             </div>
         </div>
+            <a href="" id="msearch"></a>
     </div>
 @endsection
 
@@ -269,21 +270,6 @@
             }).catch(error => console.log(error))
         });
 
-        // function getData(e){
-        //     fetch('/subcategories', {
-        //         method: 'POST',
-        //         body: JSON.stringify({text: e.value}),
-        //         headers:headers
-        //     }).then(response=>{
-        //         return response.json()
-        //     }).then(data =>{
-        //         let options = "";
-        //         for (let i in data.list){
-        //             options += '<option value="'+data.list[i].PartSubCategoryID+'">'+data.list[i].SubCategoryName+'</option>';
-        //         }
-        //         document.getElementById('PartSubCategoryID').innerHTML = options
-        //     }).catch(error => console.log(error))
-        // }
 
 
         document.getElementById('PartCategoryID').addEventListener('change', (e)=>{

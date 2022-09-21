@@ -278,24 +278,24 @@ return [
         ],
 
         // Sidebar items:
-//        [
-//            'type' => 'sidebar-menu-search',
-//            'text' => 'search',
-//        ],
+        //        [
+        //            'type' => 'sidebar-menu-search',
+        //            'text' => 'search',
+        //        ],
         [
             'text' => 'Dashboard',
             'url'  => 'home',
             'icon' => 'fas fa-tachometer-alt',
-//            'can'  =>  'isAdmin'
+            //            'can'  =>  'isAdmin'
         ],
-//        [
-//            'text'        => 'pages',
-//            'url'         => 'admin/pages',
-//            'icon'        => 'far fa-fw fa-file',
-//            'label'       => 4,
-//            'label_color' => 'success',
-//            'can'  =>  'isAdmin'
-//        ],
+        //        [
+        //            'text'        => 'pages',
+        //            'url'         => 'admin/pages',
+        //            'icon'        => 'far fa-fw fa-file',
+        //            'label'       => 4,
+        //            'label_color' => 'success',
+        //            'can'  =>  'isAdmin'
+        //        ],
         ['header' => 'OPERATIONS'],
 
         [
@@ -305,28 +305,28 @@ return [
         ],
 
 
-//        [
-//            'text' => 'Fill Box',
-//            'url'  => 'fill-box',
-//            'icon' => 'fas fa-fw fa-fill',
-//            'can'  =>  'isAdmin'
-//        ],
+        //        [
+        //            'text' => 'Fill Box',
+        //            'url'  => 'fill-box',
+        //            'icon' => 'fas fa-fw fa-fill',
+        //            'can'  =>  'isAdmin'
+        //        ],
         [
             'text'    => 'Inventory',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Add Inv',
+                    'text'  => 'Remove KIT',
+                    'url'   => 'rem-inv',
+                ],
+                [
+                    'text' => 'Add KIT to Box',
                     'url'  => 'add-inv/create',
                 ],
                 [
-                    'text'  => 'Remove Inv',
-                    'url'   => 'rem-inv',
+                    'text' => 'Add BOX to SHELF',
+                    'url'  => 'add-box-shelf',
                 ],
-//                [
-//                    'text' => 'level_one',
-//                    'url'  => '#',
-//                ],
             ],
 
         ],

@@ -94,7 +94,7 @@
                     {data: 'description',name: 'description'},
                     {data: 'is_active',name: 'is_active'},
                     {data: 'shelf_id',name: 'shelf_id'},
-                    {data: 'shelf_scanned',name: 'shelf_scanned'},
+                    {data: 'shelf_scanned_date',name: 'shelf_scanned_date'},
                     {data: 'date_created',name: 'date_created'},
                 ]
             });

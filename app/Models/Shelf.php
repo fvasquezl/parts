@@ -10,10 +10,14 @@ class Shelf extends Model
     use HasFactory;
     protected $table = 'bin.Shelves';
     protected $primaryKey = 'shelf_id';
-//    public $timestamps = false;
     protected $guarded = [];
     protected $dates = ['DateCreated'];
 
+
+    public function boxes()
+    {
+        return $this->hasMany(Box::class, 'shelf_id','shelf_id');
+    }
 
     public function getCreatedAt() {
         if($this->created_at){
