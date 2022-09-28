@@ -9,9 +9,10 @@ class LcnController extends Controller
 {
     public function index(Request $request)
     {
-        if(isset($request->text)){
+
+        if(isset($request->data)){
             return response()->json([
-                'fields'=> $this->getFields($request->text),
+                'fields'=> $this->getFields($request->data),
                 'success' => true
             ]);
         }else{
@@ -24,12 +25,34 @@ class LcnController extends Controller
     public function getFields($text): array
     {
 
+//        $query = \DB::select("SELECT Brand, Model,VerifiedReferenceExist FROM [PartsProcessing].[prt].[sp_GetLCNData]('$text')")[0];
         $query = \DB::select("SELECT Brand, Model FROM [PartsProcessing].[prt].[sp_GetLCNData]('$text')")[0];
-
         return $fields = [
             'partsLcn'=> strtoupper($text.'-KIT'),
             'brand' => strtoupper($query->Brand),
             'model' => strtoupper($query->Model),
+//            'exist' => $query->VerifiedReferenceExist
         ];
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getSkus(Request $request)
+    {
+        $query = \DB::select("EXEC [PartsProcessing].[prt].[sp_GetVerifiedPartReferences]'$request->data'");
+       return $query;
+    }
+
+
+    public function saveSkus(Request $request)
+    {
+        $query = \DB::selectt("EXEC [PartsProcessing].[prt].[sp_InsertPartReferences]'$request->sku'");
+        return $request->all();
+    }
+
+
+
+
 }

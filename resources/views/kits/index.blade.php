@@ -102,7 +102,7 @@
                     {data: 'url', name: 'url'},
                     {data: 'Keywords', name: 'Keywords'},
                     {data: 'name', name: 'name'},
-                    {data: 'created_at', name: 'Created_at'},
+                    {data: 'created_at', name: 'created_at'},
 
                 ],
                 columnDefs: [

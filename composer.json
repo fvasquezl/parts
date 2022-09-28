@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
         "league/flysystem-aws-s3-v3": "^3.2",
+        "livewire/livewire": "^2.10",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "yajra/laravel-datatables-oracle": "^10.0"
     },

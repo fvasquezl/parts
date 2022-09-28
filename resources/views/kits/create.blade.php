@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-body">
 
-                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm" >
+                            <form method="POST" action="{{ route('kits.store') }}" enctype="multipart/form-data" id="myForm">
                                 @csrf
 
                                 <div class="row mb-3">
@@ -177,7 +177,7 @@
                                         <label for="CountryID"
                                                class="col-form-label text-md-end">{{ __('Country Origin') }}</label>
 
-                                        <select name="CountryID" aria-label="select country"
+                                        <select name="CountryID" aria-label="select country" id="CountryID"
                                                 class="form-control @error('CountryID') is-invalid @enderror" >
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->CountryID }}"
@@ -217,7 +217,7 @@
 
                                         @error('Comments')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong></span>
+{{--                                        <strong>{{ $message }}</strong></span>--}}
                                         @enderror
                                     </div>
                                 </div>
@@ -235,10 +235,19 @@
         </div>
             <a href="" id="msearch"></a>
     </div>
+
 @endsection
 
 
 @section('css')
+    <style>
+        .modal-body{
+            height: 500px;
+            width: 100%;
+            overflow-y: auto;
+        }
+    </style>
+
 
 @stop
 
@@ -252,6 +261,32 @@
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         }
+        // let exists=0
+        // let lcn = null;
+        // let brand =null;
+        // let model = null;
+        // let CategoryID=null;
+        // let SubCategoryID=null;
+        // let SerialNumber=null;
+        // let CountryID=null;
+        // let DateManufactured=null;
+        // let Notes=null;
+
+        // async function getData(value,url){
+        //     try {
+        //         const response = await fetch(`${url}`,{
+        //             method: 'POST',
+        //             body: JSON.stringify({data:value}),
+        //             headers:headers
+        //         })
+        //         const data = await response.json()
+        //         return data
+        //
+        //     }
+        //     catch(err) {
+        //         console.log(err);
+        //     }
+        // }
 
         window.addEventListener("load", function() {
             let e =document.getElementById('PartCategoryID');
@@ -294,16 +329,20 @@
                 e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
                 fetch('/lcn', {
                             method: 'POST',
-                            body: JSON.stringify({text: e.target.value}),
+                            body: JSON.stringify({data: e.target.value}),
                             headers:headers
                         }).then(response=>{
                             return response.json()
                         }).then(data =>{
-                            console.log(data)
-                             document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
-                             document.getElementById('Brand').setAttribute('value',data.fields.brand)
-                             document.getElementById('Model').setAttribute('value',data.fields.model)
-                            document.getElementById("Brand").focus();
+                            if (data.fields['exist'] === '1') {
+                                exists = 1
+                            }
+                                console.log(data)
+                                document.getElementById('KitLCN').setAttribute('value',data.fields.partsLcn)
+                                document.getElementById('Brand').setAttribute('value',data.fields.brand)
+                                document.getElementById('Model').setAttribute('value',data.fields.model)
+                                document.getElementById("Brand").focus();
+
                         }).catch(error => console.log(error))
             }
         });
@@ -330,21 +369,30 @@
 
         });
 
-
-        // $('#LCN').keypress(function(event){
-        //     var keycode = (event.keyCode ? event.keyCode : event.which);
-        //     if(keycode == '13'){
-        //         alert('You pressed a "enter" key in textbox');
-        //     }
-        //     //Stop the event from propogation to other handlers
-        //     //If this line will be removed, then keypress event handler attached
-        //     //at document level will also be triggered
-        //     event.stopPropagation();
-        // });
+        // window.addEventListener("DOMContentLoaded", function() {
+        //     document.getElementById('myForm').addEventListener("submit", function(e) {
+        //         e.preventDefault(); // before the code
+        //         lcn = document.getElementById("LCN").value;
+        //         brand =  document.getElementById("brand").value;
+        //         model =  document.getElementById("model").value;
+        //         CategoryID= document.getElementById("PartCategoryID").value;
+        //         SubCategoryID=document.getElementById("PartSubCategoryID").value;
+        //         SerialNumber=document.getElementById("ProductSerialNumber").value;
+        //         CountryID=document.getElementById("CountryID").value;
+        //         DateManufactured=document.getElementById("DateManufactured").value;
+        //         Notes=document.getElementById("Comments").value;
         //
-        // document.getElementById("myForm").addEventListener("submit", function(e){
-        //     e.preventDefault()
+        //         if (lcn){
+        //             getKitData('lcn');
+        //         }
+        //         else{
+        //             console.log('fill lcn')
+        //         }
+        //
+        //     })
         // });
+
+
 
         window.onhelp = function() {
             return false;
@@ -354,6 +402,7 @@
             switch (evt.keyCode) {
                 //F12
                 case 123:
+
                     document.getElementById("myForm").submit();
                     break;
                 default:
@@ -362,6 +411,53 @@
             //Returning false overrides default browser event
             return false;
         };
+
+        // async function getKitData(value) {
+        //     await getData(value,'/lcn/getSkus').then(
+        //         data => {
+        //             let b = data.length;
+        //             const modalHeader = document.getElementById("modalHeader");
+        //             modalHeader.innerHTML = `<h5 class="modal-title" >KitLCN: ${value}-KIT </h5>`;
+        //             const modalBody = document.getElementById("ModalBody");
+        //             let str1=''
+        //             for (let i = 0; i < b; i++) {
+        //                str1+="<div class='custom-control custom-radio'>" +
+        //                    "<input type='radio' class='custom-control-input' id='mycheckbox"+data[i].version+"' name='skuRadios' value='"+data[i].ref_sku+"'>" +
+        //                    "<label class='custom-control-label font-weight-normal' for='mycheckbox"+data[i].version+"'>" +
+        //                    "<ul><li><b>Version:</b>&emsp;"+data[i].version+"<br><b>SKU:</b>&emsp;"+data[i].ref_sku+"<br>"+data[i].Parts+"</li></ul>" +
+        //                    "</label>" +
+        //                    "</div>"
+        //
+        //             }
+        //             modalBody.innerHTML = str1+"</div>"
+        //             document.getElementById('mycheckbox1').checked= true
+        //
+        //             $('#myModal').modal('show')
+        //
+        //         });
+        //     // MTC8QT1341
+        //
+        //     $(document).on("keypress", function (e) {
+        //         let id = 'mycheckbox'+e.key
+        //         document.getElementById(id).checked= true;
+        //     });
+        //
+        //     document.getElementById('submitSku').addEventListener('click',(e)=>{
+        //         const sku = document.querySelector('input[name="skuRadios"]:checked').value;
+        //         const kitLCN = value+'-KIT';
+        //         const data = {'sku':sku,'kitLCN':kitLCN}
+        //
+        //         saveSkuData(data)
+        //         $('#myModal').modal('hide')
+        //     })
+        // }
+        // async function saveSkuData(value) {
+        //     await getData(value,'/lcn/saveSkus').then(
+        //         data=>{
+        //             let b = data.length;
+        //             // document.getElementById("myForm").submit();
+        //          })
+        // }
 
 
 

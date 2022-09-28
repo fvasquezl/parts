@@ -15,6 +15,7 @@ use App\Http\Controllers\KitController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
+use App\Http\Controllers\SkuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +44,6 @@ Route::middleware('auth')
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
 
-
         Route::resource('boxShelf', BoxShelfController::class)
             ->only([
                 'index', 'update'
@@ -52,9 +52,14 @@ Route::middleware('auth')
             'boxShelf' => 'shelf'
         ]);
 
+        Route::resource('skus', SkuController::class,);
+
 
 
         Route::post('/lcn', [LcnController::class, 'index']);
+        Route::post('/lcn/getSkus', [LcnController::class, 'getSkus']);
+        Route::post('/lcn/saveSkus', [LcnController::class, 'saveSkus']);
+
         Route::post('/subcategories', [SubcategoryController::class, 'index']);
         Route::resource('parts', PartReferenceController::class);
 

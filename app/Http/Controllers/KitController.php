@@ -55,6 +55,9 @@ class KitController extends Controller
                     }
                     return $kit->Keywords;
                 })
+                ->editColumn('created_at', function ($kit) {
+                    return $kit->created_at->toDateTimeString();
+                })
                 ->addColumn('Actions', function () {
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
@@ -94,9 +97,12 @@ class KitController extends Controller
      * @param StorekitRequest $request
      * @return RedirectResponse
      */
-    public function store(StorekitRequest $request): RedirectResponse
+    public function store(StorekitRequest $request)
     {
+
+
         $kit = $request->createKit();
+
 
         $partlist = PartList::select('PartName', 'IsRequired')
             ->where('PartCategoryID', $kit->PartCategoryID)
@@ -119,6 +125,14 @@ class KitController extends Controller
             ]);
         }
         $firstPart = $kit->parts->first();
+
+        $exitst = \DB::select("SELECT VerifiedReferenceExist FROM [PartsProcessing].[prt].[sp_GetLCNData]('$kit->LCN')")[0];
+
+        if($exitst->VerifiedReferenceExist ==='1'){
+            return redirect()->route('skus.index', [
+                'LCN' => $kit->LCN
+            ]);
+        }
 
         return redirect()->route('parts.edit', $firstPart)
             ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;

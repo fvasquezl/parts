@@ -298,6 +298,12 @@ return [
         //        ],
         ['header' => 'OPERATIONS'],
 
+//        [
+//            'text' => 'Skus',
+//            'url'  => 'skus',
+//            'icon' => 'fas fa-fw fa-layer-group',
+//        ],
+
         [
             'text' => 'Kits',
             'url'  => 'kits',
