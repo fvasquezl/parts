@@ -44,21 +44,25 @@ class SkuController extends Controller
     public function store(Request $request)
     {
         $ref_sku = $request->Ref_Sku;
+
         $kit = Kit::where('KitLCN',$request->KitLCN)->first();
-
-        $result =DB::select("EXEC [PartsProcessing].[prt].[sp_UpdatePartReferencesFromVerified]'$kit->LCN','$ref_sku'")[0];
-
         $firstPart = $kit->parts->first();
 
-        if ($result->Success){
-            return redirect()->route('kits.index')
-                ->with('status', 'The Kit and parts has been created, successfully');
-        }else{
-            return redirect()->route('parts.edit', $firstPart)
-                ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
+        if ($ref_sku !== 'nodata') {
+
+            $result =DB::select("EXEC [PartsProcessing].[prt].[sp_UpdatePartReferencesFromVerified]'$kit->LCN','$ref_sku'")[0];
+
+            if ($result->Success){
+
+                $CablesPart = $kit->parts->where('PartName','Cables')->first();
+
+                return redirect()->route('parts.edit', $CablesPart)
+                    ->with('status', 'The Kit and parts has been created, successfully');
+            }
 
         }
-
+         return redirect()->route('parts.edit', $firstPart)
+                ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
 
     }
 

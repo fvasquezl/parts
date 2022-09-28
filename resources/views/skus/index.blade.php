@@ -56,6 +56,17 @@
                             </label>
                         </div>
                     @endforeach
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="mycheckbox0" name="Ref_Sku" value="nodata">
+                            <label class="custom-control-label font-weight-normal" for="mycheckbox0">
+                                <ul>
+                                    <li>
+                                        <b>None of the above:</b>
+                                    </li>
+                                </ul>
+                            </label>
+                        </div>
+
                         <div class="form-group">
                             <input type="text" class="form-control" name="KitLCN" value="{{$skus[0]->KitLCN}}" hidden >
                         </div>

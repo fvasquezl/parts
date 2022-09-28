@@ -2,7 +2,7 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h2>Kit {{$kitID}}, "{{$part->PartName}}"-{{$editPart}}/{{$totalParts}}</h2>
+    <h2>Kit {{$kitID}}, "{{$part->PartName}}"</h2>
 @stop
 
 @section('content')

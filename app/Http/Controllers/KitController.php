@@ -104,7 +104,8 @@ class KitController extends Controller
         $kit = $request->createKit();
 
 
-        $partlist = PartList::select('PartName', 'IsRequired')
+        $partlist = PartList::select('PartSequence','PartName', 'IsRequired')
+            ->orderBy('PartSequence','asc')
             ->where('PartCategoryID', $kit->PartCategoryID)
             ->where('PartSubCategoryID', $kit->PartSubCategoryID)
             ->get()->mapWithKeys(function ($item) {
@@ -113,6 +114,7 @@ class KitController extends Controller
 
 
         $kit->parts()->delete();
+
 
         foreach ($partlist as $partname => $value) {
 
