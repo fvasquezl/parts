@@ -61,7 +61,7 @@
                             <label class="custom-control-label font-weight-normal" for="mycheckbox0">
                                 <ul>
                                     <li>
-                                        <b>None of the above:</b>
+                                        <b>Version: 0</b> None of the above
                                     </li>
                                 </ul>
                             </label>
