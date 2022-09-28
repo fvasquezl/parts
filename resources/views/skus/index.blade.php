@@ -76,6 +76,7 @@
                                 {{ __('Create SKU[F12]') }}
                             </button>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
