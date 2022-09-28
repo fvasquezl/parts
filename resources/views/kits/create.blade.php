@@ -261,32 +261,7 @@
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         }
-        // let exists=0
-        // let lcn = null;
-        // let brand =null;
-        // let model = null;
-        // let CategoryID=null;
-        // let SubCategoryID=null;
-        // let SerialNumber=null;
-        // let CountryID=null;
-        // let DateManufactured=null;
-        // let Notes=null;
 
-        // async function getData(value,url){
-        //     try {
-        //         const response = await fetch(`${url}`,{
-        //             method: 'POST',
-        //             body: JSON.stringify({data:value}),
-        //             headers:headers
-        //         })
-        //         const data = await response.json()
-        //         return data
-        //
-        //     }
-        //     catch(err) {
-        //         console.log(err);
-        //     }
-        // }
 
         window.addEventListener("load", function() {
             let e =document.getElementById('PartCategoryID');
@@ -369,30 +344,6 @@
 
         });
 
-        // window.addEventListener("DOMContentLoaded", function() {
-        //     document.getElementById('myForm').addEventListener("submit", function(e) {
-        //         e.preventDefault(); // before the code
-        //         lcn = document.getElementById("LCN").value;
-        //         brand =  document.getElementById("brand").value;
-        //         model =  document.getElementById("model").value;
-        //         CategoryID= document.getElementById("PartCategoryID").value;
-        //         SubCategoryID=document.getElementById("PartSubCategoryID").value;
-        //         SerialNumber=document.getElementById("ProductSerialNumber").value;
-        //         CountryID=document.getElementById("CountryID").value;
-        //         DateManufactured=document.getElementById("DateManufactured").value;
-        //         Notes=document.getElementById("Comments").value;
-        //
-        //         if (lcn){
-        //             getKitData('lcn');
-        //         }
-        //         else{
-        //             console.log('fill lcn')
-        //         }
-        //
-        //     })
-        // });
-
-
 
         window.onhelp = function() {
             return false;
@@ -411,55 +362,6 @@
             //Returning false overrides default browser event
             return false;
         };
-
-        // async function getKitData(value) {
-        //     await getData(value,'/lcn/getSkus').then(
-        //         data => {
-        //             let b = data.length;
-        //             const modalHeader = document.getElementById("modalHeader");
-        //             modalHeader.innerHTML = `<h5 class="modal-title" >KitLCN: ${value}-KIT </h5>`;
-        //             const modalBody = document.getElementById("ModalBody");
-        //             let str1=''
-        //             for (let i = 0; i < b; i++) {
-        //                str1+="<div class='custom-control custom-radio'>" +
-        //                    "<input type='radio' class='custom-control-input' id='mycheckbox"+data[i].version+"' name='skuRadios' value='"+data[i].ref_sku+"'>" +
-        //                    "<label class='custom-control-label font-weight-normal' for='mycheckbox"+data[i].version+"'>" +
-        //                    "<ul><li><b>Version:</b>&emsp;"+data[i].version+"<br><b>SKU:</b>&emsp;"+data[i].ref_sku+"<br>"+data[i].Parts+"</li></ul>" +
-        //                    "</label>" +
-        //                    "</div>"
-        //
-        //             }
-        //             modalBody.innerHTML = str1+"</div>"
-        //             document.getElementById('mycheckbox1').checked= true
-        //
-        //             $('#myModal').modal('show')
-        //
-        //         });
-        //     // MTC8QT1341
-        //
-        //     $(document).on("keypress", function (e) {
-        //         let id = 'mycheckbox'+e.key
-        //         document.getElementById(id).checked= true;
-        //     });
-        //
-        //     document.getElementById('submitSku').addEventListener('click',(e)=>{
-        //         const sku = document.querySelector('input[name="skuRadios"]:checked').value;
-        //         const kitLCN = value+'-KIT';
-        //         const data = {'sku':sku,'kitLCN':kitLCN}
-        //
-        //         saveSkuData(data)
-        //         $('#myModal').modal('hide')
-        //     })
-        // }
-        // async function saveSkuData(value) {
-        //     await getData(value,'/lcn/saveSkus').then(
-        //         data=>{
-        //             let b = data.length;
-        //             // document.getElementById("myForm").submit();
-        //          })
-        // }
-
-
 
     </script>
 @stop

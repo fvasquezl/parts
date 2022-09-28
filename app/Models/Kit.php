@@ -57,15 +57,6 @@ class Kit extends Model
     }
 
 
-    ///RElacionar Kit con BoxContent y
-    /// PartKitsData necesita estar relacionado con BoxContent
-
-
-//    public function setDateManufactured($value)
-//    {
-//        $this->attributes['DateManufactured'] = Carbon::createFromFormat()
-//    }
-
     public function getDateManufactured() {
         if($this->DateManufactured){
             return $this->DateManufactured->format('m/d/Y');

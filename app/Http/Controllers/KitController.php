@@ -137,10 +137,6 @@ class KitController extends Controller
         return redirect()->route('parts.edit', $firstPart)
             ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');;
 
-
-//        return redirect()->route('kit-parts.update',$kit)
-//            ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
-
     }
 
     /**

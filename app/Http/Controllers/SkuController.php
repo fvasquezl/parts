@@ -48,7 +48,6 @@ class SkuController extends Controller
 
         $result =DB::select("EXEC [PartsProcessing].[prt].[sp_UpdatePartReferencesFromVerified]'$kit->LCN','$ref_sku'")[0];
 
-//        return ($result->Success==='1');
         $firstPart = $kit->parts->first();
 
         if ($result->Success){
