@@ -78,15 +78,13 @@
         }
 
         $(document).ready( function () {
-            // $.ajaxSetup({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     }
-            // });
 
             let $boxTable = $('#boxTable').DataTable({
+                order: [[0, 'desc']],
                 responsive: true,
                 serverSide: true,
+                scrollY: "53vh",
+
                 ajax: "{{route('boxes.index')}}",
                 columns: [
                     {data: 'box_id',name: 'box_id'},
@@ -108,21 +106,15 @@
                 document.getElementById('printf').src = url;
             });
 
-            // $(document).on('click', '.show-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'box/'+rowId);
-            // });
-            //
-            // $(document).on('click', '.edit-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'box/'+rowId+'/edit');
-            // });
-
         });
+
+        $(document).on('click', '.show-btn', function (e) {
+            e.stopPropagation();
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('ID');
+            $(location).attr('href', 'boxes/'+rowId);
+        });
+
 
         document.getElementById('create_box').addEventListener('click',function (){
             fetch('boxes', {

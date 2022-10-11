@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Box extends Model
 {
@@ -30,11 +31,12 @@ class Box extends Model
 
     public function getIsActive() {
         return $this->is_active ? 'yes': 'no';
-//        if($this->is_active){
-//            return true;
-//        }else{
-//
-//        }
+    }
+
+
+    public function kits()
+    {
+        return $this->belongsToMany(Kit::class,'bin.BoxContent','box_id', 'kit_id');
     }
 
 }

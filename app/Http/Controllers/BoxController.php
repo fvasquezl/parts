@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Box;
+use App\Models\Kit;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class BoxController extends Controller
@@ -76,11 +80,13 @@ class BoxController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Box  $box
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function show(Box $box)
     {
-        //
+        $kits= $box->kits()->pluck('KitLCN','KitID');
+
+        return view('boxes.show', compact('kits','box'));
     }
 
     /**
