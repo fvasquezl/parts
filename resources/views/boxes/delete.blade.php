@@ -38,6 +38,21 @@
                 </div>
 
                 <div class="card-body" id="mainForm">
+                    <h3>Pasos (Steps):</h3>
+                    <ul>
+                        <li>
+                            Escanea el código QR de la CAJA .<br>
+                            Scan the BOX QR
+                        </li>
+                        <li>
+                            Escanea el código QR de la KIT para eliminarlo de la caja.<br>
+                            Scan the KIT QR code to remove from box
+                        </li>
+                        <li>
+                            Una vez hecho esto, escanee el QR de la Caja para eliminar los kits.<br>
+                            Once done, scan the BOX Qr to delete all kits.
+                        </li>
+                    </ul>
                     <div class="row mb-3">
                         <div class="col-md-6">
 
