@@ -52,6 +52,9 @@ Route::middleware('auth')
             'boxShelf' => 'shelf'
         ]);
 
+        Route::view('/boxesRemove','boxes.delete');
+
+
         Route::resource('skus', SkuController::class,);
 
 
@@ -75,6 +78,7 @@ Route::middleware('auth')
 
 
         Route::post('validate/kit', [ValidateController::class, 'kit'])->name('validate.kit');
+        Route::post('validate/kits/{box}', [ValidateController::class, 'kits'])->name('validate.kits');
 
         //        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
 
@@ -89,3 +93,4 @@ Route::middleware('auth')
 Route::prefix('/admin')->middleware('auth', 'role:admin')->group(function () {
     Route::resource('users', UsersController::class);
 });
+

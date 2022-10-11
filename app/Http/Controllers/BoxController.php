@@ -118,8 +118,10 @@ class BoxController extends Controller
      * @param  \App\Models\Box  $box
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Box $box)
+    public function destroy(Request $request, Box $box)
     {
-        //
+        $box->kits()->detach($request->data);
+
+        return true;
     }
 }

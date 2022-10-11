@@ -333,6 +333,10 @@ return [
                     'text' => 'Add BOX to SHELF',
                     'url'  => 'boxShelf',
                 ],
+                [
+                    'text' => 'Remove BoxContent',
+                    'url'  => 'boxesRemove',
+                ],
             ],
             'can'  =>  'isAdmin'
 

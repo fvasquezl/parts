@@ -74,7 +74,6 @@ class ValidateController extends Controller
     }
 
 
-
     public function boxes(Request $request)
     {
         $this->validate($request, [
@@ -84,7 +83,7 @@ class ValidateController extends Controller
             ],
         ]);
 
-        return Box::where('box_name',$request->data )->first();
+        return Box::where('box_name', $request->data)->first();
 
     }
 
@@ -97,22 +96,32 @@ class ValidateController extends Controller
             ],
         ]);
 
-        return Shelf::where('shelf_name',$request->data )->first();
+        return Shelf::where('shelf_name', $request->data)->first();
 
-
-
-
-
-//        $box = Box::whereBox_id($id)->first();
-//        if ($box) {
-//            return response()->json([
-//                'id' => $box->box_id,
-//                'name' => 'BOX' . $box->box_id,
-//            ]);
-//        }
-//        return response()->json(
-//            'There an error with the BOX Information'
-//        );
     }
 
+    public function kits(Request $request, Box $box)
+    {
+
+        try {
+            $kit = $box->kits()->where('KitLCN',$request->data)->first();
+        } catch (Exception $e) {
+
+            $message = $e->getMessage();
+            var_dump('Exception Message: ' . $message);
+
+            $code = $e->getCode();
+            var_dump('Exception Code: ' . $code);
+
+            $string = $e->__toString();
+            var_dump('Exception String: ' . $string);
+
+            exit;
+        }
+
+        return response()->json(
+            $kit
+        );
+
+    }
 }

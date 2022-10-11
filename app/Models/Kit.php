@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kit extends Model
@@ -56,6 +57,11 @@ class Kit extends Model
         return $this->hasMany(BoxContent::class,'kit_id','KitID');
     }
 
+
+    public function box(): BelongsToMany
+    {
+        return $this->belongsToMany(Box::class,'bin.BoxContent','kit_id', 'box_id');
+    }
 
     public function getDateManufactured() {
         if($this->DateManufactured){

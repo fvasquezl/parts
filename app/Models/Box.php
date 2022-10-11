@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Box extends Model
@@ -34,7 +35,7 @@ class Box extends Model
     }
 
 
-    public function kits()
+    public function kits(): BelongsToMany
     {
         return $this->belongsToMany(Kit::class,'bin.BoxContent','box_id', 'kit_id');
     }
