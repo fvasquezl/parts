@@ -19,14 +19,14 @@ class BoxController extends Controller
             $data = Box::query();
             return datatables($data)
                 ->addIndexColumn()
-                ->editColumn('box_id', function($box) {
-                    return 'BOX'.$box->box_id;
-                })
                 ->editColumn('date_created', function($box) {
                     return $box->getDateCreated();
                 })
                 ->editColumn('is_active', function($box) {
                     return $box->getIsActive();
+                })
+                ->addColumn('kits', function($box) {
+                    return $box->kits()->count();
                 })
 
                 ->addColumn('actions', function(){

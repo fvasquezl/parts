@@ -16,13 +16,12 @@ class ShelfController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->editColumn('shelf_id', function ($shelf) {
-                    return 'SHELF' . $shelf->shelf_id;
-                })
                 ->editColumn('created_at', function ($shelf) {
                     return $shelf->getCreatedAt();
                 })
-
+                ->editColumn('boxes', function ($shelf) {
+                    return $shelf->boxes()->count();
+                })
                 ->addColumn('actions', function () {
                     $btns = '<button class="qrcode btn btn-sm btn-dark"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';

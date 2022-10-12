@@ -39,6 +39,7 @@
                             <tr>
                                 <th>Shelf ID</th>
                                 <th>Created At</th>
+                                <th># Boxes</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -82,11 +83,13 @@
             let $shelfTable = $('#shelfTable').DataTable({
                 responsive: true,
                 serverSide: true,
+                scrollY: "53vh",
                 ajax: "{{route('shelves.index')}}",
                 columns: [
-                    {data: 'shelf_id',name: 'shelf_id'},
-                    {data: 'created_at',name: 'created_at'},
+                    {data: 'shelf_name',name: 'shelf_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                    {data: 'boxes',name: 'boxes'},
+                    {data: 'created_at',name: 'created_at'},
                 ]
             });
 

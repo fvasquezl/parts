@@ -40,6 +40,7 @@
                                 <th>Box Id</th>
                                 <th>Actions</th>
                                 <th>Description</th>
+                                <th># Kits</th>
                                 <th>Is Active</th>
                                 <th>Shelf</th>
                                 <th>Shelf Scanned</th>
@@ -87,9 +88,10 @@
 
                 ajax: "{{route('boxes.index')}}",
                 columns: [
-                    {data: 'box_id',name: 'box_id'},
+                    {data: 'box_name',name: 'box_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'description',name: 'description'},
+                    {data: 'kits',name: 'kits'},
                     {data: 'is_active',name: 'is_active'},
                     {data: 'shelf_id',name: 'shelf_id'},
                     {data: 'shelf_scanned_date',name: 'shelf_scanned_date'},
