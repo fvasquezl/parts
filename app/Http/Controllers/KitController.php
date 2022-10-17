@@ -43,13 +43,13 @@ class KitController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->editColumn('BoxName', function ($kit) {
+                ->editColumn('boxname', function ($kit) {
                     if(!$kit->BoxName){
                         return 'No Box Yet';
                     }
                     return $kit->BoxName;
                 })
-                ->editColumn('Keywords', function ($kit) {
+                ->editColumn('keywords', function ($kit) {
                     if(!$kit->Keywords){
                         return 'No Keywords Yet';
                     }
@@ -58,12 +58,12 @@ class KitController extends Controller
                 ->editColumn('created_at', function ($kit) {
                     return $kit->created_at->toDateTimeString();
                 })
-                ->addColumn('Actions', function () {
+                ->addColumn('actions', function () {
                     $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
                         <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
-                ->rawColumns(['Actions'])
+                ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
                     return $data->KitID;
                 })

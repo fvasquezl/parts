@@ -93,17 +93,16 @@
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'kitid', name: 'kitid'},
-                    {data: 'kitlcn', name: 'KitLCN'},
-                    {data: 'BoxName', name: 'BoxName'},
-                    {data: 'Actions', name: 'Actions', orderable: false, searchable: false},
-                    {data: 'brand', name: 'Brand'},
-                    {data: 'model', name: 'Model'},
-                    {data: 'noofparts', name: 'NoOfParts'},
+                    {data: 'kitlcn', name: 'kitlcn'},
+                    {data: 'boxname', name: 'boxname'},
+                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                    {data: 'brand', name: 'brand'},
+                    {data: 'model', name: 'model'},
+                    {data: 'noofparts', name: 'noofparts'},
                     {data: 'url', name: 'url'},
-                    {data: 'Keywords', name: 'Keywords'},
+                    {data: 'keywords', name: 'keywords'},
                     {data: 'name', name: 'name'},
                     {data: 'created_at', name: 'created_at'},
-
                 ],
                 columnDefs: [
                     {
