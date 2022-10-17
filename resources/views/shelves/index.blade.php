@@ -38,9 +38,9 @@
                             <thead>
                             <tr>
                                 <th>Shelf ID</th>
-                                <th>Created At</th>
-                                <th># Boxes</th>
                                 <th>Actions</th>
+                                <th>Boxes</th>
+                                <th>Created At</th>
                             </tr>
                             </thead>
                         </table>
@@ -84,6 +84,8 @@
                 responsive: true,
                 serverSide: true,
                 scrollY: "53vh",
+                scrollX: false,
+
                 ajax: "{{route('shelves.index')}}",
                 columns: [
                     {data: 'shelf_name',name: 'shelf_name'},

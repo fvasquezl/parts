@@ -85,6 +85,7 @@
                 responsive: true,
                 serverSide: true,
                 scrollY: "53vh",
+                fixedHeader: true,
 
                 ajax: "{{route('boxes.index')}}",
                 columns: [
