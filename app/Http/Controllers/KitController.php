@@ -65,7 +65,7 @@ class KitController extends Controller
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
-                    return $data->KitID;
+                    return $data->kitid;
                 })
                 ->toJson();
         }
