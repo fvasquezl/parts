@@ -50,10 +50,10 @@ class KitController extends Controller
                     return $kit->BoxName;
                 })
                 ->editColumn('keywords', function ($kit) {
-                    if(!$kit->Keywords){
+                    if(!$kit->keywords){
                         return 'No Keywords Yet';
                     }
-                    return $kit->Keywords;
+                    return $kit->keywords;
                 })
                 ->editColumn('created_at', function ($kit) {
                     return $kit->created_at->toDateTimeString();
