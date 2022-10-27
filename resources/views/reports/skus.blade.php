@@ -127,6 +127,7 @@
                             extend: 'collection',
                             text: 'Days',
                             className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                            autoClose: true,
                             buttons: [
                                 {
                                     text: '7',
