@@ -130,7 +130,7 @@
                         {
                             extend: 'pageLength',
                             titleAttr: 'Show Records',
-                            className: 'btn selectTable btn-primary',
+                            className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
                         }
                     ],
                 },
@@ -168,6 +168,7 @@
                     },
                 ]
             });
+
 
 
             $(document).on('click', '.qrcode', function (e) {

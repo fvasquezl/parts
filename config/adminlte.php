@@ -341,6 +341,18 @@ return [
             'can'  =>  'isAdmin'
 
         ],
+        [
+            'text'    => 'Reports',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text'  => 'Skus',
+                    'url'   => 'reports/skus',
+                ],
+            ],
+            'can'  =>  'isAdmin'
+
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'Users',

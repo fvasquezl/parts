@@ -58,7 +58,6 @@ Route::middleware('auth')
         Route::resource('skus', SkuController::class,);
 
 
-
         Route::post('/lcn', [LcnController::class, 'index']);
         Route::post('/lcn/getSkus', [LcnController::class, 'getSkus']);
         Route::post('/lcn/saveSkus', [LcnController::class, 'saveSkus']);
@@ -93,4 +92,8 @@ Route::middleware('auth')
 Route::prefix('/admin')->middleware('auth', 'role:admin')->group(function () {
     Route::resource('users', UsersController::class);
 });
+
+
+//Reports
+Route::get('/reports/skus',[\App\Http\Controllers\Reports\SkuController::class,'index'])->name('reports.skus');
 
