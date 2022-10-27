@@ -29,8 +29,8 @@
 
             <div class="card">
                 <div class="card-header ">
-                    <h3 class="card-title mt-1">
-                        {{ __('Sku Report')}}
+                    <h3 class="card-title mt-1 days">
+                        {{ __('Sku Report (Last 7 days)')}}
                     </h3>
                 </div>
 
@@ -133,6 +133,7 @@
                                     text: '7',
                                     action: function (e, dt, node, config) {
                                         days = 7
+                                        $('.days').text('Sku Report (Last 7 days)')
                                         $kitsTable.ajax.reload();
                                     }
                                 },
@@ -140,6 +141,7 @@
                                     text: '14',
                                     action: function (e, dt, node, config) {
                                         days = 14
+                                        $('.days').text('Sku Report (Last 14 days)')
                                         $kitsTable.ajax.reload();
                                     }
                                 },
@@ -147,6 +149,7 @@
                                     text: '30',
                                     action: function (e, dt, node, config) {
                                         days = 30
+                                        $('.days').text('Sku Report (Last 30 days)')
                                         $kitsTable.ajax.reload();
                                     }
                                 },
@@ -154,6 +157,7 @@
                                     text: '60',
                                     action: function (e, dt, node, config) {
                                         days = 60
+                                        $('.days').text('Sku Report (Last 60 days)')
                                         $kitsTable.ajax.reload();
                                     }
                                 },
@@ -161,6 +165,7 @@
                                     text: '90',
                                     action: function (e, dt, node, config) {
                                         days = 90
+                                        $('.days').text('Sku Report (Last 90 days)')
                                         $kitsTable.ajax.reload();
                                     }
                                 }
