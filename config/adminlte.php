@@ -343,7 +343,7 @@ return [
         ],
         [
             'text'    => 'Reports',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-file',
             'submenu' => [
                 [
                     'text'  => 'Skus',
