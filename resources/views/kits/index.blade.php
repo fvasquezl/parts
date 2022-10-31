@@ -106,6 +106,9 @@
                 processing: true,
                 serverSide: true,
                 scrollY: "53vh",
+                scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
                     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
                     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
