@@ -46,6 +46,8 @@
                                 <th>Actions</th>
                                 <th>Brand</th>
                                 <th>Model</th>
+                                <th>Ref SKU</th>
+                                <th>No Images</th>
                                 <th># Parts</th>
                                 <th>Url</th>
                                 <th>Keywords</th>
@@ -143,6 +145,8 @@
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
+                    {data: 'ref_sku', name: 'ref_sku'},
+                    {data: 'image_count', name: 'image_count'},
                     {data: 'noofparts', name: 'noofparts'},
                     {data: 'url', name: 'url'},
                     {data: 'keywords', name: 'keywords'},
@@ -157,12 +161,12 @@
 
                     },
                     {
-                        targets: [6],
+                        targets: [8],
                         searchable: false,
                         // visible: false,
                     },
                     {
-                        targets: [7],
+                        targets: [9],
                         searchable: true,
                         visible: false
                     },
