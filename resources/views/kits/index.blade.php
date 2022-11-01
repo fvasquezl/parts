@@ -47,8 +47,9 @@
                                 <th>Brand</th>
                                 <th>Model</th>
                                 <th>Ref SKU</th>
-                                <th>No Images</th>
-                                <th># Parts</th>
+                                <th>SKU Count</th>
+                                <th>Images Qty</th>
+                                <th>Parts Qty</th>
                                 <th>Url</th>
                                 <th>Keywords</th>
                                 <th>CapturedBy</th>
@@ -149,6 +150,7 @@
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
                     {data: 'ref_sku', name: 'ref_sku'},
+                    {data: 'SKU_count', name: 'SKU_count'},
                     {data: 'image_count', name: 'image_count'},
                     {data: 'noofparts', name: 'noofparts'},
                     {data: 'url', name: 'url'},
@@ -164,12 +166,12 @@
 
                     },
                     {
-                        targets: [8],
+                        targets: [9],
                         searchable: false,
                         // visible: false,
                     },
                     {
-                        targets: [9],
+                        targets: [10],
                         searchable: true,
                         visible: false
                     },
