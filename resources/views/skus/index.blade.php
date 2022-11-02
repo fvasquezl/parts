@@ -30,8 +30,8 @@
                         </h3>
                         <div class="card-tools">
 
-                            <a class="btn btn-primary" href="{{ route('kits.create') }}">
-                                <i class="fa fa-plus"></i> Create Kit
+                            <a class="btn btn-primary" href="{{ route('skus.create') }}">
+                                <i class="fa fa-plus"></i> Create Sku
                             </a>
                         </div>
                     </div>
