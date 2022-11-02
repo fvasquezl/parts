@@ -297,18 +297,19 @@ return [
         //            'can'  =>  'isAdmin'
         //        ],
         ['header' => 'OPERATIONS'],
-
-//        [
-//            'text' => 'Skus',
-//            'url'  => 'skus',
-//            'icon' => 'fas fa-fw fa-layer-group',
-//        ],
-
         [
             'text' => 'Kits',
             'url'  => 'kits',
             'icon' => 'fas fa-fw fa-layer-group',
         ],
+
+        [
+            'text' => 'Skus',
+            'url'  => 'skus',
+            'icon' => 'fas fa-fw fa-bolt',
+        ],
+
+
 
 
         //        [
