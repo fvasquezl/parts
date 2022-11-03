@@ -303,11 +303,11 @@ return [
             'icon' => 'fas fa-fw fa-layer-group',
         ],
 
-        [
-            'text' => 'Skus',
-            'url'  => 'skus',
-            'icon' => 'fas fa-fw fa-bolt',
-        ],
+//        [
+//            'text' => 'Skus',
+//            'url'  => 'skus',
+//            'icon' => 'fas fa-fw fa-bolt',
+//        ],
 
 
 
