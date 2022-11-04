@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shelf;
+use Illuminate\Contracts\Foundation\Application as ApplicationAlias;
+use Illuminate\Contracts\View\Factory as FactoryAlias;
+use Illuminate\Contracts\View\View as ViewAlias;
 use Illuminate\Http\Request;
 
 class ShelfController extends Controller
@@ -71,11 +74,12 @@ class ShelfController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Shelve  $shelve
-     * @return \Illuminate\Http\Response
+     * @return ApplicationAlias|FactoryAlias|ViewAlias
      */
-    public function show(Shelf $shelve)
+    public function show(Shelf $shelf)
     {
-        //
+        $boxes= $shelf->boxes()->pluck('box_name','box_id');
+        return view('shelves.show',compact('boxes','shelf'));
     }
 
     /**

@@ -105,6 +105,13 @@
                 document.getElementById('printf').src = url;
             });
 
+            $(document).on('click', '.show-btn', function (e) {
+                e.stopPropagation();
+                let $tr = $(this).closest('tr');
+                let rowId = $tr.attr('ID');
+                $(location).attr('href', 'shelves/'+rowId);
+            });
+
             // $(document).on('click', '.show-btn', function (e) {
             //     e.stopPropagation();
             //     let $tr = $(this).closest('tr');
