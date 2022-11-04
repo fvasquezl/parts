@@ -16,6 +16,7 @@ use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
+use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,10 @@ Route::middleware('auth')
         Route::view('/boxesRemove','boxes.delete');
 
 
+        Route::resource('version', VersionController::class)
+            ->only([
+                'index', 'store'
+            ]);
         Route::resource('skus', SkuController::class,);
 
 

@@ -3,26 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kit;
-use App\Models\PartReference;
+use App\Models\Sku;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Exceptions\Exception;
 
 class SkuController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View|Response
+     * @param Request $request
+     * @return Application|Factory|View|JsonResponse
+     * @throws Exception
      */
     public function index(Request $request)
     {
-        return view('skus.index',[
-            'skus' => DB::select("EXEC [PartsProcessing].[prt].[sp_GetVerifiedPartReferences]'$request->LCN'")
-        ]);
+        if ($request->ajax()) {
+                $data = Sku::query();
+            return datatables($data)
+                ->addIndexColumn()
+                ->addColumn('actions', function () {
+                    $btns = '<button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
+                    return $btns;
+                })
+                ->rawColumns(['actions'])
+                ->setRowId(function ($data) {
+                    return $data->id;
+                })
+                ->toJson();
+        }
+
+        return view('skus.index');
     }
 
     /**

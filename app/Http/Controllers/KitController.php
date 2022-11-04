@@ -131,7 +131,7 @@ class KitController extends Controller
         $exitst = \DB::select("SELECT VerifiedReferenceExist FROM [PartsProcessing].[prt].[sp_GetLCNData]('$kit->LCN')")[0];
 
         if($exitst->VerifiedReferenceExist ==='1'){
-            return redirect()->route('skus.index', [
+            return redirect()->route('version.index', [
                 'LCN' => $kit->LCN
             ]);
         }
