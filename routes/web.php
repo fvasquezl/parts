@@ -16,6 +16,7 @@ use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
+use App\Http\Controllers\Skus\SKUStep1Controller;
 use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,11 @@ Route::middleware('auth')
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
 
+        Route::resource('sku/step1', SKUStep1Controller::class)
+            ->only([
+                'index'
+            ]);
+
         Route::resource('boxShelf', BoxShelfController::class)
             ->only([
                 'index', 'update'
@@ -60,7 +66,7 @@ Route::middleware('auth')
             ->only([
                 'index', 'store'
             ]);
-        Route::resource('skus', SkuController::class,);
+        Route::resource('skus', SkuController::class);
 
 
         Route::post('/lcn', [LcnController::class, 'index']);
@@ -101,4 +107,5 @@ Route::prefix('/admin')->middleware('auth', 'role:admin')->group(function () {
 
 //Reports
 Route::get('/reports/skus',[\App\Http\Controllers\Reports\SkuController::class,'index'])->name('reports.skus');
+
 

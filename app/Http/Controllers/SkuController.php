@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Country;
 use App\Models\Kit;
 use App\Models\Sku;
+use App\Models\SmartControl;
+use App\Models\SubCategory;
+use App\Models\WorkCenter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -41,14 +46,28 @@ class SkuController extends Controller
         return view('skus.index');
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @throws Exception
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->ajax()) {
+//            $brand = $request->brandID;
+//            $model = $request->modelID;
+            $brand = 'Hisense';
+            $model = '40H4030F';
+
+
+            $data = \DB::select("SELECT * FROM [PartsProcessing].[prt].[fn_GetVerifiedPartReferences]('$brand', '$model')");
+
+            return datatables($data)->toJson();
+        }
+
+        return view('skus.create', [
+            'brands' => Kit::query()->select('Brand')->distinct()->get(),
+            'models' => Kit::query()->select('Model')->distinct()->get(),
+        ]);
     }
 
     /**
@@ -59,26 +78,6 @@ class SkuController extends Controller
      */
     public function store(Request $request)
     {
-        $ref_sku = $request->Ref_Sku;
-
-        $kit = Kit::where('KitLCN',$request->KitLCN)->first();
-        $firstPart = $kit->parts->first();
-
-        if ($ref_sku !== 'nodata') {
-
-            $result =DB::select("EXEC [PartsProcessing].[prt].[sp_UpdatePartReferencesFromVerified]'$kit->LCN','$ref_sku'")[0];
-
-            if ($result->Success){
-
-                $CablesPart = $kit->parts->where('PartName','Cables')->first();
-
-                return redirect()->route('parts.edit', $CablesPart)
-                    ->with('status', 'The Kit and parts has been created, successfully');
-            }
-
-        }
-         return redirect()->route('parts.edit', $firstPart)
-                ->with('status', 'The Kit has been created, successfully, now we will create each part that compose it');
 
     }
 
