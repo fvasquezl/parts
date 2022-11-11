@@ -53,11 +53,8 @@ class SkuController extends Controller
     public function create(Request $request)
     {
         if ($request->ajax()) {
-//            $brand = $request->brandID;
-//            $model = $request->modelID;
-            $brand = 'Hisense';
-            $model = '40H4030F';
-
+            $brand = $request->brand;
+            $model = $request->model;
 
             $data = \DB::select("SELECT * FROM [PartsProcessing].[prt].[fn_GetVerifiedPartReferences]('$brand', '$model')");
 
@@ -66,7 +63,6 @@ class SkuController extends Controller
 
         return view('skus.create', [
             'brands' => Kit::query()->select('Brand')->distinct()->get(),
-            'models' => Kit::query()->select('Model')->distinct()->get(),
         ]);
     }
 
@@ -125,4 +121,7 @@ class SkuController extends Controller
     {
         //
     }
+
+
+
 }

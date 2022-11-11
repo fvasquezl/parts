@@ -16,6 +16,7 @@ use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
+use App\Http\Controllers\Skus\HelperController;
 use App\Http\Controllers\Skus\SKUStep1Controller;
 use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
@@ -97,6 +98,10 @@ Route::middleware('auth')
 
         Route::get('/kit-parts-update/{kit}/edit', [KitPartUpdateController::class, 'edit'])->name('kit-parts-update.edit');
         Route::patch('/kit-parts-update/{kit}', [KitPartUpdateController::class, 'update'])->name('kit-parts-update.update');
+
+        Route::post('/sku/getModels',[HelperController::class,'getModels'])->name('sku.getModels');
+
+
     });
 
 

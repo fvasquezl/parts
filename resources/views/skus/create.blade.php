@@ -28,8 +28,8 @@
                         <form>
                             <div class="form-row align-items-center">
                                 <div class="col-sm-3 my-1">
-                                    <select name="brand" aria-label="select brand" id="brand"
-                                            class="myselect2 form-control">
+                                    <select name="brand" aria-label="select brand" id="myBrand"
+                                            class=" form-control">
                                         <option value="0">Brand</option>
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->Brand }}"
@@ -40,14 +40,8 @@
                                 </div>
                                 <div class="col-sm-3 my-1">
 
-                                    <select name="model" aria-label="select model" id="model"
-                                            class="myselect2 form-control">
-                                        <option value="0">Model</option>
-                                        @foreach ($models as $model)
-                                            <option value="{{ $model->Model }}"
-                                                {{ old('model') ? 'selected':''}}>
-                                                {{ $model->Model }}</option>
-                                        @endforeach
+                                    <select name="model" aria-label="select model" id="myModel"
+                                            class="form-control">
                                     </select>
                                 </div>
                             </div>
@@ -114,6 +108,13 @@
         let $kitsTable;
         let brand;
         let model;
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
 
         $('.myselect2').select2({
             theme: 'bootstrap4',
@@ -121,12 +122,10 @@
 
         $(document).ready( function () {
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                headers
             });
 
-            let $kitsTable = $('#kitsTable').DataTable({
+            $kitsTable = $('#kitsTable').DataTable({
                 pageLength: 100,
                 lengthMenu: [
                     [100,500, -1],
@@ -177,8 +176,8 @@
                                 $(node).removeClass('btn-secondary buttons-html5')
                             },
                             action: function ( e, dt, node, config ) {
-                                brand = $( "#brand option:selected" ).text().trim();
-                                model = $( "#model option:selected" ).text().trim();
+                                brand =$('select[name=brand]').val();
+                                model =$('select[name=model]').val();
                                 window.location = '/sku/step1?brand='+brand+'&model='+model;
 
                             }
@@ -186,7 +185,15 @@
                     ],
                 },
 
-                ajax: "{{route('skus.create')}}",
+                ajax: {
+                    url: "{{route('skus.create')}}",
+                    data: function (d) {
+                        d.brand = $('select[name=brand]').val();
+                        d.model = $('select[name=model]').val();
+                    }
+                },
+
+
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
                     {data: 'brand',name:'brand'},
@@ -204,94 +211,33 @@
                     {data: 'Button Set',name:'Button Set'},
                     {data: 'Blutooth Module',name:'Blutooth Module'},
 
-
                 ],
-                // columnDefs: [
-                //     {
-                //         targets: [0],
-                //         searchable: true,
-                //         // visible: false,
-                //
-                //     },
-                //     {
-                //         targets: [3],
-                //         searchable: false,
-                //         // visible: false,
-                //     },
-                // ]
             });
-            step1.index
-
-
-            {{--$(document).on('click', '.qrcode', function (e) {--}}
-            {{--    e.stopPropagation();--}}
-            {{--    let $tr = $(this).closest('tr');--}}
-            {{--    let rowId = $tr.attr('ID');--}}
-            {{--    let url = "{{route('qrcode',':id')}}"--}}
-            {{--    url = url.replace(':id',rowId);--}}
-            {{--    document.getElementById('printf').src = url;--}}
-            {{--});--}}
-
-            // $(document).on('click', '.show-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'kits/'+rowId);
-            // });
-            //
-            // $(document).on('click', '.edit-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'kits/'+rowId+'/edit');
-            // });
-
-            // $(document).on('click', '.del-btn', function (e) {
-            //
-            //     e.stopPropagation();
-            //     e.stopImmediatePropagation();
-            //
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     let url = 'kits/'+rowId;
-            //
-            //     Swal.fire({
-            //         title: 'Are you sure?',
-            //         text: "You won't be able to revert this!",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: 'Yes, delete it!'
-            //     }).then((result) => {
-            //         if (result.value) {
-            //             let request = $.ajax({
-            //                 url: url,
-            //                 type: 'delete',
-            //                 dataType: 'json',
-            //             });
-            //             request.done(function (data) {
-            //                 Swal.fire(
-            //                     'Deleted!',
-            //                     data.message,
-            //                     'success'
-            //                 );
-            //                 $kitsTable.draw();
-            //             });
-            //             request.fail(function (jqXHR, textStatus, errorThrown) {
-            //                 Swal.fire('Failed!', "There was something wrong", "warning");
-            //             });
-            //         }
-            //     });
-            //
-            //
-            //     // e.stopPropagation();
-            //     // let $tr = $(this).closest('tr');
-            //     // let rowId = $tr.attr('ID');
-            //     // $(location).attr('href', 'kits/'+rowId+'/edit');
-            // });
         });
 
+
+        document.getElementById('myBrand').addEventListener('change', (e)=>{
+            fetch('/sku/getModels', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                let options = "<option value='0'>Model</option>";
+                for (let i in data){
+                    options += '<option value="'+data[i].model+'">'+data[i].model+'</option>';
+                }
+                document.getElementById('myModel').innerHTML = options
+            }).catch(error => console.log(error))
+        })
+
+        document.getElementById('myModel').addEventListener('change', (e)=>{
+             if ($('select[name=brand]').val()) {
+                 $kitsTable.ajax.reload();
+             }
+
+        })
 
     </script>
 @stop
