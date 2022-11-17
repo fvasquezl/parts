@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 class SKUStepsController extends Controller
 {
+
     public function create($brand,$model): Factory|View|Application
     {
         return view('skus.steps.create',[

@@ -166,12 +166,11 @@
                     </div>
                 </div>
 
-                <div class="card-body">
+                <th class="card-body">
                     <table class="table table-striped table-hover table-bordered nowrap" id="skusTable">
                         <thead>
                         <tr>
-                            <th>Ref Sku</th>
-                            <th>Actions</th>
+                            <th>Ref_Sku</th>
                             <th>Brand</th>
                             <th>Model</th>
                             <th>Version</th>
@@ -195,7 +194,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12 ">
-            <div class="card mb-4 shadow-sm card-outline card-primary">
+            <div class="card mb-4 shadow-sm card-outline card-success">
                 <div class="card-header ">
                     <h3 class="card-title mt-1">
                         Kits Listing
@@ -208,20 +207,18 @@
                     <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Kit LCN</th>
-                            <th>BoxID</th>
                             <th>Actions</th>
-                            <th>SKU Count</th>
-                            <th>Brand</th>
-                            <th>Model</th>
-                            <th>Ref SKU</th>
-                            <th>Images Qty</th>
-                            <th>Parts Qty</th>
-                            <th>Url</th>
-                            <th>Keywords</th>
-                            <th>CapturedBy</th>
-                            <th>Created At</th>
+                            <th>KitID</th>
+                            <th>brand</th>
+                            <th>model</th>
+                            <th>Open Cell</th>
+                            <th>Main Board</th>
+                            <th>T-Con Board</th>
+                            <th>Power Supply</th>
+                            <th>WiFi Module</th>
+                            <th>IR Sensor</th>
+                            <th>Button Set</th>
+                            <th>Blutooth Module</th>
                         </tr>
                         </thead>
                     </table>
@@ -266,14 +263,15 @@
             });
 
             let $skusTable = $('#skusTable').DataTable({
-                pageLength: 100,
+                order: [[0, 'desc']],
+                pageLength: 50,
                 lengthMenu: [
-                    [100,500, -1],
-                    [100,500,'All']
+                    [50,100, -1],
+                    [50,100,'All']
                 ],
                 processing: true,
                 serverSide: true,
-                scrollY: "53vh",
+                scrollY: "35vh",
                 scrollX: true,
                 scrollCollapse: true,
                 stateSave: true,
@@ -290,16 +288,7 @@
                             tag: null
                         }
                     },
-                    buttons: [{
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
-                        title: 'Skus to Excel',
-                        titleAttr: 'Excel',
-                        className: 'btn btn-success',
-                        init: function (api, node, config) {
-                            $(node).removeClass('btn-secondary buttons-html5 buttons-excel')
-                        },
-                    },
+                    buttons: [
                         {
                             extend: 'pageLength',
                             titleAttr: 'Show Records',
@@ -308,10 +297,9 @@
                     ],
                 },
 
-                ajax: "{{route('skus.index')}}",
+                ajax: "{{route('sku.getSkus')}}",
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
-                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'brand',name:'brand'},
                     {data: 'model',name:'model'},
                     {data: 'version',name:'version'},
@@ -326,33 +314,27 @@
                     {data: 'IR Sensor',name:'IR Sensor'},
                     {data: 'Button Set',name:'Button Set'},
                     {data: 'Blutooth Module',name:'Blutooth Module'},
-
                 ],
                 columnDefs: [
                     {
                         targets: [0],
                         searchable: true,
-                        // visible: false,
-
-                    },
-                    {
-                        targets: [3],
-                        searchable: false,
-                        // visible: false,
-                    },
-                ]
+                    }
+                ],
             });
+
+
 
             let $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
-                    [100,500, -1],
-                    [100,500,'All']
+                    [50,100, -1],
+                    [50,100,'All']
                 ],
                 processing: true,
                 serverSide: true,
-                scrollY: "53vh",
+                scrollY: "35vh",
                 scrollX: true,
                 scrollCollapse: true,
                 stateSave: true,
@@ -369,16 +351,7 @@
                             tag: null
                         }
                     },
-                    buttons: [{
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
-                        title: 'Kits to Excel',
-                        titleAttr: 'Excel',
-                        className: 'btn btn-success',
-                        init: function (api, node, config) {
-                            $(node).removeClass('btn-secondary buttons-html5 buttons-excel')
-                        },
-                    },
+                    buttons: [
                         {
                             extend: 'pageLength',
                             titleAttr: 'Show Records',
@@ -387,44 +360,54 @@
                     ],
                 },
 
-                ajax: "{{route('kits.index')}}",
+                ajax: "{{route('sku.getKits')}}",
                 columns: [
-                    {data: 'kitid', name: 'kitid'},
-                    {data: 'kitlcn', name: 'kitlcn'},
-                    {data: 'boxname', name: 'boxname'},
-                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
-                    {data: 'SKU_count', name: 'SKU_count'},
+                    {data: 'actions', name: 'actions'},
+                    {data: 'KitID', name: 'KitID'},
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
-                    {data: 'ref_sku', name: 'ref_sku'},
-                    {data: 'image_count', name: 'image_count'},
-                    {data: 'noofparts', name: 'noofparts'},
-                    {data: 'url', name: 'url'},
-                    {data: 'keywords', name: 'keywords'},
-                    {data: 'name', name: 'name'},
-                    {data: 'created_at', name: 'created_at'},
+                    {data: 'Open Cell', name: 'Open Cell'},
+                    {data: 'Main Board', name: 'Main Board'},
+                    {data: 'T-Con Board', name: 'T-Con Board'},
+                    {data: 'Power Supply', name: 'Power Supply'},
+                    {data: 'WiFi Module', name: 'WiFi Module'},
+                    {data: 'IR Sensor', name: 'IR Sensor'},
+                    {data: 'Button Set', name: 'Button Set'},
+                    {data: 'Blutooth Module', name: 'Blutooth Module'},
                 ],
                 columnDefs: [
                     {
                         targets: [0],
                         searchable: true,
-                        // visible: false,
-
-                    },
-                    {
-                        targets: [9],
-                        searchable: false,
-                        // visible: false,
-                    },
-                    {
-                        targets: [10],
-                        searchable: true,
-                        visible: false
                     },
                 ]
             });
-
         });
+
+
+
+        $(document).on('click', '.add-btn', function (e) {
+            e.stopPropagation();
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('id');
+
+            console.log(rowId);
+            // $('#ajaxModal').on('shown.bs.modal', function () {
+            //     let form = $('#productForm');
+            //     form.attr("action", "/products/" + rowId)
+            //         .attr('method', 'PUT');
+            //     $(form).trigger("reset");
+            //     let product = getRowData(rowId);
+            //     // console.log(product);
+            //     let category = getRowData(product.CategoryID, '', '/category');
+            //     $(this).find(".modal-title").html("Update Product " + product.SKU);
+            //     displayLabels(form, product, category);
+            // }).modal('show');
+        });
+
+
+
+
 
 
     </script>

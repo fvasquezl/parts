@@ -102,6 +102,8 @@ Route::middleware('auth')
         Route::patch('/kit-parts-update/{kit}', [KitPartUpdateController::class, 'update'])->name('kit-parts-update.update');
 
         Route::post('/sku/getModels',[HelperController::class,'getModels'])->name('sku.getModels');
+        Route::get('/sku/getSkus',[HelperController::class,'getSkus'])->name('sku.getSkus');
+        Route::get('/sku/getKits',[HelperController::class,'getKits'])->name('sku.getKits');
 
 
     });
