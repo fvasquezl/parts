@@ -37,10 +37,9 @@
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
+                        <table class="table table-striped table-hover table-bordered nowrap" id="skusTable">
                             <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Ref Sku</th>
                                 <th>Actions</th>
                                 <th>Brand</th>
@@ -92,7 +91,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        let $kitsTable;
+        let $skusTable;
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
@@ -100,7 +99,7 @@
                 }
             });
 
-            let $kitsTable = $('#kitsTable').DataTable({
+            let $skusTable = $('#skusTable').DataTable({
                 pageLength: 100,
                 lengthMenu: [
                     [100,500, -1],
@@ -145,7 +144,6 @@
 
                 ajax: "{{route('skus.index')}}",
                 columns: [
-                    {data: 'id',name:'id'},
                     {data: 'ref_sku',name:'ref_sku'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'brand',name:'brand'},
@@ -180,74 +178,6 @@
             });
 
 
-
-            {{--$(document).on('click', '.qrcode', function (e) {--}}
-            {{--    e.stopPropagation();--}}
-            {{--    let $tr = $(this).closest('tr');--}}
-            {{--    let rowId = $tr.attr('ID');--}}
-            {{--    let url = "{{route('qrcode',':id')}}"--}}
-            {{--    url = url.replace(':id',rowId);--}}
-            {{--    document.getElementById('printf').src = url;--}}
-            {{--});--}}
-
-            // $(document).on('click', '.show-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'kits/'+rowId);
-            // });
-            //
-            // $(document).on('click', '.edit-btn', function (e) {
-            //     e.stopPropagation();
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     $(location).attr('href', 'kits/'+rowId+'/edit');
-            // });
-
-            // $(document).on('click', '.del-btn', function (e) {
-            //
-            //     e.stopPropagation();
-            //     e.stopImmediatePropagation();
-            //
-            //     let $tr = $(this).closest('tr');
-            //     let rowId = $tr.attr('ID');
-            //     let url = 'kits/'+rowId;
-            //
-            //     Swal.fire({
-            //         title: 'Are you sure?',
-            //         text: "You won't be able to revert this!",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: 'Yes, delete it!'
-            //     }).then((result) => {
-            //         if (result.value) {
-            //             let request = $.ajax({
-            //                 url: url,
-            //                 type: 'delete',
-            //                 dataType: 'json',
-            //             });
-            //             request.done(function (data) {
-            //                 Swal.fire(
-            //                     'Deleted!',
-            //                     data.message,
-            //                     'success'
-            //                 );
-            //                 $kitsTable.draw();
-            //             });
-            //             request.fail(function (jqXHR, textStatus, errorThrown) {
-            //                 Swal.fire('Failed!', "There was something wrong", "warning");
-            //             });
-            //         }
-            //     });
-            //
-            //
-            //     // e.stopPropagation();
-            //     // let $tr = $(this).closest('tr');
-            //     // let rowId = $tr.attr('ID');
-            //     // $(location).attr('href', 'kits/'+rowId+'/edit');
-            // });
         });
 
 

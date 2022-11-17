@@ -9,7 +9,7 @@ class Sku extends Model
 {
     use HasFactory;
     protected $table = 'prt.vw_VerifiedPartReferences';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'ref_sku';
     protected $guarded = [];
 
 }

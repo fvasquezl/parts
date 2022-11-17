@@ -38,7 +38,7 @@ class SkuController extends Controller
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
-                    return $data->id;
+                    return $data->ref_sku;
                 })
                 ->toJson();
         }

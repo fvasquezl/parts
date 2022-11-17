@@ -106,7 +106,7 @@
 
     <script>
         let $kitsTable;
-        let brand;
+        let brand,create_sku_btn;
         let model;
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let headers = {
@@ -174,13 +174,13 @@
                             },
                             init: function (api, node, config) {
                                 $(node).removeClass('btn-secondary buttons-html5')
+                                this.disable();
                             },
                             action: function ( e, dt, node, config ) {
                                 brand =$('select[name=brand]').val();
                                 model =$('select[name=model]').val();
-                                window.location = '/sku/step1?brand='+brand+'&model='+model;
-
-                            }
+                                window.location = '/sku/steps/create/'+brand+'/'+model;
+                            },
                         }
                     ],
                 },
@@ -230,13 +230,27 @@
                 }
                 document.getElementById('myModel').innerHTML = options
             }).catch(error => console.log(error))
+            manage()
         })
 
-        document.getElementById('myModel').addEventListener('change', (e)=>{
-             if ($('select[name=brand]').val()) {
-                 $kitsTable.ajax.reload();
-             }
+        function manage() {
+            let bt = document.getElementById('create-sku-btn');
+            let selBrand = document.getElementById('myBrand');
+            let selModel = document.getElementById('myModel');
+            if(selBrand.value !== '0' && selModel.value !== '0'&& selModel.value !== ''){
+                bt.classList.remove('disabled');
+                bt.disabled = false;
+            }else{
+                bt.disabled = true;
+            }
+            $kitsTable.ajax.reload();
+             console.log(bt)
 
+        }
+
+
+        document.getElementById('myModel').addEventListener('change', (e)=>{
+            manage()
         })
 
     </script>

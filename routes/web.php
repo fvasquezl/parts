@@ -17,7 +17,7 @@ use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
 use App\Http\Controllers\Skus\HelperController;
-use App\Http\Controllers\Skus\SKUStep1Controller;
+use App\Http\Controllers\Skus\SKUStepsController;
 use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,10 +47,12 @@ Route::middleware('auth')
         Route::resource('add-inv', AddInvController::class);
         Route::resource('rem-inv', RemoveInvController::class);
 
-        Route::resource('sku/step1', SKUStep1Controller::class)
-            ->only([
-                'index'
-            ]);
+
+        Route::get('sku/steps/create/{brand}/{model}',[SKUStepsController::class,'create'])->name('steps.create' );
+        Route::post('sku/steps',[SKUStepsController::class,'store'])->name('steps.store');
+        Route::get('sku/steps/{sku}/edit',[SKUStepsController::class,'edit'])->name('steps.edit');
+        Route::patch('sku/steps/{sku}',[SKUStepsController::class,'update'])->name('steps.update');
+
 
         Route::resource('boxShelf', BoxShelfController::class)
             ->only([
