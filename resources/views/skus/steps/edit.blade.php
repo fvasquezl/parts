@@ -27,7 +27,6 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('steps.update', $sku) }}" enctype="multipart/form-data" id="myForm">
                             @csrf
-
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="brand" class="col-form-label text-md-end">{{ __('Brand') }}</label>
@@ -42,7 +41,6 @@
                                     </span>
                                     @enderror
                                 </div>
-
                                 <div class="col-md-3">
                                     <label for="model" class="col-form-label text-md-end">{{ __('Model') }}</label>
 
@@ -56,90 +54,582 @@
                                     </span>
                                     @enderror
                                 </div>
-
-                                <div class="col-md-3">
-                                    <label for="partName" class="col-form-label text-md-end">{{ __('Part Name') }}</label>
-
-                                    <input id="partName" type="text"
-                                           class="form-control @error('partName') is-invalid @enderror" name="partName"
-                                           value="{{ old('partName') }}"  autocomplete="off" autofocus>
-
-                                    @error('partName')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="partRef1" class="col-form-label text-md-end">{{ __('PartRef1') }}</label>
-
-                                    <input id="partRef1" type="text"
-                                           class="form-control @error('partRef1') is-invalid @enderror" name="partRef1"
-                                           value="{{ old('partRef1') }}"  autocomplete="off" autofocus >
-
-                                    @error('partRef1')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
                             </div>
-
                             <div class="row mb-3">
-                                <div class="col-md-3">
-                                    <label for="partRef2" class="col-form-label text-md-end">{{ __('Part Ref2') }}</label>
+                                <div class="col-md-2">
+                                    <input id="part1Name" type="text"
+                                           class="form-control @error('part1Name') is-invalid @enderror" name="part1Name"
+                                           value="OpenCell"  autocomplete="off" autofocus disabled>
+                                </div>
 
-                                    <input id="partRef2" type="text"
-                                           class="form-control @error('partRef2') is-invalid @enderror" name="partRef2"
-                                           value="{{ old('partRef2') }}"  autocomplete="off" autofocus>
 
-                                    @error('partRef2')
+                                <div class="col-md-2">
+
+                                    <input id="part1Ref1" type="text"
+                                           class="form-control @error('part1Ref1') is-invalid @enderror" name="part1Ref1"
+                                           value="{{ old('part1Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part1Ref1')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="partRef3" class="col-form-label text-md-end">{{ __('Part Ref3') }}</label>
+                                <div class="col-md-2">
 
-                                    <input id="partRef3" type="text"
-                                           class="form-control @error('partRef3') is-invalid @enderror" name="partRef3"
-                                           value="{{ old('partRef3') }}"  autocomplete="off" autofocus >
+                                    <input id="part1Ref2" type="text"
+                                           class="form-control @error('part1Ref2') is-invalid @enderror" name="part1Ref2"
+                                           value="{{ old('part1Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2" >
 
-                                    @error('partRef3')
+                                    @error('part1Ref2')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="partRef4" class="col-form-label text-md-end">{{ __('Part Ref4') }}</label>
+                                <div class="col-md-2">
 
-                                    <input id="partRef4" type="text"
-                                           class="form-control @error('partRef4') is-invalid @enderror" name="partRef4"
-                                           value="{{ old('partRef4') }}"  autocomplete="off" autofocus>
+                                    <input id="part1Ref3" type="text"
+                                           class="form-control @error('part1Ref3') is-invalid @enderror" name="part1Ref3"
+                                           value="{{ old('part1Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
 
-                                    @error('partRef4')
+                                    @error('part1Ref3')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="partRef5" class="col-form-label text-md-end">{{ __('Part Ref5') }}</label>
 
-                                    <input id="partRef5" type="text"
-                                           class="form-control @error('partRef5') is-invalid @enderror" name="partRef5"
-                                           value="{{ old('partRef5') }}"  autocomplete="off" autofocus >
+                                <div class="col-md-2">
 
-                                    @error('partRef5')
+                                    <input id="part1Ref4" type="text"
+                                           class="form-control @error('part1Ref4') is-invalid @enderror" name="part1Ref4"
+                                           value="{{ old('part1Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4" >
+
+                                    @error('part1Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part1Ref5" type="text"
+                                           class="form-control @error('part1Ref5') is-invalid @enderror" name="part1Ref5"
+                                           value="{{ old('part1Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5" >
+
+                                    @error('part1Ref5')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
 
+                                    <input id="part2Name" type="text"
+                                           class="form-control @error('part2Name') is-invalid @enderror" name="part2Name"
+                                           value="MainBoard"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part2Ref1" type="text"
+                                           class="form-control @error('part2Ref1') is-invalid @enderror" name="part2Ref1"
+                                           value="{{ old('part2Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part2Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part2Ref2" type="text"
+                                           class="form-control @error('part2Ref2') is-invalid @enderror" name="part2Ref2"
+                                           value="{{ old('part2Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part2Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part2Ref3" type="text"
+                                           class="form-control @error('part2Ref3') is-invalid @enderror" name="part2Ref3"
+                                           value="{{ old('part2Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part2Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part2Ref4" type="text"
+                                           class="form-control @error('part2Ref4') is-invalid @enderror" name="part2Ref4"
+                                           value="{{ old('part2Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part2Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part2Ref5" type="text"
+                                           class="form-control @error('part2Ref5') is-invalid @enderror" name="part2Ref5"
+                                           value="{{ old('part2Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part2Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part3Name" type="text"
+                                           class="form-control @error('part3Name') is-invalid @enderror" name="part3Name"
+                                           value="T-Con Board"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part3Ref1" type="text"
+                                           class="form-control @error('part3Ref1') is-invalid @enderror" name="part3Ref1"
+                                           value="{{ old('part3Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part3Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part3Ref2" type="text"
+                                           class="form-control @error('part3Ref2') is-invalid @enderror" name="part3Ref2"
+                                           value="{{ old('part3Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part3Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part3Ref3" type="text"
+                                           class="form-control @error('part3Ref3') is-invalid @enderror" name="part3Ref3"
+                                           value="{{ old('part3Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part3Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part3Ref4" type="text"
+                                           class="form-control @error('part3Ref4') is-invalid @enderror" name="part3Ref4"
+                                           value="{{ old('part3Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part3Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part3Ref5" type="text"
+                                           class="form-control @error('part3Ref5') is-invalid @enderror" name="part3Ref5"
+                                           value="{{ old('part3Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part3Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part4Name" type="text"
+                                           class="form-control @error('part4Name') is-invalid @enderror" name="part4Name"
+                                           value="Power Supply"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part4Ref1" type="text"
+                                           class="form-control @error('part4Ref1') is-invalid @enderror" name="part4Ref1"
+                                           value="{{ old('part4Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part4Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part4Ref2" type="text"
+                                           class="form-control @error('part4Ref2') is-invalid @enderror" name="part4Ref2"
+                                           value="{{ old('part4Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part4Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part4Ref3" type="text"
+                                           class="form-control @error('part4Ref3') is-invalid @enderror" name="part4Ref3"
+                                           value="{{ old('part4Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part4Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part4Ref4" type="text"
+                                           class="form-control @error('part4Ref4') is-invalid @enderror" name="part4Ref4"
+                                           value="{{ old('part4Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part4Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part4Ref5" type="text"
+                                           class="form-control @error('part4Ref5') is-invalid @enderror" name="part4Ref5"
+                                           value="{{ old('part4Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part4Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part5Name" type="text"
+                                           class="form-control @error('part5Name') is-invalid @enderror" name="part5Name"
+                                           value="WiFi Module"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part5Ref1" type="text"
+                                           class="form-control @error('part5Ref1') is-invalid @enderror" name="part5Ref1"
+                                           value="{{ old('part5Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part5Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part5Ref2" type="text"
+                                           class="form-control @error('part5Ref2') is-invalid @enderror" name="part5Ref2"
+                                           value="{{ old('part5Ref2') }}"  autocomplete="off" autofocus  placeholder="Ref 2">
+
+                                    @error('part5Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part5Ref3" type="text"
+                                           class="form-control @error('part5Ref3') is-invalid @enderror" name="part5Ref3"
+                                           value="{{ old('part5Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part5Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part5Ref4" type="text"
+                                           class="form-control @error('part5Ref4') is-invalid @enderror" name="part5Ref4"
+                                           value="{{ old('part5Ref4') }}"  autocomplete="off" autofocus  placeholder="Ref 4">
+
+                                    @error('part5Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part5Ref5" type="text"
+                                           class="form-control @error('part5Ref5') is-invalid @enderror" name="part5Ref5"
+                                           value="{{ old('part5Ref5') }}"  autocomplete="off" autofocus  placeholder="Ref 5">
+
+                                    @error('part5Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part6Name" type="text"
+                                           class="form-control @error('part6Name') is-invalid @enderror" name="part6Name"
+                                           value="IR sensor"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part6Ref1" type="text"
+                                           class="form-control @error('part6Ref1') is-invalid @enderror" name="part6Ref1"
+                                           value="{{ old('part6Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part6Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part6Ref2" type="text"
+                                           class="form-control @error('part6Ref2') is-invalid @enderror" name="part6Ref2"
+                                           value="{{ old('part6Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part6Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part6Ref3" type="text"
+                                           class="form-control @error('part6Ref3') is-invalid @enderror" name="part6Ref3"
+                                           value="{{ old('part6Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part6Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part6Ref4" type="text"
+                                           class="form-control @error('part6Ref4') is-invalid @enderror" name="part6Ref4"
+                                           value="{{ old('part6Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part6Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part6Ref5" type="text"
+                                           class="form-control @error('part6Ref5') is-invalid @enderror" name="part6Ref5"
+                                           value="{{ old('part6Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part6Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part7Name" type="text"
+                                           class="form-control @error('part7Name') is-invalid @enderror" name="part7Name"
+                                           value="Button Set"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part7Ref1" type="text"
+                                           class="form-control @error('part7Ref1') is-invalid @enderror" name="part7Ref1"
+                                           value="{{ old('part7Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part7Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part7Ref2" type="text"
+                                           class="form-control @error('part7Ref2') is-invalid @enderror" name="part7Ref2"
+                                           value="{{ old('part7Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part7Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part7Ref3" type="text"
+                                           class="form-control @error('part7Ref3') is-invalid @enderror" name="part7Ref3"
+                                           value="{{ old('part7Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part7Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part7Ref4" type="text"
+                                           class="form-control @error('part7Ref4') is-invalid @enderror" name="part7Ref4"
+                                           value="{{ old('part7Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part7Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part7Ref5" type="text"
+                                           class="form-control @error('part7Ref5') is-invalid @enderror" name="part7Ref5"
+                                           value="{{ old('part7Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part7Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+
+                                    <input id="part8Name" type="text"
+                                           class="form-control @error('part8Name') is-invalid @enderror" name="part8Name"
+                                           value="Blutooth Module"  autocomplete="off" autofocus disabled>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                    <input id="part8Ref1" type="text"
+                                           class="form-control @error('part8Ref1') is-invalid @enderror" name="part8Ref1"
+                                           value="{{ old('part8Ref1') }}"  autocomplete="off" autofocus placeholder="Ref 1">
+
+                                    @error('part8Ref1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part8Ref2" type="text"
+                                           class="form-control @error('part8Ref2') is-invalid @enderror" name="part8Ref2"
+                                           value="{{ old('part8Ref2') }}"  autocomplete="off" autofocus placeholder="Ref 2">
+
+                                    @error('part8Ref2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input id="part8Ref3" type="text"
+                                           class="form-control @error('part8Ref3') is-invalid @enderror" name="part8Ref3"
+                                           value="{{ old('part8Ref3') }}"  autocomplete="off" autofocus placeholder="Ref 3">
+
+                                    @error('part8Ref3')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part8Ref4" type="text"
+                                           class="form-control @error('part8Ref4') is-invalid @enderror" name="part8Ref4"
+                                           value="{{ old('part8Ref4') }}"  autocomplete="off" autofocus placeholder="Ref 4">
+
+                                    @error('part8Ref4')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    <input id="part8Ref5" type="text"
+                                           class="form-control @error('part8Ref5') is-invalid @enderror" name="part8Ref5"
+                                           value="{{ old('part8Ref5') }}"  autocomplete="off" autofocus placeholder="Ref 5">
+
+                                    @error('part8Ref5')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row">
                                 <button type="submit" class="btn btn-block btn-primary">
                                     {{ __('Create [F12]') }}
@@ -166,7 +656,7 @@
                     </div>
                 </div>
 
-                <th class="card-body">
+                <div class="card-body">
                     <table class="table table-striped table-hover table-bordered nowrap" id="skusTable">
                         <thead>
                         <tr>
@@ -234,8 +724,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
-
-
 @stop
 
 @section('js')
@@ -254,7 +742,9 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        let $kitsTable;
+        let $kitsTable
+        let $skusTable;
+
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
@@ -262,7 +752,7 @@
                 }
             });
 
-            let $skusTable = $('#skusTable').DataTable({
+            $skusTable = $('#skusTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 50,
                 lengthMenu: [
@@ -325,7 +815,7 @@
 
 
 
-            let $kitsTable = $('#kitsTable').DataTable({
+            $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
@@ -388,27 +878,30 @@
 
         $(document).on('click', '.add-btn', function (e) {
             e.stopPropagation();
-            let $tr = $(this).closest('tr');
-            let rowId = $tr.attr('id');
+            let tr = $(this).closest('tr');
+            let rowId = tr.attr('id');
+            let row = $kitsTable.row(tr).data();
+            let headers =['Open Cell',
+                'Main Board',
+                'T-Con Board',
+                'Power Supply',
+                'WiFi Module',
+                'IR Sensor',
+                'Button Set',
+                'Blutooth Module'
+            ];
 
-            console.log(rowId);
-            // $('#ajaxModal').on('shown.bs.modal', function () {
-            //     let form = $('#productForm');
-            //     form.attr("action", "/products/" + rowId)
-            //         .attr('method', 'PUT');
-            //     $(form).trigger("reset");
-            //     let product = getRowData(rowId);
-            //     // console.log(product);
-            //     let category = getRowData(product.CategoryID, '', '/category');
-            //     $(this).find(".modal-title").html("Update Product " + product.SKU);
-            //     displayLabels(form, product, category);
-            // }).modal('show');
+            headers.forEach(function (e,i){
+                i+=1
+                if(row[e]) {
+                    let refs = row[e].split(',')
+                    refs.forEach(function(r, j){
+                        j+=1
+                        $('#part'+i+'Ref'+j).val(r)
+                    })
+                }
+            })
         });
-
-
-
-
-
 
     </script>
 @stop
