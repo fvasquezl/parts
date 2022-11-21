@@ -27,6 +27,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('steps.update', $sku) }}" enctype="multipart/form-data" id="myForm">
                             @csrf
+                            @method('PATCH')
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="brand" class="col-form-label text-md-end">{{ __('Brand') }}</label>
@@ -59,7 +60,7 @@
                                 <div class="col-md-2">
                                     <input id="part1Name" type="text"
                                            class="form-control @error('part1Name') is-invalid @enderror" name="part1Name"
-                                           value="OpenCell"  autocomplete="off" autofocus disabled>
+                                           value="Open Cell"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -131,7 +132,7 @@
 
                                     <input id="part2Name" type="text"
                                            class="form-control @error('part2Name') is-invalid @enderror" name="part2Name"
-                                           value="MainBoard"  autocomplete="off" autofocus disabled>
+                                           value="Main Board"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -203,7 +204,7 @@
 
                                     <input id="part3Name" type="text"
                                            class="form-control @error('part3Name') is-invalid @enderror" name="part3Name"
-                                           value="T-Con Board"  autocomplete="off" autofocus disabled>
+                                           value="T-Con Board"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -275,7 +276,7 @@
 
                                     <input id="part4Name" type="text"
                                            class="form-control @error('part4Name') is-invalid @enderror" name="part4Name"
-                                           value="Power Supply"  autocomplete="off" autofocus disabled>
+                                           value="Power Supply"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -347,7 +348,7 @@
 
                                     <input id="part5Name" type="text"
                                            class="form-control @error('part5Name') is-invalid @enderror" name="part5Name"
-                                           value="WiFi Module"  autocomplete="off" autofocus disabled>
+                                           value="WiFi Module"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -419,7 +420,7 @@
 
                                     <input id="part6Name" type="text"
                                            class="form-control @error('part6Name') is-invalid @enderror" name="part6Name"
-                                           value="IR sensor"  autocomplete="off" autofocus disabled>
+                                           value="IR Sensor"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -491,7 +492,7 @@
 
                                     <input id="part7Name" type="text"
                                            class="form-control @error('part7Name') is-invalid @enderror" name="part7Name"
-                                           value="Button Set"  autocomplete="off" autofocus disabled>
+                                           value="Button Set"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -563,7 +564,7 @@
 
                                     <input id="part8Name" type="text"
                                            class="form-control @error('part8Name') is-invalid @enderror" name="part8Name"
-                                           value="Blutooth Module"  autocomplete="off" autofocus disabled>
+                                           value="Bluetooth Module"  autocomplete="off" autofocus readonly>
                                 </div>
 
 
@@ -787,7 +788,13 @@
                     ],
                 },
 
-                ajax: "{{route('sku.getSkus')}}",
+                ajax: {
+                    url:'/sku/getSkus',
+                    data: function (d) {
+                        d.brand = $('input[name=brand]').val();
+                        d.model = $('input[name=model]').val();
+                    }
+                },
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
                     {data: 'brand',name:'brand'},
@@ -850,7 +857,13 @@
                     ],
                 },
 
-                ajax: "{{route('sku.getKits')}}",
+                ajax: {
+                    url:'/sku/getKits',
+                    data: function (d) {
+                        d.brand = $('input[name=brand]').val();
+                        d.model = $('input[name=model]').val();
+                    }
+                },
                 columns: [
                     {data: 'actions', name: 'actions'},
                     {data: 'KitID', name: 'KitID'},
@@ -901,6 +914,7 @@
                     })
                 }
             })
+            $("html, body").animate({ scrollTop: 0 }, "slow");
         });
 
     </script>

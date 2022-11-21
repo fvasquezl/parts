@@ -97,7 +97,7 @@
                 }
             });
 
-            let $kitsTable = $('#kitsTable').DataTable({
+            $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [

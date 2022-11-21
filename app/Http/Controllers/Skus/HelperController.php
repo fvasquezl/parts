@@ -14,20 +14,20 @@ class HelperController extends Controller
 
     public function getSkus(Request $request): \Illuminate\Http\JsonResponse
     {
-        $data = \DB::select("SELECT * FROM [prt].[fn_GetVerifiedPartReferences] ('LG','55UQ7070ZUE')");
+
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetVerifiedPartReferences] ('$request->brand','$request->model')");
         return datatables($data)
             ->addIndexColumn()
             ->setRowId(function ($data) {
                 return $data->ref_sku;
             })
             ->toJson();
-
     }
 
 
     public function getKits(Request $request): \Illuminate\Http\JsonResponse
     {
-        $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('LG','55UQ7070ZUE')");
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('$request->brand','$request->model')");
         return datatables($data)
             ->addIndexColumn()
             ->addColumn('actions', function () {
@@ -39,6 +39,5 @@ class HelperController extends Controller
                 return $data->KitID;
             })
             ->toJson();
-
     }
 }

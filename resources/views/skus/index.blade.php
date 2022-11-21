@@ -99,7 +99,8 @@
                 }
             });
 
-            let $skusTable = $('#skusTable').DataTable({
+            $skusTable = $('#skusTable').DataTable({
+                order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
                     [100,500, -1],

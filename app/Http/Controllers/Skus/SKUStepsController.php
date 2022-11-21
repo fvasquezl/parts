@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SKUStepsController extends Controller
 {
@@ -45,10 +46,34 @@ class SKUStepsController extends Controller
         return view('skus.steps.edit',compact('sku'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Sku $sku)
     {
-        return $request->all();
+
+        $elements=array_slice($request->all(), 4);
+        $offset =0;
+        foreach (range(1,8) as $i){
+            $element= array_slice($elements, $offset,6);
+
+               $data = DB::select("EXEC [PartsProcessing].[prt].[sp_CreateSKUVerifiedPartReferencesStep2]
+                '{$request->brand}',
+                '{$request->model}',
+                '{$sku->ref_sku}',
+                '{$element['part'.$i.'Name']}',
+                '{$element['part'.$i.'Ref1']}',
+                '{$element['part'.$i.'Ref2']}',
+                '{$element['part'.$i.'Ref3']}',
+                '{$element['part'.$i.'Ref4']}',
+                '{$element['part'.$i.'Ref5']}'
+                ");
+
+            $offset+=6;
+        }
+
+
+        return redirect()->route('skus.index')->with('status', 'The SKU "'.$sku->ref_sku.'" Has been created Successfully');
+
     }
 
 
 }
+///2571	Sony	KD50X80J	T500QVN04.2	1-009-724-31 , A5027308A	CTRL 50T39 CO4	AP-P265AM , 2955070605 , AP-P265AM B 100980021-00187206-00	DHUR-SY63 , 409B-DHURSY63	1-009-471-11
