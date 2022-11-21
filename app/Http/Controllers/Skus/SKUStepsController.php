@@ -30,8 +30,8 @@ class SKUStepsController extends Controller
             'brand' => ['required'],
             'model'  => ['required'],
             'country' => ['required'],
-            'productVersion'  => ['required'],
-            'chasis' => ['required'],
+            'productVersion'  => ['sometimes'],
+            'chasis' => ['sometimes'],
             ]);
 
         $query = \DB::select("EXEC [PartsProcessing].[prt].[sp_CreateSKUVerifiedPartReferencesStep1]
