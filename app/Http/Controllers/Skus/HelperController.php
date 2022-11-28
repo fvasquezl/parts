@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Skus;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sku;
 use Illuminate\Http\Request;
 
 class HelperController extends Controller
@@ -51,4 +52,14 @@ class HelperController extends Controller
             })
             ->toJson();
     }
+
+
+    public function getImages(Sku $sku)
+    {
+        $images = \DB::select("EXEC [prt].[sp_GetKitSKUImages] '{$sku->ref_sku}'");
+
+        return view('skus.images',compact('images', 'sku'));
+    }
+
+
 }
