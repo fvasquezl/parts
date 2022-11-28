@@ -44,6 +44,7 @@
                                 <th>Actions</th>
                                 <th>Brand</th>
                                 <th>Model</th>
+                                <th>Images Count</th>
                                 <th>Version</th>
                                 <th>Country Manufactured</th>
                                 <th>Chasis</th>
@@ -149,6 +150,7 @@
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'brand',name:'brand'},
                     {data: 'model',name:'model'},
+                    {data: 'image_count',name:'image_count'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
                     {data: 'chasis',name:'chasis'},
@@ -165,16 +167,16 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0],
-                        searchable: true,
-                        // visible: false,
-
-                    },
-                    {
-                        targets: [3],
+                        targets: [1],
                         searchable: false,
                         // visible: false,
                     },
+                    {
+                        targets: [1,4,5,6],
+                        className: "text-center",
+                        // visible: false,
+                    }
+
                 ]
             });
 

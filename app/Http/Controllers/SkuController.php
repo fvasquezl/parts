@@ -31,13 +31,17 @@ class SkuController extends Controller
     {
         if ($request->ajax()) {
                 $data = Sku::query();
+
             return datatables($data)
                 ->addIndexColumn()
+                ->editColumn('image_count', function(Sku $sku){
+                    return '<a href="#">Images '.$sku->image_count.'</a>';
+                })
                 ->addColumn('actions', function () {
                     $btns = '<button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
                     return $btns;
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['image_count','actions'])
                 ->setRowId(function ($data) {
                     return $data->ref_sku;
                 })
