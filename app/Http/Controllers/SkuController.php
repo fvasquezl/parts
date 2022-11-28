@@ -16,6 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Exceptions\Exception;
 
 class SkuController extends Controller
@@ -53,8 +54,8 @@ class SkuController extends Controller
     public function create(Request $request)
     {
         if ($request->ajax()) {
-            $brand = $request->brand;
-            $model = $request->model;
+            $brand = Str::upper($request->brand);
+            $model = Str::upper($request->model);
 
             $data = \DB::select("SELECT * FROM [PartsProcessing].[prt].[fn_GetVerifiedPartReferences]('$brand', '$model')");
 

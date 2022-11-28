@@ -104,7 +104,7 @@ Route::middleware('auth')
         Route::post('/sku/getModels',[HelperController::class,'getModels'])->name('sku.getModels');
         Route::get('/sku/getSkus',[HelperController::class,'getSkus'])->name('sku.getSkus');
         Route::get('/sku/getKits',[HelperController::class,'getKits'])->name('sku.getKits');
-
+        Route::get('/sku/getKitsWSku',[HelperController::class,'getKitsWSku'])->name('sku.getKitsWSku');
 
     });
 

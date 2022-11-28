@@ -29,7 +29,7 @@
                             <div class="form-row align-items-center">
                                 <div class="col-sm-3 my-1">
                                     <select name="brand" aria-label="select brand" id="myBrand"
-                                            class=" form-control">
+                                            class=" form-control ">
                                         <option value="0">Brand</option>
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->Brand }}"
@@ -39,9 +39,8 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3 my-1">
-
                                     <select name="model" aria-label="select model" id="myModel"
-                                            class="form-control">
+                                            class="form-control mySelect2">
                                     </select>
                                 </div>
                             </div>
@@ -49,8 +48,7 @@
                     </div>
 
                     <div class="card-body">
-
-                        <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
+                        <table class="table table-striped table-hover table-bordered nowrap" id="skusTable">
                             <thead>
                             <tr>
                                 <th>Ref_SKU</th>
@@ -71,12 +69,48 @@
                             </tr>
                             </thead>
                         </table>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-12 ">
+            <div class="card mb-4 shadow-sm card-outline card-success">
+                <div class="card-header ">
+                    <h3 class="card-title mt-1">
+                        Kits Listing
+                    </h3>
+                    <div class="card-tools">
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
+                        <thead>
+                        <tr>
+                            <th>kitid</th>
+                            <th>brand</th>
+                            <th>model</th>
+                            <th>kitlcn</th>
+                            <th>Open Cell</th>
+                            <th>Main Board</th>
+                            <th>T-Con Board</th>
+                            <th>Power Supply</th>
+                            <th>WiFi Module</th>
+                            <th>IR Sensor</th>
+                            <th>Button Set</th>
+                            <th>Blutooth Module</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
 @endsection
 
@@ -105,6 +139,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        let $skusTable;
         let $kitsTable;
         let brand,create_sku_btn;
         let model;
@@ -116,16 +151,14 @@
             "X-CSRF-TOKEN": token
         }
 
-        $('.myselect2').select2({
-            theme: 'bootstrap4',
-        });
+
 
         $(document).ready( function () {
             $.ajaxSetup({
                 headers
             });
 
-            $kitsTable = $('#kitsTable').DataTable({
+            $skusTable = $('#skusTable').DataTable({
                 pageLength: 100,
                 lengthMenu: [
                     [100,500, -1],
@@ -179,6 +212,8 @@
                             action: function ( e, dt, node, config ) {
                                 brand =$('select[name=brand]').val();
                                 model =$('select[name=model]').val();
+
+                                // model =$('#myModel').find(':selected');
                                 window.location = '/sku/steps/create/'+brand+'/'+model;
                             },
                         }
@@ -213,6 +248,72 @@
 
                 ],
             });
+
+            $kitsTable = $('#kitsTable').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 100,
+                lengthMenu: [
+                    [50,100, -1],
+                    [50,100,'All']
+                ],
+                processing: true,
+                serverSide: true,
+                scrollY: "35vh",
+                scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
+                dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                    '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                    '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                buttons: {
+                    dom: {
+                        container: {
+                            tag: 'div',
+                            className: 'flexcontent'
+                        },
+                        buttonLiner: {
+                            tag: null
+                        }
+                    },
+                    buttons: [
+                        {
+                            extend: 'pageLength',
+                            titleAttr: 'Show Records',
+                            className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                        }
+                    ],
+                },
+
+
+                ajax: {
+                    url:'/sku/getKitsWSku',
+                    data: function (d) {
+                        d.brand = $('select[name=brand]').val();
+                        d.model = $('select[name=model]').val();
+                        // console.log(d.model)
+                    }
+                },
+                columns: [
+                    {data: 'kitid', name: 'kitid'},
+                    {data: 'brand', name: 'brand'},
+                    {data: 'model', name: 'model'},
+                    {data: 'kitlcn', name: 'kitlcn'},
+                    {data: 'Open Cell', name: 'Open Cell'},
+                    {data: 'Main Board', name: 'Main Board'},
+                    {data: 'T-Con Board', name: 'T-Con Board'},
+                    {data: 'Power Supply', name: 'Power Supply'},
+                    {data: 'WiFi Module', name: 'WiFi Module'},
+                    {data: 'IR Sensor', name: 'IR Sensor'},
+                    {data: 'Button Set', name: 'Button Set'},
+                    {data: 'Blutooth Module', name: 'Blutooth Module'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        searchable: true,
+                    },
+                ]
+            });
         });
 
 
@@ -242,16 +343,20 @@
                 bt.disabled = false;
             }else{
                 bt.disabled = true;
-            }
-            $kitsTable.ajax.reload();
-             console.log(bt)
 
+            }
+            $skusTable.ajax.reload();
+            $kitsTable.ajax.reload();
         }
 
+        //  Hisense 58R6E3
 
-        document.getElementById('myModel').addEventListener('change', (e)=>{
+        $('.mySelect2').select2({
+            theme: 'bootstrap4',
+        }).on('select2:select', function(e) {
             manage()
-        })
+        });
+
 
     </script>
 @stop

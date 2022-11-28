@@ -40,4 +40,15 @@ class HelperController extends Controller
             })
             ->toJson();
     }
+
+    public function getKitsWSku(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetKitData] ('$request->brand','$request->model')");
+        return datatables($data)
+            ->addIndexColumn()
+            ->setRowId(function ($data) {
+                return $data->kitid;
+            })
+            ->toJson();
+    }
 }
