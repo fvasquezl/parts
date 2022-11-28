@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Skus Listing')
+@section('title', 'Sku Images')
 
 @section('content_header')
     <h1>Images to Sku {{$sku->ref_sku}}</h1>
