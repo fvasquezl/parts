@@ -29,7 +29,7 @@ class KitController extends Controller
      * @return Application|Factory|View|JsonResponse
      * @throws \Yajra\DataTables\Exceptions\Exception
      */
-    public function index(Request $request)
+    public function index(Request $request): View|Factory|JsonResponse|Application
     {
 
         if ($request->ajax()) {

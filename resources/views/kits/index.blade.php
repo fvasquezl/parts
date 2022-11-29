@@ -26,10 +26,9 @@
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
-                            Kits Listing
+                            <input id="search_sku" class="form-control" type="search" placeholder="Filter by Sku">
                         </h3>
                         <div class="card-tools">
-
                             <a class="btn btn-primary" href="{{ route('kits.create') }}">
                                 <i class="fa fa-plus"></i> Create Kit
                             </a>
@@ -97,6 +96,7 @@
                 }
             });
 
+
             $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
@@ -140,7 +140,6 @@
                         }
                     ],
                 },
-
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'kitid', name: 'kitid'},
@@ -163,7 +162,6 @@
                         targets: [0],
                         searchable: true,
                         // visible: false,
-
                     },
                     {
                         targets: [9],
@@ -179,6 +177,14 @@
             });
 
 
+            $('#search_sku').on('search keyup', function() {
+                    $kitsTable
+                        .column(7)
+                        .search(this.value)
+                        .draw();
+            });
+
+
 
             $(document).on('click', '.qrcode', function (e) {
                 e.stopPropagation();
@@ -188,30 +194,24 @@
                 url = url.replace(':id',rowId);
                 document.getElementById('printf').src = url;
             });
-
             $(document).on('click', '.show-btn', function (e) {
                 e.stopPropagation();
                 let $tr = $(this).closest('tr');
                 let rowId = $tr.attr('ID');
                 $(location).attr('href', 'kits/'+rowId);
             });
-
             $(document).on('click', '.edit-btn', function (e) {
                 e.stopPropagation();
                 let $tr = $(this).closest('tr');
                 let rowId = $tr.attr('ID');
                 $(location).attr('href', 'kits/'+rowId+'/edit');
             });
-
             $(document).on('click', '.del-btn', function (e) {
-
                 e.stopPropagation();
                 e.stopImmediatePropagation();
-
                 let $tr = $(this).closest('tr');
                 let rowId = $tr.attr('ID');
                 let url = 'kits/'+rowId;
-
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -240,18 +240,11 @@
                         });
                     }
                 });
-
-
                 // e.stopPropagation();
                 // let $tr = $(this).closest('tr');
                 // let rowId = $tr.attr('ID');
                 // $(location).attr('href', 'kits/'+rowId+'/edit');
             });
         });
-
-
     </script>
 @stop
-
-
-
