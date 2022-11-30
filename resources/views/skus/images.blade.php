@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row">
             @foreach($images as $key => $image)
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card mb-3">
                     <div class="card-header">
                         <h3 class="card-text">{{$image->part_name}}</h3>
