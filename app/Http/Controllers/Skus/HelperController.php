@@ -68,8 +68,9 @@ class HelperController extends Controller
      */
     public function getKitsBySku(Request $request): bool|\Illuminate\Http\JsonResponse
     {
+
         if ($request->ajax()) {
-            $data = KitsData::query()->where('ref_sku', '1099')->get();
+            $data = KitsData::query()->where('ref_sku', "{$request->sku}")->get();
 
             return datatables($data)
                 ->addIndexColumn()

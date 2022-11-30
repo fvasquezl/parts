@@ -73,7 +73,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
-
+    <style>
+        .verybigmodal {
+            max-width: 80%;
+        }
+    </style>
 
 @stop
 
@@ -184,7 +188,7 @@
             let row = $skusTable.row($tr).data();
             $('#ajaxModalKits')
                 .on('shown.bs.modal', function () {
-                    $(this).find(".modal-title").html('Filter by Sku: '+rowId+",  "+ row['qty']+" Kits")
+                    $(this).find(".modal-title").html(row['qty']+' Kits related to SKU: '+rowId)
                     $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap" id="kitsTable"> <thead> <tr> <th>ID</th> <th>Kit LCN</th> <th>BoxID</th> <th>SKU Count</th> <th>Brand</th> <th>Model</th> <th>Ref SKU</th> <th>Images Qty</th> <th>Parts Qty</th> <th>Keywords</th> <th>CapturedBy</th> <th>Created At</th> </tr> </thead> </table>')
                     $kitsTable = $('#kitsTable').DataTable({
                     order: [[0, 'desc']],
@@ -230,7 +234,10 @@
                         ],
                     },
                     ajax: {
-                        url: "{{route('sku.getKitsBySku')}}"
+                        url: "/sku/getKitsBySku",
+                        data: function (d) {
+                            d.sku = rowId;
+                        },
                     },
                     columns: [
                         {data: 'kitid', name: 'kitid'},

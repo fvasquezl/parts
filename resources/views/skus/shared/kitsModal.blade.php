@@ -1,5 +1,5 @@
 <div class="modal fade show" id="ajaxModalKits" aria-modal="true" aria-hidden="true"  style="padding-right: 15px;">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl verybigmodal">
         <div class="modal-content">
 
             <div class="modal-header">
