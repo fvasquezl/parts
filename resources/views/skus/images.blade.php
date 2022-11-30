@@ -13,7 +13,7 @@
             <div class="col-md-3">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <h3 class="card-text">{{$image->part_name}}</h3>
+                        <h4 class="card-text">{{$image->part_name}}</h4>
                     </div>
 
                     <div class="card-body">
