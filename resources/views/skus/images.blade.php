@@ -8,16 +8,21 @@
 
 @section('content')
     <div class="container-fluid">
-     @foreach($images as $image)
+        <div class="row">
+            @foreach($images as $key => $image)
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3 class="card-text">{{$image->part_name}}</h3>
+                    </div>
 
-            <div class="card mb-3">
-                <img class="card-img-top" src="{{$image->image_url}}" alt="{{$image->part_name}}">
-                <div class="card-body">
-                    <h1 class="card-text">{{$image->part_name}}</h1>
+                    <div class="card-body">
+                        <a href="{{$image->image_url}}" target="_blank"><img class="card-img-top" src="{{$image->image_url}}" alt="{{$image->part_name}}"></a>
+                    </div>
                 </div>
             </div>
-
      @endforeach
+        </div>
     </div>
 
 @endsection

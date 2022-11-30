@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Skus;
 use App\Http\Controllers\Controller;
 use App\Models\KitsData;
 use App\Models\Sku;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Exceptions\Exception;
 
@@ -15,7 +19,7 @@ class HelperController extends Controller
         return \DB::select("SELECT * FROM [PartsProcessing].[prt].[fn_GetVerifiedPartReferencesModels]('$request->text')");
     }
 
-    public function getSkus(Request $request): \Illuminate\Http\JsonResponse
+    public function getSkus(Request $request): JsonResponse
     {
 
         $data = \DB::select("SELECT * FROM [prt].[fn_GetVerifiedPartReferences] ('$request->brand','$request->model')");
@@ -28,7 +32,7 @@ class HelperController extends Controller
     }
 
 
-    public function getKits(Request $request): \Illuminate\Http\JsonResponse
+    public function getKits(Request $request): JsonResponse
     {
         $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('$request->brand','$request->model')");
         return datatables($data)
@@ -44,7 +48,7 @@ class HelperController extends Controller
             ->toJson();
     }
 
-    public function getKitsWSku(Request $request): \Illuminate\Http\JsonResponse
+    public function getKitsWSku(Request $request): JsonResponse
     {
         $data = \DB::select("SELECT * FROM [prt].[fn_GetKitData] ('$request->brand','$request->model')");
         return datatables($data)
@@ -56,7 +60,7 @@ class HelperController extends Controller
     }
 
 
-    public function getImages(Sku $sku)
+    public function getImages(Sku $sku): Factory|View|Application
     {
         $images = \DB::select("EXEC [prt].[sp_GetKitSKUImages] '{$sku->ref_sku}'");
 
@@ -66,7 +70,7 @@ class HelperController extends Controller
     /**
      * @throws Exception
      */
-    public function getKitsBySku(Request $request): bool|\Illuminate\Http\JsonResponse
+    public function getKitsBySku(Request $request): bool|JsonResponse
     {
 
         if ($request->ajax()) {
