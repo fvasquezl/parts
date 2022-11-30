@@ -35,13 +35,14 @@ class SkuController extends Controller
             return datatables($data)
                 ->addIndexColumn()
                 ->editColumn('image_count', function(Sku $sku){
-                    return '<a href="/sku/images/'.$sku->ref_sku.'" target="_blank">Images '.$sku->image_count.'</a>';
+                    return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info btn-block" target="_blank">
+                            <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>';
                 })
-                ->addColumn('actions', function () {
-                    $btns = '<button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
-                    return $btns;
+                ->editColumn('kits_count', function(Sku $sku){
+                    return '<button class="btn btn-secondary btn-block kits-count">
+                            <i class="fas fa-fw fa-layer-group"></i>&nbsp;&nbsp;&nbsp;'.$sku->qty.'</button>';
                 })
-                ->rawColumns(['image_count','actions'])
+                ->rawColumns(['image_count','kits_count'])
                 ->setRowId(function ($data) {
                     return $data->ref_sku;
                 })

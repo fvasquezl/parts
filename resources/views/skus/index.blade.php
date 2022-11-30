@@ -41,10 +41,10 @@
                             <thead>
                             <tr>
                                 <th>Ref Sku</th>
-                                <th>Actions</th>
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>Images Count</th>
+                                <th>Img Count</th>
+                                <th>Kits Count</th>
                                 <th>Version</th>
                                 <th>Country Manufactured</th>
                                 <th>Chasis</th>
@@ -66,6 +66,7 @@
         </div>
     </div>
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
+    @include('skus.shared.kitsModal')
 @endsection
 
 @section('css')
@@ -93,6 +94,7 @@
 
     <script>
         let $skusTable;
+        let $kitsTable;
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
@@ -147,10 +149,10 @@
                 ajax: "{{route('skus.index')}}",
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
-                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'brand',name:'brand'},
                     {data: 'model',name:'model'},
                     {data: 'image_count',name:'image_count'},
+                    {data: 'kits_count',name:'kits_count'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
                     {data: 'chasis',name:'chasis'},
@@ -167,22 +169,97 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [1],
-                        searchable: false,
-                        // visible: false,
-                    },
-                    {
-                        targets: [1,4,5,6],
+                        targets: [3,4,5],
                         className: "text-center",
-                        // visible: false,
                     }
 
                 ]
             });
-
-
         });
 
+        $(document).on('click', '.kits-count', function (e) {
+            e.stopPropagation();
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('id');
+            let row = $skusTable.row($tr).data();
+            $('#ajaxModalKits')
+                .on('shown.bs.modal', function () {
+                    $(this).find(".modal-title").html('Filter by Sku: '+rowId+",  "+ row['qty']+" Kits")
+                    $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap" id="kitsTable"> <thead> <tr> <th>ID</th> <th>Kit LCN</th> <th>BoxID</th> <th>SKU Count</th> <th>Brand</th> <th>Model</th> <th>Ref SKU</th> <th>Images Qty</th> <th>Parts Qty</th> <th>Keywords</th> <th>CapturedBy</th> <th>Created At</th> </tr> </thead> </table>')
+                    $kitsTable = $('#kitsTable').DataTable({
+                    order: [[0, 'desc']],
+                    pageLength: 100,
+                    lengthMenu: [
+                        [100,500, -1],
+                        [100,500,'All']
+                    ],
+                    processing: true,
+                    serverSide: true,
+                    scrollY: "53vh",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    stateSave: true,
+                    dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                        '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                        '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                    buttons: {
+                        dom: {
+                            container: {
+                                tag: 'div',
+                                className: 'flexcontent'
+                            },
+                            buttonLiner: {
+                                tag: null
+                            }
+                        },
+                        buttons: [{
+                            extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i> Excel',
+                            title: 'Kits to Excel',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-success',
+                            init: function (api, node, config) {
+                                $(node).removeClass('btn-secondary buttons-html5 buttons-excel')
+                            },
+                        },
+                            {
+                                extend: 'pageLength',
+                                titleAttr: 'Show Records',
+                                className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                            }
+                        ],
+                    },
+                    ajax: {
+                        url: "{{route('sku.getKitsBySku')}}"
+                    },
+                    columns: [
+                        {data: 'kitid', name: 'kitid'},
+                        {data: 'kitlcn', name: 'kitlcn'},
+                        {data: 'boxname', name: 'boxname'},
+                        {data: 'SKU_count', name: 'SKU_count'},
+                        {data: 'brand', name: 'brand'},
+                        {data: 'model', name: 'model'},
+                        {data: 'ref_sku', name: 'ref_sku'},
+                        {data: 'image_count', name: 'image_count'},
+                        {data: 'noofparts', name: 'noofparts'},
+                        {data: 'keywords', name: 'keywords'},
+                        {data: 'name', name: 'name'},
+                        {data: 'created_at', name: 'created_at'},
+                    ],
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            searchable: true,
+                            // visible: false,
+                        },
+                    ]
+                });
+                }).on('hidden.bs.modal', function (e) {
+                    $(this).find(".modal-title").html('');
+                    $(this).find(".modal-body").html("");
+                    $kitsTable='';
+                }).modal('show');
+        });
 
     </script>
 @stop

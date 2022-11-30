@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Skus;
 
 use App\Http\Controllers\Controller;
+use App\Models\KitsData;
 use App\Models\Sku;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Exceptions\Exception;
 
 class HelperController extends Controller
 {
@@ -59,6 +61,39 @@ class HelperController extends Controller
         $images = \DB::select("EXEC [prt].[sp_GetKitSKUImages] '{$sku->ref_sku}'");
 
         return view('skus.images',compact('images', 'sku'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getKitsBySku(Request $request): bool|\Illuminate\Http\JsonResponse
+    {
+        if ($request->ajax()) {
+            $data = KitsData::query()->where('ref_sku', '1099')->get();
+
+            return datatables($data)
+                ->addIndexColumn()
+                ->editColumn('boxname', function ($kit) {
+                    if (!$kit->BoxName) {
+                        return 'No Box Yet';
+                    }
+                    return $kit->BoxName;
+                })
+                ->editColumn('keywords', function ($kit) {
+                    if (!$kit->keywords) {
+                        return 'No Keywords Yet';
+                    }
+                    return $kit->keywords;
+                })
+                ->editColumn('created_at', function ($kit) {
+                    return $kit->created_at->toDateTimeString();
+                })
+                ->setRowId(function ($data) {
+                    return $data->kitid;
+                })
+                ->toJson();
+        }
+        return false;
     }
 
 
