@@ -40,6 +40,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>LCN</th>
                                 <th>Kit LCN</th>
                                 <th>BoxID</th>
                                 <th>Actions</th>
@@ -101,8 +102,8 @@
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
-                    [100,500, -1],
-                    [100,500,'All']
+                    [100,500,5000, -1],
+                    [100,500,5000,'All']
                 ],
                 processing: true,
                 serverSide: true,
@@ -143,6 +144,7 @@
                 ajax: "{{route('kits.index')}}",
                 columns: [
                     {data: 'kitid', name: 'kitid'},
+                    {data: 'lcn', name: 'lcn'},
                     {data: 'kitlcn', name: 'kitlcn'},
                     {data: 'boxname', name: 'boxname'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
@@ -164,12 +166,12 @@
                         // visible: false,
                     },
                     {
-                        targets: [9],
+                        targets: [10],
                         searchable: false,
                         // visible: false,
                     },
                     {
-                        targets: [10],
+                        targets: [11],
                         searchable: true,
                         visible: false
                     },

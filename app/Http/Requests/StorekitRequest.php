@@ -30,7 +30,7 @@ class StorekitRequest extends FormRequest
 
         $rules = [
             'WorkCenterID'=>['required'],
-            'LCN' => ['required','alpha_num',Rule::unique('sqlsrv.prt.PartsKitData')->ignore($this->kit)],
+            'LCN' => ['required','alpha_num','max:10',Rule::unique('sqlsrv.prt.PartsKitData','LCN')->ignore($this->kit)],
             'KitLCN'=>['required','string', 'max:50'],
             'Brand'=>['required','string', 'max:50'],
             'Model'=>['required','string', 'max:50'],
