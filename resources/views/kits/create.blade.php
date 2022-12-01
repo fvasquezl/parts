@@ -301,7 +301,7 @@
 
         document.querySelector('input[name="LCN"]').addEventListener("keyup", (e) => {
             if (e.key === "Enter") {
-                e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','');
+                e.target.value = e.target.value.replace('http://support.mitechnologiesinc.com/Item/LicensePlate/','').trim();
                 fetch('/lcn', {
                             method: 'POST',
                             body: JSON.stringify({data: e.target.value}),

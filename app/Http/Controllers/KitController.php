@@ -99,11 +99,7 @@ class KitController extends Controller
      */
     public function store(StorekitRequest $request)
     {
-
-
         $kit = $request->createKit();
-
-
         $partlist = PartList::select('PartSequence','PartName', 'IsRequired')
             ->orderBy('PartSequence','asc')
             ->where('PartCategoryID', $kit->PartCategoryID)
