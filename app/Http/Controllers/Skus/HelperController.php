@@ -101,5 +101,29 @@ class HelperController extends Controller
         return false;
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getSkuToKit(Request $request): bool|JsonResponse
+    {
+        if ($request->ajax()) {
+            $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesSKU] ('$request->brand','$request->model')");
+
+            return datatables($data)
+                ->addIndexColumn()
+                ->addColumn('select', function () {
+                    $btns ='<button class="btn btn-info"><i class="fa fa-check-circle"></i></button>';
+                    return $btns;
+                })
+                ->rawColumns(['select'])
+                ->setRowId(function ($data) {
+                    return $data->ref_sku;
+                })
+                ->toJson();
+        }
+        return false;
+    }
+
+
 
 }

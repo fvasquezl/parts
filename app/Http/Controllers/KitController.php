@@ -59,9 +59,15 @@ class KitController extends Controller
                     return $kit->created_at->toDateTimeString();
                 })
                 ->addColumn('actions', function () {
-                    $btns = '<button class="btn btn-sm btn-info qrcode"><i class="fas fa-print"></i></button>
-                        <button class="btn btn-sm btn-default show-btn"><i class="fas fa-eye"></i></button>';
-                    return $btns;
+                    $btns ='<div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-info qrcode"><i class="fas fa-fw fa-print"></i></a>
+                            <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a>';
+
+                        if(auth()->user()->role =='admin'){
+                           $btns .='<a href="#" class="btn btn-sm btn-primary sku-btn"><i class="fas fa-fw fa-bolt"></i></a>';
+                        }
+
+                    return $btns.'</div>';
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {

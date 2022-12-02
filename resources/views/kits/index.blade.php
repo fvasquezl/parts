@@ -63,13 +63,19 @@
         </div>
     </div>
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
+    @include('skus.shared.kitsModal')
 @endsection
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
-
+    <style>
+        .verybigmodal {
+            max-width: 80%;
+            margin-left: 10%;
+        }
+    </style>
 
 @stop
 
@@ -90,13 +96,13 @@
 
     <script>
         let $kitsTable;
+        let $skusTable;
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
 
             $kitsTable = $('#kitsTable').DataTable({
                 order: [[0, 'desc']],
@@ -178,15 +184,12 @@
                 ]
             });
 
-
             $('#search_sku').on('search keyup', function() {
                     $kitsTable
                         .column(7)
                         .search(this.value)
                         .draw();
             });
-
-
 
             $(document).on('click', '.qrcode', function (e) {
                 e.stopPropagation();
@@ -247,6 +250,97 @@
                 // let rowId = $tr.attr('ID');
                 // $(location).attr('href', 'kits/'+rowId+'/edit');
             });
+        });
+
+        $(document).on('click', '.sku-btn', function (e) {
+            e.stopPropagation();
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('id');
+            let row = $kitsTable.row($tr).data();
+            $('#ajaxModalKits')
+                .on('shown.bs.modal', function () {
+                    $(this).find(".modal-title").html('Add SKU  Kit: <b>'+ row['kitlcn']+'</b> Brand: <b>'+row['brand']+'</b> Model: <b>'+row['model']+'</b>')
+                    $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap" id="skusTable"><thead><tr> <th>Select</th><th>Ref Sku</th><th>Brand</th> <th>Model</th><th>Version</th> <th>Country Manufactured</th><th>Chasis</th> <th>Product Version Number</th><th>Open Cell</th> <th>Main Board</th><th>T-Con Board</th> <th>Power Supply</th><th>WiFi Module</th> <th>IR Sensor</th><th>Button Set</th> <th>Blutooth Module</th></tr> </thead></table>')
+                    $skusTable = $('#skusTable').DataTable({
+                        order: [[0, 'desc']],
+                        pageLength: 100,
+                        lengthMenu: [
+                            [100,500, -1],
+                            [100,500,'All']
+                        ],
+                        processing: true,
+                        serverSide: true,
+                        scrollY: "53vh",
+                        scrollX: true,
+                        scrollCollapse: true,
+                        stateSave: true,
+                        dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                            '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                            '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                        buttons: {
+                            dom: {
+                                container: {
+                                    tag: 'div',
+                                    className: 'flexcontent'
+                                },
+                                buttonLiner: {
+                                    tag: null
+                                }
+                            },
+                            buttons: [
+                                {
+                                    extend: 'pageLength',
+                                    titleAttr: 'Show Records',
+                                    className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                                }
+                            ],
+                        },
+
+                        {{--ajax: "{{route('skus.index')}}",--}}
+                            ajax: {
+                                url: "/sku/getSkuToKit",
+                                data: function (d) {
+                                    d.brand = row['brand'];
+                                    d.model = row['model'];
+                                },
+                            },
+                        columns: [
+                            {data: 'select',name:'select'},
+                            {data: 'ref_sku',name:'ref_sku'},
+                            {data: 'brand',name:'brand'},
+                            {data: 'model',name:'model'},
+                            {data: 'version',name:'version'},
+                            {data: 'country_manufactured',name:'country_manufactured'},
+                            {data: 'chasis',name:'chasis'},
+                            {data: 'product_version_number',name:'product_version_number'},
+                            {data: 'Open Cell',name:'Open Cell'},
+                            {data: 'Main Board',name:'Main Board'},
+                            {data: 'T-Con Board',name:'T-Con Board'},
+                            {data: 'Power Supply',name:'Power Supply'},
+                            {data: 'WiFi Module',name:'WiFi Module'},
+                            {data: 'IR Sensor',name:'IR Sensor'},
+                            {data: 'Button Set',name:'Button Set'},
+                            {data: 'Blutooth Module',name:'Blutooth Module'},
+
+                        ],
+                        columnDefs: [
+                            {
+                                targets: [3,4,5],
+                                className: "text-center",
+                            },
+                            {
+                                targets: [3,4],
+                                searchable: false,
+                            }
+
+                        ]
+                    });
+
+                }).on('hidden.bs.modal', function (e) {
+                $(this).find(".modal-title").html('');
+                $(this).find(".modal-body").html("");
+                $skusTable='';
+            }).modal('show');
         });
     </script>
 @stop
