@@ -112,7 +112,7 @@ class HelperController extends Controller
             return datatables($data)
                 ->addIndexColumn()
                 ->addColumn('select', function () {
-                    $btns ='<button class="btn btn-info"><i class="fa fa-check-circle"></i></button>';
+                    $btns ='<button class="btn btn-info selected-btn"><i class="fa fa-check-circle"></i></button>';
                     return $btns;
                 })
                 ->rawColumns(['select'])
@@ -120,6 +120,17 @@ class HelperController extends Controller
                     return $data->ref_sku;
                 })
                 ->toJson();
+        }
+        return false;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function kitUpdate(Request $request): bool|JsonResponse
+    {
+        if ($request->ajax()) {
+            return \DB::select("EXEC [prt].[sp_UpdateKitSKU] '{$request->kit}','{$request->sku}'");
         }
         return false;
     }

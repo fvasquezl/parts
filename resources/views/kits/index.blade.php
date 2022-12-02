@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
+                        <table class="table table-striped table-hover table-bordered nowrap hover" id="kitsTable">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -75,6 +75,9 @@
             max-width: 80%;
             margin-left: 10%;
         }
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #94eed3;
+        }
     </style>
 
 @stop
@@ -97,11 +100,17 @@
     <script>
         let $kitsTable;
         let $skusTable;
+        let $kit
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
         $(document).ready( function () {
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                headers
             });
 
             $kitsTable = $('#kitsTable').DataTable({
@@ -181,6 +190,11 @@
                         searchable: true,
                         visible: false
                     },
+                    {
+                        targets: [5,8,9,10],
+                        searchable: false,
+                    }
+
                 ]
             });
 
@@ -257,10 +271,28 @@
             let $tr = $(this).closest('tr');
             let rowId = $tr.attr('id');
             let row = $kitsTable.row($tr).data();
+            $kit = row['kitlcn'];
             $('#ajaxModalKits')
                 .on('shown.bs.modal', function () {
                     $(this).find(".modal-title").html('Add SKU  Kit: <b>'+ row['kitlcn']+'</b> Brand: <b>'+row['brand']+'</b> Model: <b>'+row['model']+'</b>')
-                    $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap" id="skusTable"><thead><tr> <th>Select</th><th>Ref Sku</th><th>Brand</th> <th>Model</th><th>Version</th> <th>Country Manufactured</th><th>Chasis</th> <th>Product Version Number</th><th>Open Cell</th> <th>Main Board</th><th>T-Con Board</th> <th>Power Supply</th><th>WiFi Module</th> <th>IR Sensor</th><th>Button Set</th> <th>Blutooth Module</th></tr> </thead></table>')
+                    $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
+                        '<th>Select</th>' +
+                        '<th>Ref Sku</th>' +
+                        '<th>Brand</th>' +
+                        '<th>Model</th>' +
+                        '<th>Version</th>' +
+                        '<th>Country Manufactured</th>' +
+                        '<th>Chasis</th>' +
+                        '<th>Product Version Number</th>' +
+                        '<th>Open Cell</th>' +
+                        '<th>Main Board</th>' +
+                        '<th>T-Con Board</th>' +
+                        '<th>Power Supply</th>' +
+                        '<th>WiFi Module</th> ' +
+                        '<th>IR Sensor</th>' +
+                        '<th>Button Set</th> ' +
+                        '<th>Blutooth Module</th>' +
+                        '</tr> </thead></table>')
                     $skusTable = $('#skusTable').DataTable({
                         order: [[0, 'desc']],
                         pageLength: 100,
@@ -296,7 +328,6 @@
                             ],
                         },
 
-                        {{--ajax: "{{route('skus.index')}}",--}}
                             ajax: {
                                 url: "/sku/getSkuToKit",
                                 data: function (d) {
@@ -329,7 +360,7 @@
                                 className: "text-center",
                             },
                             {
-                                targets: [3,4],
+                                targets: [0],
                                 searchable: false,
                             }
 
@@ -340,7 +371,35 @@
                 $(this).find(".modal-title").html('');
                 $(this).find(".modal-body").html("");
                 $skusTable='';
+                $kit = '';
             }).modal('show');
         });
+
+
+        $(document).on('click', '.selected-btn', function (e) {
+            e.stopPropagation();
+            let $tr = $(this).closest('tr');
+            let sku = $tr.attr('id');
+            let row = $skusTable.row($tr).data();
+
+            fetch('/sku/kitUpdate', {
+                method: 'POST',
+                body: JSON.stringify({
+                    kit: $kit,
+                    sku: sku
+                }),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+               console.log(data)
+               $kitsTable.ajax.reload(null, false);
+
+            }).catch(error => console.log(error))
+
+
+        });
+
+
     </script>
 @stop

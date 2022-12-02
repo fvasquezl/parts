@@ -108,6 +108,8 @@ Route::middleware('auth')
         Route::get('/sku/images/{sku}',[HelperController::class,'getImages'])->name('sku.getImages');
         Route::get('/sku/getKitsBySku',[HelperController::class,'getKitsBySku'])->name('sku.getKitsBySku');
         Route::get('/sku/getSkuToKit',[HelperController::class,'getSkuToKit'])->name('sku.getSkuToKit');
+        Route::post('/sku/kitUpdate',[HelperController::class,'kitUpdate'])->name('sku.kitUpdate');
+
     });
 
 
