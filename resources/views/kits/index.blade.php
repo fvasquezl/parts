@@ -70,6 +70,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
+
     <style>
         .verybigmodal {
             max-width: 80%;
@@ -94,6 +96,9 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
+
+    <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -269,6 +274,8 @@
         $(document).on('click', '.sku-btn', function (e) {
             e.stopPropagation();
             let $tr = $(this).closest('tr');
+            $kitsTable.$('tr.selected').removeClass('selected');
+            $tr.addClass('selected');
             let rowId = $tr.attr('id');
             let row = $kitsTable.row($tr).data();
             $kit = row['kitlcn'];
@@ -372,6 +379,7 @@
                 $(this).find(".modal-body").html("");
                 $skusTable='';
                 $kit = '';
+                $kitsTable.$('tr.selected').removeClass('selected');
             }).modal('show');
         });
 
@@ -393,13 +401,11 @@
                 return response.json()
             }).then(data =>{
                console.log(data)
-               $kitsTable.ajax.reload(null, false);
+               $kitsTable.ajax.reload();
+               $('#ajaxModalKits').modal('hide')
 
             }).catch(error => console.log(error))
-
-
         });
-
 
     </script>
 @stop
