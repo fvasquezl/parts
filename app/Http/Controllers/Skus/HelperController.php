@@ -112,8 +112,7 @@ class HelperController extends Controller
             return datatables($data)
                 ->addIndexColumn()
                 ->addColumn('select', function () {
-                    $btns ='<button class="btn btn-info selected-btn"><i class="fa fa-check-circle"></i></button>';
-                    return $btns;
+                    return '';
                 })
                 ->rawColumns(['select'])
                 ->setRowId(function ($data) {
@@ -134,7 +133,5 @@ class HelperController extends Controller
         }
         return false;
     }
-
-
-
+//15460	MTCARM0251
 }

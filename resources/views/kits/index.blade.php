@@ -283,7 +283,7 @@
                 .on('shown.bs.modal', function () {
                     $(this).find(".modal-title").html('Add SKU  Kit: <b>'+ row['kitlcn']+'</b> Brand: <b>'+row['brand']+'</b> Model: <b>'+row['model']+'</b>')
                     $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
-                        '<th>Select</th>' +
+                        '<th></th>' +
                         '<th>Ref Sku</th>' +
                         '<th>Brand</th>' +
                         '<th>Model</th>' +
@@ -300,8 +300,10 @@
                         '<th>Button Set</th> ' +
                         '<th>Blutooth Module</th>' +
                         '</tr> </thead></table>')
+                    $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary">Save changes</button> ' +
+                        '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
+
                     $skusTable = $('#skusTable').DataTable({
-                        order: [[0, 'desc']],
                         pageLength: 100,
                         lengthMenu: [
                             [100,500, -1],
@@ -365,18 +367,27 @@
                             {
                                 targets: [3,4,5],
                                 className: "text-center",
-                            },
-                            {
-                                targets: [0],
-                                searchable: false,
+                            }, {
+                                orderable: false,
+                                className: 'select-checkbox',
+                                targets: 0
+                            },{
+                                "targets": [1],
+                                "visible": false,
+                                "searchable": false
                             }
-
-                        ]
+                        ],
+                        select: {
+                            style:    'os',
+                            selector: 'td:first-child'
+                        },
+                        order: [[1, 'desc']],
                     });
 
                 }).on('hidden.bs.modal', function (e) {
                 $(this).find(".modal-title").html('');
                 $(this).find(".modal-body").html("");
+                $skusTable.ajax.reload()
                 $skusTable='';
                 $kit = '';
                 $kitsTable.$('tr.selected').removeClass('selected');
@@ -384,11 +395,11 @@
         });
 
 
-        $(document).on('click', '.selected-btn', function (e) {
+
+        $(document).on('click', '#update-sku', function (e) {
             e.stopPropagation();
-            let $tr = $(this).closest('tr');
-            let sku = $tr.attr('id');
-            let row = $skusTable.row($tr).data();
+            let $tr = $skusTable.rows('.selected').data();
+            let sku = $tr[0].ref_sku
 
             fetch('/sku/kitUpdate', {
                 method: 'POST',
