@@ -111,8 +111,11 @@ class HelperController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->addColumn('select', function () {
-                    return '';
+                ->addColumn('select', function ($row) {
+                    if($row->ref_sku == '1004'){
+                        return $row->ref_sku;
+                    }
+                    return 'disable';
                 })
                 ->rawColumns(['select'])
                 ->setRowId(function ($data) {

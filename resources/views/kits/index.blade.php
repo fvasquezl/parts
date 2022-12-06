@@ -107,6 +107,7 @@
         let $skusTable;
         let $kit
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let $sku
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -300,7 +301,7 @@
                         '<th>Button Set</th> ' +
                         '<th>Blutooth Module</th>' +
                         '</tr> </thead></table>')
-                    $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary">Save changes</button> ' +
+                    $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary" disabled>Save changes</button> ' +
                         '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
 
                     $skusTable = $('#skusTable').DataTable({
@@ -364,23 +365,25 @@
 
                         ],
                         columnDefs: [
+
                             {
+                                targets: 0,
+                                orderable: false,
+                                searchable: false,
+                                className: 'dt-body-center',
+                                render: function(data, type, full, meta) {
+                                    if(data === "disable"){
+                                        return '<input type="checkbox" name="chkbx'+meta.row+'" class="checkbox_check">';
+                                    }else{
+                                        $sku = data
+                                        return '<input type="checkbox" checked name="chkbx'+meta.row+'" class="checkbox_check">';
+                                    }
+                                },
+                            },{
                                 targets: [3,4,5],
                                 className: "text-center",
-                            }, {
-                                orderable: false,
-                                className: 'select-checkbox',
-                                targets: 0
-                            },{
-                                "targets": [1],
-                                "visible": false,
-                                "searchable": false
                             }
                         ],
-                        select: {
-                            style:    'os',
-                            selector: 'td:first-child'
-                        },
                         order: [[1, 'desc']],
                     });
 
@@ -392,15 +395,15 @@
                 $kit = '';
                 $kitsTable.$('tr.selected').removeClass('selected');
             }).modal('show');
-        });
 
+        });
 
 
         $(document).on('click', '#update-sku', function (e) {
             e.stopPropagation();
             let $tr = $skusTable.rows('.selected').data();
             let sku = $tr[0].ref_sku
-
+            let row = $skusTable.row($tr).data();
             fetch('/sku/kitUpdate', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -417,6 +420,28 @@
 
             }).catch(error => console.log(error))
         });
+
+        $(document).on('click','input[type="checkbox"]', function (e){
+
+            let name = this.name
+
+            $skusTable.rows(function (idx,data, node) {
+                return $(node).find('input[type="checkbox"][name="chkbx'+idx+'"]').prop('checked',false);
+            })
+
+            $skusTable.rows(function (idx,data, node) {
+                $(node).find('input[type="checkbox"][name="'+name+'"]').prop('checked',true).val(data.ref_sku);
+            })
+
+
+             if($sku !== this.value ){
+                 $(document).find('#update-sku').removeAttr("disabled")
+             }else {
+                 $(document).find('#update-sku').prop("disabled",true);
+             }
+
+        })
+
 
     </script>
 @stop
