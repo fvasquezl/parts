@@ -80,6 +80,14 @@
         .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
             background-color: #94eed3;
         }
+        input.larger {
+            width: 20px;
+            height: 20px;
+        }
+
+        .table-condensed{
+            font-size: 25px;
+        }
     </style>
 
 @stop
@@ -108,6 +116,7 @@
         let $kit
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let $sku
+        let $sku_selected
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -282,7 +291,9 @@
             $kit = row['kitlcn'];
             $('#ajaxModalKits')
                 .on('shown.bs.modal', function () {
-                    $(this).find(".modal-title").html('Add SKU  Kit: <b>'+ row['kitlcn']+'</b> Brand: <b>'+row['brand']+'</b> Model: <b>'+row['model']+'</b>')
+                    $(this).find(".modal-title").html(function (){
+                        return showGetResult(rowId)
+                    })
                     $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
                         '<th></th>' +
                         '<th>Ref Sku</th>' +
@@ -290,16 +301,16 @@
                         '<th>Model</th>' +
                         '<th>Version</th>' +
                         '<th>Country Manufactured</th>' +
-                        '<th>Chasis</th>' +
-                        '<th>Product Version Number</th>' +
                         '<th>Open Cell</th>' +
                         '<th>Main Board</th>' +
-                        '<th>T-Con Board</th>' +
+                        '<th>T-Con Board  </th>' +
                         '<th>Power Supply</th>' +
-                        '<th>WiFi Module</th> ' +
+                        '<th>WiFi Module</th>' +
                         '<th>IR Sensor</th>' +
                         '<th>Button Set</th> ' +
                         '<th>Blutooth Module</th>' +
+                        '<th>Chasis</th> ' +
+                        '<th>product_version_number</th>' +
                         '</tr> </thead></table>')
                     $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary" disabled>Save changes</button> ' +
                         '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
@@ -343,6 +354,7 @@
                                 data: function (d) {
                                     d.brand = row['brand'];
                                     d.model = row['model'];
+                                    d.ref_sku = row['ref_sku'];
                                 },
                             },
                         columns: [
@@ -373,10 +385,10 @@
                                 className: 'dt-body-center',
                                 render: function(data, type, full, meta) {
                                     if(data === "disable"){
-                                        return '<input type="checkbox" name="chkbx'+meta.row+'" class="checkbox_check">';
+                                        return '<input type="checkbox" name="chkbx'+meta.row+'" class="larger">';
                                     }else{
                                         $sku = data
-                                        return '<input type="checkbox" checked name="chkbx'+meta.row+'" class="checkbox_check">';
+                                        return '<input type="checkbox" checked name="chkbx'+meta.row+'" class="larger">';
                                     }
                                 },
                             },{
@@ -401,14 +413,11 @@
 
         $(document).on('click', '#update-sku', function (e) {
             e.stopPropagation();
-            let $tr = $skusTable.rows('.selected').data();
-            let sku = $tr[0].ref_sku
-            let row = $skusTable.row($tr).data();
             fetch('/sku/kitUpdate', {
                 method: 'POST',
                 body: JSON.stringify({
                     kit: $kit,
-                    sku: sku
+                    sku: $sku_selected
                 }),
                 headers:headers
             }).then(response=>{
@@ -440,8 +449,32 @@
                  $(document).find('#update-sku').prop("disabled",true);
              }
 
+            $sku_selected = this.value
+
         })
+
+
+        function showGetResult( rowId )
+        {
+            let result = null;
+            let scriptUrl = "/sku/getKitData/"+rowId ;
+            $.ajax({
+                url: scriptUrl,
+                type: 'get',
+                dataType: 'json',
+                contentType: "application/json",
+                async: false,
+                success: function(data) {
+                    result = data;
+                }
+            });
+
+            return '<table class="table table-bordered table-condensed"><thead><tr><th>Brand</th><th>Model</th><th>Keywords</th></tr> </thead><tbody><tr><th>'+result.Brand+'</th><td>'+result.Model+'</td><td>'+result.Keywords+'</td></tr></tbody></table>';
+        }
 
 
     </script>
 @stop
+{{--15656--}}
+{{--15683--}}
+{{--15690--}}

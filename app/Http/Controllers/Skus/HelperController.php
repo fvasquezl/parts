@@ -111,10 +111,13 @@ class HelperController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-                ->addColumn('select', function ($row) {
-                    if($row->ref_sku == '1004'){
-                        return $row->ref_sku;
+                ->addColumn('select', function ($row) use ($request) {
+                    if($request->ref_sku){
+                        if($request->ref_sku ===  $row->ref_sku){
+                            return $row->ref_sku;
+                        }
                     }
+
                     return 'disable';
                 })
                 ->rawColumns(['select'])
@@ -136,5 +139,28 @@ class HelperController extends Controller
         }
         return false;
     }
+
+    public function getKitData($kit): mixed
+    {
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetKitRowData] ('{$kit}')")[0];
+
+        if($data){
+            $return_data = [
+                'Brand' => $data->brand,
+                'Model' => $data->model,
+                'Keywords' =>
+                    'Open Cell: '.$data->{'Open Cell'} .
+                    'Main Board: '.$data->{'Main Board'} .
+                    'T-Con Board: '.$data->{'T-Con Board'} .
+                    'IR Sensor: '.$data->{'IR Sensor'} .
+                    'WiFi Module: '.$data->{'WiFi Module'}
+            ];
+            return response()->json($return_data);
+
+        }
+        return null;
+    }
+
+
 //15460	MTCARM0251
 }
