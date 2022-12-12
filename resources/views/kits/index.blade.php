@@ -47,7 +47,7 @@
                                 <th>SKU Count</th>
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>QtyDamageTV</th>
+                                <th>DMG Qty</th>
                                 <th>Ref SKU</th>
                                 <th>Images Qty</th>
                                 <th>Parts Qty</th>

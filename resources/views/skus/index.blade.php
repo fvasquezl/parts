@@ -45,7 +45,7 @@
                                 <th>Model</th>
                                 <th>Img Count</th>
                                 <th>Kits Count</th>
-                                <th>QtyDamageTV</th>
+                                <th>DMG Qty</th>
                                 <th>Version</th>
                                 <th>Country Manufactured</th>
                                 <th>Chasis</th>
