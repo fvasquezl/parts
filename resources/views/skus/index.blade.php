@@ -45,6 +45,7 @@
                                 <th>Model</th>
                                 <th>Img Count</th>
                                 <th>Kits Count</th>
+                                <th>QtyDamageTV</th>
                                 <th>Version</th>
                                 <th>Country Manufactured</th>
                                 <th>Chasis</th>
@@ -157,6 +158,7 @@
                     {data: 'model',name:'model'},
                     {data: 'image_count',name:'image_count'},
                     {data: 'kits_count',name:'kits_count'},
+                    {data: 'QtyDamageTV',name:'QtyDamageTV'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
                     {data: 'chasis',name:'chasis'},
@@ -173,7 +175,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [3,4,5],
+                        targets: [3,4,5,6,7],
                         className: "text-center",
                     },
                     {

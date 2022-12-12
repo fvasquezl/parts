@@ -67,8 +67,8 @@
                                     <select name="country" aria-label="select country" id="country"
                                             class="form-control @error('country') is-invalid @enderror" >
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->CountryID }}"
-                                                {{ old('country')==$country->CountryID ? 'selected':''}}>
+                                            <option value="{{ $country->CountryName }}"
+                                                {{ old('country')==$country->CountryName ? 'selected':''}}>
                                                 {{ $country->CountryName}}</option>
                                         @endforeach
                                     </select>
