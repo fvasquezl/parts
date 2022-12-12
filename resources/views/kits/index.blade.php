@@ -47,6 +47,7 @@
                                 <th>SKU Count</th>
                                 <th>Brand</th>
                                 <th>Model</th>
+                                <th>QtyDamageTV</th>
                                 <th>Ref SKU</th>
                                 <th>Images Qty</th>
                                 <th>Parts Qty</th>
@@ -181,6 +182,7 @@
                     {data: 'SKU_count', name: 'SKU_count'},
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
+                    {data: 'QtyDamageTV', name: 'QtyDamageTV'},
                     {data: 'ref_sku', name: 'ref_sku'},
                     {data: 'image_count', name: 'image_count'},
                     {data: 'noofparts', name: 'noofparts'},
@@ -196,20 +198,18 @@
                         // visible: false,
                     },
                     {
-                        targets: [10],
-                        searchable: false,
-                        // visible: false,
-                    },
-                    {
-                        targets: [11],
+                        targets: [12],
                         searchable: true,
                         visible: false
                     },
                     {
-                        targets: [5,8,9,10],
+                        targets: [5,9,10,11],
                         searchable: false,
+                    },
+                    {
+                        targets: [5,6,8,9,10],
+                        className: "text-center",
                     }
-
                 ]
             });
 

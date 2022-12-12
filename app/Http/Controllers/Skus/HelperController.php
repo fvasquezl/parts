@@ -21,7 +21,6 @@ class HelperController extends Controller
 
     public function getSkus(Request $request): JsonResponse
     {
-
         $data = \DB::select("SELECT * FROM [prt].[fn_GetVerifiedPartReferences] ('$request->brand','$request->model')");
         return datatables($data)
             ->addIndexColumn()
@@ -31,10 +30,11 @@ class HelperController extends Controller
             ->toJson();
     }
 
-
     public function getKits(Request $request): JsonResponse
     {
+
         $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('$request->brand','$request->model')");
+
         return datatables($data)
             ->addIndexColumn()
             ->addColumn('actions', function () {
