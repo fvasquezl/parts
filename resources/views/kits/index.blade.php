@@ -72,7 +72,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
-
+e*/
     <style>
         .verybigmodal {
             max-width: 80%;
@@ -105,11 +105,11 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
-
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
-
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{--    <script src="js/jquery.dataTables.colResize.js"></script>--}}
+
 
     <script>
         let $kitsTable;
@@ -210,7 +210,8 @@
                         targets: [5,6,8,9,10],
                         className: "text-center",
                     }
-                ]
+                ],
+
             });
 
             $('#search_sku').on('search keyup', function() {

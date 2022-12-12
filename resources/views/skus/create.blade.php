@@ -76,39 +76,38 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-        <div class="col-lg-12 ">
-            <div class="card mb-4 shadow-sm card-outline card-success">
-                <div class="card-header ">
-                    <h3 class="card-title mt-1">
-                        Kits Listing
-                    </h3>
-                    <div class="card-tools">
+            <div class="col-lg-12 ">
+                <div class="card mb-4 shadow-sm card-outline card-success">
+                    <div class="card-header ">
+                        <h3 class="card-title mt-1">
+                            Kits Listing
+                        </h3>
+                        <div class="card-tools">
+                        </div>
                     </div>
-                </div>
 
-                <div class="card-body">
-                    <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
-                        <thead>
-                        <tr>
-                            <th>kitid</th>
-                            <th>brand</th>
-                            <th>model</th>
-                            <th>kitlcn</th>
-                            <th>Open Cell</th>
-                            <th>Main Board</th>
-                            <th>T-Con Board</th>
-                            <th>Power Supply</th>
-                            <th>WiFi Module</th>
-                            <th>IR Sensor</th>
-                            <th>Button Set</th>
-                            <th>Blutooth Module</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div class="card-body">
+                        <table class="table table-striped table-hover table-bordered nowrap" id="kitsTable">
+                            <thead>
+                            <tr>
+                                <th>KitID</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Open Cell</th>
+                                <th>Main Board</th>
+                                <th>T-Con Board</th>
+                                <th>Power Supply</th>
+                                <th>WiFi Module</th>
+                                <th>IR Sensor</th>
+                                <th>Button Set</th>
+                                <th>Blutooth Module</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
@@ -259,7 +258,7 @@
                 processing: true,
                 serverSide: true,
                 scrollY: "35vh",
-                scrollX: true,
+
                 scrollCollapse: true,
                 stateSave: true,
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
@@ -294,10 +293,9 @@
                     }
                 },
                 columns: [
-                    {data: 'kitid', name: 'kitid'},
+                    {data: 'KitID', name: 'KitID'},
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
-                    {data: 'kitlcn', name: 'kitlcn'},
                     {data: 'Open Cell', name: 'Open Cell'},
                     {data: 'Main Board', name: 'Main Board'},
                     {data: 'T-Con Board', name: 'T-Con Board'},
@@ -361,6 +359,5 @@
     </script>
 @stop
 {{--element, firstmodel--}}
-
 
 

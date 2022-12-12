@@ -50,11 +50,11 @@ class HelperController extends Controller
 
     public function getKitsWSku(Request $request): JsonResponse
     {
-        $data = \DB::select("SELECT * FROM [prt].[fn_GetKitData] ('$request->brand','$request->model')");
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('$request->brand','$request->model')");
         return datatables($data)
             ->addIndexColumn()
             ->setRowId(function ($data) {
-                return $data->kitid;
+                return $data->KitID;
             })
             ->toJson();
     }
