@@ -109,7 +109,7 @@ Route::middleware('auth')
         Route::get('/sku/getKitsBySku',[HelperController::class,'getKitsBySku'])->name('sku.getKitsBySku');
         Route::get('/sku/getSkuToKit',[HelperController::class,'getSkuToKit'])->name('sku.getSkuToKit');
         Route::post('/sku/kitUpdate',[HelperController::class,'kitUpdate'])->name('sku.kitUpdate');
-        Route::get('/sku/getKitData/{kit}',[HelperController::class,'getKitData'])->name('sku.getKitData');
+        Route::get('/sku/getKitData',[HelperController::class,'getKitData'])->name('sku.getKitData');
     });
 
 

@@ -114,6 +114,7 @@
     <script>
         let $kitsTable;
         let $skusTable;
+        let $skuHeaderTable
         let $kit
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let $sku
@@ -292,16 +293,36 @@
             $kit = row['kitlcn'];
             $('#ajaxModalKits')
                 .on('shown.bs.modal', function () {
-                    $(this).find(".modal-title").html(function (){
-                        return showGetResult(rowId)
-                    })
-                    $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
+                    $(this).find(".modal-title").html("Kit: "+ rowId)
+
+                    $(this).find(".modal-body").html(
+                        '<table class="table table-striped table-hover table-bordered nowrap hover" id="kitHeaderTable">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th>Kit Lcn</th>' +
+                        '<th>Bran</th>' +
+                        '<th>Model</th>' +
+                        '<th>Open Cell</th>' +
+                        '<th>Main Board</th>' +
+                        '<th>T-Con Board</th>' +
+                        '<th>Power Supply</th>' +
+                        '<th>WiFi Module</th>' +
+                        '<th>IR Sensor</th>' +
+                        '<th>Button Set</th>' +
+                        '<th>Blutooth Module</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '</table>'+
+                        '<br>'+
+                        '<hr>'+
+
+
+                        '<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
                         '<th></th>' +
                         '<th>Ref Sku</th>' +
                         '<th>Brand</th>' +
                         '<th>Model</th>' +
                         '<th>Version</th>' +
-                        '<th>Country Manufactured</th>' +
                         '<th>Open Cell</th>' +
                         '<th>Main Board</th>' +
                         '<th>T-Con Board</th>' +
@@ -316,88 +337,9 @@
                     $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary" disabled>Save changes</button> ' +
                         '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
 
-                    $skusTable = $('#skusTable').DataTable({
-                        pageLength: 100,
-                        lengthMenu: [
-                            [100,500, -1],
-                            [100,500,'All']
-                        ],
-                        processing: true,
-                        serverSide: true,
-                        scrollY: "53vh",
-                        scrollX: true,
-                        scrollCollapse: true,
-                        stateSave: true,
-                        dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
-                            '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
-                            '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
-                        buttons: {
-                            dom: {
-                                container: {
-                                    tag: 'div',
-                                    className: 'flexcontent'
-                                },
-                                buttonLiner: {
-                                    tag: null
-                                }
-                            },
-                            buttons: [
-                                {
-                                    extend: 'pageLength',
-                                    titleAttr: 'Show Records',
-                                    className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
-                                }
-                            ],
-                        },
+                    showGetSkus(row['brand'],row['model'],row['ref_sku']);
+                    showGetKit(rowId)
 
-                            ajax: {
-                                url: "/sku/getSkuToKit",
-                                data: function (d) {
-                                    d.brand = row['brand'];
-                                    d.model = row['model'];
-                                    d.ref_sku = row['ref_sku'];
-                                },
-                            },
-                        columns: [
-                            {data: 'select',name:'select'},
-                            {data: 'ref_sku',name:'ref_sku'},
-                            {data: 'brand',name:'brand'},
-                            {data: 'model',name:'model'},
-                            {data: 'version',name:'version'},
-                            {data: 'country_manufactured',name:'country_manufactured'},
-                            {data: 'Open Cell',name:'Open Cell'},
-                            {data: 'Main Board',name:'Main Board'},
-                            {data: 'T-Con Board',name:'T-Con Board'},
-                            {data: 'Power Supply',name:'Power Supply'},
-                            {data: 'WiFi Module',name:'WiFi Module'},
-                            {data: 'IR Sensor',name:'IR Sensor'},
-                            {data: 'Button Set',name:'Button Set'},
-                            {data: 'Blutooth Module',name:'Blutooth Module'},
-                            {data: 'chasis',name:'chasis'},
-                            {data: 'product_version_number',name:'product_version_number'},
-                        ],
-                        columnDefs: [
-
-                            {
-                                targets: 0,
-                                orderable: false,
-                                searchable: false,
-                                className: 'dt-body-center',
-                                render: function(data, type, full, meta) {
-                                    if(data === "disable"){
-                                        return '<input type="checkbox" name="chkbx'+meta.row+'" class="larger">';
-                                    }else{
-                                        $sku = data
-                                        return '<input type="checkbox" checked name="chkbx'+meta.row+'" class="larger">';
-                                    }
-                                },
-                            },{
-                                targets: [3,4,5],
-                                className: "text-center",
-                            }
-                        ],
-                        order: [[1, 'desc']],
-                    });
 
                 }).on('hidden.bs.modal', function (e) {
                 $(this).find(".modal-title").html('');
@@ -453,23 +395,117 @@
 
         })
 
+        function showGetSkus(brand,model,ref_sku){
+            $skusTable = $('#skusTable').DataTable({
+                pageLength: 100,
+                lengthMenu: [
+                    [100,500, -1],
+                    [100,500,'All']
+                ],
+                processing: true,
+                serverSide: true,
+                scrollY: "53vh",
+                scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
+                dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                    '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                    '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                buttons: {
+                    dom: {
+                        container: {
+                            tag: 'div',
+                            className: 'flexcontent'
+                        },
+                        buttonLiner: {
+                            tag: null
+                        }
+                    },
+                    buttons: [
+                        {
+                            extend: 'pageLength',
+                            titleAttr: 'Show Records',
+                            className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                        }
+                    ],
+                },
 
-        function showGetResult( rowId )
-        {
-            let result = null;
-            let scriptUrl = "/sku/getKitData/"+rowId ;
-            $.ajax({
-                url: scriptUrl,
-                type: 'get',
-                dataType: 'json',
-                contentType: "application/json",
-                async: false,
-                success: function(data) {
-                    result = data;
-                }
+                ajax: {
+                    url: "/sku/getSkuToKit",
+                    data: function (d) {
+                        d.brand = brand;
+                        d.model = model;
+                        d.ref_sku = ref_sku;
+                    },
+                },
+                columns: [
+                    {data: 'select',name:'select'},
+                    {data: 'ref_sku',name:'ref_sku'},
+                    {data: 'brand',name:'brand'},
+                    {data: 'model',name:'model'},
+                    {data: 'version',name:'version'},
+                    {data: 'Open Cell',name:'Open Cell'},
+                    {data: 'Main Board',name:'Main Board'},
+                    {data: 'T-Con Board',name:'T-Con Board'},
+                    {data: 'Power Supply',name:'Power Supply'},
+                    {data: 'WiFi Module',name:'WiFi Module'},
+                    {data: 'IR Sensor',name:'IR Sensor'},
+                    {data: 'Button Set',name:'Button Set'},
+                    {data: 'Blutooth Module',name:'Blutooth Module'},
+                    {data: 'chasis',name:'chasis'},
+                    {data: 'product_version_number',name:'product_version_number'},
+                ],
+                columnDefs: [
+
+                    {
+                        targets: 0,
+                        orderable: false,
+                        searchable: false,
+                        className: 'dt-body-center',
+                        render: function(data, type, full, meta) {
+                            if(data === "disable"){
+                                return '<input type="checkbox" name="chkbx'+meta.row+'" class="larger">';
+                            }else{
+                                $sku = data
+                                return '<input type="checkbox" checked name="chkbx'+meta.row+'" class="larger">';
+                            }
+                        },
+                    },{
+                        targets: [3,4,5],
+                        className: "text-center",
+                    }
+                ],
+                order: [[1, 'desc']],
             });
+        }
+        function showGetKit( rowId )
+        {
+             $skuHeaderTable =$('#kitHeaderTable').DataTable({
+                 serverSide: true,
+                 scrollX: true,
+                 pageLength: 100,
+                 ajax: {
+                     url: "/sku/getKitData/",
+                     data: function (d) {
+                         d.kit =rowId;
+                     },
+                 },
+                 dom: 'rt',
+                 columns: [
+                     {data: 'kitlcn',name:'kitlcn'},
+                     {data: 'brand',name:'brand'},
+                     {data: 'model',name:'model'},
+                     {data: 'Open Cell',name:'Open Cell'},
+                     {data: 'Main Board',name:'Main Board'},
+                     {data: 'T-Con Board',name:'T-Con Board'},
+                     {data: 'Power Supply',name:'Power Supply'},
+                     {data: 'WiFi Module',name:'WiFi Module'},
+                     {data: 'IR Sensor',name:'IR Sensor'},
+                     {data: 'Button Set',name:'Button Set'},
+                     {data: 'Blutooth Module',name:'Blutooth Module'},
+                 ]
+            })
 
-            return '<table class="table table-bordered table-condensed"><thead><tr><th>Brand</th><th>Model</th><th>Keywords</th></tr> </thead><tbody><tr><th>'+result.Brand+'</th><td>'+result.Model+'</td><td>'+result.Keywords+'</td></tr></tbody></table>';
         }
 
 

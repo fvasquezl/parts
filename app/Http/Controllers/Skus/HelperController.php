@@ -140,24 +140,35 @@ class HelperController extends Controller
         return false;
     }
 
-    public function getKitData($kit): mixed
+    /**
+     * @throws Exception
+     */
+    public function getKitData(Request $request): ?JsonResponse
     {
-        $data = \DB::select("SELECT * FROM [prt].[fn_GetKitRowData] ('{$kit}')")[0];
+        if ($request->ajax()) {
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetKitRowData] ('{$request->kit}')");
 
-        if($data){
-            $return_data = [
-                'Brand' => $data->brand,
-                'Model' => $data->model,
-                'Keywords' =>
-                    'Open Cell: '.$data->{'Open Cell'} .
-                    'Main Board: '.$data->{'Main Board'} .
-                    'T-Con Board: '.$data->{'T-Con Board'} .
-                    'IR Sensor: '.$data->{'IR Sensor'} .
-                    'WiFi Module: '.$data->{'WiFi Module'}
-            ];
-            return response()->json($return_data);
-
+            return datatables($data)
+                ->addIndexColumn()
+                ->setRowId(function ($kit) {
+                    return $kit->kitid;
+                })
+                ->toJson();
         }
+//            return $data;
+////            $return_data = [
+////                'Brand' => $data->brand,
+////                'Model' => $data->model,
+////                'Keywords' =>
+////                    'Open Cell: '.$data->{'Open Cell'} .
+////                    'Main Board: '.$data->{'Main Board'} .
+////                    'T-Con Board: '.$data->{'T-Con Board'} .
+////                    'IR Sensor: '.$data->{'IR Sensor'} .
+////                    'WiFi Module: '.$data->{'WiFi Module'}
+////            ];
+////            return response()->json($return_data);
+//
+//        }
         return null;
     }
 
