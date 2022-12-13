@@ -72,7 +72,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
-e*/
+
     <style>
         .verybigmodal {
             max-width: 80%;
@@ -304,7 +304,7 @@ e*/
                         '<th>Country Manufactured</th>' +
                         '<th>Open Cell</th>' +
                         '<th>Main Board</th>' +
-                        '<th>T-Con Board  </th>' +
+                        '<th>T-Con Board</th>' +
                         '<th>Power Supply</th>' +
                         '<th>WiFi Module</th>' +
                         '<th>IR Sensor</th>' +
@@ -365,8 +365,6 @@ e*/
                             {data: 'model',name:'model'},
                             {data: 'version',name:'version'},
                             {data: 'country_manufactured',name:'country_manufactured'},
-                            {data: 'chasis',name:'chasis'},
-                            {data: 'product_version_number',name:'product_version_number'},
                             {data: 'Open Cell',name:'Open Cell'},
                             {data: 'Main Board',name:'Main Board'},
                             {data: 'T-Con Board',name:'T-Con Board'},
@@ -375,7 +373,8 @@ e*/
                             {data: 'IR Sensor',name:'IR Sensor'},
                             {data: 'Button Set',name:'Button Set'},
                             {data: 'Blutooth Module',name:'Blutooth Module'},
-
+                            {data: 'chasis',name:'chasis'},
+                            {data: 'product_version_number',name:'product_version_number'},
                         ],
                         columnDefs: [
 
