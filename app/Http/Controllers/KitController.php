@@ -76,7 +76,9 @@ class KitController extends Controller
                 ->toJson();
         }
 
-        return view('kits.index');
+        return view('kits.index',[
+            'brands' => Kit::query()->select('Brand')->distinct()->get(),
+        ]);
     }
 
 

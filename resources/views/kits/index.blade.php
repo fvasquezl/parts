@@ -25,11 +25,40 @@
             <div class="col-lg-12 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
-                        <h3 class="card-title mt-1">
-                            <input id="search_sku" class="form-control" type="search" placeholder="Filter by Sku">
-                        </h3>
+                        <div class="form-row align-items-left card-title mt-1">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-fw fa-layer-group" style="color:blue"></i></span>
+                                    </div>
+                                    <input id="search_sku" type="search" class="form-control" placeholder="Filter by Sku">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="brand" aria-label="select brand" id="search_brand"
+                                        class=" form-control ">
+                                    <option value="0">Brand</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->Brand }}"
+                                            {{ old('brand') ? 'selected':''}}>
+                                            {{ $brand->Brand }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="model" aria-label="select model" id="search_model"
+                                        class="form-control mySelect2">
+                                    <option value='0'>Model</option>
+                                </select>
+
+                            </div>
+                            <div class="col-sm-3 text-left mt-2">
+                                <button class="btn btn-sm btn-success" id="btn-reset-form">Reset form</button>
+                            </div>
+                        </div>
+
                         <div class="card-tools">
-                            <a class="btn btn-primary" href="{{ route('kits.create') }}">
+                            <a class="btn btn-primary " href="{{ route('kits.create') }}">
                                 <i class="fa fa-plus"></i> Create Kit
                             </a>
                         </div>
@@ -72,6 +101,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+
 
     <style>
         .verybigmodal {
@@ -107,8 +139,10 @@
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-{{--    <script src="js/jquery.dataTables.colResize.js"></script>--}}
+
+    {{--    <script src="js/jquery.dataTables.colResize.js"></script>--}}
 
 
     <script>
@@ -142,7 +176,7 @@
                 scrollY: "53vh",
                 scrollX: true,
                 scrollCollapse: true,
-                stateSave: true,
+                // stateSave: true,
                 dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
                     '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
                     '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
@@ -204,7 +238,7 @@
                         visible: false
                     },
                     {
-                        targets: [5,9,10,11],
+                        targets: [4,10,11],
                         searchable: false,
                     },
                     {
@@ -216,10 +250,10 @@
             });
 
             $('#search_sku').on('search keyup', function() {
-                    $kitsTable
-                        .column(7)
-                        .search(this.value)
-                        .draw();
+                $kitsTable
+                    .column(9)
+                    .search(this.value)
+                    .draw();
             });
 
             $(document).on('click', '.qrcode', function (e) {
@@ -295,51 +329,15 @@
                 .on('shown.bs.modal', function () {
                     $(this).find(".modal-title").html("Kit: "+ rowId)
 
-                    $(this).find(".modal-body").html(
-                        '<table class="table table-striped table-hover table-bordered nowrap hover" id="kitHeaderTable">' +
-                        '<thead>' +
-                        '<tr>' +
-                        '<th>Kit Lcn</th>' +
-                        '<th>Bran</th>' +
-                        '<th>Model</th>' +
-                        '<th>Open Cell</th>' +
-                        '<th>Main Board</th>' +
-                        '<th>T-Con Board</th>' +
-                        '<th>Power Supply</th>' +
-                        '<th>WiFi Module</th>' +
-                        '<th>IR Sensor</th>' +
-                        '<th>Button Set</th>' +
-                        '<th>Blutooth Module</th>' +
-                        '</tr>' +
-                        '</thead>' +
-                        '</table>'+
-                        '<br>'+
-                        '<hr>'+
-
-
-                        '<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
-                        '<th></th>' +
-                        '<th>Ref Sku</th>' +
-                        '<th>Brand</th>' +
-                        '<th>Model</th>' +
-                        '<th>Version</th>' +
-                        '<th>Open Cell</th>' +
-                        '<th>Main Board</th>' +
-                        '<th>T-Con Board</th>' +
-                        '<th>Power Supply</th>' +
-                        '<th>WiFi Module</th>' +
-                        '<th>IR Sensor</th>' +
-                        '<th>Button Set</th> ' +
-                        '<th>Blutooth Module</th>' +
-                        '<th>Chasis</th> ' +
-                        '<th>product_version_number</th>' +
-                        '</tr> </thead></table>')
-                    $(this).find(".modal-footer").html('<button type="button" id="update-sku" class="btn btn-primary" disabled>Save changes</button> ' +
-                        '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>')
+                    $(this).find(".modal-body").html(function (){
+                            return createTables()
+                    })
+                    $(this).find(".modal-footer").html(function (){
+                        return createButtons()
+                    })
 
                     showGetSkus(row['brand'],row['model'],row['ref_sku']);
                     showGetKit(rowId)
-
 
                 }).on('hidden.bs.modal', function (e) {
                 $(this).find(".modal-title").html('');
@@ -351,7 +349,6 @@
             }).modal('show');
 
         });
-
 
         $(document).on('click', '#update-sku', function (e) {
             e.stopPropagation();
@@ -478,8 +475,7 @@
                 order: [[1, 'desc']],
             });
         }
-        function showGetKit( rowId )
-        {
+        function showGetKit( rowId ) {
              $skuHeaderTable =$('#kitHeaderTable').DataTable({
                  serverSide: true,
                  scrollX: true,
@@ -507,7 +503,111 @@
             })
 
         }
+        function createTables(){
+            return '<table class="table table-striped table-hover table-bordered nowrap hover" id="kitHeaderTable">' +
+                '<thead>' +
+                '<tr>' +
+                '<th>Kit Lcn</th>' +
+                '<th>Bran</th>' +
+                '<th>Model</th>' +
+                '<th>Open Cell</th>' +
+                '<th>Main Board</th>' +
+                '<th>T-Con Board</th>' +
+                '<th>Power Supply</th>' +
+                '<th>WiFi Module</th>' +
+                '<th>IR Sensor</th>' +
+                '<th>Button Set</th>' +
+                '<th>Blutooth Module</th>' +
+                '</tr>' +
+                '</thead>' +
+                '</table>'+
+                '<br>'+
+                '<hr>'+
 
+
+                '<table class="table table-striped table-hover table-bordered nowrap hover" id="skusTable"><thead><tr>' +
+                '<th></th>' +
+                '<th>Ref Sku</th>' +
+                '<th>Brand</th>' +
+                '<th>Model</th>' +
+                '<th>Version</th>' +
+                '<th>Open Cell</th>' +
+                '<th>Main Board</th>' +
+                '<th>T-Con Board</th>' +
+                '<th>Power Supply</th>' +
+                '<th>WiFi Module</th>' +
+                '<th>IR Sensor</th>' +
+                '<th>Button Set</th> ' +
+                '<th>Blutooth Module</th>' +
+                '<th>Chasis</th> ' +
+                '<th>product_version_number</th>' +
+                '</tr> </thead></table>'
+        }
+        function createButtons(){
+            return '<button type="button" id="update-sku" class="btn btn-primary" disabled>Save changes</button> ' +
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'
+        }
+
+        document.getElementById('search_brand').addEventListener('change', (e)=>{
+            fetch('/sku/getModels', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                console.log(data)
+                let options = "<option value='0'>Model</option>";
+                for (let i in data){
+                    options += '<option value="'+data[i].model+'">'+data[i].skucountpendingkits+'</option>';
+                }
+                document.getElementById('search_model').innerHTML = options
+            }).catch(error => console.log(error))
+
+
+             manage()
+        })
+
+        function manage() {
+            let selBrand = document.getElementById('search_brand');
+            let selModel = document.getElementById('search_model');
+
+
+            if(selBrand.value !== '0'){
+                $kitsTable.column(6).search(selBrand.value).draw()
+            }
+
+            if (selModel.value !== '0' && selModel.value !== ''){
+                $kitsTable.column(7).search(selModel.value).draw()
+            }
+
+            if(selBrand.value === '0'){
+                $kitsTable.columns([6,7]).search("").draw();
+                document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
+            }
+
+            if(selModel.value === '0'){
+                $kitsTable.columns([7]).search("").draw();
+            }
+
+
+        }
+
+        document.getElementById('btn-reset-form').addEventListener('click', (e)=>{
+            document.getElementById('search_brand').selectedIndex = 0;
+            document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
+            document.getElementById('search_sku').value = '';
+            $kitsTable.columns([6,7,9]).search("").draw();
+        });
+
+
+
+        $('.mySelect2').select2({
+            theme: 'bootstrap4',
+            width: 'resolve'
+        }).on('select2:select', function(e) {
+             manage()
+        });
 
     </script>
 @stop

@@ -155,20 +155,6 @@ class HelperController extends Controller
                 })
                 ->toJson();
         }
-//            return $data;
-////            $return_data = [
-////                'Brand' => $data->brand,
-////                'Model' => $data->model,
-////                'Keywords' =>
-////                    'Open Cell: '.$data->{'Open Cell'} .
-////                    'Main Board: '.$data->{'Main Board'} .
-////                    'T-Con Board: '.$data->{'T-Con Board'} .
-////                    'IR Sensor: '.$data->{'IR Sensor'} .
-////                    'WiFi Module: '.$data->{'WiFi Module'}
-////            ];
-////            return response()->json($return_data);
-//
-//        }
         return null;
     }
 

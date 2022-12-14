@@ -325,7 +325,7 @@
             }).then(data =>{
                 let options = "<option value='0'>Model</option>";
                 for (let i in data){
-                    options += '<option value="'+data[i].model+'">'+data[i].model+'</option>';
+                    options += '<option value="'+data[i].model+'">'+data[i].skucountpendingkits+'</option>';
                 }
                 document.getElementById('myModel').innerHTML = options
             }).catch(error => console.log(error))
