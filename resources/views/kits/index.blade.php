@@ -25,42 +25,40 @@
             <div class="col-lg-12 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
-                        <div class="form-row align-items-left card-title mt-1">
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-fw fa-layer-group" style="color:blue"></i></span>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-row align-items-left mt-1">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-fw fa-layer-group" style="color:blue"></i></span>
+                                            </div>
+                                            <input id="search_sku" type="search" class="form-control" placeholder="Filter by Sku">
+                                        </div>
                                     </div>
-                                    <input id="search_sku" type="search" class="form-control" placeholder="Filter by Sku">
+                                    <div class="col-sm-3">
+                                        <select name="brand" aria-label="select brand" id="search_brand"
+                                                class=" form-control ">
+                                            <option value="0">Brand</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->Brand }}"
+                                                    {{ old('brand') ? 'selected':''}}>
+                                                    {{ $brand->Brand }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select name="model" aria-label="select model" id="search_model"
+                                                class="form-control mySelect2">
+                                            <option value='0'>Model</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-sm-3 text-left">
+                                        <button class="btn btn-success" id="btn-reset-form">Reset form</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <select name="brand" aria-label="select brand" id="search_brand"
-                                        class=" form-control ">
-                                    <option value="0">Brand</option>
-                                    @foreach ($brands as $brand)
-                                        <option value="{{ $brand->Brand }}"
-                                            {{ old('brand') ? 'selected':''}}>
-                                            {{ $brand->Brand }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <select name="model" aria-label="select model" id="search_model"
-                                        class="form-control mySelect2">
-                                    <option value='0'>Model</option>
-                                </select>
-
-                            </div>
-                            <div class="col-sm-3 text-left mt-2">
-                                <button class="btn btn-sm btn-success" id="btn-reset-form">Reset form</button>
-                            </div>
-                        </div>
-
-                        <div class="card-tools">
-                            <a class="btn btn-primary " href="{{ route('kits.create') }}">
-                                <i class="fa fa-plus"></i> Create Kit
-                            </a>
                         </div>
                     </div>
 
@@ -198,12 +196,25 @@
                         className: 'btn btn-success',
                         init: function (api, node, config) {
                             $(node).removeClass('btn-secondary buttons-html5 buttons-excel')
-                        },
-                    },
-                        {
+                            },
+                        },{
                             extend: 'pageLength',
                             titleAttr: 'Show Records',
                             className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                        },{
+                            text: '<i class="fas fa-plus-circle"></i> Create KIT',
+                            title: 'Create Kit',
+                            titleAttr: 'Create New Kit',
+                            className: 'btn btn-primary',
+                            attr: {
+                                id: 'create-kit-btn'
+                            },
+                            init: function (api, node, config) {
+                                $(node).removeClass('btn-secondary buttons-html5')
+                            },
+                            action: function ( e, dt, node, config ) {
+                                window.location = '/kits/create';
+                            }
                         }
                     ],
                 },
@@ -310,10 +321,6 @@
                         });
                     }
                 });
-                // e.stopPropagation();
-                // let $tr = $(this).closest('tr');
-                // let rowId = $tr.attr('ID');
-                // $(location).attr('href', 'kits/'+rowId+'/edit');
             });
         });
 
@@ -610,6 +617,4 @@
 
     </script>
 @stop
-{{--15656--}}
-{{--15683--}}
-{{--15690--}}
+

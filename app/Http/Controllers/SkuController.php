@@ -9,6 +9,7 @@ use App\Models\Sku;
 use App\Models\SmartControl;
 use App\Models\SubCategory;
 use App\Models\WorkCenter;
+use Aws\Result;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -121,11 +122,37 @@ class SkuController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return Response
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        try {
+            $delete = \DB::select("EXEC [prt].[sp_NukeRefSKU]'{$id}'")[0];
+
+            if ($delete->Result != '1'){
+            return response()->json([
+                'success' => false
+                ]);
+            };
+
+        } catch (Exception $e) {
+
+            $message = $e->getMessage();
+            var_dump('Exception Message: '. $message);
+
+            $code = $e->getCode();
+            var_dump('Exception Code: '. $code);
+
+            $string = $e->__toString();
+            var_dump('Exception String: '. $string);
+
+            exit;
+        }
+
+        return response()->json([
+            'success' => 'The sku has been deleted successfully',
+        ], 200);
+
     }
 
 

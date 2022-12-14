@@ -632,11 +632,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button type="submit" class="btn btn-block btn-primary">
-                                    {{ __('Create [F12]') }}
-                                </button>
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-block btn-primary">
+                                        {{ __('Create [F12]') }}
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-danger" id="btn-remove-sku">
+                                        {{ __('Cancel & remove SKU:').$sku->ref_sku }}
+                                    </button>
+                                </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -666,8 +672,6 @@
                             <th>Model</th>
                             <th>Version</th>
                             <th>Country Manufactured</th>
-                            <th>Chasis</th>
-                            <th>Product Version Number</th>
                             <th>Open Cell</th>
                             <th>Main Board</th>
                             <th>T-Con Board</th>
@@ -676,6 +680,8 @@
                             <th>IR Sensor</th>
                             <th>Button Set</th>
                             <th>Blutooth Module</th>
+                            <th>Chasis</th>
+                            <th>Product Version Number</th>
                         </tr>
                         </thead>
                     </table>
@@ -745,12 +751,17 @@
     <script>
         let $kitsTable
         let $skusTable;
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
 
         $(document).ready( function () {
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                headers:headers
             });
 
             $skusTable = $('#skusTable').DataTable({
@@ -801,8 +812,6 @@
                     {data: 'model',name:'model'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
-                    {data: 'chasis',name:'chasis'},
-                    {data: 'product_version_number',name:'product_version_number'},
                     {data: 'Open Cell',name:'Open Cell'},
                     {data: 'Main Board',name:'Main Board'},
                     {data: 'T-Con Board',name:'T-Con Board'},
@@ -811,6 +820,8 @@
                     {data: 'IR Sensor',name:'IR Sensor'},
                     {data: 'Button Set',name:'Button Set'},
                     {data: 'Blutooth Module',name:'Blutooth Module'},
+                    {data: 'chasis',name:'chasis'},
+                    {data: 'product_version_number',name:'product_version_number'},
                 ],
                 columnDefs: [
                     {
@@ -887,8 +898,6 @@
             });
         });
 
-
-
         $(document).on('click', '.add-btn', function (e) {
             e.stopPropagation();
             let tr = $(this).closest('tr');
@@ -917,5 +926,72 @@
             $("html, body").animate({ scrollTop: 0 }, "slow");
         });
 
+        async function deleteData(url){
+            try {
+                const response = await fetch(`${url}`,{
+                    method: 'DELETE',
+                    headers:headers
+                })
+
+                const data = await response.json()
+                return data
+            }
+            catch(err) {
+                console.log(err);
+            }
+        }
+
+        document.getElementById('btn-remove-sku').addEventListener('click', (e)=>{
+            e.preventDefault()
+
+            Swal.fire({
+                title: `Are you sure?`,
+                text: `Delete those kits`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    deleteSku()
+                    async function deleteSku() {
+                        await deleteData(`/skus/{{$sku->ref_sku}}`).then(
+                            data => {
+                                if (data.success){
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.success,
+                                        'success'
+                                    ).then(()=>{
+                                        window.location = '/skus'
+                                    });
+                                }else {
+                                    Swal.fire('Failed!', "elements No found").then(()=>{
+                                        location.reload()
+                                    });
+                                }
+                            }
+                        )
+                    }
+
+
+                    {{--fetch('', {--}}
+                    {{--    method: 'delete',--}}
+                    {{--    --}}{{--body: JSON.stringify({sku: {{$sku->ref_sku}}}),--}}
+                    {{--    headers:headers--}}
+                    {{--}).then(response=>{--}}
+                    {{--    console.log(response)--}}
+
+                    {{--}).then(data =>{--}}
+                    {{--    console.log(data)--}}
+                    {{--    // window.location = '/skus';--}}
+                    {{--}).catch(error => console.log(error))--}}
+                }
+            });
+
+
+
+        })
     </script>
 @stop

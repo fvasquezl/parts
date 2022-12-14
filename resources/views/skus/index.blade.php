@@ -30,9 +30,6 @@
                         </h3>
                         <div class="card-tools">
 
-                            <a class="btn btn-primary" href="{{ route('skus.create') }}">
-                                <i class="fa fa-plus"></i> Create Sku
-                            </a>
                         </div>
                     </div>
 
@@ -141,12 +138,25 @@
                         className: 'btn btn-success',
                         init: function (api, node, config) {
                             $(node).removeClass('btn-secondary buttons-html5 buttons-excel')
-                        },
-                    },
-                        {
+                            },
+                        },{
                             extend: 'pageLength',
                             titleAttr: 'Show Records',
                             className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
+                        },{
+                            text: '<i class="fas fa-plus-circle"></i> Create SKU',
+                            title: 'Create SKU',
+                            titleAttr: 'Create New SKU',
+                            className: 'btn btn-primary',
+                            attr: {
+                                id: 'create-sku-btn'
+                            },
+                            init: function (api, node, config) {
+                                $(node).removeClass('btn-secondary buttons-html5')
+                            },
+                            action: function ( e, dt, node, config ) {
+                                window.location = '/skus/create';
+                            }
                         }
                     ],
                 },

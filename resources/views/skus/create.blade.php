@@ -55,8 +55,6 @@
                                 <th>Brand</th>
                                 <th>Model</th>
                                 <th>Version</th>
-                                <th>Country Manufactured</th>
-                                <th>Chasis</th>
                                 <th>Product Version Number</th>
                                 <th>Open Cell</th>
                                 <th>Main Board</th>
@@ -66,6 +64,8 @@
                                 <th>IR Sensor</th>
                                 <th>Button Set</th>
                                 <th>Blutooth Module</th>
+                                <th>Country Manufactured</th>
+                                <th>Chasis</th>
                             </tr>
                             </thead>
                         </table>
@@ -234,8 +234,6 @@
                     {data: 'model',name:'model'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
-                    {data: 'chasis',name:'chasis'},
-                    {data: 'product_version_number',name:'product_version_number'},
                     {data: 'Open Cell',name:'Open Cell'},
                     {data: 'Main Board',name:'Main Board'},
                     {data: 'T-Con Board',name:'T-Con Board'},
@@ -244,7 +242,8 @@
                     {data: 'IR Sensor',name:'IR Sensor'},
                     {data: 'Button Set',name:'Button Set'},
                     {data: 'Blutooth Module',name:'Blutooth Module'},
-
+                    {data: 'chasis',name:'chasis'},
+                    {data: 'product_version_number',name:'product_version_number'},
                 ],
             });
 

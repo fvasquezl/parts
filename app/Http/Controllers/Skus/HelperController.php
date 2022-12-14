@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Exceptions\Exception;
 
@@ -58,7 +59,6 @@ class HelperController extends Controller
             })
             ->toJson();
     }
-
 
     public function getImages(Sku $sku): Factory|View|Application
     {
@@ -158,6 +158,4 @@ class HelperController extends Controller
         return null;
     }
 
-
-//15460	MTCARM0251
 }
