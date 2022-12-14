@@ -556,10 +556,9 @@
             }).then(response=>{
                 return response.json()
             }).then(data =>{
-                console.log(data)
                 let options = "<option value='0'>Model</option>";
                 for (let i in data){
-                    options += '<option value="'+data[i].model+'">'+data[i].skucountpendingkits+'</option>';
+                    options += '<option value="'+data[i].model+'">'+data[i].model+'</option>';
                 }
                 document.getElementById('search_model').innerHTML = options
             }).catch(error => console.log(error))
