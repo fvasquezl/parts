@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="form-row align-items-left mt-1">
-                                    <div class="col-sm-3">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-fw fa-layer-group" style="color:blue"></i></span>
@@ -36,7 +36,7 @@
                                             <input id="search_sku" type="search" class="form-control" placeholder="Filter by Sku">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-md-3">
                                         <select name="brand" aria-label="select brand" id="search_brand"
                                                 class=" form-control ">
                                             <option value="0">Brand</option>
@@ -47,15 +47,15 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-md-3">
                                         <select name="model" aria-label="select model" id="search_model"
                                                 class="form-control mySelect2">
                                             <option value='0'>Model</option>
                                         </select>
 
                                     </div>
-                                    <div class="col-sm-3 text-left">
-                                        <button class="btn btn-success" id="btn-reset-form">Reset form</button>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success ml-5" id="btn-reset-form">Reset form</button>
                                     </div>
                                 </div>
                             </div>

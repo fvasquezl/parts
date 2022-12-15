@@ -63,7 +63,6 @@ class PartReferenceController extends Controller
     {
         $kitID = $part->kit->KitID;
 
-
         $totalParts = PartReference::where('KitID',$kitID)->count();
         $editParts = PartReference::where('KitID',$kitID)->where('Created',false)->count();
         $editPart = ($totalParts - $editParts)+1;
@@ -107,9 +106,9 @@ class PartReferenceController extends Controller
             $part->save();
         }
 
-//
         $kit = $part->KitID;
         $partRest = PartReference::where('KitID',$kit)->where('Created',0)->first();
+
 
 
         if ($partRest) {
