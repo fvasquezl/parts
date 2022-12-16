@@ -218,7 +218,16 @@
                         }
                     ],
                 },
-                ajax: "{{route('kits.index')}}",
+                ajax: {
+                    url: "{{route('kits.index')}}",
+                    data: function (d) {
+                        // d.brand = $('select[name=brand]').val();
+
+                        // added ===================
+                        d.model = $('select[name=model]').val();
+                        // ----------
+                    }
+                },
                 columns: [
                     {data: 'kitid', name: 'kitid'},
                     {data: 'lcn', name: 'lcn'},
@@ -561,6 +570,14 @@
         }
 
         document.getElementById('search_brand').addEventListener('change', (e)=>{
+            e.preventDefault();
+            let selModel = document.getElementById('search_model');
+
+            if (selModel.value !== '0' && selModel.value !== ''){
+                selModel.value ='0';
+            }
+
+
             fetch('/sku/getModels', {
                 method: 'POST',
                 body: JSON.stringify({text: e.target.value}),
@@ -589,7 +606,12 @@
             }
 
             if (selModel.value !== '0' && selModel.value !== ''){
-                $kitsTable.column(7).search(selModel.value).draw()
+
+                // $kitsTable.column(7).search(selModel.value).draw()
+
+                // added =========
+                $kitsTable.ajax.reload()
+                //--------------------
             }
 
             if(selBrand.value === '0'){

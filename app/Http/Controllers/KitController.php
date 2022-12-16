@@ -39,6 +39,12 @@ class KitController extends Controller
 
             } else {
                 $data = KitsData::query();
+
+                //added=================
+                if($request->model !== '0'){
+                   $data->where('model', $request->model);
+                }
+                //-------------------------
             }
 
             return datatables($data)
