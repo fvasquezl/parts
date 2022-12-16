@@ -43,10 +43,10 @@
                                 <th>Img Count</th>
                                 <th>Kits Count</th>
                                 <th>DMG Qty</th>
+                                <th>OC SKU</th>
+                                <th>OC Qty</th>
                                 <th>Version</th>
-                                <th>Country Manufactured</th>
-                                <th>Chasis</th>
-                                <th>Product Version Number</th>
+                                <th>Country Mfr</th>
                                 <th>Open Cell</th>
                                 <th>Main Board</th>
                                 <th>T-Con Board</th>
@@ -55,6 +55,8 @@
                                 <th>IR Sensor</th>
                                 <th>Button Set</th>
                                 <th>Blutooth Module</th>
+                                <th>Chasis</th>
+                                <th>Product Version Number</th>
                             </tr>
                             </thead>
                         </table>
@@ -169,10 +171,10 @@
                     {data: 'image_count',name:'image_count'},
                     {data: 'kits_count',name:'kits_count'},
                     {data: 'QtyDamageTV',name:'QtyDamageTV'},
+                    {data: 'OCSKU',name:'OCSKU'},
+                    {data: 'OCQty',name:'OCQty'},
                     {data: 'version',name:'version'},
                     {data: 'country_manufactured',name:'country_manufactured'},
-                    {data: 'chasis',name:'chasis'},
-                    {data: 'product_version_number',name:'product_version_number'},
                     {data: 'Open Cell',name:'Open Cell'},
                     {data: 'Main Board',name:'Main Board'},
                     {data: 'T-Con Board',name:'T-Con Board'},
@@ -181,11 +183,12 @@
                     {data: 'IR Sensor',name:'IR Sensor'},
                     {data: 'Button Set',name:'Button Set'},
                     {data: 'Blutooth Module',name:'Blutooth Module'},
-
+                    {data: 'chasis',name:'chasis'},
+                    {data: 'product_version_number',name:'product_version_number'},
                 ],
                 columnDefs: [
                     {
-                        targets: [3,4,5,6,7],
+                        targets: [3,4,5,7,8,9],
                         className: "text-center",
                     },
                     {

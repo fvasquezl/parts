@@ -255,6 +255,11 @@
                     {
                         targets: [5,6,8,9,10],
                         className: "text-center",
+                    },
+                    {
+                        targets: [7],
+                        searchable: true,
+                        exactvalue:true
                     }
                 ],
 
