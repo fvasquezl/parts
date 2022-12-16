@@ -35,16 +35,24 @@ class KitController extends Controller
         if ($request->ajax()) {
 
             if (auth()->user()->role == 'employee') {
-                $data = KitsData::query()->where('UserID', auth()->id())->get();
+                $data = KitsData::query()->where('UserID', auth()->id());
+
+//                if($request->model !== '0'){
+//                    $data->where('model', $request->model);
+//                }
 
             } else {
                 $data = KitsData::query();
 
                 //added=================
-                if($request->model !== '0'){
-                   $data->where('model', $request->model);
-                }
+//                if($request->model !== '0'){
+//                   $data->where('model', $request->model);
+//                }
                 //-------------------------
+            }
+
+            if($request->model !== '0'){
+                $data->where('model', $request->model);
             }
 
             return datatables($data)
