@@ -43,6 +43,7 @@
                                 <th>Img Count</th>
                                 <th>Kits Count</th>
                                 <th>DMG Qty</th>
+                                <th>Kits %</th>
                                 <th>OC SKU</th>
                                 <th>OC Qty</th>
                                 <th>Version</th>
@@ -171,6 +172,7 @@
                     {data: 'image_count',name:'image_count'},
                     {data: 'kits_count',name:'kits_count'},
                     {data: 'QtyDamageTV',name:'QtyDamageTV'},
+                    {data: 'Kits%',name:'Kits%'},
                     {data: 'OCSKU',name:'OCSKU'},
                     {data: 'OCQty',name:'OCQty'},
                     {data: 'version',name:'version'},
@@ -188,7 +190,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [3,4,5,7,8,9],
+                        targets: [3,4,5,6,8,9,10],
                         className: "text-center",
                     },
                     {
