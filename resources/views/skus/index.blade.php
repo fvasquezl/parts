@@ -172,7 +172,7 @@
                     {data: 'image_count',name:'image_count'},
                     {data: 'kits_count',name:'kits_count'},
                     {data: 'QtyDamageTV',name:'QtyDamageTV'},
-                    {data: 'Kits%',name:'Kits%'},
+                    {data: 'kits_percent',name:'kits_percent'},
                     {data: 'OCSKU',name:'OCSKU'},
                     {data: 'OCQty',name:'OCQty'},
                     {data: 'version',name:'version'},

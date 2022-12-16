@@ -39,6 +39,9 @@ class SkuController extends Controller
                     return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info btn-block" target="_blank">
                             <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>';
                 })
+                ->editColumn('kits_percent', function(Sku $sku){
+                    return $sku->kits_percent." %";
+                })
                 ->editColumn('kits_count', function(Sku $sku){
                     return '<button class="btn btn-secondary btn-block kits-count">
                             <i class="fas fa-fw fa-layer-group"></i>&nbsp;&nbsp;&nbsp;'.$sku->qty.'</button>';
