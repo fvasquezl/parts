@@ -56,13 +56,15 @@ Route::middleware('auth')
 
         Route::resource('boxShelf', BoxShelfController::class)
             ->only([
-                'index', 'update'
+                'index', 'update','destroy'
             ])
             ->parameters([
             'boxShelf' => 'shelf'
         ]);
 
         Route::view('/boxesRemove','boxes.delete');
+        Route::view('/shelfRemove','shelves.delete');
+
 
 
         Route::resource('version', VersionController::class)
@@ -93,6 +95,7 @@ Route::middleware('auth')
         Route::post('validate/kit', [ValidateController::class, 'kit'])->name('validate.kit');
         Route::post('validate/kits/{box}', [ValidateController::class, 'kits'])->name('validate.kits');
 
+        Route::post('validate/shelfBox/{shelf}', [ValidateController::class, 'shelfBox'])->name('validate.shelfBox');
         //        Route::get('qrcode/shelf/{shelf}', [QrCodeController::class,'shelf'])->name('qrcode.shelf')
 
         Route::get('/kit-parts/{kit}/edit', [KitPartController::class, 'edit'])->name('kit-parts.edit');

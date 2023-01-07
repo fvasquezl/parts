@@ -124,4 +124,33 @@ class ValidateController extends Controller
         );
 
     }
+
+    public function shelfBox(Request $request, Shelf $shelf)
+    {
+
+        try {
+            $box = $shelf->boxes->where('box_name',$request->data)->first();
+        } catch (Exception $e) {
+
+            $message = $e->getMessage();
+            var_dump('Exception Message: ' . $message);
+
+            $code = $e->getCode();
+            var_dump('Exception Code: ' . $code);
+
+            $string = $e->__toString();
+            var_dump('Exception String: ' . $string);
+
+            exit;
+        }
+        if ($box) {
+            return response()->json([
+                'id' => $box->box_id,
+                'name' => $box->box_name,
+            ]);
+        }
+        return response()->json($box);
+
+    }
+
 }

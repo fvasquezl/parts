@@ -339,6 +339,10 @@ return [
                     'text' => 'Remove BoxContent',
                     'url'  => 'boxesRemove',
                 ],
+                [
+                    'text' => 'Remove ShelfContent',
+                    'url'  => 'shelfRemove',
+                ],
             ],
             'can'  =>  'isAdmin'
 

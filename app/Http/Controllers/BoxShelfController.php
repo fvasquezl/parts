@@ -50,4 +50,22 @@ class BoxShelfController extends Controller
         );
     }
 
+
+    public function destroy(Request $request,Shelf $shelf): \Illuminate\Http\JsonResponse
+    {
+        foreach ($request->data as $boxObj){
+            try {
+                $shelf->boxes()->detach($boxObj['id']);
+            } catch (Throwable $e) {
+                return response()->json(
+                    $e
+                );
+            }
+        };
+
+        return response()->json(
+            'The Boxes has been deleted Successfully'
+        );
+    }
+
 }

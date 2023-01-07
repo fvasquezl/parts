@@ -14,9 +14,15 @@ class Shelf extends Model
     protected $dates = ['DateCreated'];
 
 
+//    public function boxes()
+//    {
+//        return $this->hasMany(Box::class, 'shelf_id','shelf_id');
+//    }
+
     public function boxes()
     {
-        return $this->hasMany(Box::class, 'shelf_id','shelf_id');
+        return $this->belongsToMany(Box::class, 'bin.shelf_id','shelf_id');
+        return $this->belongsToMany(Kit::class,'bin.BoxContent','box_id', 'kit_id');
     }
 
     public function getCreatedAt() {

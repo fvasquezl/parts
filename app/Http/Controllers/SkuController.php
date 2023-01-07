@@ -36,8 +36,9 @@ class SkuController extends Controller
             return datatables($data)
                 ->addIndexColumn()
                 ->editColumn('image_count', function(Sku $sku){
-                    return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info btn-block" target="_blank">
-                            <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>';
+                    return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info" target="_blank">
+                            <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>
+                             <button class="btn btn-danger kits-delete"><i class="fas fa-fw fa-trash-alt"></i></button>';
                 })
                 ->editColumn('kits_percent', function(Sku $sku){
                     return $sku->kits_percent." %";
@@ -157,7 +158,4 @@ class SkuController extends Controller
         ], 200);
 
     }
-
-
-
 }

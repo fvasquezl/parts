@@ -40,7 +40,7 @@
                                 <th>Ref Sku</th>
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>Img Count</th>
+                                <th>Actions</th>
                                 <th>Kits Count</th>
                                 <th>DMG Qty</th>
                                 <th>Kits %</th>
@@ -100,6 +100,23 @@
     <script>
         let $skusTable;
         let $kitsTable;
+
+        async function deleteData(url) {
+            try {
+                const response = await fetch(`${url}`, {
+                    method: 'DELETE',
+                    headers: headers,
+                    body: JSON.stringify({data: kits}),
+                })
+                const data = await response.json()
+                return data
+            } catch (err) {
+                console.log(err);
+                addElementList(`Error: ${err}`)
+            }
+        }
+
+
         $(document).ready( function () {
             $.ajaxSetup({
                 headers: {
@@ -287,6 +304,44 @@
                     $(this).find(".modal-body").html("");
                     $kitsTable='';
                 }).modal('show');
+        });
+
+        $(document).on('click', '.kits-delete', function (e) {
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('id');
+            // console.log(rowId)
+
+            Swal.fire({
+                title: 'Password to delete SKU',
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+            }).then((result) => {
+                if (result.value === 'dLp173Vb') {
+
+                    console.log(rowId)
+                    // deleteData(`/kits/${rowId}`)
+                    // reloadPage()
+                    Swal.fire({
+                        title: 'The SKU!',
+                        html: `
+                        <h3>${rowId}</h3>
+                        <h3><b>Has been deleted</b></h3>
+                      `,
+                        confirmButtonText: 'Exit'
+                    })
+                }else{
+                    Swal.fire({
+                        title: 'Sorry!',
+                        html: `<h3><b>The password is not correct</b></h3>`,
+                        confirmButtonText: 'Exit'
+                    })
+                }
+
+            });
         });
 
     </script>
