@@ -100,28 +100,32 @@
     <script>
         let $skusTable;
         let $kitsTable;
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
 
         async function deleteData(url) {
             try {
                 const response = await fetch(`${url}`, {
                     method: 'DELETE',
                     headers: headers,
-                    body: JSON.stringify({data: kits}),
                 })
                 const data = await response.json()
                 return data
             } catch (err) {
                 console.log(err);
-                addElementList(`Error: ${err}`)
             }
         }
 
 
+
         $(document).ready( function () {
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                headers
             });
 
             $skusTable = $('#skusTable').DataTable({
@@ -322,9 +326,9 @@
             }).then((result) => {
                 if (result.value === 'dLp173Vb') {
 
-                    console.log(rowId)
-                    // deleteData(`/kits/${rowId}`)
-                    // reloadPage()
+                    // console.log(rowId)
+                    deleteData(`/skus/${rowId}`)
+
                     Swal.fire({
                         title: 'The SKU!',
                         html: `
@@ -333,6 +337,7 @@
                       `,
                         confirmButtonText: 'Exit'
                     })
+                    $skusTable.ajax.reload()
                 }else{
                     Swal.fire({
                         title: 'Sorry!',
@@ -346,5 +351,4 @@
 
     </script>
 @stop
-
 
