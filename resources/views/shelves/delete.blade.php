@@ -179,7 +179,7 @@
                                     if (result.value) {
                                         deleteData(`boxShelf/${shelf.id}`)
                                         addElementList('msg: Processing...')
-                                        // reloadPage()reloadPage()
+                                        reloadPage()
                                     }
                                 });
 

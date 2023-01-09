@@ -53,9 +53,10 @@ class BoxShelfController extends Controller
 
     public function destroy(Request $request,Shelf $shelf): \Illuminate\Http\JsonResponse
     {
+
         foreach ($request->data as $boxObj){
             try {
-                $shelf->boxes()->detach($boxObj['id']);
+                 \DB::select("EXEC [PartsProcessing].[bin].[sp_RemoveBoxFromShelf] '{$boxObj['id']}'");
             } catch (Throwable $e) {
                 return response()->json(
                     $e
