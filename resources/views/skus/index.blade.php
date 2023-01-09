@@ -324,9 +324,8 @@
                 showCancelButton: true,
                 confirmButtonText: 'Submit',
             }).then((result) => {
-                if (result.value === 'dLp173Vb') {
+                if (result.value === 'pLa13t1B') {
 
-                    // console.log(rowId)
                     deleteData(`/skus/${rowId}`)
 
                     Swal.fire({
