@@ -38,7 +38,10 @@ class SkuController extends Controller
                 ->editColumn('image_count', function(Sku $sku){
                     return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info" target="_blank">
                             <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>
-                             <button class="btn btn-danger kits-delete"><i class="fas fa-fw fa-trash-alt"></i></button>';
+                             <button class="btn btn-danger kits-delete"><i class="fas fa-fw fa-trash-alt"></i></button>
+                              <button class="btn btn-primary kits-bulk"><i class="fas fa-fw fa-layer-group"></i></button>';
+
+
                 })
                 ->editColumn('kits_percent', function(Sku $sku){
                     return $sku->kits_percent." %";
@@ -54,7 +57,9 @@ class SkuController extends Controller
                 ->toJson();
         }
 
-        return view('skus.index');
+        return view('skus.index',[
+        'brands' => Sku::query()->select('Brand')->distinct()->get(),
+        ]);
     }
 
 

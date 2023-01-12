@@ -25,11 +25,32 @@
             <div class="col-lg-12 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
-                        <h3 class="card-title mt-1">
-                            Skus Listing
-                        </h3>
-                        <div class="card-tools">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-row align-items-left mt-1">
+                                    <div class="col-md-3">
+                                        <select name="brand" aria-label="select brand" id="search_brand"
+                                                class=" form-control ">
+                                            <option value="0">Brand</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->Brand }}"
+                                                    {{ old('brand') ? 'selected':''}}>
+                                                    {{ $brand->Brand }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="model" aria-label="select model" id="search_model"
+                                                class="form-control mySelect2">
+                                            <option value='0'>Model</option>
+                                        </select>
 
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success ml-2" id="btn-reset-form">Reset form</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -74,6 +95,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+
     <style>
         .verybigmodal {
             max-width: 80%;
@@ -94,13 +118,17 @@
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/filterSkus.js') }}"></script>
 
     <script>
         let $skusTable;
         let $kitsTable;
+        let $kitsBulkTable
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let selBrand = '0'
+        let selModel
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -120,7 +148,6 @@
                 console.log(err);
             }
         }
-
 
 
         $(document).ready( function () {
@@ -217,6 +244,10 @@
                     {
                         targets: [3,4],
                         searchable: false,
+                    },{
+                        targets: [2],
+                        searchable: true,
+                        exactvalue:true
                     }
 
                 ]
@@ -347,6 +378,53 @@
 
             });
         });
+
+        document.getElementById('search_brand').addEventListener('change', (e)=>{
+            e.preventDefault();
+            selModel = document.getElementById('search_model');
+
+            if (selModel.value !== '0' && selModel.value !== ''){
+                $skusTable.columns([1,2]).search('').draw();
+                selModel.value ='0';
+            }
+
+
+            fetch('/sku/getSKUModels', {
+                method: 'POST',
+                body: JSON.stringify({text: e.target.value}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                let options = "<option value='0'>Model</option>";
+                for (let i in data){
+                    options += '<option value="'+data[i].model+'">'+data[i].model+'</option>';
+                }
+                document.getElementById('search_model').innerHTML = options
+            }).catch(error => console.log(error))
+
+
+            manageBrand($skusTable)
+        })
+
+
+        document.getElementById('btn-reset-form').addEventListener('click', (e)=>{
+            document.getElementById('search_brand').selectedIndex = 0;
+            document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
+            $skusTable.columns([1,2]).search("").draw();
+        });
+
+
+        $('.mySelect2').select2({
+            theme: 'bootstrap4',
+            width: 'resolve'
+        }).on('select2:select', function(e) {
+             manageModel($skusTable)
+        });
+
+        window.onload = function (){
+            $skusTable.columns().search("").draw();
+        }
 
     </script>
 @stop

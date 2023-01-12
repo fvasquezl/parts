@@ -20,6 +20,10 @@ class HelperController extends Controller
         return \DB::select("SELECT * FROM [PartsProcessing].[prt].[fn_GetVerifiedPartReferencesModels]('$request->text')");
     }
 
+    public function getSKUModels(Request $request){
+        return Sku::query()->select('model')->where('brand',$request->text)->distinct()->get();
+    }
+
     public function getSkus(Request $request): JsonResponse
     {
         $data = \DB::select("SELECT * FROM [prt].[fn_GetVerifiedPartReferences] ('$request->brand','$request->model')");
