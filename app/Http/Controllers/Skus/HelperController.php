@@ -9,9 +9,10 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Exceptions\Exception;
+use Throwable;
 
 class HelperController extends Controller
 {
@@ -166,10 +167,21 @@ class HelperController extends Controller
     public function kitBulkUpdate(Request $request): bool|JsonResponse
     {
         if ($request->ajax()) {
-        $kits = $request->items;
-        $sku = $request->sku;
-        foreach ($kits as $kit)
-            return \DB::select("EXEC [prt].[sp_UpdateKitSKU] '{$kit}','{$sku}'");
+            $kits = $request->kits;
+            $sku = $request->sku;
+            foreach ($kits as $kit){
+                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_UpdateKitSKUbyID] '{$kit}','{$sku}'");
+//                try {
+//                    \DB::select("EXEC [PartsProcessing].[prt].[sp_UpdateKitSKUbyID] '{$kit}','{$sku}'");
+//                } catch (Throwable $e) {
+//                    return response()->json(
+//                        $e
+//                    );
+//                }
+            }
+            return response()->json(
+                'The Kits has been update successfully'
+            );
         }
         return false;
     }

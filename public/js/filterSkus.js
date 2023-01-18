@@ -1,9 +1,9 @@
-async function manageData(items, sku, url, method) {
+async function manageData(kits, sku, url, method) {
     try {
         const response = await fetch(`${url}`, {
             method: method,
             body: JSON.stringify({
-                kits: items,
+                kits: kits,
                 sku:sku
             }),
             headers: headers
@@ -184,3 +184,5 @@ $(document).on('click', '.kits-bulk', function (e) {
         $kitsBulkTable='';
     }).modal('show');
 });
+
+//1451
