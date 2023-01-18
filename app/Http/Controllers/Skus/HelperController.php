@@ -64,6 +64,22 @@ class HelperController extends Controller
             ->toJson();
     }
 
+    public function getBulkKitsWSku(Request $request): JsonResponse
+    {
+        $data = \DB::select("SELECT * FROM [prt].[fn_GetPartReferencesNonSKU] ('$request->brand','$request->model')");
+        return datatables($data)
+            ->addIndexColumn()
+            ->addColumn('id', function ($data) {
+                return $data->KitID;
+            },0)
+            ->setRowId(function ($data) {
+                return $data->KitID;
+            })
+            ->toJson();
+    }
+
+
+
     public function getImages(Sku $sku): Factory|View|Application
     {
         $images = \DB::select("EXEC [prt].[sp_GetKitSKUImages] '{$sku->ref_sku}'");
@@ -140,6 +156,20 @@ class HelperController extends Controller
     {
         if ($request->ajax()) {
             return \DB::select("EXEC [prt].[sp_UpdateKitSKU] '{$request->kit}','{$request->sku}'");
+        }
+        return false;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function kitBulkUpdate(Request $request): bool|JsonResponse
+    {
+        if ($request->ajax()) {
+        $kits = $request->items;
+        $sku = $request->sku;
+        foreach ($kits as $kit)
+            return \DB::select("EXEC [prt].[sp_UpdateKitSKU] '{$kit}','{$sku}'");
         }
         return false;
     }
