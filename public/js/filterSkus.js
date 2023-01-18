@@ -11,8 +11,7 @@ async function manageData(items, sku, url, method) {
         const data = await response.json()
         return data
     } catch (err) {
-        console.log(err);
-        addElementList(`Error: ${err}`)
+        console.log(`Error: ${err}`)
     }
 }
 
@@ -131,11 +130,11 @@ $(document).on('click', '.kits-bulk', function (e) {
 
                                     updateBulkKits('/sku/kitBulkUpdate',kitsArray,rowId)
 
+                                    $skusTable.ajax.reload();
+
                                 }else{
                                     alert("Please select some kits")
                                 }
-
-
 
                                 // window.location = '/skus/create';
                             }
