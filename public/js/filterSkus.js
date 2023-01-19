@@ -58,10 +58,52 @@ $(document).on('click', '.kits-bulk', function (e) {
     let $tr = $(this).closest('tr');
     let rowId = $tr.attr('id');
     let row = $skusTable.row($tr).data();
+    let brand = row.brand;
+    let model = row.model;
+
     $('#ajaxModalKits')
         .on('shown.bs.modal', function () {
-            $(this).find(".modal-title").html(' Add Kits on bulk to SKU: '+rowId)
-            $(this).find(".modal-body").html('<table class="table table-striped table-hover table-bordered nowrap" id="kitsBulkTable">\n' +
+            $(this).find(".modal-title").html("Add Kits to Sku: "+rowId)
+            $(this).find(".modal-body").html(
+                '<table class="table table-striped table-hover table-bordered nowrap" id="skuHeaderTable">'+
+                '<thead>'+
+                '<tr>'+
+                '<th>Ref Sku</th>'+
+                '<th>Country Mfr</th>'+
+                '<th>Open Cell</th>'+
+                '<th>Main Board</th>'+
+                '<th>T-Con Board</th>'+
+                '<th>Power Supply</th>'+
+                '<th>WiFi Module</th>'+
+                '<th>IR Sensor</th>'+
+                '<th>Button Set</th>'+
+                '<th>Blutooth Module</th>'+
+                '<th>Chasis</th>'+
+                '<th>Product Ver Num</th>'+
+                '</tr>'+
+                '</thead>'+
+                '<tbody>' +
+                '<tr>'+
+                '<td>'+row['ref_sku']+'</td>' +
+                '<td>'+row['country_manufactured']+'</td>' +
+                '<td>'+row['Open Cell']+'</td>' +
+                '<td>'+row['Main Board']+'</td>' +
+                '<td>'+row['T-Con Board']+'</td>' +
+                '<td>'+row['Power Supply']+'</td>' +
+                '<td>'+row['WiFi Module']+'</td>' +
+                '<td>'+row['IR Sensor']+'</td>' +
+                '<td>'+row['Button Set']+'</td>' +
+                '<td>'+row['Blutooth Module']+'</td>' +
+                '<td>'+row['chasis']+'</td>' +
+                '<td>'+row['product_version_number']+'</td>' +
+                '</tr>'+
+                '</tbody>'+
+                '</table>'+
+                '<br>'+
+                '<hr>'+
+
+
+                '<table class="table table-striped table-hover table-bordered nowrap" id="kitsBulkTable">\n' +
                 '                            <thead>\n' +
                 '                            <tr>\n' +
                 '                                <th></th>\n' +
@@ -88,7 +130,7 @@ $(document).on('click', '.kits-bulk', function (e) {
                 ],
                 processing: true,
                 serverSide: true,
-                // scrollY: "35vh",
+                scrollY: "45vh",
                 scrollX: true,
 
                 scrollCollapse: true,
@@ -147,8 +189,10 @@ $(document).on('click', '.kits-bulk', function (e) {
                 ajax: {
                     url:'/sku/getBulkKitsWSku',
                     data: function (d) {
-                        d.brand = $('select[name=brand]').val();
-                        d.model = $('select[name=model]').val();
+                        // d.brand1 = $('select[name=brand]').val();
+                        // d.model1 = $('select[name=model]').val();
+                        d.brand = brand;
+                        d.model = model;
                         // console.log(d.model)
                     }
                 },
@@ -179,11 +223,17 @@ $(document).on('click', '.kits-bulk', function (e) {
                     style: 'multi'
                 },
             });
+            $('#skuHeaderTable').DataTable({
+                dom:'rt',
+                scrollX: true,
+            })
         }).on('hidden.bs.modal', function (e) {
         $(this).find(".modal-title").html('');
         $(this).find(".modal-body").html("");
         $kitsBulkTable='';
     }).modal('show');
 });
+
+
 
 //1451

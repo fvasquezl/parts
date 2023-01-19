@@ -414,7 +414,6 @@
             manageBrand($skusTable)
         })
 
-
         document.getElementById('btn-reset-form').addEventListener('click', (e)=>{
             document.getElementById('search_brand').selectedIndex = 0;
             document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
@@ -432,6 +431,8 @@
         window.onload = function (){
             $skusTable.columns().search("").draw();
         }
+
+
 
     </script>
 @stop
