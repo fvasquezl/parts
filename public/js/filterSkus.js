@@ -23,6 +23,7 @@ async function updateBulkKits(url, kitsArray, sku) {
         data => {
             if (!data.errors) {
                 console.log(`Msg: ${data}`)
+                $kitsBulkTable.ajax.reload()
             } else {
                 console.log(`Error: ${data.errors}`)
             }
@@ -171,7 +172,7 @@ $(document).on('click', '.kits-bulk', function (e) {
                         targets: 0,
                         checkboxes: {
                             selectRow: true
-                        }
+                        },
                     },
                 ],
                 select: {

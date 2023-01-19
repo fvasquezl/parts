@@ -103,6 +103,10 @@
         .verybigmodal {
             max-width: 80%;
         }
+        input[type=checkbox]{
+            width: 17px;
+            height: 17px;
+        }
     </style>
 
 @stop
@@ -432,7 +436,4 @@
     </script>
 @stop
 
-{{--//1249--}}
-{{--18307--}}
-{{--19625--}}
-{{--19918--}}
+
