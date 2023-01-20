@@ -46,7 +46,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <select name="images" aria-label="select model" id="search_images"
+                                        <select name="images" aria-label="select images" id="search_images"
                                                 class="form-control">
                                             <option value='0'>Has Images? Y/N</option>
                                             <option value='1'>Yes</option>
@@ -436,6 +436,7 @@
 
         document.getElementById('btn-reset-form').addEventListener('click', (e)=>{
             document.getElementById('search_brand').selectedIndex = 0;
+            document.getElementById('search_images').selectedIndex = 0;
             document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
             $skusTable.columns([1,2]).search("").draw();
         });
