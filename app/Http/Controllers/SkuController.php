@@ -31,7 +31,15 @@ class SkuController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+
+            if($request->images == 1){
+                $data = Sku::query()->where('image_count','>',0);
+            }
+            else if($request->images == 2){
+                $data = Sku::query()->where('image_count','=',0);
+            }else{
                 $data = Sku::query();
+            }
 
             return datatables($data)
                 ->addIndexColumn()

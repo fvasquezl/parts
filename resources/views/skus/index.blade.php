@@ -26,9 +26,9 @@
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="form-row align-items-left mt-1">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <select name="brand" aria-label="select brand" id="search_brand"
                                                 class=" form-control ">
                                             <option value="0">Brand</option>
@@ -39,14 +39,21 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <select name="model" aria-label="select model" id="search_model"
                                                 class="form-control mySelect2">
                                             <option value='0'>Model</option>
                                         </select>
-
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <select name="images" aria-label="select model" id="search_images"
+                                                class="form-control">
+                                            <option value='0'>Has Images? Y/N</option>
+                                            <option value='1'>Yes</option>
+                                            <option value='2'>No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
                                         <button class="btn btn-success ml-2" id="btn-reset-form">Reset form</button>
                                     </div>
                                 </div>
@@ -136,6 +143,7 @@
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let selBrand = '0'
         let selModel
+        let selImages
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -219,7 +227,14 @@
                     ],
                 },
 
-                ajax: "{{route('skus.index')}}",
+                ajax: {
+                    url: "{{route('skus.index')}}",
+                    data: function (d) {
+                        d.images = $('select[name=images]').val();
+                    },
+                },
+
+                {{--ajax: "{{route('skus.index')}}",--}}
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
                     {data: 'brand',name:'brand'},
@@ -412,6 +427,11 @@
 
 
             manageBrand($skusTable)
+        })
+
+        document.getElementById('search_images').addEventListener('change', (e)=>{
+            e.preventDefault();
+            $skusTable.ajax.reload()
         })
 
         document.getElementById('btn-reset-form').addEventListener('click', (e)=>{
