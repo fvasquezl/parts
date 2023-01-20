@@ -49,6 +49,12 @@
                                 <p class="text-md">Part Reference 3:
                                     <b class="d-inline">{{($part->PartRef3)}}</b>
                                 </p>
+                                <p class="text-md">Part Reference 4:
+                                    <b class="d-inline">{{($part->PartRef4)}}</b>
+                                </p>
+                                <p class="text-md">Part Reference 5:
+                                    <b class="d-inline">{{($part->PartRef5)}}</b>
+                                </p>
                                 <p>
                                     <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> image</a>
                                 </p>
