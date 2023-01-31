@@ -15,6 +15,19 @@ async function manageData(kits, sku, url, method) {
     }
 }
 
+async function editSkuData(url, method) {
+    try {
+        const response = await fetch(`${url}`, {
+            method: method,
+            headers: headers
+        })
+        const data = await response.json()
+        return data
+    } catch (err) {
+        console.log(`Error: ${err}`)
+    }
+}
+
 
 
 async function updateBulkKits(url, kitsArray, sku) {
@@ -29,7 +42,6 @@ async function updateBulkKits(url, kitsArray, sku) {
             }
         }
     )
-
 }
 
 function manageBrand($table) {

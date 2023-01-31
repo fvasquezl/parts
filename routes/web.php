@@ -118,6 +118,9 @@ Route::middleware('auth')
         Route::get('/sku/getSkuToKit',[HelperController::class,'getSkuToKit'])->name('sku.getSkuToKit');
         Route::post('/sku/kitUpdate',[HelperController::class,'kitUpdate'])->name('sku.kitUpdate');
         Route::get('/sku/getKitData',[HelperController::class,'getKitData'])->name('sku.getKitData');
+
+        Route::patch('/sku/updateKitData/{sku}',[HelperController::class,'updateKitData'])->name('sku.updateKitData');
+
     });
 
 

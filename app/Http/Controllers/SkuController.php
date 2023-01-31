@@ -44,9 +44,9 @@ class SkuController extends Controller
             return datatables($data)
                 ->addIndexColumn()
                 ->editColumn('image_count', function(Sku $sku){
-                    return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info" target="_blank">
-                            <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>
+                    return '
                              <button class="btn btn-danger kits-delete"><i class="fas fa-fw fa-trash-alt"></i></button>
+                              <button class="btn btn-success sku-edit"><i class="fas fa-fw fa-edit"></i></button>
                               <button class="btn btn-primary kits-bulk"><i class="fas fa-fw fa-layer-group"></i></button>';
 
 
@@ -55,7 +55,9 @@ class SkuController extends Controller
                     return $sku->kits_percent." %";
                 })
                 ->editColumn('kits_count', function(Sku $sku){
-                    return '<button class="btn btn-secondary btn-block kits-count">
+                    return '<a href="/sku/images/'.$sku->ref_sku.'" class="btn btn-info" target="_blank">
+                            <i class="fas fa-images"></i>&nbsp;&nbsp;&nbsp;'.$sku->image_count.'</a>
+                            <button class="btn btn-secondary kits-count">
                             <i class="fas fa-fw fa-layer-group"></i>&nbsp;&nbsp;&nbsp;'.$sku->qty.'</button>';
                 })
                 ->rawColumns(['image_count','kits_count'])
@@ -115,24 +117,28 @@ class SkuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $sku
      */
-    public function edit($id)
+    public function edit(int $sku ): JsonResponse
     {
-        //
+        $data = \DB::select("EXEC [prt].[sp_GetVerifiedPartReferencesBySKU]'{$sku}'")[0];
+
+        return response()->json([
+            'sku' => $data,
+            'countries' => Country::all(),
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Sku $sku
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Sku $sku)
     {
-        //
+        dd($request->all());
     }
 
     /**

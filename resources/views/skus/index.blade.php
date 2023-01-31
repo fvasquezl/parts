@@ -48,7 +48,7 @@
                                     <div class="col-md-2">
                                         <select name="images" aria-label="select images" id="search_images"
                                                 class="form-control">
-                                            <option value='0'>Has Images? Y/N</option>
+                                            <option value='0'>Has Images? All</option>
                                             <option value='1'>Yes</option>
                                             <option value='2'>No</option>
                                         </select>
@@ -96,6 +96,7 @@
     </div>
     <iframe id="printf" name="printf"  style="visibility: hidden;" src="about:blank"></iframe>
     @include('skus.shared.kitsModal')
+    @include('skus.shared.skuModalEditForm')
 @endsection
 
 @section('css')
@@ -163,6 +164,7 @@
                 console.log(err);
             }
         }
+
 
 
         $(document).ready( function () {
@@ -400,6 +402,143 @@
 
             });
         });
+
+        async function getSkuEditData(rowId){
+            try {
+                let response = await fetch(`skus/${rowId}/edit`)
+                const data = await response.json();
+                return  data
+            }catch (e) {
+                console.log(e)
+            }
+        }
+
+        async function modifyModal(rowId,row) {
+            let data = await getSkuEditData(rowId)
+            const country_manufactured = row['country_manufactured'];
+            let options=''
+            for (let i in data.countries) {
+                let selected = null;
+                if (data.countries[i].CountryName === country_manufactured) {
+                    selected = 'selected'
+                }
+                options += `<option value="${data.countries[i].CountryName}" ${selected}>${data.countries[i].CountryName}</option>`;
+                document.getElementById('country_manufactured').innerHTML = options
+            }
+
+            // const inputs = document.querySelectorAll('#skuForm input');
+            document.getElementById('skuForm').action =`/sku/updateKitData/${rowId}`
+
+            document.getElementById('skuID').innerHTML =`${rowId}`
+
+            document.getElementById('bluetoothmodule_partref1').value =data.sku['bluetoothmodule_partref1']
+            document.getElementById('bluetoothmodule_partref2').value = data.sku['bluetoothmodule_partref2']
+            document.getElementById('bluetoothmodule_partref3').value = data.sku['bluetoothmodule_partref3']
+            document.getElementById('bluetoothmodule_partref4').value = data.sku['bluetoothmodule_partref4']
+            document.getElementById('bluetoothmodule_partref5').value = data.sku['bluetoothmodule_partref5']
+
+             document.getElementById('irsensor_partref1').value = data.sku['irsensor_partref1']
+             document.getElementById('irsensor_partref2').value = data.sku['irsensor_partref2']
+             document.getElementById('irsensor_partref3').value = data.sku['irsensor_partref3']
+             document.getElementById('irsensor_partref4').value = data.sku['irsensor_partref4']
+             document.getElementById('irsensor_partref5').value = data.sku['irsensor_partref5']
+
+             document.getElementById('mainboard_partref1').value = data.sku['mainboard_partref1']
+             document.getElementById('mainboard_partref2').value = data.sku['mainboard_partref2']
+             document.getElementById('mainboard_partref3').value = data.sku['mainboard_partref3']
+             document.getElementById('mainboard_partref4').value = data.sku['mainboard_partref4']
+             document.getElementById('mainboard_partref5').value = data.sku['mainboard_partref5']
+
+            document.getElementById('opencell_partref1').value =data.sku['opencell_partref1']
+            document.getElementById('opencell_partref2').value =data.sku['opencell_partref2']
+            document.getElementById('opencell_partref3').value =data.sku['opencell_partref3']
+            document.getElementById('opencell_partref4').value =data.sku['opencell_partref4']
+            document.getElementById('opencell_partref5').value =data.sku['opencell_partref5']
+
+            document.getElementById('powersupply_partref1').value = data.sku['powersupply_partref1']
+            document.getElementById('powersupply_partref2').value = data.sku['powersupply_partref2']
+            document.getElementById('powersupply_partref3').value = data.sku['powersupply_partref3']
+            document.getElementById('powersupply_partref4').value = data.sku['powersupply_partref4']
+            document.getElementById('powersupply_partref5').value = data.sku['powersupply_partref5']
+
+            document.getElementById('tconboard_partref1').value = data.sku['tconboard_partref1']
+            document.getElementById('tconboard_partref2').value = data.sku['tconboard_partref2']
+            document.getElementById('tconboard_partref3').value = data.sku['tconboard_partref3']
+            document.getElementById('tconboard_partref4').value = data.sku['tconboard_partref4']
+            document.getElementById('tconboard_partref5').value = data.sku['tconboard_partref5']
+
+            document.getElementById('wifimodule_partref1').value = data.sku['wifimodule_partref1']
+            document.getElementById('wifimodule_partref2').value = data.sku['wifimodule_partref2']
+            document.getElementById('wifimodule_partref3').value = data.sku['wifimodule_partref3']
+            document.getElementById('wifimodule_partref4').value = data.sku['wifimodule_partref4']
+            document.getElementById('wifimodule_partref5').value = data.sku['wifimodule_partref5']
+
+            document.getElementById('chasis').value = data.sku['chasis']
+            document.getElementById('opencell_manufacturer').value = data.sku['opencell_manufacturer']
+            document.getElementById('opencell_sku').value = data.sku['opencell_sku']
+            document.getElementById('product_version_number').value = data.sku['product_version_number']
+
+            document.getElementById('brand').innerHTML = data.sku['Brand']
+            document.getElementById('model').innerHTML =data.sku['Model']
+
+            $('#ajaxModalSkuEdit').modal('show')
+        }
+
+        $(document).on('click', '.sku-edit', function (e) {
+            let $tr = $(this).closest('tr');
+            let rowId = $tr.attr('id');
+            let row = $skusTable.row($tr).data();
+
+            modifyModal(rowId,row)
+
+        });
+
+////////////////////////////////////////////////////////////////
+/// Update Sku
+        async function updateMySkuEditData(url,jsonData) {
+            try {
+                const response = await fetch(`${url}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        sku:jsonData
+                    }),
+                    headers: headers
+                })
+                const data = await response.json()
+                return data
+
+
+            } catch (err) {
+                console.log(`Error: ${err}`)
+            }
+
+        }
+
+// Get Imformation
+        document.getElementById('skuForm').addEventListener('submit',async(e)=>{
+            e.preventDefault()
+            const action = document.getElementById("skuForm").action
+            const fd = new FormData(e.target);
+            let data = {};
+            for (let [key, prop] of fd) {
+                data[key] = prop;
+            }
+            let myData = await updateMySkuEditData(action,data)
+            if(myData){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: myData,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            $skusTable.ajax.reload()
+            $('#ajaxModalSkuEdit').modal('toggle');
+
+        })
+
+
 
         document.getElementById('search_brand').addEventListener('change', (e)=>{
             e.preventDefault();

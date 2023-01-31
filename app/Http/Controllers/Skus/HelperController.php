@@ -79,8 +79,6 @@ class HelperController extends Controller
             ->toJson();
     }
 
-
-
     public function getImages(Sku $sku): Factory|View|Application
     {
         $images = \DB::select("EXEC [prt].[sp_GetKitSKUImages] '{$sku->ref_sku}'");
@@ -204,4 +202,22 @@ class HelperController extends Controller
         return null;
     }
 
+//1854
+    public function updateKitData(Request $request, $sku): bool|JsonResponse
+    {
+        if ($request->ajax()) {
+            try {
+                $updated= \DB::update("EXEC [prt].[sp_UpdatetVerifiedPartReferencesSKU]'{$sku}','{$request->sku["country_manufactured"]}','{$request->sku["chasis"]}','{$request->sku["product_version_number"]}','{$request->sku["opencell_sku"]}','{$request->sku["opencell_manufacturer"]}','{$request->sku["opencell_partref1"]}','{$request->sku["opencell_partref2"]}','{$request->sku["opencell_partref3"]}','{$request->sku["opencell_partref4"]}','{$request->sku["opencell_partref5"]}','{$request->sku["mainboard_partref1"]}','{$request->sku["mainboard_partref2"]}','{$request->sku["mainboard_partref3"]}','{$request->sku["mainboard_partref4"]}','{$request->sku["mainboard_partref5"]}','{$request->sku["powersupply_partref1"]}','{$request->sku["powersupply_partref2"]}','{$request->sku["powersupply_partref3"]}','{$request->sku["powersupply_partref4"]}','{$request->sku["powersupply_partref5"]}','{$request->sku["tconboard_partref1"]}','{$request->sku["tconboard_partref2"]}','{$request->sku["tconboard_partref3"]}','{$request->sku["tconboard_partref4"]}','{$request->sku["tconboard_partref5"]}','{$request->sku["irsensor_partref1"]}','{$request->sku["irsensor_partref2"]}','{$request->sku["irsensor_partref3"]}','{$request->sku["irsensor_partref4"]}','{$request->sku["irsensor_partref5"]}','{$request->sku["bluetoothmodule_partref1"]}','{$request->sku["bluetoothmodule_partref2"]}','{$request->sku["bluetoothmodule_partref3"]}','{$request->sku["bluetoothmodule_partref4"]}','{$request->sku["bluetoothmodule_partref5"]}','{$request->sku["wifimodule_partref1"]}','{$request->sku["wifimodule_partref2"]}','{$request->sku["wifimodule_partref3"]}','{$request->sku["wifimodule_partref4"]}','{$request->sku["wifimodule_partref5"]}'");
+
+                if($updated){
+                    return response()->json('The Sku has been updated');
+                }else{
+                    throw new Exception;
+                }
+            }catch (Exception $e){
+                return false;
+            }
+        }
+        return false;
+    }
 }
