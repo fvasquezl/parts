@@ -12,6 +12,7 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
+use App\Http\Controllers\Oc\OcDataController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
@@ -121,6 +122,9 @@ Route::middleware('auth')
 
         Route::patch('/sku/updateKitData/{sku}',[HelperController::class,'updateKitData'])->name('sku.updateKitData');
 
+
+        Route::get('/oc',[OCDataController::class,'index'])->name('oc.index');
+        Route::get('/oc/create',[OCDataController::class,'create'])->name('oc.create');
     });
 
 

@@ -310,15 +310,12 @@ return [
             'can'  =>  'isAdmin'
         ],
 
-
-
-
-        //        [
-        //            'text' => 'Fill Box',
-        //            'url'  => 'fill-box',
-        //            'icon' => 'fas fa-fw fa-fill',
-        //            'can'  =>  'isAdmin'
-        //        ],
+        [
+            'text' => 'OpenCell',
+            'url'  => 'oc',
+            'icon' => 'fas fa-tv',
+            'can'  =>  'isAdmin'
+        ],
         [
             'text'    => 'Inventory',
             'icon'    => 'fas fa-fw fa-share',
