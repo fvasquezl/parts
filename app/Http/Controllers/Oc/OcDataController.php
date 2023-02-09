@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Oc;
 
 use App\Http\Controllers\Controller;
+use App\Models\OCConfigList;
 use App\Models\OCData;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class OcDataController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = OCData::query();
+            $data = OCConfigList::query();
 
             return datatables($data)
                 ->addIndexColumn()
