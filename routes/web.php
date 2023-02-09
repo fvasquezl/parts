@@ -13,6 +13,7 @@ use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\Oc\OcDataController;
+use App\Http\Controllers\Oc\OCHelperController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\ShelfController;
@@ -125,6 +126,8 @@ Route::middleware('auth')
 
         Route::get('/oc',[OCDataController::class,'index'])->name('oc.index');
         Route::get('/oc/create',[OCDataController::class,'create'])->name('oc.create');
+        Route::post('/oc/getModels',[OCHelperController::class,'getTvModels'])->name('oc.getTvModels');
+        Route::get('/oc/getOCList',[OCHelperController::class,'getOCList'])->name('oc.getOCList');
     });
 
 

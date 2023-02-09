@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Oc;
 use App\Http\Controllers\Controller;
 use App\Models\OCConfigList;
 use App\Models\OCData;
+use App\Models\Tv;
 use Illuminate\Http\Request;
 
 class OcDataController extends Controller
@@ -33,7 +34,9 @@ class OcDataController extends Controller
 
     public function create()
     {
-        return view('oc.create');
+        $brands = Tv::select('brand')->distinct('brand')->orderBy('brand', 'asc')->get();
+
+        return view('oc.create',compact('brands'));
     }
 
 }

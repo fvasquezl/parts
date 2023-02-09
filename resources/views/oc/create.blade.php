@@ -37,25 +37,20 @@
                                     <select name="brand" aria-label="select brand" id="brand"
                                             class=" form-control ">
                                         <option value="0">Brand</option>
-                                        {{--                                        @foreach ($brands as $brand)--}}
-                                        {{--                                            <option value="{{ $brand->Brand }}"--}}
-                                        {{--                                                {{ old('brand') ? 'selected':''}}>--}}
-                                        {{--                                                {{ $brand->Brand }}</option>--}}
-                                        {{--                                        @endforeach--}}
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->brand }}"
+                                                    {{ old('brand') ? 'selected':''}}>
+                                                    {{ $brand->brand }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="model" class="col-sm-2 col-form-label">Model</label>
                                 <div class="col-sm-10">
-                                    <select name="brand" aria-label="select model" id="model"
+                                    <select name="model" aria-label="select model" id="model"
                                             class=" form-control ">
-                                        <option value="0">model</option>
-                                        {{--                                        @foreach ($brands as $brand)--}}
-                                        {{--                                            <option value="{{ $brand->Brand }}"--}}
-                                        {{--                                                {{ old('brand') ? 'selected':''}}>--}}
-                                        {{--                                                {{ $brand->Brand }}</option>--}}
-                                        {{--                                        @endforeach--}}
+                                        <option value="0">Model</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,7 +64,6 @@
                                 <th>CompatibleID</th>
                                 <th>Manufacturer</th>
                                 <th>Part Number</th>
-                                <th>Version</th>
                                 <th>MITSKU</th>
                             </tr>
                             </thead>
@@ -191,7 +185,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="{{asset('js/OCCreate.js')}}"></script>
 
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -204,29 +198,50 @@
             "X-CSRF-TOKEN": token
         }
 
-        $(document).ready( function () {
+        $(document).ready(function () {
             $.ajaxSetup({
                 headers
             });
 
-            // $openCells = $('#openCells').DataTable({
-            //     order: [[0, 'desc']],
-            //     pageLength: 100,
-            //     lengthMenu: [
-            //         [100,500, -1],
-            //         [100,500,'All']
-            //     ],
-            //     processing: true,
-            //     serverSide: true,
-            //     scrollY: "53vh",
-            //     scrollX: true,
-            //     scrollCollapse: true,
-            //     stateSave: true,
-            //     dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
-            //         '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
-            //         '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"'
-            // })
-            //
+            $openCells = $('#openCells').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 100,
+                lengthMenu: [
+                    [100,500, -1],
+                    [100,500,'All']
+                ],
+                processing: true,
+                serverSide: true,
+                scrollY: "53vh",
+                // scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
+                dom: '"<\'row\'<\'col-md-6\'B><\'col-md-6\'f>>" +\n' +
+                    '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                    '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"',
+                ajax: {
+                    url: "/oc/getOCList",
+                    data: function (d) {
+                        d.brand = $('select[name=brand]').val();
+                        d.model = $('select[name=model]').val();
+                    },
+                },
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'OC_Manufacturer', name: 'OC_Manufacturer'},
+                    {data: 'OC_PartNumber', name: 'OC_PartNumber'},
+                    {data: 'OC_MITSKU', name: 'OC_MITSKU'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        searchable: true,
+                        // visible: false,
+                    },
+                ]
+
+            })
+
             // $componentsTable = $('#componentsTable').DataTable({
             //     order: [[0, 'desc']],
             //     pageLength: 100,
@@ -246,4 +261,5 @@
             // })
         });
     </script>
+
 @stop
