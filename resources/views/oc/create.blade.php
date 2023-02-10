@@ -79,11 +79,6 @@
                                     <select name="partNumber" aria-label="select model" id="partNumber"
                                             class=" form-control ">
                                         <option value="0">PartNumber</option>
-                                        {{--                                        @foreach ($brands as $brand)--}}
-                                        {{--                                            <option value="{{ $brand->Brand }}"--}}
-                                        {{--                                                {{ old('brand') ? 'selected':''}}>--}}
-                                        {{--                                                {{ $brand->Brand }}</option>--}}
-                                        {{--                                        @endforeach--}}
                                     </select>
                                 </div>
                             </div>

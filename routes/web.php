@@ -128,6 +128,8 @@ Route::middleware('auth')
         Route::get('/oc/create',[OCDataController::class,'create'])->name('oc.create');
         Route::post('/oc/getModels',[OCHelperController::class,'getTvModels'])->name('oc.getTvModels');
         Route::get('/oc/getOCList',[OCHelperController::class,'getOCList'])->name('oc.getOCList');
+        Route::post('/oc/getOCPartNumbers',[OCHelperController::class,'getOCPartNumbers'])->name('oc.getOCPartNumbers');
+        Route::post('/oc/getManufacturer',[OCHelperController::class,'getManufacturer'])->name('oc.getManufacturer');
     });
 
 
