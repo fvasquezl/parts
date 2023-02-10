@@ -7,6 +7,7 @@ use App\Models\OCConfigList;
 use App\Models\OCData;
 use App\Models\Tv;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OcDataController extends Controller
 {
@@ -35,8 +36,10 @@ class OcDataController extends Controller
     public function create()
     {
         $brands = Tv::select('brand')->distinct('brand')->orderBy('brand', 'asc')->get();
+        $mitSkus = DB::select(
+            DB::raw("SELECT * FROM [PartsProcessing].[oc].[fn_GetOCSKUs] ()"));
 
-        return view('oc.create',compact('brands'));
+        return view('oc.create',compact('brands','mitSkus'));
     }
 
 }

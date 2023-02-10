@@ -27,33 +27,40 @@ document.getElementById('brand').addEventListener('change', async (e) => {
     models.forEach((e) => {
         modelOptions += `<option value="${e.model}">${e.model}</option>`
     })
+
     document.getElementById('model').innerHTML = modelOptions
+    document.getElementById('partNumber').innerHTML = `<option value="0">PartNumber</option>`
     document.getElementById('manufacturer').value = ''
+
+    $("#mitSku").val(0).trigger('change');
+    // document.getElementById('mitSku').value = 0
+
 
 })
 
-document.getElementById('model').addEventListener('change',  async (e) => {
-    $modelSelected = e.target.value
-    document.getElementById('manufacturer').value = ''
-    $openCells.ajax.reload()
-    const part_numbers = await manageData('/oc/getOCPartNumbers', 'POST', {'brand':$brandSelected,'model':$modelSelected})
 
+async function getPNFromModel(element){
+    $modelSelected = element
+    const part_numbers = await manageData('/oc/getOCPartNumbers', 'POST', {'brand':$brandSelected,'model':$modelSelected})
     let parModelOptions = `<option value="0">PartNumber</option>`;
     document.getElementById('partNumber').innerHTML = ""
     part_numbers.forEach((e) => {
         parModelOptions += `<option value="${e.id}">${e.part_number}</option>`
     })
     document.getElementById('partNumber').innerHTML = parModelOptions
-})
+    document.getElementById('manufacturer').value = ''
 
+    $("#mitSku").val(0).trigger('change');
+    // document.getElementById('mitSku').value = 0
+}
 
-document.getElementById('partNumber').addEventListener('change',  async (e) => {
-    $partNumberSelected = e.target.value
-
+async function getMITSKUFromPartNumber(element){
+    $partNumberSelected = element
     const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
 
     document.getElementById('manufacturer').value = data['manufacturer']
+}
 
-})
+
 
 

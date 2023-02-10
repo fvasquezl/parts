@@ -6,6 +6,7 @@
 @stop
 
 @section('content')
+
     <div class="container-fluid">
         @if (session('status'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -35,7 +36,7 @@
                                 <label for="brand" class="col-sm-2 col-form-label">Brand</label>
                                 <div class="col-sm-10">
                                     <select name="brand" aria-label="select brand" id="brand"
-                                            class=" form-control ">
+                                            class=" form-control">
                                         <option value="0">Brand</option>
                                             @foreach ($brands as $brand)
                                                 <option value="{{ $brand->brand }}"
@@ -49,7 +50,7 @@
                                 <label for="model" class="col-sm-2 col-form-label">Model</label>
                                 <div class="col-sm-10">
                                     <select name="model" aria-label="select model" id="model"
-                                            class=" form-control ">
+                                            class=" form-control modelSelect2">
                                         <option value="0">Model</option>
                                     </select>
                                 </div>
@@ -77,7 +78,7 @@
                                 <label for="partNumber" class="col-sm-2 col-form-label">Part Number</label>
                                 <div class="col-sm-10">
                                     <select name="partNumber" aria-label="select model" id="partNumber"
-                                            class=" form-control ">
+                                            class=" form-control">
                                         <option value="0">PartNumber</option>
                                     </select>
                                 </div>
@@ -86,7 +87,7 @@
                             <div class="form-group row">
                                 <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer">
+                                    <input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer" readonly>
                                 </div>
                             </div>
 
@@ -95,12 +96,12 @@
                                 <div class="col-sm-10">
                                     <select name="mitSku" aria-label="select model" id="mitSku"
                                             class=" form-control ">
-                                        <option value="0">mitSku</option>
-                                        {{--                                        @foreach ($brands as $brand)--}}
-                                        {{--                                            <option value="{{ $brand->Brand }}"--}}
-                                        {{--                                                {{ old('brand') ? 'selected':''}}>--}}
-                                        {{--                                                {{ $brand->Brand }}</option>--}}
-                                        {{--                                        @endforeach--}}
+                                        <option value="0">MITSKU</option>
+                                            @foreach ($mitSkus as $mitsku)
+                                                <option value="{{ $mitsku->MITSKU }}"
+                                                    {{ old('ProductSKU') ? 'selected':''}}>
+                                                    {{ $mitsku->ProductSKU }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -116,8 +117,8 @@
                                 <label for="instructions" class="col-sm-2 col-form-label">Assembly Guide</label>
                                 <div class="col-sm-10">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" class="custom-file-input" id="assambleGuide">
+                                        <label class="custom-file-label" for="assambleGuide">Choose file</label>
                                     </div>
                                 </div>
                             </div>
@@ -160,8 +161,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css"/>
     /*<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css"/>*/
-    /*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css" />*/
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css" />
+    /*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>*/
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
 @stop
 
@@ -177,12 +179,17 @@
 {{--    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>--}}
 {{--    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>--}}
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <script src="{{asset('js/OCCreate.js')}}"></script>
 
     <script>
+
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let $openCells
         let $componentsTable
@@ -254,7 +261,27 @@
             //         '"<\'row\'<\'col-sm-12\'tr>>" +\n' +
             //         '"<\'row\'<\'col-sm-12 col-md-5\'i ><\'col-sm-12 col-md-7\'p>>"'
             // })
+
         });
+
+
+        $('#model').select2({
+            theme: 'bootstrap4',
+        }).on("change", function() {
+            $openCells.ajax.reload()
+            getPNFromModel($(this).val());
+        });
+
+        $('#partNumber').select2({
+            theme: 'bootstrap4',
+        }).on("change",function (){
+            getMITSKUFromPartNumber($(this).val());
+        })
+
+        $('#mitSku').select2({
+            theme: 'bootstrap4',
+        })
+
     </script>
 
 @stop
