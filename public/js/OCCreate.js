@@ -28,11 +28,13 @@ document.getElementById('brand').addEventListener('change', async (e) => {
         modelOptions += `<option value="${e.model}">${e.model}</option>`
     })
     document.getElementById('model').innerHTML = modelOptions
+    document.getElementById('manufacturer').value = ''
 
 })
 
 document.getElementById('model').addEventListener('change',  async (e) => {
     $modelSelected = e.target.value
+    document.getElementById('manufacturer').value = ''
     $openCells.ajax.reload()
     const part_numbers = await manageData('/oc/getOCPartNumbers', 'POST', {'brand':$brandSelected,'model':$modelSelected})
 
@@ -51,12 +53,7 @@ document.getElementById('partNumber').addEventListener('change',  async (e) => {
     const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
 
     document.getElementById('manufacturer').value = data['manufacturer']
-    // let parModelOptions = `<option value="0">PartNumber</option>`;
-    // document.getElementById('partNumber').innerHTML = ""
-    // part_numbers.forEach((e) => {
-    //     parModelOptions += `<option value="${e.id}">${e.part_number}</option>`
-    // })
-    // document.getElementById('partNumber').innerHTML = parModelOptions
+
 })
 
 
