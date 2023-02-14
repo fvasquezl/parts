@@ -21,9 +21,6 @@ async function manageData(url, method, item) {
 
 displayErrors = (err) => {
      let errors = ""
-    // for (const property in err) {
-    //     errors += `<b>${property}</b>: ${err[property]}<br>`
-    // }
     Object.keys(err).forEach(key=>{
         errors += `${key}:${err[key][0]}<br>`
     })
