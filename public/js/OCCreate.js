@@ -20,17 +20,30 @@ async function manageData(url, method, item) {
 
 
 displayErrors = (err) => {
-    let errors = ""
-    for (const property in err) {
-        errors += `<b>${property}</b>: ${err[property]}<br>`
-    }
+     let errors = ""
+    // for (const property in err) {
+    //     errors += `<b>${property}</b>: ${err[property]}<br>`
+    // }
+    Object.keys(err).forEach(key=>{
+        errors += `${key}:${err[key][0]}<br>`
+    })
+
     Swal.fire({
         position: 'top-end',
         icon: 'error',
         title: 'Oops...',
         html: errors,
         showConfirmButton: false,
-        timer: 1800
+        timer: 2000
+    })
+}
+displayMsg=(msg) =>{
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: msg,
+        showConfirmButton: false,
+        timer: 1500
     })
 }
 
@@ -55,19 +68,6 @@ clearForm = (input) => {
 
 }
 
-async function manageMyData(url, options) {
-    try {
-        const response = await fetch(`${url}`, options)
-        const data = await response.json()
-        if (data.errors) {
-            throw {status: response.status, errorMessages: data.errors}
-        }
-        return data
-    } catch (err) {
-        if (err.errorMessages) displayErrors(err.errorMessages)
-        console.log(`Error: ${err}`)
-    }
-}
 
 
 /// Select Model from brand and reload grid
@@ -90,6 +90,7 @@ async function getPNFromModel(element) {
         'brand': $brandSelected,
         'model': $modelSelected
     })
+
     let parModelOptions = `<option value="">PartNumber</option>`;
     document.getElementById('partNumber').innerHTML = ""
     part_numbers.forEach((e) => {
@@ -100,16 +101,13 @@ async function getPNFromModel(element) {
 
 }
 
-async function getMITSKUFromPartNumber(element) {
+async function getManufacturerFromPartNumber(element) {
     $partNumberSelected = element
     const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
 
-    document.getElementById('manufacturer').value = data['manufacturer']
+    document.getElementById('manufacturer').value = data['OC_Manufacturer']
     clearForm(3)
 }
-
-// let myForm = document.getElementById('accForm')
-// let action = myForm.action
 
 
 $('#accForm').on('submit', (e) => {
@@ -129,41 +127,15 @@ $('#accForm').on('submit', (e) => {
     });
     request.done(function (msg) {
         console.log(msg)
+        displayMsg(msg)
     });
     request.fail(function (jqXHR, textStatus) {
-        alert("Request failed: " + textStatus);
+         displayErrors(jqXHR.responseJSON.errors)
     });
 })
 
 
-// myForm.onsubmit = async (e)=>{
-//     e.preventDefault();
-//     const assemblyGuide = document.getElementById('assemblyGuide').files[0]
-//     let fd = new FormData(myForm);
-//     fd.append('assemblyGuide',assemblyGuide)
-//     // fd.append("_token", document.getElementsByName('_token')[0].value)
-//
-//     const options = {
-//         method: 'POST',
-//         body: fd,
-//         headers: {}
-//     };
-//     delete options.headers['Content-Type'];
-//
-//     const result = await manageMyData('/oc/store', options)
-//
-//
-//     if(result){
-//         Swal.fire({
-//             position: 'top-end',
-//             icon: 'success',
-//             title: result,
-//             showConfirmButton: false,
-//             timer: 1500
-//         })
-//     }
-//
-// }
+
 
 
 

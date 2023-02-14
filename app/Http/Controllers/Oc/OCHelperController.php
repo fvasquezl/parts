@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Oc;
 
 use App\Http\Controllers\Controller;
+use App\Models\OCData;
 use App\Models\OCManufacturer;
 use App\Models\Tv;
 use http\Env\Response;
@@ -44,7 +45,7 @@ class OCHelperController extends Controller
     }
 
 
-    public function getOCPartNumbers(Request $request)
+    public function getOCPartNumbers(Request $request): \Illuminate\Http\JsonResponse
     {
         $brand = $request->data['brand'];
         $model =$request->data['model'];
@@ -55,10 +56,10 @@ class OCHelperController extends Controller
         return response()->json($data);
     }
 
-    public function getManufacturer(Request $request)
+    public function getManufacturer(Request $request): \Illuminate\Http\JsonResponse
     {
         $partNumber = (int) $request->data['$partNumberSelected'];
-        $manufacturer = OCManufacturer::select('manufacturer')->where('id', $partNumber)->first();
+        $manufacturer = OCData::select('OC_Manufacturer')->where('id',$partNumber)->first();
         return response()->json($manufacturer);
     }
 }

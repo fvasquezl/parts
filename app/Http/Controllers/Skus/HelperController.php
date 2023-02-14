@@ -154,7 +154,7 @@ class HelperController extends Controller
     public function kitUpdate(Request $request): bool|JsonResponse
     {
         if ($request->ajax()) {
-            return \DB::select("EXEC [prt].[sp_UpdateKitSKU] '{$request->kit}','{$request->sku}'");
+            return \DB::scalar("EXEC [prt].[sp_UpdateKitSKU] '{$request->kit}','{$request->sku}'");
         }
         return false;
     }

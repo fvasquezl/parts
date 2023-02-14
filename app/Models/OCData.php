@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class OCData extends Model
 {
     use HasFactory;
@@ -16,4 +17,9 @@ class OCData extends Model
     protected $dates = [
         'created_at'
     ];
+
+    public function oc_manufacturers(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OCManufacturer::class, 'oc_manufacturer_id','id');
+    }
 }

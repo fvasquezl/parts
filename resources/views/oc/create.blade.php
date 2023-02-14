@@ -135,7 +135,7 @@
                 <div class="card shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <h3 class="card-title mt-1 days">
-                            {{ __('Open Cell Data')}}
+                            {{ __('Accessories Data')}}
                         </h3>
                     </div>
 
@@ -249,7 +249,7 @@
         $('#partNumber').select2({
             theme: 'bootstrap4',
         }).on("change",function (){
-            getMITSKUFromPartNumber($(this).val());
+            getManufacturerFromPartNumber($(this).val());
         })
 
         $('#mitSku').select2({

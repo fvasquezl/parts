@@ -13,4 +13,10 @@ class OCManufacturer extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+
+    public function oc_data(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OCData::class, 'id','oc_manufacturer_id');
+    }
+
 }

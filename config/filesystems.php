@@ -60,7 +60,7 @@ return [
             'host' => env('SFTP_HOST'),
             'username' => env('SFTP_USERNAME'),
             'password' => env('SFTP_PASSWORD'),
-            'root' => '/mnt/tv_parts/assemblyGuides/',
+            'root' => '/part-storage/',
             'directoryPerm' => 0775
         ],
     ],
