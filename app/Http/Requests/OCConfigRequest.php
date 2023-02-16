@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\OCConfig;
-use App\Models\Tv;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+
 
 class OCConfigRequest extends FormRequest
 {
@@ -29,18 +28,26 @@ class OCConfigRequest extends FormRequest
         $rules = [
             "brand" => "required",
             "model" => "required",
-            "partNumber" => "required",
+//            "partNumber" => ["required",Rule::unique('sqlsrv.oc.OC_Config', 'oc_id')],
+            "partNumber" => ['required'],
             "mitSku" => "required",
             "instructions" => "sometimes"
         ];
 
         if($this->hasFile('assemblyGuide'))
         {
-            $rules["assemblyGuide"] ="required|file|mimetypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel";
+            $rules["assemblyGuide"] ="required|file|mimetypes:application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword";
 
         }
 
         return $rules;
 
+    }
+
+    public function messages()
+    {
+        return [
+            'assemblyGuide.mimetypes' => 'The file must be of type Word.'
+        ];
     }
 }

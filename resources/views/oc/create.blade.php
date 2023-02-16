@@ -45,6 +45,9 @@
                                                     {{ $brand->brand }}</option>
                                             @endforeach
                                     </select>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -54,6 +57,9 @@
                                             class=" form-control modelSelect2">
                                         <option value="">Model</option>
                                     </select>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
 
@@ -79,6 +85,9 @@
                                             class=" form-control">
                                         <option value="">PartNumber</option>
                                     </select>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
 
@@ -87,6 +96,9 @@
                                 <div class="col-sm-10">
                                     <input type="text" name="manufacturer" class="form-control" id="manufacturer" placeholder="Manufacturer" readonly>
                                 </div>
+                                <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                             </div>
 
                             <div class="form-group row">
@@ -101,6 +113,9 @@
                                                     {{ $mitsku->ProductSKU }}</option>
                                             @endforeach
                                     </select>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
 
@@ -115,15 +130,18 @@
                                 <label for="assemblyGuide" class="col-sm-2 col-form-label">Assembly Guide</label>
                                 <div class="col-sm-10">
                                     <div class="custom-file">
-                                        <input type="file"  class="custom-file-input" id="assemblyGuide" aria-describedby="assemblyGuide">
+                                        <input type="file" name="assemblyGuide" class="custom-file-input" id="assemblyGuide" aria-describedby="assemblyGuide">
                                         <label class="custom-file-label" for="assemblyGuide">Select file</label>
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong></strong>
+                                    </span>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
 {{--                                <input type = "button" onclick = "clearForm(0)" value = "Reset" >--}}
-                                <button type="submit" class="btn btn-primary mb-4 btn-block">Submit</button>
+                                <button type="submit" id="btnOCConfig" class="btn btn-primary mb-4 btn-block">Submit</button>
                             </div>
 
                         </form>
@@ -141,6 +159,7 @@
 
                     <div class="card-body">
                         <div>
+                            <button type="button" id="btnOCAccessories" class="btn btn-primary mb-4" disabled>Add Accessories</button>
                             <table class="table table-striped table-hover table-bordered nowrap" id="componentsTable">
                                 <thead>
                                 <tr>

@@ -18,22 +18,36 @@ async function manageData(url, method, item) {
     }
 }
 
-
-displayErrors = (err) => {
-     let errors = ""
-    Object.keys(err).forEach(key=>{
-        errors += `${key}:${err[key][0]}<br>`
-    })
-
-    Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: 'Oops...',
-        html: errors,
-        showConfirmButton: false,
-        timer: 2000
+clearErrors=(myform)=>{
+    const form = document.getElementById(myform);
+    const formElements = Array.from(form.elements);
+    formElements.forEach(element => {
+        if(element.classList.contains('is-invalid')){
+            element.classList.remove('is-invalid')
+        }
     })
 }
+
+displayErrors = (err, myform) => {
+    const form = document.getElementById(myform);
+    const formElements = Array.from(form.elements);
+    formElements.forEach(element => {
+        let name = element.getAttribute("name")
+        // if(element.classList.contains('is-invalid')){
+        //     element.classList.remove('is-invalid')
+        // }
+        if(name in err){
+            element.classList.add('is-invalid')
+            const div= element.parentNode.closest('div')
+            if (div.children.length === 2){
+                div.children[1].firstElementChild.innerHTML=err[name][0]
+            }else{
+                div.children[2].firstElementChild.innerHTML=err[name][0]
+            }
+        }
+    });
+}
+
 displayMsg=(msg) =>{
     Swal.fire({
         position: 'top-end',
@@ -61,8 +75,6 @@ clearForm = (input) => {
     selectedFile.value = ""
     selectedFile.nextElementSibling.innerText = ""
     selectedFile.nextElementSibling.innerText = "Select a file"
-
-
 }
 
 
@@ -124,10 +136,16 @@ $('#accForm').on('submit', (e) => {
     });
     request.done(function (msg) {
         console.log(msg)
+        clearErrors('accForm')
         displayMsg(msg)
+
+        $('#btnOCAccessories').prop('disabled', false);
+        $('#btnOCConfig').prop('disabled', true);
+
     });
     request.fail(function (jqXHR, textStatus) {
-         displayErrors(jqXHR.responseJSON.errors)
+         clearErrors('accForm')
+         displayErrors(jqXHR.responseJSON.errors, 'accForm')
     });
 })
 
