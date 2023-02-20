@@ -28,8 +28,8 @@ clearErrors=(myform)=>{
     })
 }
 
-displayErrors = (err, myform) => {
-    const form = document.getElementById(myform);
+displayErrors = (err, myForm) => {
+    const form = document.getElementById(myForm);
     const formElements = Array.from(form.elements);
     formElements.forEach(element => {
         let name = element.getAttribute("name")
@@ -118,6 +118,14 @@ async function getManufacturerFromPartNumber(element) {
     clearForm(3)
 }
 
+disableFormElements = (myForm) => {
+    const form = document.getElementById(myForm);
+    const formElements = Array.from(form.elements);
+    formElements.forEach(element => {
+      element.disabled = true
+    });
+}
+
 
 $('#accForm').on('submit', (e) => {
     e.preventDefault();
@@ -135,12 +143,19 @@ $('#accForm').on('submit', (e) => {
         contentType: false
     });
     request.done(function (msg) {
-        console.log(msg)
-        clearErrors('accForm')
-        displayMsg(msg)
 
+        OcConfigId = msg.data.accessory_id
+        clearErrors('accForm')
+
+
+        disableFormElements('accForm')
+
+
+        displayMsg(msg.message)
+        $('#idOCConfig').val(OcConfigId)
         $('#btnOCAccessories').prop('disabled', false);
         $('#btnOCConfig').prop('disabled', true);
+
 
     });
     request.fail(function (jqXHR, textStatus) {
@@ -150,6 +165,60 @@ $('#accForm').on('submit', (e) => {
 })
 
 
+
+
+///////////////////////
+
+
+
+async function getMPartName() {
+    const partNames = await manageData('/oc/getAPartName', 'POST', 'notting')
+    let parModelOptions = `<option value="">PartName</option>`;
+    document.getElementById('aPartName').innerHTML = ""
+    partNames.forEach((e) => {
+        parModelOptions += `<option value="${e.PartName}">${e.PartName}</option>`
+    })
+    document.getElementById('aPartName').innerHTML = parModelOptions
+}
+
+async function getMitSKUFromPartName(partName) {
+
+    const mitSkus = await manageData('/oc/getAMitSKu', 'POST', partName)
+
+    let mitSkuOptions = `<option value="">MITSKU</option>`;
+    document.getElementById('aMitSKU').innerHTML = ""
+    mitSkus.forEach((e) => {
+        mitSkuOptions += `<option value="${e.MITSKU}">${e.ProductSKU}</option>`
+    })
+    document.getElementById('aMitSKU').innerHTML = mitSkuOptions
+}
+
+
+$('#accDataForm').on('submit', (e) => {
+    e.preventDefault();
+    let fd = new FormData(e.target);
+
+    let request = $.ajax({
+        url: "/oc/accessories/store",
+        method: 'post',
+        data: fd,
+        dataType: "json",
+        processData: false,
+        contentType: false
+    });
+
+    request.done(function (msg) {
+        clearErrors('accDataForm')
+        displayMsg(msg.message)
+        $('#ocAccModal').modal('hide')
+        $OCAccessoriesTable.ajax.reload()
+    });
+    request.fail(function (jqXHR, textStatus) {
+
+        clearErrors('accDataForm')
+        displayErrors(jqXHR.responseJSON.errors, 'accDataForm')
+    });
+})
 
 
 

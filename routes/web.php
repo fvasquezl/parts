@@ -12,6 +12,7 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
+use App\Http\Controllers\Oc\OCAccessoriesController;
 use App\Http\Controllers\Oc\OcDataController;
 use App\Http\Controllers\Oc\OCHelperController;
 use App\Http\Controllers\PartReferenceController;
@@ -133,6 +134,13 @@ Route::middleware('auth')
         Route::get('/oc/getOCList',[OCHelperController::class,'getOCList'])->name('oc.getOCList');
         Route::post('/oc/getOCPartNumbers',[OCHelperController::class,'getOCPartNumbers'])->name('oc.getOCPartNumbers');
         Route::post('/oc/getManufacturer',[OCHelperController::class,'getManufacturer'])->name('oc.getManufacturer');
+
+        Route::get('/oc/accessories',[OCAccessoriesController::class,'index'])->name('oc.accessories');
+        Route::post('/oc/accessories/store',[OCAccessoriesController::class,'store'])->name('oc.accessories.store');
+
+        Route::post('/oc/getAPartName',[OCHelperController::class,'getAPartName'])->name('oc.getAPartName');
+        Route::post('/oc/getAMitSKu',[OCHelperController::class,'getAMitSKu'])->name('oc.getAMitSKu');
+
     });
 
 

@@ -49,7 +49,7 @@ class OcDataController extends Controller
         Debugbar::info($request->all());
 
         $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
-        $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}'");
+        $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
 
 
         if ($request->file('assemblyGuide')) {
@@ -63,8 +63,13 @@ class OcDataController extends Controller
             $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
             $occonfig->update();
         }
-
-        return response()->json('The OcConfig has been saved successfully', 200);
+        return response()->json([
+                'status' => 200,
+                'message' => 'The OcConfig has been saved successfully',
+                'data' => [
+                    'accessory_id' => $rowInserted
+                ]
+            ]);
 
     }
 }

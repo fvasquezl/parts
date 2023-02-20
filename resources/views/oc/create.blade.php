@@ -28,6 +28,9 @@
                         <h3 class="card-title mt-1 days">
                             {{ __('Open Cell Configuration')}}
                         </h3>
+                        <div class="card-tools">
+                            <button class="btn btn-warning" id="resetAndContinue">Reset and Continue</button>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -140,7 +143,6 @@
                             </div>
 
                             <div>
-{{--                                <input type = "button" onclick = "clearForm(0)" value = "Reset" >--}}
                                 <button type="submit" id="btnOCConfig" class="btn btn-primary mb-4 btn-block">Submit</button>
                             </div>
 
@@ -155,12 +157,22 @@
                         <h3 class="card-title mt-1 days">
                             {{ __('Accessories Data')}}
                         </h3>
+                        <div class="card-tools">
+                            <div class="row">
+                                <div class="col mt-2 text-right">
+                                    <h5>Id Conf:</h5>
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="form-control" name="idOCConfig" id="idOCConfig" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card-body">
                         <div>
                             <button type="button" id="btnOCAccessories" class="btn btn-primary mb-4" disabled>Add Accessories</button>
-                            <table class="table table-striped table-hover table-bordered nowrap" id="componentsTable">
+                            <table class="table table-striped table-hover table-bordered nowrap" id="OCAccessoriesTable">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -177,7 +189,7 @@
             </div>
         </div>
     </div>
-
+    @include('oc.shared.OCAccessoriesModal')
 @endsection
 
 
@@ -201,7 +213,9 @@
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let $openCells
+        let $OCAccessoriesTable
         let $componentsTable
+        let OcConfigId
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -209,15 +223,12 @@
             "X-CSRF-TOKEN": token
         }
 
-
-
         $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             $openCells = $('#openCells').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
@@ -227,7 +238,7 @@
                 ],
                 processing: true,
                 serverSide: true,
-                scrollY: "53vh",
+                scrollY: "20vh",
                 // scrollX: true,
                 scrollCollapse: true,
                 stateSave: true,
@@ -254,7 +265,42 @@
                 ]
 
             })
+            $OCAccessoriesTable = $('#OCAccessoriesTable').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 100,
+                lengthMenu: [
+                    [100,500, -1],
+                    [100,500,'All']
+                ],
+                processing: true,
+                serverSide: true,
+                scrollY: "53vh",
+                // scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
+                dom: 'rt',
+                ajax: {
+                    url: "/oc/accessories",
+                    data: function (d) {
+                        d.OcConfigId= OcConfigId;
+                    },
+                },
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'part_name', name: 'part_name'},
+                    {data: 'MITSKU', name: 'MITSKU'},
+                    {data: 'qty_required', name: 'qty_required'},
+                    {data: 'Notes', name: 'Notes'},
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        searchable: true,
+                        // visible: false,
+                    },
+                ]
 
+            })
         });
 
 
@@ -277,6 +323,26 @@
             clearForm(4)
         })
 
+        let $mitSKU= $('#aMitSKU')
+
+        $(document).on('click', '#btnOCAccessories', function (e) {
+            $('#ocAccModal')
+                .on('shown.bs.modal', function () {
+                    $('#ocId').val(OcConfigId)
+                    getMPartName()
+                    $mitSKU.select2({theme: 'bootstrap4'})
+                }).on('hidden.bs.modal', function () {
+                 $mitSKU.html('<option value="">MITSKU</option>')
+                $('#accDataForm').trigger("reset");
+            }).modal('show');
+        })
+
+        $('#aPartName').on("change", function(e) {
+            getMitSKUFromPartName($(this).val());
+        });
+
+
+
     </script>
 
     <script>
@@ -284,6 +350,10 @@
             let name = document.getElementById("assemblyGuide").files[0].name;
             let nextSibling = e.target.nextElementSibling
             nextSibling.innerText = name
+        })
+
+        document.getElementById('resetAndContinue').addEventListener('click',(e)=>{
+            window.location.reload();
         })
     </script>
 
