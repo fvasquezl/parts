@@ -128,7 +128,7 @@ Route::middleware('auth')
         Route::get('/oc',[OCDataController::class,'index'])->name('oc.index');
         Route::get('/oc/create',[OCDataController::class,'create'])->name('oc.create');
         Route::post('/oc/store',[OCDataController::class,'store'])->name('oc.store');
-        Route::get('/oc/show/{OCConfig}',[OCDataController::class,'show'])->name('oc.show');
+        Route::get('/oc/show/{id}',[OCDataController::class,'show'])->name('oc.show');
 
 
         Route::post('/oc/getModels',[OCHelperController::class,'getTvModels'])->name('oc.getTvModels');

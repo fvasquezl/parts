@@ -2,12 +2,10 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h4>Open Cell Configration</h4>
+    <h4>Open Cell Configration: {{$ocConfig["id"]}}</h4>
 @stop
 
 @section('content')
-
-    {{$OCConfig}}
     <div class="container-fluid">
         @if (session('status'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -37,7 +35,7 @@
                             <div class="form-group row">
                                 <label for="brand" class="col-sm-2 col-form-label">Brand</label>
                                 <div class="col-sm-10">
-                                    <input name="brand" class="form-control" id="brand"/>
+                                    <input name="brand" class="form-control" id="brand" value="{{$ocConfig["Brand"]}}"/>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -46,7 +44,7 @@
                             <div class="form-group row">
                                 <label for="model" class="col-sm-2 col-form-label">Model</label>
                                 <div class="col-sm-10">
-                                    <input name="model" class="form-control" id="model"/>
+                                    <input name="model" class="form-control" id="model" value="{{$ocConfig["Model"]}}" />
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -59,26 +57,26 @@
                             <div class="form-group row">
                                 <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
                                 <div class="col-sm-10">
-                                    <input name="manufacturer" class="form-control" id="manufacturer"/>
+                                    <input name="manufacturer" class="form-control" id="manufacturer" value="{{$ocConfig["OC_Manufacturer"]}}" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="partNumber" class="col-sm-2 col-form-label">Part Number</label>
                                 <div class="col-sm-10">
-                                    <input name="partNumber" class="form-control" id="partNumber"/>
+                                    <input name="partNumber" class="form-control" id="partNumber" value="{{$ocConfig["OC_PartNumber"]}}"/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="MITSKU" class="col-sm-2 col-form-label">MITSKU</label>
                                 <div class="col-sm-10">
-                                    <input name="MITSKU" class="form-control" id="MITSKU"/>
+                                    <input name="MITSKU" class="form-control" id="MITSKU" value="{{$ocConfig["OC_MITSKU"]}}"/>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="QOH" class="col-sm-2 col-form-label">QOH</label>
                                 <div class="col-sm-10">
-                                    <input name="QOH" class="form-control" id="QOH"/>
+                                    <input name="QOH" class="form-control" id="QOH" value="{{$ocConfig["Qty"]}}"/>
                                 </div>
                             </div>
 
@@ -88,14 +86,14 @@
                             <div class="form-group row">
                                 <label for="instructions" class="col-sm-2 col-form-label">Instructions</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="instructions" id="instructions" rows="3"></textarea>
+                                    <textarea class="form-control" name="instructions" id="instructions" rows="3">{{$ocConfig["notes"]}}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="instructions" class="col-sm-2 col-form-label">Assembly Guide</label>
-                                <div class="col-sm-10">
-                                    <input name="instructions" class="form-control" id="instructions"/>
+                                <div class="col-sm-10 mt-2">
+                                    <a href="{{$ocConfig["attachments"]}}">{{$ocConfig["attachments"]}}</a>
                                 </div>
                             </div>
                         </form>
@@ -125,6 +123,18 @@
                                     <th>QOH</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                @foreach ($ocAccessories as $accessory)
+                                    <tr>
+                                        <td>{{ $accessory->id }}</td>
+                                        <td>{{ $accessory->part_name }}</td>
+                                        <td>{{ $accessory->MITSKU }}</td>
+                                        <td>{{ $accessory->qty_required }}</td>
+                                        <td>{{ $accessory->Notes }}</td>
+                                        <td>{{ $accessory->QOH }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -153,151 +163,22 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('js/OCCreate.js')}}"></script>
 
-{{--    <script>--}}
-{{--        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');--}}
-{{--        let $openCells--}}
-{{--        let $OCAccessoriesTable--}}
-{{--        let $componentsTable--}}
-{{--        let OcConfigId--}}
-{{--        let headers = {--}}
-{{--            "Content-Type": "application/json",--}}
-{{--            "Accept": "application/json, text-plain, */*",--}}
-{{--            "X-Requested-With": "XMLHttpRequest",--}}
-{{--            "X-CSRF-TOKEN": token--}}
-{{--        }--}}
+    <script>
 
-{{--        $(document).ready(function () {--}}
-{{--            $.ajaxSetup({--}}
-{{--                headers: {--}}
-{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--                }--}}
-{{--            });--}}
-{{--            $openCells = $('#openCells').DataTable({--}}
-{{--                order: [[0, 'desc']],--}}
-{{--                pageLength: 100,--}}
-{{--                lengthMenu: [--}}
-{{--                    [100,500, -1],--}}
-{{--                    [100,500,'All']--}}
-{{--                ],--}}
-{{--                processing: true,--}}
-{{--                serverSide: true,--}}
-{{--                scrollY: "20vh",--}}
-{{--                // scrollX: true,--}}
-{{--                scrollCollapse: true,--}}
-{{--                stateSave: true,--}}
-{{--                dom: 'rt',--}}
-{{--                ajax: {--}}
-{{--                    url: "/oc/getOCList",--}}
-{{--                    data: function (d) {--}}
-{{--                        d.brand = $('select[name=brand]').val();--}}
-{{--                        d.model = $('select[name=model]').val();--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                columns: [--}}
-{{--                    {data: 'id', name: 'id'},--}}
-{{--                    {data: 'OC_Manufacturer', name: 'OC_Manufacturer'},--}}
-{{--                    {data: 'OC_PartNumber', name: 'OC_PartNumber'},--}}
-{{--                    {data: 'OC_MITSKU', name: 'OC_MITSKU'},--}}
-{{--                ],--}}
-{{--                columnDefs: [--}}
-{{--                    {--}}
-{{--                        targets: [0],--}}
-{{--                        searchable: true,--}}
-{{--                        // visible: false,--}}
-{{--                    },--}}
-{{--                ]--}}
+        let $OCAccessoriesTable
 
-{{--            })--}}
-{{--            $OCAccessoriesTable = $('#OCAccessoriesTable').DataTable({--}}
-{{--                order: [[0, 'desc']],--}}
-{{--                pageLength: 100,--}}
-{{--                lengthMenu: [--}}
-{{--                    [100,500, -1],--}}
-{{--                    [100,500,'All']--}}
-{{--                ],--}}
-{{--                processing: true,--}}
-{{--                serverSide: true,--}}
-{{--                scrollY: "53vh",--}}
-{{--                // scrollX: true,--}}
-{{--                scrollCollapse: true,--}}
-{{--                stateSave: true,--}}
-{{--                dom: 'rt',--}}
-{{--                ajax: {--}}
-{{--                    url: "/oc/accessories",--}}
-{{--                    data: function (d) {--}}
-{{--                        d.OcConfigId= OcConfigId;--}}
-{{--                    },--}}
-{{--                },--}}
-{{--                columns: [--}}
-{{--                    {data: 'id', name: 'id'},--}}
-{{--                    {data: 'part_name', name: 'part_name'},--}}
-{{--                    {data: 'MITSKU', name: 'MITSKU'},--}}
-{{--                    {data: 'qty_required', name: 'qty_required'},--}}
-{{--                    {data: 'Notes', name: 'Notes'},--}}
-{{--                ],--}}
-{{--                columnDefs: [--}}
-{{--                    {--}}
-{{--                        targets: [0],--}}
-{{--                        searchable: true,--}}
-{{--                        // visible: false,--}}
-{{--                    },--}}
-{{--                ]--}}
+        $(document).ready(function () {
+            $OCAccessoriesTable = $('#OCAccessoriesTable').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 100,
+                processing: true,
+                scrollY: "53vh",
+                // scrollX: true,
+                scrollCollapse: true,
+                stateSave: true,
+            })
+        });
 
-{{--            })--}}
-{{--        });--}}
-
-
-{{--        $('#model').select2({--}}
-{{--            theme: 'bootstrap4',--}}
-{{--        }).on("change", function() {--}}
-{{--            $openCells.ajax.reload()--}}
-{{--            getPNFromModel($(this).val());--}}
-{{--        });--}}
-
-{{--        $('#partNumber').select2({--}}
-{{--            theme: 'bootstrap4',--}}
-{{--        }).on("change",function (){--}}
-{{--            getManufacturerFromPartNumber($(this).val());--}}
-{{--        })--}}
-
-{{--        $('#mitSku').select2({--}}
-{{--            theme: 'bootstrap4',--}}
-{{--        }).on("change",function (){--}}
-{{--            clearForm(4)--}}
-{{--        })--}}
-
-{{--        let $mitSKU= $('#aMitSKU')--}}
-
-{{--        $(document).on('click', '#btnOCAccessories', function (e) {--}}
-{{--            $('#ocAccModal')--}}
-{{--                .on('shown.bs.modal', function () {--}}
-{{--                    $('#ocId').val(OcConfigId)--}}
-{{--                    getMPartName()--}}
-{{--                    $mitSKU.select2({theme: 'bootstrap4'})--}}
-{{--                }).on('hidden.bs.modal', function () {--}}
-{{--                $mitSKU.html('<option value="">MITSKU</option>')--}}
-{{--                $('#accDataForm').trigger("reset");--}}
-{{--            }).modal('show');--}}
-{{--        })--}}
-
-{{--        $('#aPartName').on("change", function(e) {--}}
-{{--            getMitSKUFromPartName($(this).val());--}}
-{{--        });--}}
-
-
-
-{{--    </script>--}}
-
-{{--    <script>--}}
-{{--        document.querySelector('.custom-file-input').addEventListener('change', function (e) {--}}
-{{--            let name = document.getElementById("assemblyGuide").files[0].name;--}}
-{{--            let nextSibling = e.target.nextElementSibling--}}
-{{--            nextSibling.innerText = name--}}
-{{--        })--}}
-
-{{--        document.getElementById('resetAndContinue').addEventListener('click',(e)=>{--}}
-{{--            window.location.reload();--}}
-{{--        })--}}
-{{--    </script>--}}
+    </script>
 
 @stop

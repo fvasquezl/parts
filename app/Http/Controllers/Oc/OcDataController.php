@@ -21,15 +21,10 @@ class OcDataController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
-//                ->editColumn('ConfigOCs', function ($config) {
-//                    return $config->ConfigOCs;
-//                })
-
                 ->addColumn('actions', function () {
                     return '<div class="btn-group btn-group-sm">
                             <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a></div>';
                 })
-
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
                     return $data->tv_id;
@@ -41,8 +36,22 @@ class OcDataController extends Controller
     }
 
 
-    public function show(OCConfig $OCConfig){
-        return view("oc.show",compact('OCConfig'));
+    public function show($id){
+        $ocConfig = \DB::select(
+            DB::raw("SELECT *FROM [oc].[fn_GetOCConfiguredList] ('{$id}')")
+        )[0];
+
+        $ocAccessories = DB::select(
+            DB::raw("SELECT *FROM [oc].[fn_GetOCAccessoriesList] ('{$id}')")
+        );
+
+        $ocConfig = collect($ocConfig);
+
+        $ocAccessories = collect($ocAccessories)->map(function ($v) {
+            return (object) $v;
+        });
+
+        return view("oc.show",compact('ocConfig','ocAccessories'));
     }
 
 
