@@ -8,9 +8,6 @@ use App\Models\OCConfig;
 use App\Models\OCConfigList;
 use App\Models\Tv;
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +21,15 @@ class OcDataController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
+//                ->editColumn('ConfigOCs', function ($config) {
+//                    return $config->ConfigOCs;
+//                })
+
                 ->addColumn('actions', function () {
                     return '<div class="btn-group btn-group-sm">
                             <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a></div>';
                 })
+
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
                     return $data->tv_id;
@@ -40,7 +42,7 @@ class OcDataController extends Controller
 
 
     public function show(OCConfig $OCConfig){
-        return view("oc.show");
+        return view("oc.show",compact('OCConfig'));
     }
 
 

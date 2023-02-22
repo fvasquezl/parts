@@ -202,6 +202,12 @@
                         targets: [3],
                         className: "text-center",
                     },
+                    {
+                        targets: [4],
+                        render: function ( data, type, full ) {
+                            return $("<div/>").html(data).text();
+                        }
+                    },
                 ],
 
             });
