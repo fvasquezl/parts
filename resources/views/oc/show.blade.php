@@ -107,13 +107,7 @@
                         <h3 class="card-title mt-1 days">
                             {{ __('Assembly Components')}}
                         </h3>
-                        <div class="card-tools">
-                            <div class="row">
-                                <div class="col mt-2 text-right">
-                                    <h5>Id Conf:</h5>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
 
                     <div class="card-body">
