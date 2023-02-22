@@ -8,6 +8,9 @@ use App\Models\OCConfig;
 use App\Models\OCConfigList;
 use App\Models\Tv;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -34,6 +37,13 @@ class OcDataController extends Controller
 
         return view('oc.index');
     }
+
+
+    public function show(OCConfig $OCConfig){
+        return view("oc.show");
+    }
+
+
 
     public function create()
     {
