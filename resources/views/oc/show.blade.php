@@ -35,7 +35,7 @@
                             <div class="form-group row">
                                 <label for="brand" class="col-sm-2 col-form-label">Brand</label>
                                 <div class="col-sm-10">
-                                    <input name="brand" class="form-control" id="brand" value="{{$ocConfig["Brand"]}}"/>
+                                    <input name="brand" class="form-control" id="brand" value="{{$ocConfig["Brand"]}}" readonly/>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -44,7 +44,7 @@
                             <div class="form-group row">
                                 <label for="model" class="col-sm-2 col-form-label">Model</label>
                                 <div class="col-sm-10">
-                                    <input name="model" class="form-control" id="model" value="{{$ocConfig["Model"]}}" />
+                                    <input name="model" class="form-control" id="model" value="{{$ocConfig["Model"]}}" readonly/>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -57,26 +57,26 @@
                             <div class="form-group row">
                                 <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
                                 <div class="col-sm-10">
-                                    <input name="manufacturer" class="form-control" id="manufacturer" value="{{$ocConfig["OC_Manufacturer"]}}" />
+                                    <input name="manufacturer" class="form-control" id="manufacturer" value="{{$ocConfig["OC_Manufacturer"]}}" readonly/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="partNumber" class="col-sm-2 col-form-label">Part Number</label>
                                 <div class="col-sm-10">
-                                    <input name="partNumber" class="form-control" id="partNumber" value="{{$ocConfig["OC_PartNumber"]}}"/>
+                                    <input name="partNumber" class="form-control" id="partNumber" value="{{$ocConfig["OC_PartNumber"]}}" readonly/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="MITSKU" class="col-sm-2 col-form-label">MITSKU</label>
                                 <div class="col-sm-10">
-                                    <input name="MITSKU" class="form-control" id="MITSKU" value="{{$ocConfig["OC_MITSKU"]}}"/>
+                                    <input name="MITSKU" class="form-control" id="MITSKU" value="{{$ocConfig["OC_MITSKU"]}}" readonly/>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="QOH" class="col-sm-2 col-form-label">QOH</label>
                                 <div class="col-sm-10">
-                                    <input name="QOH" class="form-control" id="QOH" value="{{$ocConfig["Qty"]}}"/>
+                                    <input name="QOH" class="form-control" id="QOH" value="{{$ocConfig["Qty"]}}" readonly/>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
                             <div class="form-group row">
                                 <label for="instructions" class="col-sm-2 col-form-label">Instructions</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="instructions" id="instructions" rows="3">{{$ocConfig["notes"]}}</textarea>
+                                    <textarea class="form-control" name="instructions" id="instructions" rows="3" readonly>{{$ocConfig["notes"]}}</textarea>
                                 </div>
                             </div>
 
