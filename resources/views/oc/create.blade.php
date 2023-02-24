@@ -42,11 +42,11 @@
                                     <select name="brand" aria-label="select brand" id="brand"
                                             class="form-control">
                                         <option value="">Brand</option>
-                                            @foreach ($brands as $brand)
-                                                <option value="{{ $brand->brand }}"
-                                                    {{ old('brand') ? 'selected':''}}>
-                                                    {{ $brand->brand }}</option>
-                                            @endforeach
+                                        @foreach ($brands as $brand)
+                                            <option value="{{ $brand->brand }}"
+                                                {{ old('brand') ? 'selected':''}}>
+                                                {{ $brand->brand }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -66,18 +66,18 @@
                                 </div>
                             </div>
 
-                           <hr/>
+                            <hr/>
 
-                        <table class="table table-striped table-hover table-bordered nowrap" id="openCells">
-                            <thead>
-                            <tr>
-                                <th>CompatibleID</th>
-                                <th>Manufacturer</th>
-                                <th>Part Number</th>
-                                <th>MITSKU</th>
-                            </tr>
-                            </thead>
-                        </table>
+                            <table class="table table-striped table-hover table-bordered nowrap" id="openCells">
+                                <thead>
+                                <tr>
+                                    <th>CompatibleID</th>
+                                    <th>Manufacturer</th>
+                                    <th>Part Number</th>
+                                    <th>MITSKU</th>
+                                </tr>
+                                </thead>
+                            </table>
 
                             <hr/>
 
@@ -97,7 +97,8 @@
                             <div class="form-group row">
                                 <label for="manufacturer" class="col-sm-2 col-form-label">Manufacturer</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="manufacturer" class="form-control" id="manufacturer" placeholder="Manufacturer" readonly>
+                                    <input type="text" name="manufacturer" class="form-control" id="manufacturer"
+                                           placeholder="Manufacturer" readonly>
                                 </div>
                                 <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -110,11 +111,11 @@
                                     <select name="mitSku" aria-label="select model" id="mitSku"
                                             class=" form-control ">
                                         <option value="">MITSKU</option>
-                                            @foreach ($mitSkus as $mitsku)
-                                                <option value="{{ $mitsku->MITSKU }}"
-                                                    {{ old('ProductSKU') ? 'selected':''}}>
-                                                    {{ $mitsku->ProductSKU }}</option>
-                                            @endforeach
+                                        @foreach ($mitSkus as $mitsku)
+                                            <option value="{{ $mitsku->MITSKU }}"
+                                                {{ old('ProductSKU') ? 'selected':''}}>
+                                                {{ $mitsku->ProductSKU }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -125,7 +126,8 @@
                             <div class="form-group row">
                                 <label for="instructions" class="col-sm-2 col-form-label">Instructions</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="instructions" id="instructions" rows="3"></textarea>
+                                    <textarea class="form-control" name="instructions" id="instructions"
+                                              rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -133,7 +135,8 @@
                                 <label for="assemblyGuide" class="col-sm-2 col-form-label">Assembly Guide</label>
                                 <div class="col-sm-10">
                                     <div class="custom-file">
-                                        <input type="file" name="assemblyGuide" class="custom-file-input" id="assemblyGuide" aria-describedby="assemblyGuide">
+                                        <input type="file" name="assemblyGuide" class="custom-file-input"
+                                               id="assemblyGuide" aria-describedby="assemblyGuide">
                                         <label class="custom-file-label" for="assemblyGuide">Select file</label>
                                         <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -143,7 +146,8 @@
                             </div>
 
                             <div>
-                                <button type="submit" id="btnOCConfig" class="btn btn-primary mb-4 btn-block">Submit</button>
+                                <button type="submit" id="btnOCConfig" class="btn btn-primary mb-4 btn-block">Submit
+                                </button>
                             </div>
 
                         </form>
@@ -163,7 +167,8 @@
                                     <h5>Id Conf:</h5>
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control" name="idOCConfig" id="idOCConfig" readonly>
+                                    <input type="number" class="form-control" name="idOCConfig" id="idOCConfig"
+                                           readonly>
                                 </div>
                             </div>
                         </div>
@@ -171,8 +176,11 @@
 
                     <div class="card-body">
                         <div>
-                            <button type="button" id="btnOCAccessories" class="btn btn-primary mb-4" disabled>Add Accessories</button>
-                            <table class="table table-striped table-hover table-bordered nowrap" id="OCAccessoriesTable">
+                            <button type="button" id="btnOCAccessories" class="btn btn-primary mb-4" disabled>Add
+                                Accessories
+                            </button>
+                            <table class="table table-striped table-hover table-bordered nowrap"
+                                   id="OCAccessoriesTable">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -197,8 +205,9 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
 
 @stop
 
@@ -233,8 +242,8 @@
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
-                    [100,500, -1],
-                    [100,500,'All']
+                    [100, 500, -1],
+                    [100, 500, 'All']
                 ],
                 processing: true,
                 serverSide: true,
@@ -269,8 +278,8 @@
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
-                    [100,500, -1],
-                    [100,500,'All']
+                    [100, 500, -1],
+                    [100, 500, 'All']
                 ],
                 processing: true,
                 serverSide: true,
@@ -282,7 +291,7 @@
                 ajax: {
                     url: "/oc/accessories",
                     data: function (d) {
-                        d.OcConfigId= OcConfigId;
+                        d.OcConfigId = OcConfigId;
                     },
                 },
                 columns: [
@@ -304,45 +313,90 @@
         });
 
 
+        $('#brand').select2({
+            theme: 'bootstrap4',
+        }).on("change", function () {
+            getModelFromBrand($(this).val());
+        }).on('select2:select', function () {
+            $('#model').focus()
+        }).focus()
+
         $('#model').select2({
             theme: 'bootstrap4',
-        }).on("change", function() {
+        }).on("change", function () {
             $openCells.ajax.reload()
             getPNFromModel($(this).val());
-        });
+        }).on('select2:select', function () {
+            $('#partNumber').focus()
+        })
 
         $('#partNumber').select2({
             theme: 'bootstrap4',
-        }).on("change",function (){
+        }).on("change", function () {
             getManufacturerFromPartNumber($(this).val());
+        }).on('select2:select', function () {
+            $('#mitSku').focus()
         })
 
         $('#mitSku').select2({
             theme: 'bootstrap4',
-        }).on("change",function (){
+        }).on("change", function () {
             clearForm(4)
+        }).on('select2:select', function () {
+            $('#instructions').focus()
         })
 
-        let $mitSKU= $('#aMitSKU')
+        let $mitSKU = $('#aMitSKU')
+        let $aPartName= $('#aPartName')
+        let $aQtyRequired = $("#aQtyRequired")
+        let $aNotes = $("#aNotes")
 
         $(document).on('click', '#btnOCAccessories', function (e) {
             $('#ocAccModal')
                 .on('shown.bs.modal', function () {
                     $('#ocId').val(OcConfigId)
                     getMPartName()
+                    $aPartName.select2({theme: 'bootstrap4'})
                     $mitSKU.select2({theme: 'bootstrap4'})
+                    $aQtyRequired.keydown(function(e){
+                        if(e.keyCode === 13) {
+                            e.preventDefault();
+                            $aNotes.focus()
+                            return false;
+                        }
+                    })
+
                 }).on('hidden.bs.modal', function () {
-                 $mitSKU.html('<option value="">MITSKU</option>')
+                $mitSKU.html('<option value="">MITSKU</option>')
                 $('#accDataForm').trigger("reset");
             }).modal('show');
         })
 
-        $('#aPartName').on("change", function(e) {
+        $aPartName.on("change", function (e) {
             getMitSKUFromPartName($(this).val());
+        }).on('select2:select', function () {
+            $mitSKU.focus()
+        })
+
+        $mitSKU.on('select2:select', function () {
+            $aQtyRequired.focus()
+        })
+
+
+
+        $(document).on('select2:open', (e) => {
+            const selectId = e.target.id;
+            $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (key, value,) {
+                value.focus();
+            });
         });
 
-
-
+        $(document).keypress(
+            function(event){
+                if (event.which === '13') {
+                    event.preventDefault();
+                }
+            });
     </script>
 
     <script>
@@ -352,7 +406,7 @@
             nextSibling.innerText = name
         })
 
-        document.getElementById('resetAndContinue').addEventListener('click',(e)=>{
+        document.getElementById('resetAndContinue').addEventListener('click', (e) => {
             window.location.reload();
         })
     </script>

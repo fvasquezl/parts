@@ -80,8 +80,10 @@ clearForm = (input) => {
 
 
 /// Select Model from brand and reload grid
-document.getElementById('brand').addEventListener('change', async (e) => {
-    $brandSelected = e.target.value
+
+
+async function getModelFromBrand(e) {
+    $brandSelected = e
     const models = await manageData('/oc/getModels', 'POST', $brandSelected)
     let modelOptions = `<option value="">Model</option>`;
     document.getElementById('model').innerHTML = ""
@@ -90,8 +92,7 @@ document.getElementById('brand').addEventListener('change', async (e) => {
     })
     document.getElementById('model').innerHTML = modelOptions
     clearForm(1)
-})
-
+}
 
 async function getPNFromModel(element) {
     $modelSelected = element
@@ -148,7 +149,7 @@ $('#accForm').on('submit', (e) => {
         clearErrors('accForm')
 
 
-        disableFormElements('accForm')
+         disableFormElements('accForm')
 
 
         displayMsg(msg.message)
