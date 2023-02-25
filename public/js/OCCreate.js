@@ -1,6 +1,7 @@
 let $brandSelected = ""
 let $modelSelected = ""
 let $partNumberSelected = ""
+let $formUpdate
 
 async function manageData(url, method, item) {
     try {
@@ -139,7 +140,7 @@ enableFormElements = (myForm) => {
 $('#accForm').on('submit', (e) => {
     e.preventDefault();
     const assemblyGuide = document.getElementById('assemblyGuide').files[0]
-    let fd = new FormData(e.target);
+    var fd = new FormData(e.target);
     let method='POST'
     let url = "/oc/store"
 
@@ -148,11 +149,12 @@ $('#accForm').on('submit', (e) => {
     // console.log(OcConfigId)
 
     if(OcConfigId){
-
-        $("updateAccForm").appendTo(inputs)
-        console.log(inputs)
-        fd = new FormData($("updateAccForm"));
-
+        // let inputs = document.forms["accForm"].getElementsByTagName("input");
+        // // let updateForm = $("#updateAccForm")
+        // let updateForm = $(`<form></form>`);
+        // updateForm.append(inputs)
+        // fd = new FormData(updateForm);
+        fd.append('_token', token);
         method='PUT'
         url = "/oc/update/"+OcConfigId
     }
@@ -249,6 +251,44 @@ $('#accDataForm').on('submit', (e) => {
         displayErrors(jqXHR.responseJSON.errors, 'accDataForm')
     });
 })
+
+$(document).on('click', '.btn-remove-acc', function (e) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    let $tr = $(this).closest('tr');
+    let rowId = $tr.attr('ID');
+    let urld = '/oc/accessories/'+rowId;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            let request = $.ajax({
+                url: urld,
+                method: 'delete',
+                dataType: 'json',
+                processData: false,
+                contentType: false
+            });
+            request.done(function (data) {
+                Swal.fire(
+                    'Deleted!',
+                    data.message,
+                    'success'
+                );
+                $OCAccessoriesTable.draw();
+            });
+            request.fail(function (jqXHR, textStatus, errorThrown) {
+                Swal.fire('Failed!', "There was something wrong", "warning");
+            });
+        }
+    });
+});
 
 
 

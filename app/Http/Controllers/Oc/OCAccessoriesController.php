@@ -24,7 +24,7 @@ class OCAccessoriesController extends Controller
                 ->addIndexColumn()
                 ->addColumn('actions', function () {
                     return '<div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-danger text-center"><i class="fas fa-trash-alt"></i></a></div>';
+                            <a href="#" class="btn btn-danger text-center btn-remove-acc"><i class="fas fa-trash-alt"></i></a></div>';
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
@@ -49,6 +49,26 @@ class OCAccessoriesController extends Controller
                 return response()->json([
                     'status' => 200,
                     'message' => 'The OcAccessories has been saved successfully',
+                ]);
+            }else{
+                throw new \ErrorException('Error found');
+            }
+
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage())->withInput();
+        }
+
+    }
+
+    public function destroy($id): \Illuminate\Http\JsonResponse
+    {
+        try {
+        $rowDelete = \DB::select("EXEC [oc].[sp_NukeConfigAccessoryItem]'{$id}' ");
+
+            if ($rowDelete){
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'The OcAccessories has been delete successfully',
                 ]);
             }else{
                 throw new \ErrorException('Error found');

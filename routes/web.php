@@ -139,6 +139,7 @@ Route::middleware('auth')
 
         Route::get('/oc/accessories',[OCAccessoriesController::class,'index'])->name('oc.accessories');
         Route::post('/oc/accessories/store',[OCAccessoriesController::class,'store'])->name('oc.accessories.store');
+        Route::delete('/oc/accessories/{id}',[OCAccessoriesController::class,'destroy'])->name('oc.accessories.destroy');
 
         Route::post('/oc/getAPartName',[OCHelperController::class,'getAPartName'])->name('oc.getAPartName');
         Route::post('/oc/getAMitSKu',[OCHelperController::class,'getAMitSKu'])->name('oc.getAMitSKu');

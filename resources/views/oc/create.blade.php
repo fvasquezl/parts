@@ -421,6 +421,7 @@
         document.getElementById('resetAndContinue').addEventListener('click', (e) => {
             window.location.reload();
         })
+
     </script>
 
 @stop
