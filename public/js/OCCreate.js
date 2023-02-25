@@ -19,11 +19,11 @@ async function manageData(url, method, item) {
     }
 }
 
-clearErrors=(myform)=>{
+clearErrors = (myform) => {
     const form = document.getElementById(myform);
     const formElements = Array.from(form.elements);
     formElements.forEach(element => {
-        if(element.classList.contains('is-invalid')){
+        if (element.classList.contains('is-invalid')) {
             element.classList.remove('is-invalid')
         }
     })
@@ -37,19 +37,19 @@ displayErrors = (err, myForm) => {
         // if(element.classList.contains('is-invalid')){
         //     element.classList.remove('is-invalid')
         // }
-        if(name in err){
+        if (name in err) {
             element.classList.add('is-invalid')
-            const div= element.parentNode.closest('div')
-            if (div.children.length === 2){
-                div.children[1].firstElementChild.innerHTML=err[name][0]
-            }else{
-                div.children[2].firstElementChild.innerHTML=err[name][0]
+            const div = element.parentNode.closest('div')
+            if (div.children.length === 2) {
+                div.children[1].firstElementChild.innerHTML = err[name][0]
+            } else {
+                div.children[2].firstElementChild.innerHTML = err[name][0]
             }
         }
     });
 }
 
-displayMsg=(msg) =>{
+displayMsg = (msg) => {
     Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -77,7 +77,6 @@ clearForm = (input) => {
     selectedFile.nextElementSibling.innerText = ""
     selectedFile.nextElementSibling.innerText = "Select a file"
 }
-
 
 
 /// Select Model from brand and reload grid
@@ -124,7 +123,7 @@ disableFormElements = (myForm) => {
     const form = document.getElementById(myForm);
     const formElements = Array.from(form.elements);
     formElements.forEach(element => {
-      element.disabled = true
+        element.disabled = true
     });
 }
 
@@ -136,27 +135,15 @@ enableFormElements = (myForm) => {
     });
 }
 
-
+///////////////////////Working//////////
 $('#accForm').on('submit', (e) => {
     e.preventDefault();
-    const assemblyGuide = document.getElementById('assemblyGuide').files[0]
-    var fd = new FormData(e.target);
-    let method='POST'
+    // const assemblyGuide = document.getElementById('assemblyGuide').files[0]
+    let fd = new FormData(e.target);
+    let method = 'POST'
     let url = "/oc/store"
-
-    fd.append('assemblyGuide', assemblyGuide)
-    // fd.append('_token', token);
-    // console.log(OcConfigId)
-
-    if(OcConfigId){
-        // let inputs = document.forms["accForm"].getElementsByTagName("input");
-        // // let updateForm = $("#updateAccForm")
-        // let updateForm = $(`<form></form>`);
-        // updateForm.append(inputs)
-        // fd = new FormData(updateForm);
-        fd.append('_token', token);
-        method='PUT'
-        url = "/oc/update/"+OcConfigId
+    if (OcConfigId!==null){
+        fd.append("id", OcConfigId)
     }
 
     let request = $.ajax({
@@ -171,36 +158,28 @@ $('#accForm').on('submit', (e) => {
 
         OcConfigId = msg.data.accessory_id
         clearErrors('accForm')
-
-
-         disableFormElements('accForm')
-
-
+        disableFormElements('accForm')
         displayMsg(msg.message)
         $('#idOCConfig').val(OcConfigId)
         $('#btnOCAccessories').prop('disabled', false);
         $('#btnOCConfig').prop('disabled', true);
-
-
+        $('#enableUpdate').prop('disabled', false);
     });
     request.fail(function (jqXHR, textStatus) {
-         clearErrors('accForm')
-         displayErrors(jqXHR.responseJSON.errors, 'accForm')
+        clearErrors('accForm')
+        displayErrors(jqXHR.responseJSON.errors, 'accForm')
     });
 })
 
 
 
-$("#enableUpdate").on('click',(e)=>{
-    e.preventDefault();
+$("#enableUpdate").on('click', (e) => {
     enableFormElements('accForm')
+    $("#enableUpdate").prop('disabled', true);
 })
-
-
 
 
 ///////////////////////  Modal /////////////////////
-
 
 
 async function getMPartName() {
@@ -252,12 +231,13 @@ $('#accDataForm').on('submit', (e) => {
     });
 })
 
+
 $(document).on('click', '.btn-remove-acc', function (e) {
     e.stopPropagation();
     e.stopImmediatePropagation();
     let $tr = $(this).closest('tr');
     let rowId = $tr.attr('ID');
-    let urld = '/oc/accessories/'+rowId;
+    let urld = '/oc/accessories/' + rowId;
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

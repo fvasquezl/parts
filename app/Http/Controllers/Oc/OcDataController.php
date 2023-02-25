@@ -70,8 +70,13 @@ class OcDataController extends Controller
         Debugbar::info($request->all());
 
         $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
-        $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
 
+        if ($request->missing('id')) {
+             $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+        }else{
+             $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$request->id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+            $rowInserted = $request->id;
+        }
 
         if ($request->file('assemblyGuide')) {
             $file = $request->file('assemblyGuide');
@@ -83,6 +88,12 @@ class OcDataController extends Controller
             $occonfig = OCConfig::where('id', $rowInserted)->first();
             $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
             $occonfig->update();
+        }else{
+            $files= Storage::disk('sftp')->allFiles($rowInserted);
+            foreach ($files as $file){
+                Storage::disk('sftp')->delete($file);
+            }
+            Storage::disk('sftp')->deleteDirectory($rowInserted);
         }
         return response()->json([
                 'status' => 200,
@@ -96,32 +107,8 @@ class OcDataController extends Controller
 
     public function update(Request $request,$id)
     {
-        return response()->json($request->brand);
+        Debugbar::info($request->all());
 
-    //    $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
-
-  //      $rowInserted = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
-
-
-//        if ($request->file('assemblyGuide')) {
-//            $file = $request->file('assemblyGuide');
-//            $extension = $file->getClientOriginalExtension();
-//            $name = $rowInserted . '-assemblyguide.' . $extension;
-//            $path = $rowInserted;
-//            $link = Storage::disk('sftp')->putFileAs($path, $file, $name);
-//
-//            $occonfig = OCConfig::where('id', $rowInserted)->first();
-//            $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
-//            $occonfig->update();
-//        }
-//        return response()->json([
-//            'status' => 200,
-//            'message' => 'The OcConfig has been updated successfully',
-//            'data' => [
-//                'accessory_id' => $rowInserted
-//            ]
-//        ]);
-
-
+        return response()->json($request->all());
     }
 }

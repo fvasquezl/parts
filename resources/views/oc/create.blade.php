@@ -11,7 +11,6 @@
 @stop
 
 @section('content')
-
     <div class="container-fluid">
         @if (session('status'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -34,7 +33,7 @@
                             {{ __('Open Cell Configuration')}}
                         </h3>
                         <div class="card-tools">
-                            <button class="btn btn-success" id="enableUpdate">Enable</button>
+                            <button class="btn btn-success" id="enableUpdate" disabled>Enable For Editing</button>
                         </div>
                     </div>
 
@@ -140,14 +139,19 @@
                             <div class="form-group row">
                                 <label for="assemblyGuide" class="col-sm-2 col-form-label">Assembly Guide</label>
                                 <div class="col-sm-10">
-                                    <div class="custom-file">
-                                        <input type="file" name="assemblyGuide" class="custom-file-input"
-                                               id="assemblyGuide" aria-describedby="assemblyGuide">
-                                        <label class="custom-file-label" for="assemblyGuide">Select file</label>
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong></strong>
-                                    </span>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="assemblyGuide" class="custom-file-input"
+                                                   id="assemblyGuide" aria-describedby="assemblyGuide">
+                                            <label class="custom-file-label" for="assemblyGuide">Select file</label>
+                                        </div>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary" type="button" id="assemblyGuideRemove">Remove</button>
                                     </div>
+                                    </div>
+                                    <span class="invalid-feedback" role="alert">
+                                          <strong></strong>
+                                    </span>
                                 </div>
                             </div>
 
@@ -157,7 +161,6 @@
                             </div>
 
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -202,9 +205,6 @@
                     </div>
                 </div>
             </div>
-            <form id="updateAccForm">
-                @csrf
-            </form>
         </div>
     </div>
     @include('oc.shared.OCAccessoriesModal')
@@ -234,15 +234,18 @@
         let $openCells
         let $OCAccessoriesTable
         let $componentsTable
-        let OcConfigId
+        let OcConfigId=null
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRF-TOKEN": token
         }
+        <?php $myVar = 'OcConfigId';?>
 
         $(document).ready(function () {
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -417,6 +420,13 @@
             let nextSibling = e.target.nextElementSibling
             nextSibling.innerText = name
         })
+        document.querySelector('#assemblyGuideRemove').addEventListener('click',(e)=> {
+            const selectedFile = document.querySelector(".custom-file-input")
+            selectedFile.value = ""
+            selectedFile.nextElementSibling.innerText = ""
+            selectedFile.nextElementSibling.innerText = "Select a file"
+        })
+
 
         document.getElementById('resetAndContinue').addEventListener('click', (e) => {
             window.location.reload();
