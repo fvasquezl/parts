@@ -127,17 +127,34 @@ disableFormElements = (myForm) => {
     });
 }
 
+enableFormElements = (myForm) => {
+    const form = document.getElementById(myForm);
+    const formElements = Array.from(form.elements);
+    formElements.forEach(element => {
+        element.disabled = false
+    });
+}
+
 
 $('#accForm').on('submit', (e) => {
     e.preventDefault();
     const assemblyGuide = document.getElementById('assemblyGuide').files[0]
     let fd = new FormData(e.target);
+    let method='POST'
+    let url = "/oc/store"
+
     fd.append('assemblyGuide', assemblyGuide)
     fd.append('_token', token);
+    // console.log(OcConfigId)
+
+    if(OcConfigId){
+        method='PUT'
+        url = "/oc/update/"+OcConfigId
+    }
 
     let request = $.ajax({
-        url: "/oc/store",
-        method: 'post',
+        url: url,
+        method: method,
         data: fd,
         dataType: "json",
         processData: false,
@@ -167,8 +184,15 @@ $('#accForm').on('submit', (e) => {
 
 
 
+$("#enableUpdate").on('click',(e)=>{
+    e.preventDefault();
+    enableFormElements('accForm')
+})
 
-///////////////////////
+
+
+
+///////////////////////  Modal /////////////////////
 
 
 

@@ -24,7 +24,7 @@ class OCAccessoriesController extends Controller
                 ->addIndexColumn()
                 ->addColumn('actions', function () {
                     return '<div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a></div>';
+                            <a href="#" class="btn btn-danger text-center"><i class="fas fa-trash-alt"></i></a></div>';
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {

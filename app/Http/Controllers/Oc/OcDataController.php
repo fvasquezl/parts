@@ -38,7 +38,7 @@ class OcDataController extends Controller
 
     public function show($id){
         $ocConfig = \DB::select(
-            DB::raw("SELECT *FROM [oc].[fn_GetOCConfiguredList] ('{$id}')")
+            DB::raw("SELECT *FROM [oc].[fn_GetOCConfiguredItem] ('{$id}')")
         )[0];
 
         $ocAccessories = DB::select(
@@ -91,6 +91,36 @@ class OcDataController extends Controller
                     'accessory_id' => $rowInserted
                 ]
             ]);
+
+    }
+
+    public function update(OCConfigRequest $request,$id): \Illuminate\Http\JsonResponse
+    {
+//        Debugbar::info($request->all());
+
+        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
+
+        $rowInserted = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+
+
+        if ($request->file('assemblyGuide')) {
+            $file = $request->file('assemblyGuide');
+            $extension = $file->getClientOriginalExtension();
+            $name = $rowInserted . '-assemblyguide.' . $extension;
+            $path = $rowInserted;
+            $link = Storage::disk('sftp')->putFileAs($path, $file, $name);
+
+            $occonfig = OCConfig::where('id', $rowInserted)->first();
+            $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
+            $occonfig->update();
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'The OcConfig has been saved successfully',
+            'data' => [
+                'accessory_id' => $rowInserted
+            ]
+        ]);
 
     }
 }

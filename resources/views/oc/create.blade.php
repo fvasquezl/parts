@@ -2,7 +2,12 @@
 @section('title', 'Kits Creation')
 
 @section('content_header')
-    <h4>Open Cell</h4>
+    <div class="row">
+        <div class="col-md-12 d-flex">
+            <h3 id="quote">Open Cell Configuration</h3>
+            <button type="button" id="resetAndContinue" class="btn btn-primary ml-auto">Next Configuration</button>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -29,7 +34,7 @@
                             {{ __('Open Cell Configuration')}}
                         </h3>
                         <div class="card-tools">
-                            <button class="btn btn-warning" id="resetAndContinue">Reset and Continue</button>
+                            <button class="btn btn-success" id="enableUpdate">Enable</button>
                         </div>
                     </div>
 
@@ -188,6 +193,7 @@
                                     <th>MITSKU</th>
                                     <th>Qty Required</th>
                                     <th>Notes</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -300,6 +306,7 @@
                     {data: 'MITSKU', name: 'MITSKU'},
                     {data: 'qty_required', name: 'qty_required'},
                     {data: 'Notes', name: 'Notes'},
+                    {data: 'actions', name: 'actions'},
                 ],
                 columnDefs: [
                     {
