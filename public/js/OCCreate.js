@@ -144,10 +144,15 @@ $('#accForm').on('submit', (e) => {
     let url = "/oc/store"
 
     fd.append('assemblyGuide', assemblyGuide)
-    fd.append('_token', token);
+    // fd.append('_token', token);
     // console.log(OcConfigId)
 
     if(OcConfigId){
+        let inputs =document.getElementById("accForm").elements;
+        $("updateAccForm").appendTo(inputs)
+        console.log(inputs)
+        fd = new FormData($("updateAccForm"));
+
         method='PUT'
         url = "/oc/update/"+OcConfigId
     }

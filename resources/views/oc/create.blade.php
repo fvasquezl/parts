@@ -80,6 +80,7 @@
                                     <th>Manufacturer</th>
                                     <th>Part Number</th>
                                     <th>MITSKU</th>
+                                    <th>QOH</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -201,6 +202,9 @@
                     </div>
                 </div>
             </div>
+            <form id="updateAccForm">
+                @csrf
+            </form>
         </div>
     </div>
     @include('oc.shared.OCAccessoriesModal')
@@ -270,6 +274,7 @@
                     {data: 'OC_Manufacturer', name: 'OC_Manufacturer'},
                     {data: 'OC_PartNumber', name: 'OC_PartNumber'},
                     {data: 'OC_MITSKU', name: 'OC_MITSKU'},
+                    {data: 'QOH', name: 'QOH'},
                 ],
                 columnDefs: [
                     {

@@ -94,33 +94,34 @@ class OcDataController extends Controller
 
     }
 
-    public function update(OCConfigRequest $request,$id): \Illuminate\Http\JsonResponse
+    public function update(Request $request,$id)
     {
-//        Debugbar::info($request->all());
+        return response()->json($request->brand);
 
-        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
+    //    $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
 
-        $rowInserted = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+  //      $rowInserted = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
 
 
-        if ($request->file('assemblyGuide')) {
-            $file = $request->file('assemblyGuide');
-            $extension = $file->getClientOriginalExtension();
-            $name = $rowInserted . '-assemblyguide.' . $extension;
-            $path = $rowInserted;
-            $link = Storage::disk('sftp')->putFileAs($path, $file, $name);
+//        if ($request->file('assemblyGuide')) {
+//            $file = $request->file('assemblyGuide');
+//            $extension = $file->getClientOriginalExtension();
+//            $name = $rowInserted . '-assemblyguide.' . $extension;
+//            $path = $rowInserted;
+//            $link = Storage::disk('sftp')->putFileAs($path, $file, $name);
+//
+//            $occonfig = OCConfig::where('id', $rowInserted)->first();
+//            $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
+//            $occonfig->update();
+//        }
+//        return response()->json([
+//            'status' => 200,
+//            'message' => 'The OcConfig has been updated successfully',
+//            'data' => [
+//                'accessory_id' => $rowInserted
+//            ]
+//        ]);
 
-            $occonfig = OCConfig::where('id', $rowInserted)->first();
-            $occonfig['attachments'] = "http://part-storage.mitechnologiesinc.com/" . $link;
-            $occonfig->update();
-        }
-        return response()->json([
-            'status' => 200,
-            'message' => 'The OcConfig has been saved successfully',
-            'data' => [
-                'accessory_id' => $rowInserted
-            ]
-        ]);
 
     }
 }
