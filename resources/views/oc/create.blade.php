@@ -76,9 +76,9 @@
                             <table class="table table-striped table-hover table-bordered nowrap" id="openCells">
                                 <thead>
                                 <tr>
-                                    <th>CompatibleID</th>
-                                    <th>Manufacturer</th>
-                                    <th>Part Number</th>
+                                    <th>CID</th>
+                                    <th>Manuf</th>
+                                    <th>PN</th>
                                     <th>MITSKU</th>
                                     <th>QOH</th>
                                 </tr>

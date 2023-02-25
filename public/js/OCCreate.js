@@ -148,7 +148,7 @@ $('#accForm').on('submit', (e) => {
     // console.log(OcConfigId)
 
     if(OcConfigId){
-        let inputs =document.getElementById("accForm").elements;
+
         $("updateAccForm").appendTo(inputs)
         console.log(inputs)
         fd = new FormData($("updateAccForm"));
