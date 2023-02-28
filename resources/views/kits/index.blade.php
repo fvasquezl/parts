@@ -69,7 +69,8 @@
                                 <th>ID</th>
                                 <th>LCN</th>
                                 <th>Kit LCN</th>
-                                <th>BoxID</th>
+                                <th>Box</th>
+                                <th>Shelf</th>
                                 <th>Actions</th>
                                 <th>SKU Count</th>
                                 <th>Brand</th>
@@ -233,6 +234,7 @@
                     {data: 'lcn', name: 'lcn'},
                     {data: 'kitlcn', name: 'kitlcn'},
                     {data: 'boxname', name: 'boxname'},
+                    {data: 'shelf_name', name: 'shelf_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'SKU_count', name: 'SKU_count'},
                     {data: 'brand', name: 'brand'},
@@ -253,20 +255,20 @@
                         // visible: false,
                     },
                     {
-                        targets: [12],
+                        targets: [13],
                         searchable: true,
                         visible: false
                     },
                     {
-                        targets: [4,10,11],
+                        targets: [5,11,12],
                         searchable: false,
                     },
                     {
-                        targets: [5,6,8,9,10],
+                        targets: [6,7,9,10,11],
                         className: "text-center",
                     },
                     {
-                        targets: [7],
+                        targets: [8],
                         searchable: true,
                         exactvalue:true
                     }

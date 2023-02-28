@@ -69,6 +69,12 @@ class KitController extends Controller
                     }
                     return $kit->keywords;
                 })
+                ->editColumn('shelf_name', function ($kit) {
+                    if(!$kit->shelf_name){
+                        return 'No Shelf Yet';
+                    }
+                    return $kit->shelf_name;
+                })
                 ->editColumn('created_at', function ($kit) {
                     return $kit->created_at->toDateTimeString();
                 })
