@@ -278,7 +278,7 @@
 
             $('#search_sku').on('search keyup', function() {
                 $kitsTable
-                    .column(9)
+                    .column(10)
                     .search(this.value)
                     .draw();
             });
@@ -604,7 +604,7 @@
 
 
             if(selBrand.value !== '0'){
-                $kitsTable.column(6).search(selBrand.value).draw()
+                $kitsTable.column(7).search(selBrand.value).draw()
             }
 
             if (selModel.value !== '0' && selModel.value !== ''){
@@ -617,12 +617,12 @@
             }
 
             if(selBrand.value === '0'){
-                $kitsTable.columns([6,7]).search("").draw();
+                $kitsTable.columns([7,8]).search("").draw();
                 document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
             }
 
             if(selModel.value === '0'){
-                $kitsTable.columns([7]).search("").draw();
+                $kitsTable.columns([8]).search("").draw();
             }
 
 
@@ -632,7 +632,7 @@
             document.getElementById('search_brand').selectedIndex = 0;
             document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
             document.getElementById('search_sku').value = '';
-            $kitsTable.columns([6,7,9]).search("").draw();
+            $kitsTable.columns([7,8,10]).search("").draw();
         });
 
 
