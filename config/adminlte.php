@@ -317,6 +317,12 @@ return [
             'can'  =>  'isAdmin'
         ],
         [
+            'text' => 'Requirements',
+            'url'  => 'requirements',
+            'icon' => 'fa fa-shopping-basket',
+            'can'  =>  'isAdmin'
+        ],
+        [
             'text'    => 'Inventory',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [

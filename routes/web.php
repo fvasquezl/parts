@@ -17,6 +17,7 @@ use App\Http\Controllers\Oc\OcDataController;
 use App\Http\Controllers\Oc\OCHelperController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
+use App\Http\Controllers\Requirements\RequitementsController;
 use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
 use App\Http\Controllers\Skus\HelperController;
@@ -143,6 +144,9 @@ Route::middleware('auth')
 
         Route::post('/oc/getAPartName',[OCHelperController::class,'getAPartName'])->name('oc.getAPartName');
         Route::post('/oc/getAMitSKu',[OCHelperController::class,'getAMitSKu'])->name('oc.getAMitSKu');
+
+
+        Route::get('/requirements',[RequitementsController::class,'index'])->name('oc.requirements');
 
     });
 
