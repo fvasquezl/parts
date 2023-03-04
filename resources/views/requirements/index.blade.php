@@ -22,7 +22,7 @@
         @endif
 
         <div class="row">
-            <div class="col-lg-6 ">
+            <div class="col-lg-8 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <div class="row">
@@ -67,29 +67,29 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>LCN</th>
-                                <th>Kit LCN</th>
+{{--                                <th>LCN</th>--}}
+{{--                                <th>Kit LCN</th>--}}
                                 <th>Box</th>
                                 <th>Shelf</th>
                                 <th>Actions</th>
-                                <th>SKU Count</th>
+{{--                                <th>SKU Count</th>--}}
                                 <th>Brand</th>
                                 <th>Model</th>
-                                <th>DMG Qty</th>
-                                <th>Ref SKU</th>
-                                <th>Images Qty</th>
+{{--                                <th>DMG Qty</th>--}}
+{{--                                <th>Ref SKU</th>--}}
+{{--                                <th>Images Qty</th>--}}
                                 <th>Parts Qty</th>
                                 <th>Url</th>
                                 <th>Keywords</th>
-                                <th>CapturedBy</th>
-                                <th>Created At</th>
+{{--                                <th>CapturedBy</th>--}}
+{{--                                <th>Created At</th>--}}
                             </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 ">
+            <div class="col-lg-4 ">
                 <div class="card mb-4 shadow-sm card-outline card-primary">
                     <div class="card-header ">
                         <div class="row">
@@ -244,22 +244,22 @@
                 },
                 columns: [
                     {data: 'kitid', name: 'kitid'},
-                    {data: 'lcn', name: 'lcn'},
-                    {data: 'kitlcn', name: 'kitlcn'},
+                    // {data: 'lcn', name: 'lcn'},
+                    // {data: 'kitlcn', name: 'kitlcn'},
                     {data: 'boxname', name: 'boxname'},
                     {data: 'shelf_name', name: 'shelf_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
-                    {data: 'SKU_count', name: 'SKU_count'},
+                    // {data: 'SKU_count', name: 'SKU_count'},
                     {data: 'brand', name: 'brand'},
                     {data: 'model', name: 'model'},
-                    {data: 'QtyDamageTV', name: 'QtyDamageTV'},
-                    {data: 'ref_sku', name: 'ref_sku'},
-                    {data: 'image_count', name: 'image_count'},
+                    // {data: 'QtyDamageTV', name: 'QtyDamageTV'},
+                    // {data: 'ref_sku', name: 'ref_sku'},
+                    // {data: 'image_count', name: 'image_count'},
                     {data: 'noofparts', name: 'noofparts'},
                     {data: 'url', name: 'url'},
                     {data: 'keywords', name: 'keywords'},
-                    {data: 'name', name: 'name'},
-                    {data: 'created_at', name: 'created_at'},
+                    // {data: 'name', name: 'name'},
+                    // {data: 'created_at', name: 'created_at'},
                 ],
                 columnDefs: [
                     {
@@ -268,20 +268,20 @@
                         // visible: false,
                     },
                     {
-                        targets: [13],
+                        targets: [7],
                         searchable: true,
                         visible: false
                     },
                     {
-                        targets: [5,11,12],
+                        targets: [3,5],
                         searchable: false,
                     },
                     {
-                        targets: [6,7,9,10,11],
+                        targets: [4],
                         className: "text-center",
                     },
                     {
-                        targets: [8],
+                        targets: [5],
                         searchable: true,
                         exactvalue:true
                     }
