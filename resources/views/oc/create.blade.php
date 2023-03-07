@@ -298,9 +298,10 @@
                 processing: true,
                 serverSide: true,
                 scrollY: "53vh",
-                // scrollX: true,
+                scrollX: true,
                 scrollCollapse: true,
                 stateSave: true,
+                autoWidth:false,
                 dom: 'rt',
                 ajax: {
                     url: "/oc/accessories",
