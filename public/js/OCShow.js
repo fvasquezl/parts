@@ -145,7 +145,7 @@ $("#enableUpdate").on('click', (e) => {
                 $("#mitSKU").focus()
             }else{
                 Swal.fire({
-                    title: `Sorry The password is not correct`
+                    title: `Sorry the password is not correct`
                 })
             }
         }
