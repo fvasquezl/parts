@@ -135,7 +135,7 @@ $("#enableUpdate").on('click', (e) => {
         },
         showCancelButton: true,
         confirmButtonText: 'Submit',
-        showLoaderOnConfirm: true,
+        showLoaderOnConfirm: false,
     }).then((result) => {
         if (result.isConfirmed) {
             if (result.value === "dLp173Vb") {
@@ -143,6 +143,8 @@ $("#enableUpdate").on('click', (e) => {
                 $("#enableUpdate").prop('disabled', true);
                 $("#btnOCAccessories").prop('disabled', false);
                 $("#mitSKU").focus()
+                $(".btn-remove-acc").removeClass('disabled')
+                isDisabled = 1
             }else{
                 Swal.fire({
                     title: `Sorry the password is not correct`

@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Oc;
 
 use App\Http\Controllers\Controller;
-use App\Models\OCData;
-use App\Models\OCManufacturer;
 use App\Models\Tv;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use function GuzzleHttp\Promise\all;
+
 
 class OCHelperController extends Controller
 {
@@ -65,8 +62,6 @@ class OCHelperController extends Controller
             DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCManufacturer]('{$partNumber}')")
         );
 
-//        SELECT * FROM [PartsProcessing].[oc].[fn_GetOCManufacturer] ('13')
-//        $manufacturer = OCData::select('OC_Manufacturer')->where('id',$partNumber)->first();
         return response()->json($manufacturer[0]->manufacturer);
     }
 

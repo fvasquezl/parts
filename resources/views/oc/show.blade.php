@@ -174,7 +174,7 @@
                                     <th>ID</th>
                                     <th>Part Name</th>
                                     <th>MITSKU</th>
-                                    <th>Qty Required</th>
+                                    <th>Qty Req</th>
                                     <th>Notes</th>
                                     <th>Actions</th>
                                 </tr>
@@ -212,6 +212,7 @@
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let OcConfigId ="{{$ocConfig["id"]}}"
         let $OCAccessoriesTable
+        let isDisabled = 0
         let headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text-plain, */*",
@@ -220,7 +221,6 @@
         }
 
         $(document).ready(function () {
-
 
             $.ajaxSetup({
                 headers: {
@@ -238,7 +238,7 @@
                 processing: true,
                 serverSide: true,
                 scrollY: "53vh",
-                // scrollX: true,
+                scrollX: true,
                 scrollCollapse: true,
                 stateSave: true,
                 dom: 'rt',
@@ -246,12 +246,13 @@
                     url: "/oc/accessories",
                     data: function (d) {
                         d.OcConfigId = {{$ocConfig["id"]}};
+                        d.isDisabled= isDisabled
                     },
                 },
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'part_name', name: 'part_name'},
-                    {data: 'MITSKU', name: 'MITSKU'},
+                    {data: 'ProductSKU', name: 'ProductSKU'},
                     {data: 'qty_required', name: 'qty_required'},
                     {data: 'Notes', name: 'Notes'},
                     {data: 'actions', name: 'actions'},
@@ -262,21 +263,17 @@
                         searchable: true,
                         // visible: false,
                     },
-                ]
-
+                ],
             })
 
-
         });
+
 
         $('#mitSku').select2({
             theme: 'bootstrap4',
         }).on('select2:select', function () {
             $('#instructions').focus()
         })
-
-
-
 
         /////// MODAL////////
         let $mitSKU = $('#aMitSKU')
@@ -333,6 +330,7 @@
                 value.focus();
             });
         });
+
     </script>
 
 @stop

@@ -46,7 +46,6 @@ class OcDataController extends Controller
         $partNumbers = DB::select(
             DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCPartNumbers]('{$tv->id}')")
         );
-//        dd($partNumbers);
 
 
         $ocAccessories = DB::select(
@@ -55,10 +54,6 @@ class OcDataController extends Controller
 
         $mitSkus = DB::select(
             DB::raw("SELECT * FROM [PartsProcessing].[oc].[fn_GetOCSKUs] ()"));
-
-
-
-
 
         $ocConfig = collect($ocConfig);
 

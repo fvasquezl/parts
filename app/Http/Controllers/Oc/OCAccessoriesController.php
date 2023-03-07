@@ -20,11 +20,18 @@ class OCAccessoriesController extends Controller
                 $data = OCAccessories::query()->where('oc_config_id',$id);
             }
 
+           $disable = $request->isDisabled;
+
             return datatables($data)
                 ->addIndexColumn()
-                ->addColumn('actions', function () {
-                    return '<div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-danger text-center btn-remove-acc"><i class="fas fa-trash-alt"></i></a></div>';
+                ->addColumn('actions', function () use($disable) {
+                    if($disable){
+                        return '<div class="btn-group btn-group-sm">
+                         <a href="#" class="btn btn-danger text-center btn-remove-acc"><i class="fas fa-trash-alt"></i></a></div>';
+                    }else{
+                        return '<div class="btn-group btn-group-sm">
+                         <a href="#" class="btn btn-danger text-center btn-remove-acc disabled"><i class="fas fa-trash-alt"></i></a></div>';
+                    }
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {

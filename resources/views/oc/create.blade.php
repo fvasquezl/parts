@@ -195,7 +195,7 @@
                                     <th>ID</th>
                                     <th>Part Name</th>
                                     <th>MITSKU</th>
-                                    <th>Qty Required</th>
+                                    <th>Qty Req</th>
                                     <th>Notes</th>
                                     <th>Actions</th>
                                 </tr>
@@ -306,12 +306,13 @@
                     url: "/oc/accessories",
                     data: function (d) {
                         d.OcConfigId = OcConfigId;
+                        d.isDisabled=1
                     },
                 },
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'part_name', name: 'part_name'},
-                    {data: 'MITSKU', name: 'MITSKU'},
+                    {data: 'ProductSKU', name: 'ProductSKU'},
                     {data: 'qty_required', name: 'qty_required'},
                     {data: 'Notes', name: 'Notes'},
                     {data: 'actions', name: 'actions'},

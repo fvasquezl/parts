@@ -9,7 +9,7 @@ class OCAccessories extends Model
 {
     use HasFactory;
 
-    protected $table = 'oc.OC_Accessories';
+    protected $table = 'oc.vw_OC_Accessories';
     protected $primaryKey = 'id';
 
     protected $guarded = [];
