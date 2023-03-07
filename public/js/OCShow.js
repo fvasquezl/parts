@@ -134,17 +134,22 @@ $("#enableUpdate").on('click', (e) => {
             autocapitalize: 'off'
         },
         showCancelButton: true,
-        confirmButtonText: 'Look up',
+        confirmButtonText: 'Submit',
         showLoaderOnConfirm: true,
     }).then((result) => {
-        if (result.value === "dLp173Vb") {
-            enableFormElements('showForm')
-            $("#enableUpdate").prop('disabled', true);
-            $("#btnOCAccessories").prop('disabled', false);
-            $("#mitSKU").focus()
+        if (result.isConfirmed) {
+            if (result.value === "dLp173Vb") {
+                enableFormElements('showForm')
+                $("#enableUpdate").prop('disabled', true);
+                $("#btnOCAccessories").prop('disabled', false);
+                $("#mitSKU").focus()
+            }else{
+                Swal.fire({
+                    title: `Sorry The password is not correct`
+                })
+            }
         }
     })
-
 })
 
 
