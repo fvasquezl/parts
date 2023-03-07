@@ -59,8 +59,15 @@ class OCHelperController extends Controller
     public function getManufacturer(Request $request): \Illuminate\Http\JsonResponse
     {
         $partNumber = (int) $request->data['$partNumberSelected'];
-        $manufacturer = OCData::select('OC_Manufacturer')->where('id',$partNumber)->first();
-        return response()->json($manufacturer);
+
+
+        $manufacturer = DB::select(
+            DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCManufacturer]('{$partNumber}')")
+        );
+
+//        SELECT * FROM [PartsProcessing].[oc].[fn_GetOCManufacturer] ('13')
+//        $manufacturer = OCData::select('OC_Manufacturer')->where('id',$partNumber)->first();
+        return response()->json($manufacturer[0]->manufacturer);
     }
 
     public function getAPartName(Request $request): \Illuminate\Http\JsonResponse

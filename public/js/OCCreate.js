@@ -114,8 +114,7 @@ async function getPNFromModel(element) {
 async function getManufacturerFromPartNumber(element) {
     $partNumberSelected = element
     const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
-
-    document.getElementById('manufacturer').value = data['OC_Manufacturer']
+    document.getElementById('manufacturer').value = data
     clearForm(3)
 }
 
