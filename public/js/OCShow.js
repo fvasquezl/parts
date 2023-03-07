@@ -1,8 +1,3 @@
-let $brandSelected = ""
-let $modelSelected = ""
-let $partNumberSelected = ""
-let $formUpdate
-
 async function manageData(url, method, item) {
     try {
         const response = await fetch(`${url}`, {
@@ -28,7 +23,6 @@ clearErrors = (myform) => {
         }
     })
 }
-
 displayErrors = (err, myForm) => {
     const form = document.getElementById(myForm);
     const formElements = Array.from(form.elements);
@@ -48,7 +42,6 @@ displayErrors = (err, myForm) => {
         }
     });
 }
-
 displayMsg = (msg) => {
     Swal.fire({
         position: 'top-end',
@@ -58,7 +51,6 @@ displayMsg = (msg) => {
         timer: 1500
     })
 }
-
 clearForm = (input) => {
     if (input === 1) {
         document.getElementById('partNumber').innerHTML = `<option value="">PartNumber</option>`
@@ -77,48 +69,13 @@ clearForm = (input) => {
     selectedFile.nextElementSibling.innerText = ""
     selectedFile.nextElementSibling.innerText = "Select a file"
 }
-
-
-/// Select Model from brand and reload grid
-
-
-async function getModelFromBrand(e) {
-    $brandSelected = e
-    const models = await manageData('/oc/getModels', 'POST', $brandSelected)
-    let modelOptions = `<option value="">Model</option>`;
-    document.getElementById('model').innerHTML = ""
-    models.forEach((e) => {
-        modelOptions += `<option value="${e.model}">${e.model}</option>`
-    })
-    document.getElementById('model').innerHTML = modelOptions
-    clearForm(1)
+enableFormElements = (myForm) => {
+    const form = document.getElementById(myForm);
+    const formElements = Array.from(form.elements);
+    formElements.forEach(element => {
+        element.disabled = false
+    });
 }
-
-async function getPNFromModel(element) {
-    $modelSelected = element
-    const part_numbers = await manageData('/oc/getOCPartNumbers', 'POST', {
-        'brand': $brandSelected,
-        'model': $modelSelected
-    })
-
-    let parModelOptions = `<option value="">PartNumber</option>`;
-    document.getElementById('partNumber').innerHTML = ""
-    part_numbers.forEach((e) => {
-        parModelOptions += `<option value="${e.id}">${e.part_number}</option>`
-    })
-    document.getElementById('partNumber').innerHTML = parModelOptions
-    clearForm(2)
-
-}
-
-async function getManufacturerFromPartNumber(element) {
-    $partNumberSelected = element
-    const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
-
-    document.getElementById('manufacturer').value = data['OC_Manufacturer']
-    clearForm(3)
-}
-
 disableFormElements = (myForm) => {
     const form = document.getElementById(myForm);
     const formElements = Array.from(form.elements);
@@ -127,21 +84,18 @@ disableFormElements = (myForm) => {
     });
 }
 
-enableFormElements = (myForm) => {
-    const form = document.getElementById(myForm);
-    const formElements = Array.from(form.elements);
-    formElements.forEach(element => {
-        element.disabled = false
-    });
-}
 
-///////////////////////Working//////////
-$('#accForm').on('submit', (e) => {
+
+// const showForm = $('#showForm')
+// let putURL =showForm.attr('action')
+
+
+$('#showForm').on('submit', (e) => {
     e.preventDefault();
     // const assemblyGuide = document.getElementById('assemblyGuide').files[0]
     let fd = new FormData(e.target);
     let method = 'POST'
-    let url = "/oc/store"
+    let url = "/oc/update"
     if (OcConfigId!==null){
         fd.append("id", OcConfigId)
     }
@@ -156,26 +110,41 @@ $('#accForm').on('submit', (e) => {
     });
     request.done(function (msg) {
 
-        OcConfigId = msg.data.accessory_id
-        clearErrors('accForm')
-        disableFormElements('accForm')
+        // OcConfigId = msg.data.accessory_id
+        clearErrors('showForm')
+        disableFormElements('showForm')
         displayMsg(msg.message)
-        $('#idOCConfig').val(OcConfigId)
+        // $('#idOCConfig').val(OcConfigId)
         $('#btnOCAccessories').prop('disabled', false);
         $('#btnOCConfig').prop('disabled', true);
         $('#enableUpdate').prop('disabled', false);
     });
     request.fail(function (jqXHR, textStatus) {
-        clearErrors('accForm')
-        displayErrors(jqXHR.responseJSON.errors, 'accForm')
+        clearErrors('showForm')
+        displayErrors(jqXHR.responseJSON.errors, 'showForm')
     });
 })
 
-
-
 $("#enableUpdate").on('click', (e) => {
-    enableFormElements('accForm')
-    $("#enableUpdate").prop('disabled', true);
+
+    Swal.fire({
+        title: 'Edit Require Password',
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Look up',
+        showLoaderOnConfirm: true,
+    }).then((result) => {
+        if (result.value === "dLp173Vb") {
+            enableFormElements('showForm')
+            $("#enableUpdate").prop('disabled', true);
+            $("#btnOCAccessories").prop('disabled', false);
+            $("#mitSKU").focus()
+        }
+    })
+
 })
 
 
@@ -184,7 +153,6 @@ $("#enableUpdate").on('click', (e) => {
 
 async function getMPartName() {
     const partNames = await manageData('/oc/getAPartName', 'POST', 'notting')
-    console.log(partNames)
     let parModelOptions = `<option value="">PartName</option>`;
     document.getElementById('aPartName').innerHTML = ""
     partNames.forEach((e) => {
@@ -270,9 +238,3 @@ $(document).on('click', '.btn-remove-acc', function (e) {
         }
     });
 });
-
-
-
-
-
-

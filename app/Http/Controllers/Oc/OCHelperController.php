@@ -81,4 +81,10 @@ class OCHelperController extends Controller
     }
 
 
+    public function supdate(Request $request, $id)
+    {
+        dd($request->all());
+    }
+
+
 }
