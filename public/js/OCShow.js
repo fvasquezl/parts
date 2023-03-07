@@ -128,7 +128,7 @@ $('#showForm').on('submit', (e) => {
 $("#enableUpdate").on('click', (e) => {
 
     Swal.fire({
-        title: 'Edit Require Password',
+        title: "La edición solo puede ser realizada por personal autorizado y requiere una contraseña para continuar. <br><br>Edit can only be performed by authorized personnel and require a password to continue. ",
         input: 'password',
         inputAttributes: {
             autocapitalize: 'off'
