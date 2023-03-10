@@ -11,7 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class RequitementsController extends Controller
+class RequirementsController extends Controller
 {
     /**
      * @param Request $request
@@ -46,6 +46,9 @@ class RequitementsController extends Controller
 
             return datatables($data)
                 ->addIndexColumn()
+                ->addColumn('checkbox', function ($item) {
+                    return $item->kitid;
+                })
                 ->editColumn('boxname', function ($kit) {
                     if(!$kit->BoxName){
                         return 'No Box Yet';
@@ -64,21 +67,12 @@ class RequitementsController extends Controller
                     }
                     return $kit->shelf_name;
                 })
-                ->editColumn('created_at', function ($kit) {
-                    return $kit->created_at->toDateTimeString();
-                })
-                ->addColumn('actions', function () {
-                    $btns ='<div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info qrcode"><i class="fas fa-fw fa-print"></i></a>
-                            <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a>';
-
-                    if(auth()->user()->role =='admin'){
-                        $btns .='<a href="#" class="btn btn-sm btn-primary sku-btn"><i class="fas fa-fw fa-bolt"></i></a>';
-                    }
-
-                    return $btns.'</div>';
-                })
-                ->rawColumns(['actions'])
+//                ->addColumn('actions', function () {
+//                    $btns ='<div class="btn-group btn-group-sm">
+//                            <a href="#" class="btn btn-success select-btn"><i class="fas fa-check-circle"></i></a>';
+//                    return $btns.'</div>';
+//                })
+                ->rawColumns(['checkbox'])
                 ->setRowId(function ($data) {
                     return $data->kitid;
                 })
