@@ -66,6 +66,7 @@
                             <thead>
                             <tr>
                                 <th>Ref Sku</th>
+                                <th>BTS Sku</th>
                                 <th>Brand</th>
                                 <th>Model</th>
                                 <th>Actions</th>
@@ -239,6 +240,7 @@
                 {{--ajax: "{{route('skus.index')}}",--}}
                 columns: [
                     {data: 'ref_sku',name:'ref_sku'},
+                    {data: 'bts_sku',name:'bts_sku'},
                     {data: 'brand',name:'brand'},
                     {data: 'model',name:'model'},
                     {data: 'image_count',name:'image_count'},
@@ -262,14 +264,15 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [3,4,5,6,8,9,10],
+                        // targets: [3,4,5,6,8,9,10],
+                        targets: [4,5,6,7,9,10,11],
                         className: "text-center",
                     },
                     {
-                        targets: [3,4],
+                        targets: [4,5],
                         searchable: false,
                     },{
-                        targets: [2],
+                        targets: [3],
                         searchable: true,
                         exactvalue:true
                     }
@@ -539,13 +542,12 @@
         })
 
 
-
         document.getElementById('search_brand').addEventListener('change', (e)=>{
             e.preventDefault();
             selModel = document.getElementById('search_model');
 
             if (selModel.value !== '0' && selModel.value !== ''){
-                $skusTable.columns([1,2]).search('').draw();
+                $skusTable.columns([2,3]).search('').draw();
                 selModel.value ='0';
             }
 
@@ -577,7 +579,7 @@
             document.getElementById('search_brand').selectedIndex = 0;
             document.getElementById('search_images').selectedIndex = 0;
             document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
-            $skusTable.columns([1,2]).search("").draw();
+            $skusTable.columns([2,3]).search("").draw();
         });
 
 

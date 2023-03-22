@@ -49,7 +49,7 @@ function manageBrand($table) {
     selModel = document.getElementById('search_model');
 
     if(selBrand.value !== '0'){
-        $table.column(1).search(`${selBrand.value}`).draw()
+        $table.column(2).search(`${selBrand.value}`).draw()
     }
 }
 function manageModel($table) {
@@ -57,10 +57,10 @@ function manageModel($table) {
     selModel = document.getElementById('search_model');
 
     if(selModel.value !== '0'){
-        $table.column([2]).search(`${selModel.value}`).draw();
+        $table.column([3]).search(`${selModel.value}`).draw();
     }
     if(selModel.value === '0'){
-        $table.columns([2]).search("").draw();
+        $table.columns([3]).search("").draw();
         document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
     }
 }

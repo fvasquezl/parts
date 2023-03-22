@@ -202,7 +202,7 @@ class HelperController extends Controller
         return null;
     }
 
-//1854
+
     public function updateKitData(Request $request, $sku): bool|JsonResponse
     {
         if ($request->ajax()) {
