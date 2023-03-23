@@ -46,6 +46,7 @@ class OCHelperController extends Controller
     {
         $brand = $request->data['brand'];
         $model =$request->data['model'];
+
         $tv = Tv::where('brand', $brand)->where('model', $model)->first();
         $data = DB::select(
             DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCPartNumbers]('{$tv->id}')")
@@ -65,6 +66,25 @@ class OCHelperController extends Controller
         return response()->json($manufacturer[0]->manufacturer);
     }
 
+    public function getOCSkus(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $brand = $request->data['brand'];
+        $model =$request->data['model'];
+        $oc_id = $request->data['OCId'];
+
+        $tv = Tv::where('brand', $brand)->where('model', $model)->first();
+
+
+        $data = DB::select(
+            DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCSKUs]('{$tv->id}',$oc_id)")
+        );
+
+        return response()->json($data);
+
+    }
+
+
+
     public function getAPartName(Request $request): \Illuminate\Http\JsonResponse
     {
         $data = DB::select(
@@ -76,11 +96,15 @@ class OCHelperController extends Controller
 
     public function getAMitSKu(Request $request): \Illuminate\Http\JsonResponse
     {
+        //PartNumner == OC_id
+
         $data = DB::select(
             DB::raw("SELECT MITSKU,ProductSKU FROM [PartsProcessing].[oc].[fn_GetOCAccessoriesSKUs] () Where PartName='{$request->data}'")
         );
         return response()->json($data);
     }
+
+
 
 
     public function supdate(Request $request, $id)

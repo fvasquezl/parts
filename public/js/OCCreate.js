@@ -101,6 +101,8 @@ async function getPNFromModel(element) {
         'model': $modelSelected
     })
 
+    // console.log(part_numbers)
+
     let parModelOptions = `<option value="">PartNumber</option>`;
     document.getElementById('partNumber').innerHTML = ""
     part_numbers.forEach((e) => {
@@ -117,6 +119,28 @@ async function getManufacturerFromPartNumber(element) {
     document.getElementById('manufacturer').value = data
     clearForm(3)
 }
+
+async function getSKUsFromPartNumber(element) {
+    $partNumberSelected = element
+
+    const oc_skus = await manageData('/oc/getOCSkus', 'POST', {
+        'brand': $brandSelected,
+        'model': $modelSelected,
+        'OCId' : $partNumberSelected
+    })
+
+    let skuOptions = `<option value="">MITSKU</option>`;
+    document.getElementById('mitSku').innerHTML = ""
+    oc_skus.forEach((e) => {
+        skuOptions += `<option value="${e.MITSKU}">${e.ProductSKU}</option>`
+    })
+    document.getElementById('mitSku').innerHTML = skuOptions
+    clearForm(2)
+
+
+
+}
+
 
 disableFormElements = (myForm) => {
     const form = document.getElementById(myForm);

@@ -69,10 +69,10 @@ class OcDataController extends Controller
     public function create()
     {
         $brands = Tv::select('brand')->distinct('brand')->orderBy('brand', 'asc')->get();
-        $mitSkus = DB::select(
-            DB::raw("SELECT * FROM [PartsProcessing].[oc].[fn_GetOCSKUs] ()"));
+//        $mitSkus = DB::select(
+//            DB::raw("SELECT * FROM [PartsProcessing].[oc].[fn_GetOCSKUs] ()"));
 
-        return view('oc.create', compact('brands', 'mitSkus'));
+        return view('oc.create', compact('brands'));
     }
 
     public function store(OCConfigRequest $request): \Illuminate\Http\JsonResponse

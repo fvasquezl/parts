@@ -137,6 +137,8 @@ Route::middleware('auth')
         Route::get('/oc/getOCList',[OCHelperController::class,'getOCList'])->name('oc.getOCList');
         Route::post('/oc/getOCPartNumbers',[OCHelperController::class,'getOCPartNumbers'])->name('oc.getOCPartNumbers');
         Route::post('/oc/getManufacturer',[OCHelperController::class,'getManufacturer'])->name('oc.getManufacturer');
+        Route::post('/oc/getOCSkus',[OCHelperController::class,'getOCSkus'])->name('oc.getOCSkus');
+
 
         Route::get('/oc/accessories',[OCAccessoriesController::class,'index'])->name('oc.accessories');
         Route::post('/oc/accessories/store',[OCAccessoriesController::class,'store'])->name('oc.accessories.store');

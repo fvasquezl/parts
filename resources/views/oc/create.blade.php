@@ -116,11 +116,6 @@
                                     <select name="mitSku" aria-label="select model" id="mitSku"
                                             class=" form-control ">
                                         <option value="">MITSKU</option>
-                                        @foreach ($mitSkus as $mitsku)
-                                            <option value="{{ $mitsku->MITSKU }}"
-                                                {{ old('ProductSKU') ? 'selected':''}}>
-                                                {{ $mitsku->ProductSKU }}</option>
-                                        @endforeach
                                     </select>
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -351,6 +346,9 @@
             theme: 'bootstrap4',
         }).on("change", function () {
             getManufacturerFromPartNumber($(this).val());
+
+            getSKUsFromPartNumber($(this).val());
+
         }).on('select2:select', function () {
             $('#mitSku').focus()
         })
@@ -430,7 +428,7 @@
 
 
         document.getElementById('resetAndContinue').addEventListener('click', (e) => {
-            window.location.reload();
+            window.location.href = '/oc'; //relative to domain
         })
 
     </script>
