@@ -131,6 +131,7 @@ Route::middleware('auth')
         Route::post('/oc/store',[OCDataController::class,'store'])->name('oc.store');
         Route::get('/oc/show/{id}',[OCDataController::class,'show'])->name('oc.show');
         Route::post('/oc/update',[OCDataController::class,'update'])->name('oc.update');
+        Route::delete('/oc/delete/{id}',[OCDataController::class,'destroy'])->name('oc.destroy');
 
 
         Route::post('/oc/getModels',[OCHelperController::class,'getTvModels'])->name('oc.getTvModels');

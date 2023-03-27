@@ -28,6 +28,7 @@
                             {{ __('Open Cell Configuration')}}
                         </h3>
                         <div class="card-tools">
+                            <button class="btn btn-danger" id="deleteOcConf" >Delete Configuration</button>
                             <button class="btn btn-success" id="enableUpdate" >Enable For Editing</button>
                         </div>
                     </div>

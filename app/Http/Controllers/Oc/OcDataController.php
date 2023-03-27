@@ -35,7 +35,6 @@ class OcDataController extends Controller
         return view('oc.index');
     }
 
-
     public function show($id){
         $ocConfig = \DB::select(
             DB::raw("SELECT *FROM [oc].[fn_GetOCConfiguredItem] ('{$id}')")
@@ -63,8 +62,6 @@ class OcDataController extends Controller
 
         return view("oc.show",compact('ocConfig','ocAccessories','mitSkus','partNumbers'));
     }
-
-
 
     public function create()
     {
@@ -139,12 +136,35 @@ class OcDataController extends Controller
             $occonfig->update();
         }
 
-
-
         return response()->json([
             'status' => 200,
             'message' => 'The OcConfig has been updated successfully',
         ]);
+
+    }
+
+    public function destroy($id): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $rowDelete = \DB::select("EXEC [PartsProcessing].[oc].[sp_NukeOC_Config] '{$id}'");
+            if ($rowDelete){
+                $files= Storage::disk('sftp')->allFiles($id);
+                foreach ($files as $file){
+                    Storage::disk('sftp')->delete($file);
+                }
+                Storage::disk('sftp')->deleteDirectory($id);
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'The OcConfig has been delete successfully',
+                ]);
+            }else{
+                throw new \ErrorException('Error found');
+            }
+
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage())->withInput();
+        }
 
     }
 }

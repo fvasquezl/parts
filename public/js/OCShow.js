@@ -155,6 +155,47 @@ $("#enableUpdate").on('click', (e) => {
 })
 
 
+document.querySelector('#deleteOcConf').addEventListener('click',async(e)=> {
+let deletedOc;
+    Swal.fire({
+        title: "La eliminacion solo puede ser realizada por personal autorizado y requiere una contraseña para continuar. <br><br>Delete can only be performed by authorized personnel and require a password to continue. ",
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        showLoaderOnConfirm: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (result.value === "dLp173Vb") {
+                deleteOCConfiguration(OcConfigId)
+            }else{
+                Swal.fire({
+                    title: `Sorry the password is not correct`
+                })
+            }
+        }
+    })
+})
+
+async function deleteOCConfiguration(OcConfigId){
+    const result = await manageData("/oc/delete/"+OcConfigId,'DELETE',OcConfigId)
+    if (result){
+        Swal.fire(
+            'Deleted!',
+            result.message,
+            'success',
+        ).then(function (result1) {
+            if (result1) {
+                window.location.href = '/oc';
+            }
+        });
+    }
+
+}
+
+
 ///////////////////////  Modal /////////////////////
 
 
