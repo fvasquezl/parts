@@ -76,7 +76,7 @@ class OCHelperController extends Controller
 
 
         $data = DB::select(
-            DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCSKUs]('{$tv->id}',$oc_id)")
+            DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCSKUsFiltered]('{$tv->id}',$oc_id)")
         );
 
         return response()->json($data);
