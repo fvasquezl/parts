@@ -45,6 +45,7 @@
                                 <th>Model</th>
                                 <th>NoOfConfigOC</th>
                                 <th>ConfigOCs</th>
+                                <th>BuildQty</th>
                                 <th>Damage TV Qty</th>
                                 <th>Actions</th>
                             </tr>
@@ -186,6 +187,7 @@
                     {data:'Model',name:'Model'},
                     {data:'NoOfConfigOC',name:'NoOfConfigOC'},
                     {data:'ConfigOCs',name:'ConfigOCs'},
+                    {data:'BuildQty',name:'BuildQty'},
                     {data:'DamageTVQty',name:'DamageTVQty'},
                     {data:'actions', name: 'actions'},
 
@@ -197,7 +199,7 @@
                         // visible: false,
                     },
                     {
-                        targets: [6],
+                        targets: [7],
                         searchable: false,
                     },
                     {
