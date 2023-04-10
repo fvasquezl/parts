@@ -77,6 +77,7 @@
                                 <th>Model</th>
                                 <th>DMG Qty</th>
                                 <th>Ref SKU</th>
+                                <th>Ref SKU Display</th>
                                 <th>Images Qty</th>
                                 <th>Parts Qty</th>
                                 <th>Url</th>
@@ -241,6 +242,7 @@
                     {data: 'model', name: 'model'},
                     {data: 'QtyDamageTV', name: 'QtyDamageTV'},
                     {data: 'ref_sku', name: 'ref_sku'},
+                    {data: 'ref_sku_display', name: 'ref_sku_display'},
                     {data: 'image_count', name: 'image_count'},
                     {data: 'noofparts', name: 'noofparts'},
                     {data: 'url', name: 'url'},
@@ -255,16 +257,16 @@
                         // visible: false,
                     },
                     {
-                        targets: [13],
+                        targets: [14],
                         searchable: true,
                         visible: false
                     },
                     {
-                        targets: [5,11,12],
+                        targets: [5,12,13],
                         searchable: false,
                     },
                     {
-                        targets: [6,7,9,10,11],
+                        targets: [6,7,9,10,12],
                         className: "text-center",
                     },
                     {
