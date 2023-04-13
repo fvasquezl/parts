@@ -302,14 +302,18 @@ return [
             'url'  => 'kits',
             'icon' => 'fas fa-fw fa-layer-group',
         ],
-
         [
             'text' => 'Skus',
             'url'  => 'skus',
             'icon' => 'fas fa-fw fa-bolt',
             'can'  =>  'isAdmin'
         ],
-
+        [
+            'text' => 'Sku Master',
+            'url'  => 'sku-master',
+            'icon' => 'fas fa-fw fa-bolt',
+            'can'  =>  'isAdmin'
+        ],
         [
             'text' => 'OpenCell',
             'url'  => 'oc',

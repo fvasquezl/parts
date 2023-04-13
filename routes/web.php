@@ -22,6 +22,8 @@ use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
 use App\Http\Controllers\Skus\HelperController;
 use App\Http\Controllers\Skus\SKUStepsController;
+use App\Http\Controllers\SkusMaster\SkuMasterController;
+use App\Http\Controllers\SkusMaster\SkuMasterHelper;
 use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
 
@@ -151,6 +153,12 @@ Route::middleware('auth')
 
         Route::get('/requirements',[RequirementsController::class,'index'])->name('oc.requirements.index');
 
+        //MasterSKUS
+        Route::get('/sku-master',[SkuMasterController::class,'index'])->name('sku-master.index');
+
+        //MasterSkusHelper
+        Route::get('/sku-master/getSkus',[SkuMasterHelper::class,'getSkus'])->name('sku-master.getSkus');
+        Route::post('/sku-master/createSKUMaster',[SkuMasterHelper::class,'createSKUMaster'])->name('sku-master.createSKUMaster');
     });
 
 
