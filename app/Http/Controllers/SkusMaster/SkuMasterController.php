@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SkusMaster;
 use App\Http\Controllers\Controller;
 use App\Models\SKUCompatibility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SkuMasterController extends Controller
 {
@@ -30,5 +31,18 @@ class SkuMasterController extends Controller
         }
 
         return view('skuMaster.index');
+    }
+
+    public function store(Request $request)
+    {
+        if ($request->ajax()) {
+            $skus = $request->data['skus'];
+            $msSku = $request->data['MSku'];
+            foreach ($skus as $sku){
+                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$sku}','{$msSku}',''");
+            }
+            return response()->json(['success' => 'The SKUMaster has been update successfully'], 200);
+        }
+        return false;
     }
 }

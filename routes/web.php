@@ -155,6 +155,7 @@ Route::middleware('auth')
 
         //MasterSKUS
         Route::get('/sku-master',[SkuMasterController::class,'index'])->name('sku-master.index');
+        Route::post('/sku-master/store',[SkuMasterController::class,'store'])->name('sku-master.store');
 
         //MasterSkusHelper
         Route::get('/sku-master/getSkus',[SkuMasterHelper::class,'getSkus'])->name('sku-master.getSkus');

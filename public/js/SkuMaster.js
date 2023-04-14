@@ -1,4 +1,4 @@
-async function manageData(url, method='POST', item='') {
+async function manageData(url, method='POST', item={}) {
     try {
         const response = await fetch(`${url}`, {
             method: method,
@@ -13,6 +13,21 @@ async function manageData(url, method='POST', item='') {
         console.log(`Error: ${err}`)
     }
 }
+
+
+// async function updateBulkSkuMaster(url, kitsArray, sku) {
+//
+//     await manageData(kitsArray, sku, url,'POST').then(
+//         data => {
+//             if (!data.errors) {
+//                 console.log(`Msg: ${data}`)
+//                 $kitsBulkTable.ajax.reload()
+//             } else {
+//                 console.log(`Error: ${data.errors}`)
+//             }
+//         }
+//     )
+// }
 
 // async function deleteData(url) {
 //     try {

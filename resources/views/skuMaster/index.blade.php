@@ -285,13 +285,33 @@
                                     titleAttr: 'Update SKUMaster',
                                     className: 'btn btn-success',
                                     attr: {
-                                        id: 'create-kit-btn'
+                                        id: 'create-sku-master-btn'
                                     },
                                     init: function (api, node, config) {
                                         $(node).removeClass('btn-secondary buttons-html5')
                                     },
-                                    action: function ( e, dt, node, config ) {
-                                        // window.location = '/kits/create';
+                                    action:  async function ( e, dt, node, config ) {
+                                        let MSArray = [];
+                                        if(dt.column(0).checkboxes.selected().count()){
+                                            $.each(dt.column(0).checkboxes.selected(), function(index, rowId){
+                                                MSArray.push(rowId);
+                                            });
+
+                                            const res  = await manageData('/sku-master/store','POST',{'skus':MSArray,'MSku':data['MasterSku']})
+                                            if(res.success){
+                                                Swal.fire({
+                                                    position: 'top-end',
+                                                    icon: 'success',
+                                                    title: res.success,
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                                $('#ModalSkuMaster').modal('toggle');
+                                            }
+                                        }else{
+                                            alert("Please select some kits")
+                                        }
+
                                     }
                                 }
                                 ],
@@ -347,8 +367,13 @@
                     }).on('hidden.bs.modal', function (e) {
                     // $(this).find(".modal-title").html('');
                     // $(this).find(".modal-body").html("");
+                    $skuMasterTable.ajax.reload();
                 }).modal('show');
         })
+
+        function closeModal(){
+
+        }
 
     </script>
 @stop
