@@ -38,8 +38,10 @@ class SkuMasterController extends Controller
         if ($request->ajax()) {
             $skus = $request->data['skus'];
             $msSku = $request->data['MSku'];
+            $parentID = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_MasterRefSKU] '{$msSku}'")[0];
+
             foreach ($skus as $sku){
-                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$sku}','{$msSku}',''");
+                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$parentID->MasterSkuID}','{$sku}',''");
             }
             return response()->json(['success' => 'The SKUMaster has been update successfully'], 200);
         }
