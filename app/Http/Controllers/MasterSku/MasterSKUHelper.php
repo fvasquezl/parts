@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\SkusMaster;
+namespace App\Http\Controllers\MasterSku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sku;
 use Illuminate\Http\Request;
 
-class SkuMasterHelper extends Controller
+class MasterSKUHelper extends Controller
 {
     public function getSkus(Request $request)
     {
@@ -36,7 +36,7 @@ class SkuMasterHelper extends Controller
     }
 
 
-    public function createSKUMaster(Request $request): bool|\Illuminate\Http\JsonResponse
+    public function createMasterSKU(Request $request): bool|\Illuminate\Http\JsonResponse
     {
         if ($request->ajax()) {
             try {

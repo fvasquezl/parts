@@ -15,6 +15,29 @@ async function manageData(url, method='POST', item={}) {
 }
 
 
+function manageBrand($table) {
+    selBrand = document.getElementById('search_brand');
+    selModel = document.getElementById('search_model');
+
+    if(selBrand.value !== '0'){
+        $table.column(3).search(`${selBrand.value}`).draw()
+    }
+}
+
+function manageModel($table) {
+    selBrand = document.getElementById('search_brand');
+    selModel = document.getElementById('search_model');
+
+    if(selModel.value !== '0'){
+        $table.column([4]).search(`${selModel.value}`).draw();
+    }
+    if(selModel.value === '0'){
+        $table.columns([4]).search("").draw();
+        document.querySelectorAll('#search_model option').forEach(o =>{if (o.value !=0){ o.remove()}});
+    }
+}
+
+
 // async function updateBulkSkuMaster(url, kitsArray, sku) {
 //
 //     await manageData(kitsArray, sku, url,'POST').then(

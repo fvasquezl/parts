@@ -22,8 +22,8 @@ use App\Http\Controllers\ShelfController;
 use App\Http\Controllers\SkuController;
 use App\Http\Controllers\Skus\HelperController;
 use App\Http\Controllers\Skus\SKUStepsController;
-use App\Http\Controllers\SkusMaster\SkuMasterController;
-use App\Http\Controllers\SkusMaster\SkuMasterHelper;
+use App\Http\Controllers\MasterSku\MasterSKUController;
+use App\Http\Controllers\MasterSku\MasterSKUHelper;
 use App\Http\Controllers\VersionController;
 use Illuminate\Support\Facades\Route;
 
@@ -154,12 +154,14 @@ Route::middleware('auth')
         Route::get('/requirements',[RequirementsController::class,'index'])->name('oc.requirements.index');
 
         //MasterSKUS
-        Route::get('/sku-master',[SkuMasterController::class,'index'])->name('sku-master.index');
-        Route::post('/sku-master/store',[SkuMasterController::class,'store'])->name('sku-master.store');
+        Route::get('/master-sku',[MasterSKUController::class,'index'])->name('master-sku.index');
+//        Route::get('/sku-master/create/',[MasterSKUController::class,'create'])->name('sku-master.create');
+        Route::get('/master-sku/{id}/edit',[MasterSKUController::class,'edit'])->name('master-sku.edit');
+        Route::post('/master-sku/store',[MasterSKUController::class,'store'])->name('master-sku.store');
 
         //MasterSkusHelper
-        Route::get('/sku-master/getSkus',[SkuMasterHelper::class,'getSkus'])->name('sku-master.getSkus');
-        Route::post('/sku-master/createSKUMaster',[SkuMasterHelper::class,'createSKUMaster'])->name('sku-master.createSKUMaster');
+        Route::get('/master-sku/getSkus',[MasterSKUHelper::class,'getSkus'])->name('master-sku.getSkus');
+        Route::post('/master-sku/createMasterSKU',[MasterSKUHelper::class,'createMasterSKU'])->name('master-sku.createMasterSKU');
     });
 
 

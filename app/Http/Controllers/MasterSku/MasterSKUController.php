@@ -1,36 +1,46 @@
 <?php
 
-namespace App\Http\Controllers\SkusMaster;
+namespace App\Http\Controllers\MasterSku;
 
 use App\Http\Controllers\Controller;
-use App\Models\SKUCompatibility;
+use App\Models\MasterSku;
+use App\Models\Sku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SkuMasterController extends Controller
+class MasterSKUController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
 
-                $data = SKUCompatibility::query();
+            $data = MasterSku::query();
 
             return datatables($data)
                 ->addIndexColumn()
                 ->addColumn('actions', function () {
-                    $btns ='<div class="btn-group btn-group-sm">
+                    $btns = '<div class="btn-group btn-group-sm">
                             <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
                             <a href="#" class="btn btn-default show-btn"><i class="fas fa-trash-alt"></i></a>';
-                    return $btns.'</div>';
+                    return $btns . '</div>';
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
-                    return $data->id;
+                    return $data->ref_parentid;
                 })
                 ->toJson();
         }
 
-        return view('skuMaster.index');
+        return view('masterSku.index');
+    }
+
+
+    public function edit($id)
+    {
+
+        $brands = Sku::query()->select('Brand')->distinct()->get();
+
+        return view("masterSku.edit", compact('id','brands'));
     }
 
     public function store(Request $request)
@@ -38,13 +48,15 @@ class SkuMasterController extends Controller
         if ($request->ajax()) {
             $skus = $request->data['skus'];
             $msSku = $request->data['MSku'];
-            $parentID = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_MasterRefSKU] '{$msSku}'")[0];
+            $parentID = MasterSku::where('MasterSKU',$msSku)->first();
+//            $parentID = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_MasterRefSKU] '{$msSku}'")[0];
 
-            foreach ($skus as $sku){
-                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$parentID->MasterSkuID}','{$sku}',''");
+            foreach ($skus as $sku => $note) {
+                $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$parentID['ref_parentid']}','{$sku}','{$note}'");
             }
             return response()->json(['success' => 'The SKUMaster has been update successfully'], 200);
         }
         return false;
+
     }
 }

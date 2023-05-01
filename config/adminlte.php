@@ -310,7 +310,7 @@ return [
         ],
         [
             'text' => 'Sku Master',
-            'url'  => 'sku-master',
+            'url'  => 'master-sku',
             'icon' => 'fas fa-fw fa-bolt',
             'can'  =>  'isAdmin'
         ],
