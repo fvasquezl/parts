@@ -49,8 +49,6 @@ class MasterSKUController extends Controller
             $skus = $request->data['skus'];
             $msSku = $request->data['MSku'];
             $parentID = MasterSku::where('MasterSKU',$msSku)->first();
-//            $parentID = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_MasterRefSKU] '{$msSku}'")[0];
-
             foreach ($skus as $sku => $note) {
                 $data = DB::select("EXEC [PartsProcessing].[prt].[sp_Create_RefSkuComptability] '{$parentID['ref_parentid']}','{$sku}','{$note}'");
             }

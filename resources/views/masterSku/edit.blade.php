@@ -98,7 +98,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" id="submit-form" class="btn btn-primary" disabled>Submit</button>
                         </div>
                     </form>
                 </div>
@@ -180,58 +180,7 @@
                     extend: 'pageLength',
                     titleAttr: 'Show Records',
                     className: 'btn btn-secondary buttons-collection dropdown-toggle buttons-colvis',
-                },
-                    // {
-                    //     // text: '<i class="fas fa-check-circle"></i> Update SKUMasterss',
-                    //     // title: 'Update SKUMaster',
-                    //     // titleAttr: 'Update SKUMaster',
-                    //     // className: 'btn btn-success',
-                    //     // attr: {
-                    //     //     id: 'create-master-sku-btn'
-                    //     // },
-                    //     // init: function (api, node, config) {
-                    //     //     $(node).removeClass('btn-secondary buttons-html5')
-                    //     // },
-                    //     // action:  async function ( e, dt, node, config ) {
-                    //     //     let MSArray = '<table class="table table-striped table-hover table-bordered nowrap" id="commentsTable" xmlns="http://www.w3.org/1999/html">' +
-                    //     //         '<thead>' +
-                    //     //         '<tr>' +
-                    //     //         '<th>SKU</th>' +
-                    //     //         '<th>Comments</th>' +
-                    //     //         '<th>Actions</th>' +
-                    //     //         '</tr>' +
-                    //     //         '</thead>' +
-                    //     //         '</tbody>'
-                    //     //
-                    //     //
-                    //     //     if(dt.column(0).checkboxes.selected().count()){
-                    //     //         $.each(dt.column(0).checkboxes.selected(), function(index, rowId){
-                    //     //             MSArray += '<tr><td>'+rowId+'</td><td><input type="email" class="form-control" id="'+rowId+'"></td><td><a href="#" class="btn btn-default removeSkuComment"><i class="fas fa-trash-alt"></i></a></td></tr>'
-                    //     //         });
-                    //     //
-                    //     //         MSArray.concat('</tbody></table>')
-                    //     //         console.log(MSArray)
-                    //     //         addComments(MSArray);
-                    //     //
-                    //     //
-                    //     //         // const res  = await manageData('/master-sku/store','POST',{'skus':MSArray,'MSku':data['MasterSku']})
-                    //     //         // if(res.success){
-                    //     //         //     Swal.fire({
-                    //     //         //         position: 'top-end',
-                    //     //         //         icon: 'success',
-                    //     //         //         title: res.success,
-                    //     //         //         showConfirmButton: false,
-                    //     //         //         timer: 1500
-                    //     //         //     })
-                    //     //         //     // $('#ModalSkuMaster').modal('toggle');
-                    //     //         // }
-                    //     //     }else{
-                    //     //         alert("Please select some kits")
-                    //     //     }
-                    //     //
-                    //     // }
-                    // }
-                ],
+                }],
             },
 
             ajax: {
@@ -288,6 +237,7 @@
                 if(mSku.length === 1){
                     $('#search_brand').prop('disabled', true);
                     $('#search_model').prop('disabled', true);
+                    $('#submit-form').prop('disabled',false)
                 }
 
                 let newRow = '<div class="form-row" id="skuRow'+skuId+'">' +
@@ -366,7 +316,6 @@
                 document.getElementById('search_model').innerHTML = options
             }).catch(error => console.log(error))
 
-
             manageBrand($skusTable)
         })
 
@@ -379,6 +328,7 @@
             $('#comments').find('.card-body').html('')
             $('#search_brand').prop('disabled', false);
             $('#search_model').prop('disabled', false);
+            $('#submit-form').prop('disabled',true)
         });
 
         $('.mySelect2').select2({
@@ -401,18 +351,21 @@
                 skuData[key] = prop;
             }
             const myData  = await manageData('/master-sku/store','POST',{'skus':skuData,'MSku':'{{$id}}'})
+            console.log(myData.success)
             if(myData){
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
-                    title: myData,
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'Success',
+                    text: myData.success,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.replace("/master-sku");
+                    }
                 })
             }
             document.getElementById('btn-reset-form').click()
-            // $skusTable.ajax.reload()
-            // $('#ajaxModalSkuEdit').modal('toggle');
 
         })
 
