@@ -260,7 +260,7 @@
                         visible: false
                     },
                     {
-                        targets: [5,11,12],
+                        targets: [5,6,9,10,11,12],
                         searchable: false,
                     },
                     {

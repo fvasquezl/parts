@@ -54,5 +54,13 @@ class MasterSKUHelper extends Controller
         return false;
     }
 
+    public function getSkusData(Request $request){
+
+        //Necesito un SP que obtega todos los skus y comentarios de un MasterSKU, marca y modelo
+
+
+        return response()->json($request->all());
+    }
+
 
 }

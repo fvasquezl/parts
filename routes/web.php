@@ -162,6 +162,7 @@ Route::middleware('auth')
         //MasterSkusHelper
         Route::get('/master-sku/getSkus',[MasterSKUHelper::class,'getSkus'])->name('master-sku.getSkus');
         Route::post('/master-sku/createMasterSKU',[MasterSKUHelper::class,'createMasterSKU'])->name('master-sku.createMasterSKU');
+        Route::post('/master-sku/getSkusData',[MasterSKUHelper::class,'getSkusData'])->name('master-sku.getSkusData');
     });
 
 

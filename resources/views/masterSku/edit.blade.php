@@ -152,6 +152,25 @@
             "X-CSRF-TOKEN": token
         }
 
+        $( document ).ready(function(e) {
+
+            fetch('/master-sku/getSkusData', {
+                method: 'POST',
+                body: JSON.stringify({sku: '{{$id}}'}),
+                headers:headers
+            }).then(response=>{
+                return response.json()
+            }).then(data =>{
+                console.log(data)
+                // let options = "<option value='0'>Model</option>";
+                // for (let i in data){
+                //     options += '<option value="'+data[i].model+'">'+data[i].model+'</option>';
+                // }
+                // document.getElementById('search_model').innerHTML = options
+            }).catch(error => console.log(error))
+
+        });
+
         $skusTable = $('#skusTable').DataTable({
             pageLength: 100,
             lengthMenu: [
