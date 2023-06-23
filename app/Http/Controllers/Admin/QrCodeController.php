@@ -19,11 +19,13 @@ class QrCodeController extends Controller
      */
     public function print(Kit $kit)
     {
+        $ref_sku =  $kit->ref_sku;
         $kitlcn = $kit->KitLCN;
         $brand = $kit->Brand;
         $model  = $kit->Model;
 
         $parts = $kit->parts()->get()->pluck('PartName')->toArray();
+        $parts[array_search('Bluetooth Module', $parts)] = 'Bluetooth';
 //        $labels=0;
 //        $label2=0;
 //
@@ -39,7 +41,7 @@ class QrCodeController extends Controller
 //        }
 
 
-        return view('qrcode.print',compact('kitlcn','brand','model','parts'));
+        return view('qrcode.print',compact('kitlcn','brand','model','parts','ref_sku'));
 
     }
 

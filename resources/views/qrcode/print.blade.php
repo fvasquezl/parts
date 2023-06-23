@@ -39,9 +39,9 @@
         }
 
         ul {
-            width: 250px;
+            width: 280px;
             overflow: hidden;
-            padding: 5px;
+            padding: 2px;
         }
         li {
             float: left;
@@ -56,7 +56,7 @@
             border-right:  1px ;
         }
         #double li:nth-child(even) {
-            margin-left: 5px;
+            margin-left: 1px;
         }
     </style>
 </head>
@@ -85,11 +85,15 @@
                 {!! QrCode::size(60)->generate($kitlcn);!!}
             </td>
             <td class="text-left">
-                <ul><br>
-                    <li>{{$kitlcn}}</li>
-                    <li>{{$brand}}</li>
-                    <li>{{$model}}</li>
-                </ul>
+                <div class="text-nowrap" style="font-weight: bold">&nbsp;SKU:&nbsp;{{$ref_sku}}</div>
+                <div class="text-nowrap" style="width: 8rem;">&nbsp;{{$kitlcn}}</div>
+                <div class="text-nowrap" style="width: 8rem;">&nbsp;{{$brand}}&nbsp;{{$model}}</div>
+{{--                <ul class="mt-1">--}}
+{{--                    <li>SKU:{{$ref_sku}}</li><br>--}}
+{{--                    <li>{{$kitlcn}}</li><br>--}}
+{{--                    <li>{{$brand}}</li>--}}
+{{--                    <li>{{$model}}</li>--}}
+{{--                </ul>--}}
             </td>
         </tr>
 
