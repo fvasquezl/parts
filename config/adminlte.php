@@ -327,6 +327,12 @@ return [
             'can'  =>  'isAdmin'
         ],
         [
+            'text' => 'KitOrders',
+            'url'  => 'kit-order',
+            'icon' => 'fa fa-shopping-cart',
+            'can'  =>  'isAdmin'
+        ],
+        [
             'text'    => 'Inventory',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [

@@ -12,6 +12,8 @@ use App\Http\Controllers\BoxController;
 use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
+use App\Http\Controllers\KitOrder\KitOrderController;
+use App\Http\Controllers\KitOrder\KOHelperController;
 use App\Http\Controllers\Oc\OCAccessoriesController;
 use App\Http\Controllers\Oc\OcDataController;
 use App\Http\Controllers\Oc\OCHelperController;
@@ -163,6 +165,17 @@ Route::middleware('auth')
         Route::get('/master-sku/getSkus',[MasterSKUHelper::class,'getSkus'])->name('master-sku.getSkus');
         Route::post('/master-sku/createMasterSKU',[MasterSKUHelper::class,'createMasterSKU'])->name('master-sku.createMasterSKU');
         Route::post('/master-sku/getSkusData',[MasterSKUHelper::class,'getSkusData'])->name('master-sku.getSkusData');
+
+        //KitOrders
+        Route::get('/kit-order',[KitOrderController::class,'index'])->name('kit-order.index');
+        Route::get('/kit-order/create',[KitOrderController::class,'create'])->name('kit-order.create');
+        Route::post('/kit-order/store',[KitOrderController::class,'store'])->name('kit-order.store');
+        Route::get('/kit-order/{kitOrder}/edit',[KitOrderController::class,'edit'])->name('kit-order.edit');
+
+        //KitOrdersHelper
+        Route::get('/kit-order/getSkus',[KOHelperController::class,'getSkus'])->name('kit-order.getSkus');
+        Route::get('/kit-order/getKits',[KOHelperController::class,'getKits'])->name('kit-order.getKits');
+
     });
 
 
