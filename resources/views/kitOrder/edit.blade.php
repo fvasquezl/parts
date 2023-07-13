@@ -79,8 +79,7 @@
                                 <button class="btn btn-primary" type="button" id="addOrderDetails" ><i class="fa fa-plus"></i> AddItems</button>
                             </div>
 
-                        <form name="OrderDetailsForm" role="form" method="POST" id="OrderDetailsForm" action="">
-                            @csrf
+                        <form name="orderDetailsForm" role="form" method="POST" id="orderDetailsForm" action="">
                             <table class="table mt-2" id="orderDetailsTable">
                                 <tr>
                                     <th scope="col">SKU/LCN</th>
@@ -136,9 +135,18 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/js/dataTables.checkboxes.min.js"></script>
-<script src="{{ asset('js/orderDetails.js') }}"></script>
+    <script src="{{ asset('js/orderDetails.js') }}"></script>
 
     <script>
+
+
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        }
 
     function checkSelectedOption() {
             const radios = document.getElementsByName("optionType");
@@ -167,9 +175,36 @@
     })
 
 
+    document.getElementById('orderDetailsForm').addEventListener('submit',async(e)=>{
+        e.preventDefault()
+
+        const fd = new FormData(e.target);
+        let formData = {};
+        for (let [key, prop] of fd) {
+            formData[key] = prop;
+        }
+
+        const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData})
+        console.log(myData)
+
+        if(myData){
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: myData.success,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace("/kit-order");
+                }
+            })
+        }
+        S
+    })
+
 
 
     </script>
 
 @stop
-

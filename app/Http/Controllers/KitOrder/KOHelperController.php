@@ -40,7 +40,7 @@ class KOHelperController extends Controller
 
         return datatables($data)
             ->addColumn('id', function ($data) {
-                return $data->kitid;
+                return $data->kitlcn;
             },0)
             ->addIndexColumn()
             ->setRowId(function ($data) {

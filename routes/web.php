@@ -171,6 +171,7 @@ Route::middleware('auth')
         Route::get('/kit-order/create',[KitOrderController::class,'create'])->name('kit-order.create');
         Route::post('/kit-order/store',[KitOrderController::class,'store'])->name('kit-order.store');
         Route::get('/kit-order/{kitOrder}/edit',[KitOrderController::class,'edit'])->name('kit-order.edit');
+        Route::patch('/kit-order/{kitOrder}',[KitOrderController::class,'update'])->name('kit-order.update');
 
         //KitOrdersHelper
         Route::get('/kit-order/getSkus',[KOHelperController::class,'getSkus'])->name('kit-order.getSkus');

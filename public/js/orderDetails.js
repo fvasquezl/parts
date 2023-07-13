@@ -1,3 +1,6 @@
+let $lcnBulkTable
+let $skuBulkTable
+
 function lcn(){
     $('#kitOrderModal')
         .on('shown.bs.modal', function () {
@@ -25,7 +28,7 @@ function lcn(){
                 '</tr>\n' +
                 '</thead>\n' +
                 '</table>')
-            $kitsBulkTable = $('#lcnTable').DataTable({
+            $lcnBulkTable = $('#lcnTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
@@ -71,15 +74,12 @@ function lcn(){
                             action: function ( e, dt, node, config ) {
                                 let lcnArray = [];
                                 if(dt.column(0).checkboxes.selected().count()){
-                                    $.each(dt.column(0).checkboxes.selected(), function(index, rowId){
+                                    $.each(dt.column(0).checkboxes.selected(), function(index, rowId ){
                                         lcnArray.push(rowId);
                                     });
-                                    addItemsToForm(lcnArray)
+                                    addItemsToForm(lcnArray,'lcn')
 
-                                    // updateBulkKits('/sku/kitBulkUpdate',kitsArray,rowId)
-
-                                    // $skusTable.ajax.reload();
-
+                                    $('#kitOrderModal').modal('hide');
                                 }else{
                                     alert("Please select some kits")
                                 }
@@ -134,7 +134,7 @@ function lcn(){
         }).on('hidden.bs.modal', function (e) {
         $(this).find(".modal-title").html('');
         $(this).find(".modal-body").html("");
-        $kitsBulkTable='';
+        $lcnBulkTable = '';
     }).modal('show');
 }
 
@@ -172,7 +172,7 @@ function sku(){
                 '</tr>\n' +
                 '</thead>\n' +
                 '</table>')
-            $kitsBulkTable = $('#skusTable').DataTable({
+            $skuBulkTable = $('#skusTable').DataTable({
                 order: [[0, 'desc']],
                 pageLength: 100,
                 lengthMenu: [
@@ -222,7 +222,8 @@ function sku(){
                                         kitsArray.push(rowId);
                                     });
 
-                                     addItemsToForm(kitsArray)
+                                     addItemsToForm(kitsArray,'sku')
+                                    $('#kitOrderModal').modal('hide');
 
                                     // $skusTable.ajax.reload();
 
@@ -287,41 +288,76 @@ function sku(){
         }).on('hidden.bs.modal', function (e) {
         $(this).find(".modal-title").html('');
         $(this).find(".modal-body").html("");
-        $kitsBulkTable='';
+        $skuBulkTable='';
     }).modal('show');
 }
 
 
-function addItemsToForm(itemsArray){
-    ++i
-    itemsArray.map(item =>(
-        $('#orderDetailsTable').append(
+function addItemsToForm(itemsArray,kind){
+    itemsArray.map(item =>{
+        ++i
+        return $('#orderDetailsTable').append(
+            (kind ==='lcn')?
+
             `<tr>
                  <td>
-                     <input type="text" name="od[`+i+`][name]" class="form-control" value="${item}">
+                     <input type="text" name="`+kind+`[`+i+`][name]" class="form-control" value="${item}">
                  </td>
                  <td>
-                     <input type="number" name="od[`+i+`][qty]" class="form-control" value=1>
+                     <input type="number" name="`+kind+`[`+i+`][qty]" class="form-control" value=1 readonly>
+                 </td>
+                 <td>
+                     <button class="btn btn-danger remove-table-row" type="button" ><i class="fa fa-trash-alt"></i></button>
+                 </td>
+             </tr>` :
+                `<tr>
+                 <td>
+                     <input type="text" name="`+kind+`[`+i+`][name]" class="form-control" value="${item}">
+                 </td>
+                 <td>
+                     <input type="number" name="`+kind+`[`+i+`][qty]" class="form-control" value=1>
                  </td>
                  <td>
                      <button class="btn btn-danger remove-table-row" type="button" ><i class="fa fa-trash-alt"></i></button>
                  </td>
              </tr>`
         )
-  ))
-    // ++i
-    // $('#orderDetailsTable').append(
-    //     ` <tr>
-    //             <td>
-    //                 <input type="text" name="od[`+i+`][name]" class="form-control" value="`[]``">
-    //             </td>
-    //             <td>
-    //                 <input type="number" name="od[`+i+`][qty]" class="form-control" value=1>
-    //             </td>
-    //             <td>
-    //                 <button class="btn btn-danger remove-table-row" type="button" ><i class="fa fa-trash-alt"></i></button>
-    //             </td>
-    //         </tr>`
-    // )
+    })
+}
+
+
+async function manageData(url, method, item) {
+    try {
+        const response = await fetch(`${url}`, {
+            method: method,
+            body: JSON.stringify({
+                data: item
+            }),
+            headers: headers
+        })
+        const data = await response.json()
+        return data
+    } catch (err) {
+        console.log(`Error: ${err}`)
+    }
+}
+
+function countTableRows(formId){
+    let form = document.getElementById(formId)
+    let table = form.querySelector('table')
+    let tableRows = table.getElementsByTagName("tr")
+    return tableRows.length -1
+}
+
+function inputsToArray(rowCount){
+    const elements =[]
+    for (let i = 1; i <= rowCount; i++) {
+        const options=[]
+        options['name']=document.getElementById('od['+i+'][name]').value
+        options['qty']=document.getElementById('od['+i+'][qty]').value
+        elements.push(options)
+    }
+    return elements
+
 }
 

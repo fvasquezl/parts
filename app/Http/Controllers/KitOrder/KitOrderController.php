@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Exceptions\Exception;
 
 class KitOrderController extends Controller
@@ -65,19 +66,50 @@ class KitOrderController extends Controller
 
     public function edit(KitOrder $kitOrder): Factory|View|Application
     {
-
         return view('kitOrder.edit', compact('kitOrder'));
+    }
 
-//
-//        $kitOrder = new KitOrder;
-//        $kitOrder->order_status= 'In Process';
-//        $kitOrder->created_by= $request->user()->id;
-//        $kitOrder->save();
-//
-//        if($request->json()){
-//            return $kitOrder;
-//        }
-//        return false;
+    public function update(Request $request,KitOrder $kitOrder,)
+    {
+        $sku = array();
+        $lcn = array();
+
+        foreach ($request->data['formData'] as $key => $value) {
+            if (str_starts_with($key, 'sku')) {
+                $sku[$key] = $value;
+            } elseif (str_starts_with($key, 'lcn')) {
+                $lcn[$key] = $value;
+            }
+        }
+
+        $newLcn = array();
+        $newSku = array();
+
+        foreach ($lcn as $key => $value) {
+            if (str_contains($key, '[name]')) {
+                $newKey = str_replace(array('[name]', 'lcn[', ']'), '', $key);
+                $newLcn[$value] = (int) $lcn["lcn[$newKey][qty]"];
+            }
+        }
+        foreach ($sku as $key => $value) {
+            if (str_contains($key, '[name]')) {
+                $newKey = str_replace(array('[name]', 'sku[', ']'), '', $key);
+                $newSku[$value] = (int) $sku["sku[$newKey][qty]"];
+            }
+        }
+
+            if(count($newLcn)){
+                foreach ($newLcn as $key => $value) {
+                    $data = DB::insert("EXEC [PartsProcessing].[prt].[sp_CreateKitOrderDetails] '{$kitOrder->order_id}', 'LCN', '{$key}', {$value}");
+                }
+            }
+            if(count($newSku)){
+                foreach ($newSku as $key => $value) {
+                    $data = DB::insert("EXEC [PartsProcessing].[prt].[sp_CreateKitOrderDetails] '{$kitOrder->order_id}', 'SKU', '$key', {$value}");
+                }
+            }
+            return response()->json(['success' => 'The SKUMaster has been update successfully'],200);
+
     }
 
 }

@@ -146,12 +146,7 @@
                     {data: 'order_status',name: 'order_status'},
                 ]
             });
-
-
         });
-
-
-
 
     </script>
 @stop
