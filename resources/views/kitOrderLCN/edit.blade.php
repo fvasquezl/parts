@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Kit Orders details')
+@section('title', 'Edit Kit Orders')
 
 @section('content_header')
 @stop
@@ -90,7 +90,7 @@
                                 <form class="form-inline">
                                     <label class="sr-only" for="addLcn">Name</label>
                                     <input type="text" class="form-control mb-2 mr-sm-2" name="addlcn" id="addLcn" placeholder="AddLCN">
-                                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+
                                 </form>
                             </div>
                         </div>
