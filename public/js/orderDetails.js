@@ -323,6 +323,8 @@ function addItemsToForm(itemsArray,kind){
              </tr>`
         )
     })
+
+    document.getElementById('submitButton').disabled=false
 }
 
 

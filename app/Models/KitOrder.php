@@ -17,4 +17,10 @@ class KitOrder extends Model
         'updated_at',
         'fullfilled_at'
     ];
+
+    public function kitOrderDetails()
+    {
+        return $this->hasMany(KitOrderDetail::class ,'order_id', 'order_id');
+    }
+
 }

@@ -30,13 +30,13 @@ class KitOrderController extends Controller
                 })
                 ->addColumn('actions', function () {
                     return  '<div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-info qrcode"><i class="fas fa-fw fa-print"></i></a>
+                             <a href="#" class="btn btn-info edit-btn"><i class="fas fa-edit"></i></a>
                             <a href="#" class="btn btn-default show-btn"><i class="fas fa-eye"></i></a></div>';
 
                 })
                 ->rawColumns(['actions'])
                 ->setRowId(function ($data) {
-                    return $data->kitid;
+                    return $data->order_id;
                 })
                 ->toJson();
 
@@ -63,7 +63,6 @@ class KitOrderController extends Controller
         return false;
     }
 
-
     public function edit(KitOrder $kitOrder): Factory|View|Application
     {
         return view('kitOrder.edit', compact('kitOrder'));
@@ -71,6 +70,10 @@ class KitOrderController extends Controller
 
     public function update(Request $request,KitOrder $kitOrder,)
     {
+
+        $kitOrder->reforder_id  =  $request->data['refOrder'];
+        $kitOrder->save();
+
         $sku = array();
         $lcn = array();
 
@@ -108,6 +111,10 @@ class KitOrderController extends Controller
                     $data = DB::insert("EXEC [PartsProcessing].[prt].[sp_CreateKitOrderDetails] '{$kitOrder->order_id}', 'SKU', '$key', {$value}");
                 }
             }
+
+
+
+
             return response()->json(['success' => 'The SKUMaster has been update successfully'],200);
 
     }

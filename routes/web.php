@@ -13,6 +13,7 @@ use App\Http\Controllers\BoxShelfController;
 use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\KitOrder\KitOrderController;
+use App\Http\Controllers\KitOrder\KitOrderLCNController;
 use App\Http\Controllers\KitOrder\KOHelperController;
 use App\Http\Controllers\Oc\OCAccessoriesController;
 use App\Http\Controllers\Oc\OcDataController;
@@ -176,6 +177,9 @@ Route::middleware('auth')
         //KitOrdersHelper
         Route::get('/kit-order/getSkus',[KOHelperController::class,'getSkus'])->name('kit-order.getSkus');
         Route::get('/kit-order/getKits',[KOHelperController::class,'getKits'])->name('kit-order.getKits');
+
+        //KitOrderLCN
+        Route::get('/kit-orderLCN/{kitOrder}/edit',[KitOrderLCNController::class,'edit'])->name('kit-orderLCN.edit');
 
     });
 

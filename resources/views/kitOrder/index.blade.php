@@ -3,7 +3,6 @@
 @section('title', 'Kit Orders')
 
 @section('content_header')
-    <h1>Kir Orders</h1>
 @stop
 
 @section('content')
@@ -97,30 +96,13 @@
              const order = await createOrder();
              const {order_id} = order
              window.location.replace(`kit-order/${order_id}/edit`);
-
-
-            // $('#kitOrderModal')
-            //     .on('shown.bs.modal', function () {
-            //
-            //
-            //         // $('#ocId').val(OcConfigId)
-            //         // getMPartName()
-            //         // $aPartName.select2({theme: 'bootstrap4'})
-            //         // $mitSKU.select2({theme: 'bootstrap4'})
-            //         // $aQtyRequired.keydown(function(e){
-            //         //     if(e.keyCode === 13) {
-            //         //         e.preventDefault();
-            //         //         $aNotes.focus()
-            //         //         return false;
-            //         //     }
-            //         // })
-            //
-            //     }).on('hidden.bs.modal', function () {
-            //     // $mitSKU.html('<option value="">MITSKU</option>')
-            //     // $('#accDataForm').trigger("reset");
-            // }).modal('show');
         })
 
+        $(document).on('click', '.edit-btn', function (e) {
+            let $tr = $(this).closest('tr');
+            let order_id = $tr.attr('id');
+            window.location.replace(`kit-orderLCN/${order_id}/edit`);
+        });
 
 
         $(document).ready( function () {

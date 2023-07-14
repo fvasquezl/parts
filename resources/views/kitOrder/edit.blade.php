@@ -42,9 +42,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="orderRef" class="col-sm-2 col-form-label">Order Reference</label>
+                                            <label for="orderRef" class="col-sm-2 col-form-label">Reference Order #</label>
                                             <div class="col-sm-10">
-                                                <input type="id" value="{{$kitOrder->reforder_id}}" class="form-control" name="orderRef" id="orderRef" readonly>
+                                                <input type="id" value="{{$kitOrder->reforder_id}}" class="form-control" name="orderRef" id="orderRef">
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                 </tr>
 
                             </table>
-                                <button type="submit"  class="btn btn-primary">Submit Order</button>
+                                <input type="submit" id="submitButton" class="btn btn-primary" value="Submit Order" disabled="disabled" />
                         </form>
                     </div>
                 </div>
@@ -140,13 +140,13 @@
     <script>
 
 
-        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        let headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json, text-plain, */*",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": token
-        }
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json, text-plain, */*",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": token
+    }
 
     function checkSelectedOption() {
             const radios = document.getElementsByName("optionType");
@@ -184,8 +184,9 @@
             formData[key] = prop;
         }
 
-        const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData})
-        console.log(myData)
+        const refOrder= document.getElementById('orderRef').value
+        const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData,refOrder})
+
 
         if(myData){
             Swal.fire({
@@ -200,7 +201,7 @@
                 }
             })
         }
-        S
+
     })
 
 
