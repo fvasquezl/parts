@@ -87,93 +87,116 @@
                                 </table>
                             </div>
                             <div class="col-sm">
-                                <form class="form-inline">
-                                    <label class="sr-only" for="addLcn">Name</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2" name="addlcn" id="addLcn" placeholder="AddLCN">
+                                <input type="text" class="form-control mb-3" name="addlcn" id="addLcn"
+                                       placeholder="Scan LCN">
 
+                                <form>
+                                    <div class="row">
+                                        <div class="col-lg-7" id="lcn_inputs">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <button class="btn btn-success save-order">Save Order</button>
+                                        <button class="btn btn-danger save-order">Cancel</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-                        </div>
-
-<div class="text-right mb-3">
-    <button class="btn btn-success save-order">Save Order</button>
-    <button class="btn btn-danger save-order">Cancel</button>
-</div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            @include('kitOrder.shared.kitOrderModal')
-            @stop
+        @include('kitOrder.shared.kitOrderModal')
+        @stop
 
-            @section('css')
-                <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
-                <link rel="stylesheet"
-                      href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"/>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
-                <link
-                    href="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/css/dataTables.checkboxes.min.css"
-                    rel="stylesheet">
+        @section('css')
+{{--            <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">--}}
+{{--            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.css">--}}
+{{--            <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap4.min.css">--}}
+{{--            <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">--}}
+{{--            <link rel="stylesheet"--}}
+{{--                  href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"/>--}}
+{{--            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>--}}
+{{--            <link--}}
+{{--                href="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/css/dataTables.checkboxes.min.css"--}}
+{{--                rel="stylesheet">--}}
 
-                <style>
-                    .verybigmodal {
-                        max-width: 80%;
-                    }
+            <style>
+                .verybigmodal {
+                    max-width: 80%;
+                }
 
-                    input[type=checkbox] {
-                        width: 17px;
-                        height: 17px;
-                    }
+                input[type=checkbox] {
+                    width: 17px;
+                    height: 17px;
+                }
 
-                    .linea {
-                        margin: 0px 20px;
-                        width: 90px;
-                        border-top: 1px solid #999;
-                        position: relative;
-                        top: 10px;
-                        float: left;
-                    }
+                .linea {
+                    margin: 0px 20px;
+                    width: 90px;
+                    border-top: 1px solid #999;
+                    position: relative;
+                    top: 10px;
+                    float: left;
+                }
 
-                    .leyenda {
-                        font-weight: bold;
-                        float: left;
-                    }
-                </style>
-            @stop
+                .leyenda {
+                    font-weight: bold;
+                    float: left;
+                }
+            </style>
+        @stop
 
-            @section('js')
-                <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-                <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-                <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-                <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap4.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-                <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-                <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
-                <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
-                <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
-                <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
-                <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-                <script
-                    src="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/js/dataTables.checkboxes.min.js"></script>
-                <script src="{{ asset('js/orderDetails.js') }}"></script>
+        @section('js')
+{{--            <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap4.min.js"></script>--}}
+{{--            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>--}}
+{{--            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
+{{--            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>--}}
+{{--            <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>--}}
+{{--            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+{{--            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+{{--            <script--}}
+{{--                src="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/js/dataTables.checkboxes.min.js"></script>--}}
+{{--            <script src="{{ asset('js/orderDetails.js') }}"></script>--}}
 
-    {{--    <script>--}}
+        <script>
+
+            let i=0
+            let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            let headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+            }
+            window.addEventListener('load', function() {
+                console.log('All assets are loaded')
+                document.getElementById('addLcn').focus()
+            })
+
+            $("#addLcn").on('keyup', function (e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    i++
+                    $('#lcn_inputs').append(`<div class="d-flex flex-row mt-2">
+                                                <input type="text" name=lcn[${i}] class="form-control" value="${e.target.value}">
+                                                <button  type="button" class="btn btn-danger btn-sm ml-2 remove-btn-row">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                             </div>`)
+                    e.target.value=''
+                }
+            });
 
 
-    {{--        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');--}}
-    {{--        let headers = {--}}
-    {{--            "Content-Type": "application/json",--}}
-    {{--            "Accept": "application/json, text-plain, */*",--}}
-    {{--            "X-Requested-With": "XMLHttpRequest",--}}
-    {{--            "X-CSRF-TOKEN": token--}}
-    {{--        }--}}
 
     {{--        function checkSelectedOption() {--}}
     {{--            const radios = document.getElementsByName("optionType");--}}
@@ -197,9 +220,12 @@
     {{--            }--}}
     {{--        })--}}
 
-    {{--        $(document).on('click','.remove-table-row',function(){--}}
-    {{--            $(this).parents('tr').remove();--}}
-    {{--        })--}}
+            $(document).on('click','.remove-btn-row',function(e){
+                e.preventDefault()
+                $(this).closest('div').remove();
+                 // $(this).parents('div').remove();
+                 $("#addLcn").focus()
+            })
 
 
     {{--        document.getElementById('orderDetailsForm').addEventListener('submit',async(e)=>{--}}
@@ -233,6 +259,6 @@
 
 
 
-    {{--    </script>--}}
+        </script>
 
 @stop
