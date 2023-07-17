@@ -180,7 +180,7 @@ Route::middleware('auth')
 
         //KitOrderLCN
         Route::get('/kit-orderLCN/{kitOrder}/edit',[KitOrderLCNController::class,'edit'])->name('kit-orderLCN.edit');
-
+        Route::patch('/kit-orderLCN/{kitOrder}',[KitOrderLCNController::class,'update'])->name('kit-orderLCN.update');
     });
 
 

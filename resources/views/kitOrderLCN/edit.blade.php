@@ -58,8 +58,14 @@
                                 <div class="form-group row">
                                     <label for="orderStatus" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
-                                        <input type="text" value="{{$kitOrder->order_status}}" class="form-control"
-                                               name="orderStatus" id="orderStatus" readonly>
+                                        <select name="orderStatus" id="orderStatus"
+                                                class="form-control" required>
+                                            @foreach ($status as $state)
+                                                <option value="{{ $state->id }}"
+                                                    {{ $kitOrder->order_status == $state->id ? 'selected':''}}>
+                                                    {{ $state->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +96,7 @@
                                 <input type="text" class="form-control mb-3" name="addlcn" id="addLcn"
                                        placeholder="Scan LCN">
 
-                                <form>
+                                <form name="lcnForm" id="lcnForm">
                                     <div class="row">
                                         <div class="col-lg-7" id="lcn_inputs">
                                         </div>
@@ -162,11 +168,11 @@
 {{--            <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>--}}
 {{--            <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>--}}
 {{--            <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>--}}
-{{--            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {{--            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
 {{--            <script--}}
 {{--                src="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/js/dataTables.checkboxes.min.js"></script>--}}
-{{--            <script src="{{ asset('js/orderDetails.js') }}"></script>--}}
+            <script src="{{ asset('js/orderDetails.js') }}"></script>
 
         <script>
 
@@ -196,66 +202,43 @@
                 }
             });
 
-
-
-    {{--        function checkSelectedOption() {--}}
-    {{--            const radios = document.getElementsByName("optionType");--}}
-    {{--            let selectedOption = "";--}}
-    {{--            for (let i = 0; i < radios.length; i++) {--}}
-    {{--                if (radios[i].checked) {--}}
-    {{--                    selectedOption = radios[i].value;--}}
-    {{--                    break;--}}
-    {{--                }--}}
-    {{--            }--}}
-    {{--            return selectedOption--}}
-    {{--        }--}}
-
-    {{--        let i=0;--}}
-    {{--        $('#addOrderDetails').click(function(){--}}
-    {{--            let res = checkSelectedOption()--}}
-    {{--            if(res==='lcn'){--}}
-    {{--                lcn()--}}
-    {{--            }else{--}}
-    {{--                sku()--}}
-    {{--            }--}}
-    {{--        })--}}
-
             $(document).on('click','.remove-btn-row',function(e){
                 e.preventDefault()
                 $(this).closest('div').remove();
-                 // $(this).parents('div').remove();
                  $("#addLcn").focus()
             })
 
 
-    {{--        document.getElementById('orderDetailsForm').addEventListener('submit',async(e)=>{--}}
-    {{--            e.preventDefault()--}}
+            document.getElementById('lcnForm').addEventListener('submit',async(e)=>{
+                e.preventDefault()
 
-    {{--            const fd = new FormData(e.target);--}}
-    {{--            let formData = {};--}}
-    {{--            for (let [key, prop] of fd) {--}}
-    {{--                formData[key] = prop;--}}
-    {{--            }--}}
+                const fd = new FormData(e.target);
+                let formData = {};
+                for (let [key, prop] of fd) {
+                    formData[key] = prop;
+                }
 
-    {{--            const refOrder= document.getElementById('orderRef').value--}}
-    {{--            const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData,refOrder})--}}
+                const refOrder= document.getElementById('orderRef').value
+                const ordStatus = document.getElementById('orderStatus').value
+
+                const myData  = await manageData('/kit-orderLCN/{{$kitOrder->order_id}}','PATCH', {formData,refOrder,ordStatus})
 
 
-    {{--            if(myData){--}}
-    {{--                Swal.fire({--}}
-    {{--                    icon: 'success',--}}
-    {{--                    title: 'Success',--}}
-    {{--                    text: myData.success,--}}
-    {{--                    confirmButtonColor: '#3085d6',--}}
-    {{--                    confirmButtonText: 'Ok!'--}}
-    {{--                }).then((result) => {--}}
-    {{--                    if (result.isConfirmed) {--}}
-    {{--                        window.location.replace("/kit-order");--}}
-    {{--                    }--}}
-    {{--                })--}}
-    {{--            }--}}
+                if(myData){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: myData.success,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.replace("/kit-order");
+                        }
+                    })
+                }
 
-    {{--        })--}}
+            })
 
 
 
