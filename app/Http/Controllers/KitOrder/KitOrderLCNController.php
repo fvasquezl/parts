@@ -21,6 +21,9 @@ class KitOrderLCNController extends Controller
         ]);
 
         $kitLcns = collect(DB::select("EXEC [PartsProcessing].[ord].[sp_GetKitsOrderLCNs] '{$kitOrder->order_id}'"));
+        if($kitLcns[0]->Exists==='0'){
+            $kitLcns= collect([]);
+        }
 
         return view('kitOrderLCN.edit', compact('kitOrder','status','kitLcns'));
     }

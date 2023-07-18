@@ -178,7 +178,7 @@
             let i=0
             const lcns =[<?php echo json_encode($kitLcns); ?>][0]
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
+            // console.log(lcns[0])
             if(lcns){
                 for (let j = 0; j < lcns.length; j++) {
                     addLCNToForm(lcns[j].kit_lcn)
