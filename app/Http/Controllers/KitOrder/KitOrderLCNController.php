@@ -4,6 +4,7 @@ namespace App\Http\Controllers\KitOrder;
 
 use App\Http\Controllers\Controller;
 use App\Models\KitOrder;
+use App\Models\KitOrderLCN;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,7 +19,10 @@ class KitOrderLCNController extends Controller
             (object) ['id'=>'In Process','name'=>'In Process'],
             (object) ['id'=>'Completed','name'=>'Completed']
         ]);
-        return view('kitOrderLCN.edit', compact('kitOrder','status'));
+
+        $kitLcns = collect(DB::select("EXEC [PartsProcessing].[ord].[sp_GetKitsOrderLCNs] '{$kitOrder->order_id}'"));
+
+        return view('kitOrderLCN.edit', compact('kitOrder','status','kitLcns'));
     }
 
     public function update(Request $request, KitOrder $kitOrder): \Illuminate\Http\JsonResponse

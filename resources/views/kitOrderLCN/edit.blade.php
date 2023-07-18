@@ -18,7 +18,6 @@
             <h5><i class="icon fas fa-exclamation-triangle"></i> {{ session('info') }}!</h5>
         </div>
     @endif
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 my-3">
@@ -177,7 +176,15 @@
         <script>
 
             let i=0
+            const lcns =[<?php echo json_encode($kitLcns); ?>][0]
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            if(lcns){
+                for (let j = 0; j < lcns.length; j++) {
+                    addLCNToForm(lcns[j].kit_lcn)
+                }
+
+            }
             let headers = {
                 "Content-Type": "application/json",
                 "Accept": "application/json, text-plain, */*",
@@ -192,15 +199,21 @@
             $("#addLcn").on('keyup', function (e) {
                 if (e.key === 'Enter' || e.keyCode === 13) {
                     i++
-                    $('#lcn_inputs').append(`<div class="d-flex flex-row mt-2">
-                                                <input type="text" name=lcn[${i}] class="form-control" value="${e.target.value}">
+                    addLCNToForm( e.target.value)
+                    e.target.value=''
+                }
+            });
+
+            function addLCNToForm($value){
+                i++
+                $('#lcn_inputs').append(`<div class="d-flex flex-row mt-2">
+                                                <input type="text" name=lcn[${i}] class="form-control" value="${$value}">
                                                 <button  type="button" class="btn btn-danger btn-sm ml-2 remove-btn-row">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                              </div>`)
-                    e.target.value=''
-                }
-            });
+
+            }
 
             $(document).on('click','.remove-btn-row',function(e){
                 e.preventDefault()
