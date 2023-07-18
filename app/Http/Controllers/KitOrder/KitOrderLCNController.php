@@ -22,10 +22,6 @@ class KitOrderLCNController extends Controller
 
 //        $kitLcns = collect(DB::select("EXEC [PartsProcessing].[ord].[sp_GetKitsOrderLCNs] '{$kitOrder->order_id}'"));
         $kitLcns = KitOrderLCN::query()->select('kit_lcn')->where('order_id',$kitOrder->order_id)->get();
-//        if($kitLcns[0]->Exists==='0'){
-//            $kitLcns= collect([]);
-//        }
-//        dd($kitLcns);
 
         return view('kitOrderLCN.edit', compact('kitOrder','status','kitLcns'));
     }
@@ -37,6 +33,8 @@ class KitOrderLCNController extends Controller
         $kitOrder->save();
         $authUser = auth()->id();
 
+        KitOrderLCN::query()->select('kit_lcn')->where('order_id',$kitOrder->order_id)->get();
+
          foreach ($request->data['formData'] as $order){
              $data = DB::insert("EXEC [PartsProcessing].[prt].[sp_UpdateOrderLCNs] '{$kitOrder->order_id}', '{$authUser}', '{$order}'");
          }
@@ -44,4 +42,7 @@ class KitOrderLCNController extends Controller
         return response()->json(['success' => 'The LCNs has been update successfully'],200);
 
     }
+
+
+
 }

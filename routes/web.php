@@ -177,6 +177,8 @@ Route::middleware('auth')
         //KitOrdersHelper
         Route::get('/kit-order/getSkus',[KOHelperController::class,'getSkus'])->name('kit-order.getSkus');
         Route::get('/kit-order/getKits',[KOHelperController::class,'getKits'])->name('kit-order.getKits');
+        Route::delete('/kit-nukeLCN/{kitOrder}',[KOHelperController::class,'deleteLCN'])->name('kit-order.deleteLCN');
+
 
         //KitOrderLCN
         Route::get('/kit-orderLCN/{kitOrder}/edit',[KitOrderLCNController::class,'edit'])->name('kit-orderLCN.edit');
