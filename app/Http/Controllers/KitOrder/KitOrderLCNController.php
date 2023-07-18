@@ -20,10 +20,12 @@ class KitOrderLCNController extends Controller
             (object) ['id'=>'Completed','name'=>'Completed']
         ]);
 
-        $kitLcns = collect(DB::select("EXEC [PartsProcessing].[ord].[sp_GetKitsOrderLCNs] '{$kitOrder->order_id}'"));
-        if($kitLcns[0]->Exists==='0'){
-            $kitLcns= collect([]);
-        }
+//        $kitLcns = collect(DB::select("EXEC [PartsProcessing].[ord].[sp_GetKitsOrderLCNs] '{$kitOrder->order_id}'"));
+        $kitLcns = KitOrderLCN::query()->select('kit_lcn')->where('order_id',$kitOrder->order_id)->get();
+//        if($kitLcns[0]->Exists==='0'){
+//            $kitLcns= collect([]);
+//        }
+//        dd($kitLcns);
 
         return view('kitOrderLCN.edit', compact('kitOrder','status','kitLcns'));
     }
