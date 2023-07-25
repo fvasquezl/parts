@@ -23,6 +23,7 @@ class QrCodeController extends Controller
         $kitlcn = $kit->KitLCN;
         $brand = $kit->Brand;
         $model  = $kit->Model;
+        $lastTreeLcn = substr($kit->LCN,-3);
 
         $parts = $kit->parts()->get()->pluck('PartName')->toArray();
         $parts[array_search('Bluetooth Module', $parts)] = 'Bluetooth';
@@ -41,7 +42,7 @@ class QrCodeController extends Controller
 //        }
 
 
-        return view('qrcode.print',compact('kitlcn','brand','model','parts','ref_sku'));
+        return view('qrcode.print',compact('kitlcn','brand','model','parts','ref_sku','lastTreeLcn'));
 
     }
 

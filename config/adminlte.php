@@ -320,15 +320,21 @@ return [
             'icon' => 'fas fa-tv',
             'can'  =>  'isAdmin'
         ],
+//        [
+//            'text' => 'Requirements',
+//            'url'  => 'requirements',
+//            'icon' => 'fa fa-shopping-basket',
+//            'can'  =>  'isAdmin'
+//        ],
         [
-            'text' => 'Requirements',
-            'url'  => 'requirements',
-            'icon' => 'fa fa-shopping-basket',
+            'text' => 'Kit Orders',
+            'url'  => 'kit-order',
+            'icon' => 'fa fa-shopping-cart',
             'can'  =>  'isAdmin'
         ],
         [
-            'text' => 'KitOrders',
-            'url'  => 'kit-order',
+            'text' => 'Order Fulfillment',
+            'url'  => 'order-Fulfillment',
             'icon' => 'fa fa-shopping-cart',
             'can'  =>  'isAdmin'
         ],

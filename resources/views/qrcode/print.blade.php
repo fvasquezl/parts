@@ -85,7 +85,7 @@
                 {!! QrCode::size(60)->generate($kitlcn);!!}
             </td>
             <td class="text-left">
-                <div class="text-nowrap" style="font-weight: bold">&nbsp;SKU:&nbsp;{{$ref_sku}}</div>
+                <div class="text-nowrap" style="font-weight: bold">&nbsp;SKU:&nbsp;{{$ref_sku}} /  QP: {{$lastTreeLcn}}</div>
                 <div class="text-nowrap" style="width: 8rem;">&nbsp;{{$kitlcn}}</div>
                 <div class="text-nowrap" style="width: 8rem;">&nbsp;{{$brand}}&nbsp;{{$model}}</div>
 {{--                <ul class="mt-1">--}}
