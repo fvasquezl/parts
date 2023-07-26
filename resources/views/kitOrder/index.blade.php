@@ -39,6 +39,7 @@
                                 <th>Order #</th>
                                 <th>Actions</th>
                                 <th>Reference Order #</th>
+                                <th>Channel</th>
                                 <th>Order Date</th>
                                 <th>Fulfilled Date</th>
                                 <th>Status</th>
@@ -113,6 +114,7 @@
             });
 
              $kitOrdersTable = $('#kitOrdersTable').DataTable({
+                order: [[0, 'desc']],
                 responsive: true,
                 serverSide: true,
                 scrollY: "53vh",
@@ -123,6 +125,7 @@
                     {data: 'order_id',name: 'order_id'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'reforder_id',name: 'reforder_id'},
+                    {data: 'channel',name: 'channel'},
                     {data: 'created_at',name: 'created_at'},
                     {data: 'fulfilled_at',name: 'fulfilled_at'},
                     {data: 'order_status',name: 'order_status'},

@@ -72,6 +72,7 @@ class KitOrderController extends Controller
     {
 
         $kitOrder->reforder_id  =  $request->data['refOrder'];
+        $kitOrder->channel  =  $request->data['orderChannel'];
         $kitOrder->save();
 
         $sku = array();

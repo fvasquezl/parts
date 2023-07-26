@@ -26,6 +26,9 @@
                         <h3 class="card-title mt-1">
                             Kit Orders Details
                         </h3>
+                        <div class="card-tools">
+                            <b>Order Date:</b> {{date('m/d/Y H:i:s', strtotime($kitOrder->created_at))}}
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -48,10 +51,10 @@
                             </div>
                             <div class="col-sm">
                                 <div class="form-group row">
-                                    <label for="orderDate" class="col-sm-2 col-form-label">Order Date</label>
+                                    <label for="orderChannel" class="col-sm-2 col-form-label">Channel</label>
                                     <div class="col-sm-10">
-                                        <input type="text" value="{{$kitOrder->created_at}}" class="form-control"
-                                               name="orderDate" id="orderDate" readonly>
+                                        <input type="text" value="{{$kitOrder->channel}}" class="form-control"
+                                               name="orderChannel" id="orderChannel" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">

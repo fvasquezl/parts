@@ -27,9 +27,9 @@
                         <h3 class="card-title mt-1">
                             Kit Orders Details
                         </h3>
-{{--                        <div class="card-tools">--}}
-{{--                            <button class="btn btn-success" id="create_order" ><i class="fa fa-plus"></i> Create Order</button>--}}
-{{--                        </div>--}}
+                        <div class="card-tools">
+                            <b>Order Date:</b> {{date('m/d/Y H:i:s', strtotime($kitOrder->created_at))}}
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -50,19 +50,27 @@
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group row">
-                                            <label for="orderDate" class="col-sm-2 col-form-label">Order Date</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" value="{{$kitOrder->created_at}}" class="form-control" name="orderDate" id="orderDate" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <label for="orderStatus" class="col-sm-2 col-form-label">Status</label>
                                             <div class="col-sm-10">
                                                 <input type="text"  value="{{$kitOrder->order_status}}" class="form-control" name="orderStatus"  id="orderStatus" readonly>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label for="orderChannel" class="col-sm-2 col-form-label">Channel</label>
+                                            <div class="col-sm-10">
+                                                <select name="orderChannel" id="orderChannel"
+                                                        class="form-control">
+                                                        <option value="Wholesale Order">Wholesale Order</option>
+                                                        <option value="Internal Order">Internal Order</option>
+                                                        <option value="Manual Order">Manual Order</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
+
+
                             <div class="d-flex justify-content-end">
 
                                 <div class="form-check form-check-inline">
@@ -185,7 +193,8 @@
         }
 
         const refOrder= document.getElementById('orderRef').value
-        const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData,refOrder})
+        const orderChannel = document.getElementById('orderChannel').value
+        const myData  = await manageData('/kit-order/{{$kitOrder->order_id}}','PATCH', {formData,refOrder,orderChannel})
 
 
         if(myData){
