@@ -28,6 +28,7 @@
                             Kit Orders
                         </h3>
                         <div class="card-tools">
+                            <button class="btn btn-dark" id="create_picklist" ><i class="fa fa-file-pdf"></i> Create a Order Picklist</button>
                             <button class="btn btn-primary" id="import_web_order" ><i class="fa fa-arrow-circle-down"></i> Import Web Orders</button>
                             <button class="btn btn-success" id="create_order" ><i class="fa fa-plus"></i> Create Order</button>
                         </div>
@@ -93,6 +94,23 @@
 
         }
 
+
+        $(document).on('click', '#create_picklist',  async function (e) {
+            window.location = "{{route('get_picklist')}}";
+            {{--try {--}}
+            {{--    const response = await fetch("{{route('get_picklist')}}", {--}}
+            {{--        method: 'GET',--}}
+            {{--        headers: headers--}}
+            {{--    })--}}
+            {{--    const data = await response.json()--}}
+            {{--    // $kitOrdersTable.DataTable().ajax.reload();--}}
+            {{--    return data--}}
+            {{--} catch (err) {--}}
+            {{--    console.log("Error:",err)--}}
+            {{--}--}}
+        })
+
+
         $(document).on('click', '#import_web_order',  async function (e) {
 
             try {
@@ -107,6 +125,8 @@
                 console.log("Error:",err)
             }
         })
+
+
 
         $(document).on('click', '#create_order',  async function (e) {
 

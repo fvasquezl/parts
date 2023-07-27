@@ -179,7 +179,7 @@ Route::middleware('auth')
         Route::get('/kit-order/getSkus',[KOHelperController::class,'getSkus'])->name('kit-order.getSkus');
         Route::get('/kit-order/getKits',[KOHelperController::class,'getKits'])->name('kit-order.getKits');
         Route::delete('/kit-nukeLCN/{kitOrder}',[KOHelperController::class,'deleteLCN'])->name('kit-order.deleteLCN');
-
+        Route::get('/get_picklist',[KOHelperController::class,'get_picklist'])->name('get_picklist');
 
         //KitOrderLCN
         Route::get('/kit-orderLCN/{kitOrder}/edit',[KitOrderLCNController::class,'edit'])->name('kit-orderLCN.edit');
@@ -187,6 +187,7 @@ Route::middleware('auth')
 
         //KitWebOrder
         Route::get('/kit-web-order',[KitWebOrderController::class,'index'])->name('kit-web-order.index');
+       ;
 
 
     });
