@@ -14,6 +14,7 @@ use App\Http\Controllers\FillBoxController;
 use App\Http\Controllers\KitController;
 use App\Http\Controllers\KitOrder\KitOrderController;
 use App\Http\Controllers\KitOrder\KitOrderLCNController;
+use App\Http\Controllers\KitOrder\KitWebOrderController;
 use App\Http\Controllers\KitOrder\KOHelperController;
 use App\Http\Controllers\Oc\OCAccessoriesController;
 use App\Http\Controllers\Oc\OcDataController;
@@ -183,6 +184,11 @@ Route::middleware('auth')
         //KitOrderLCN
         Route::get('/kit-orderLCN/{kitOrder}/edit',[KitOrderLCNController::class,'edit'])->name('kit-orderLCN.edit');
         Route::patch('/kit-orderLCN/{kitOrder}',[KitOrderLCNController::class,'update'])->name('kit-orderLCN.update');
+
+        //KitWebOrder
+        Route::get('/kit-web-order',[KitWebOrderController::class,'index'])->name('kit-web-order.index');
+
+
     });
 
 

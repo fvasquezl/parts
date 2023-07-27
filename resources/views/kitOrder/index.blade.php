@@ -28,6 +28,7 @@
                             Kit Orders
                         </h3>
                         <div class="card-tools">
+                            <button class="btn btn-primary" id="import_web_order" ><i class="fa fa-arrow-circle-down"></i> Import Web Orders</button>
                             <button class="btn btn-success" id="create_order" ><i class="fa fa-plus"></i> Create Order</button>
                         </div>
                     </div>
@@ -91,6 +92,21 @@
             }
 
         }
+
+        $(document).on('click', '#import_web_order',  async function (e) {
+
+            try {
+                const response = await fetch("{{route('kit-web-order.index')}}", {
+                    method: 'GET',
+                    headers: headers
+                })
+                const data = await response.json()
+                $kitOrdersTable.DataTable().ajax.reload();
+                return data
+            } catch (err) {
+                console.log("Error:",err)
+            }
+        })
 
         $(document).on('click', '#create_order',  async function (e) {
 
