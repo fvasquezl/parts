@@ -64,9 +64,9 @@ class KOHelperController extends Controller
 
     public function get_picklist(Request $request): \Illuminate\Http\Response
     {
-        $date = Carbon::now()->format('m-d-Y_h:i:s');
+        $date = Carbon::now()->format('m/d/Y h:i:s');
         $data=collect(DB::select("EXEC [ord].[sp_GetKitOrderPickList-All]"));
-        $pdf = Pdf::loadView('kitOrder.pdf.testPDF', ['data'=>$data]);
+        $pdf = Pdf::loadView('kitOrder.pdf.testPDF', ['data'=>$data, 'date'=>$date]);
         return $pdf->download('KiOrders-'.$date.'.pdf');
     }
 

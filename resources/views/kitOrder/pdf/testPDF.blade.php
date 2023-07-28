@@ -7,10 +7,23 @@
         .myTable td{
             text-align:center;
         }
+        .myTable th{
+            text-align:center;
+        }
+        header
+        .header h1{
+           text-align:center;
+        }
+
 
     </style>
 </head>
 <body>
+<div style="margin-bottom: 10px">
+    <div style="float: left; width: 50%;font-weight: bold; font-size: 20px">Order PickList All</div>
+    <div style="margin-left: 50%; width: 50%; font-weight: bold; font-size: 20px; text-align: right">{{$date}}</div>
+</div>
+
     <table class="myTable">
         <thead>
             <tr>
