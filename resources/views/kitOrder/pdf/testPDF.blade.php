@@ -14,7 +14,15 @@
         .header h1{
            text-align:center;
         }
-
+        @font-face {
+            font-family: 'Open Sans';
+            src: url({{ storage_path('fonts\OpenSans-Regular.ttf') }}) format("truetype");
+            font-weight: 100;
+            font-style: normal;
+        }
+        body {
+            font-family: "Open Sans";
+        }
 
     </style>
 </head>
@@ -27,24 +35,28 @@
     <table class="myTable">
         <thead>
             <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>ShelfID</th>
+                <th>BoxID</th>
                 <th>SKU</th>
-                <th>ShelfName</th>
-                <th>BoxName</th>
-                <th>QtyInBox</th>
                 <th>KitLCN</th>
                 <th>QP</th>
+                <th>Picked</th>
             </tr>
         </thead>
         <tbody>
 
         @foreach($data as $item)
             <tr>
+                <td> {{$item->Brand}}</td>
+                <td> {{$item->Model}}</td>
+                <td> {{$item->ShelfID}}</td>
+                <td> {{$item->BoxID}}</td>
                 <td> {{$item->SKU}}</td>
-                <td> {{$item->ShelfName}}</td>
-                <td> {{$item->BoxName}}</td>
-                <td> {{$item->QtyInBox}}</td>
                 <td> {{$item->KitLCN}}</td>
                 <td> {{$item->QP}}</td>
+                <td> {{$item->Picked}}</td>
             </tr>
 
         @endforeach

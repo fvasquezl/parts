@@ -19,6 +19,8 @@ use App\Http\Controllers\KitOrder\KOHelperController;
 use App\Http\Controllers\Oc\OCAccessoriesController;
 use App\Http\Controllers\Oc\OcDataController;
 use App\Http\Controllers\Oc\OCHelperController;
+use App\Http\Controllers\Orders\OrderFulfillmentController;
+use App\Http\Controllers\Orders\OrdersHelperController;
 use App\Http\Controllers\PartReferenceController;
 use App\Http\Controllers\RemoveInvController;
 use App\Http\Controllers\Requirements\RequirementsController;
@@ -188,6 +190,11 @@ Route::middleware('auth')
         //KitWebOrder
         Route::get('/kit-web-order',[KitWebOrderController::class,'index'])->name('kit-web-order.index');
        ;
+       //Orders
+
+        Route::get('/order-Fulfillment',[OrderFulfillmentController::class,'index'])->name('order-Fulfillment.index');
+
+        Route::post('/orders/getLCN',[OrdersHelperController::class,'getLCN'])->name('orders.getLCN');
 
 
     });
