@@ -71,6 +71,12 @@
 
             <script>
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                let kitOrders=[]
+                let deleteBtn = ''
+                let $tableRef = $('#kitOrdersTable').DataTable({
+                    dom: 'Brtip',
+                })
+                // let tableRef = DataTable()
                 let headers = {
                     "Content-Type": "application/json",
                     "Accept": "application/json, text-plain, */*",
@@ -99,38 +105,47 @@
 
                 }
 
-
-
                 inputLCN.addEventListener('keyup',async (e)=>{
                       e.preventDefault();
                     if (e.key === 'Enter' || e.keyCode === 13) {
-                        const res = await getData(e.target.value)
-
-                        if(res){
-                        const tableRef = document.getElementById('kitOrdersTable').getElementsByTagName('tbody')[0];
-                        const newRow = tableRef.insertRow(tableRef.rows.length)
-                        newRow.innerHTML = `<tr id=${e.target.value}>
-                                                <td>${e.target.value}</td>
-                                                <td>${res.order_id}</td>
-                                                <td>${res.ref_sku}</td>
-                                                <td>${res.sku_optiontype}</td>
-                                                <td><button class="btn btn-danger delete"><i class="fa-trash-alt"></i></button></td>
-                                            </tr>`;
-                        }else{
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Error',
-                                text: "No Information",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                        if(!kitOrders.includes(e.target.value)){
+                            const res = await getData(e.target.value)
+                            if(res){
+                                kitOrders.push(e.target.value)
+                                console.log(kitOrders)
+                                $tableRef.row.add([
+                                    e.target.value,
+                                    res.order_id,
+                                    res.ref_sku,
+                                    res.sku_optiontype,
+                                   `<button class="btn btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>`,
+                            ]).draw()
+                            }else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'warning',
+                                    title: 'Error',
+                                    text: "No Information",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                console.log($tableRef)
+                            }
                         }
-
                         e.target.value=''
                     }
-
                 })
+
+
+                $(document).on('click', '.delete-btn', function (e) {
+                    e.preventDefault()
+                    let $tr = $(this).parents('tr');
+                    let row = $tableRef.row($tr).data();
+                    let lcn = row[0];
+                    kitOrders = kitOrders.filter(item=>item !== lcn)
+                    $tableRef.row( $tr ).remove().draw()
+                    console.log(kitOrders)
+                });
 
 
 
