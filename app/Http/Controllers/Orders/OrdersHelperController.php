@@ -25,4 +25,41 @@ class OrdersHelperController extends Controller
             return response()->json($error->getMessage());
         }
     }
+
+    public function deleteLCN(Request $request)
+    {
+
+        try{
+            $orderID = $request->orderID;
+            $skuLCN = $request->skuLCN;
+            $type = $request->type;
+            $data = DB::delete("EXEC [ord].[sp_deleteScannedKitLCN] '{$orderID}', '{$skuLCN}', '{$type}'");
+
+            if($data){
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Data has been delete successfully',
+                ]);
+            }else{
+                throw new Exception;
+            }
+
+        }catch (Exception $error){
+            return response()->json($error->getMessage());
+        }
+    }
+
+    public function postLCNs(Request $request)
+    {
+       $user= auth()->id();
+       foreach ($request->all() as $item){
+           $data = DB::select("EXEC [ord].[sp_SaveScannedLCNOrderSKU] '{$item[1]}', '$item[0]','{$user}' ");
+      }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data has been update successfully',
+        ]);
+    }
+
+
 }

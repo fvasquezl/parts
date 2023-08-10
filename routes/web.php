@@ -194,8 +194,10 @@ Route::middleware('auth')
 
         Route::get('/order-Fulfillment',[OrderFulfillmentController::class,'index'])->name('order-Fulfillment.index');
 
+        //Order-FulFillment helper
         Route::post('/orders/getLCN',[OrdersHelperController::class,'getLCN'])->name('orders.getLCN');
-
+        Route::delete('/orders/deleteLCN',[OrdersHelperController::class,'deleteLCN'])->name('orders.deleteLCN');
+        Route::post('/orders/postLCNs',[OrdersHelperController::class,'postLCNs'])->name('orders.postLCNs');
 
     });
 

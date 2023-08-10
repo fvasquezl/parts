@@ -28,13 +28,13 @@
                             Kit Orders
                         </h3>
                         <div class="card-tools">
-                            <div class="form-group form-inline mb-">
+                            <div class=" form-inline">
                                 <label for="kitLcn">Scan LCN: </label>
-                                <input type="text" class="form-control mr-3 ml-3" name="kitLcn" id="kitLcn"/>
+                                <input type="text" class="form-control" name="kitLcn" id="kitLcn"/>
                             </div>
                         </div>
-
-                        <div class="card-body">
+                    </div>
+                    <div class="card-body">
                             <table class="table table-striped table-hover table-bordered" id="kitOrdersTable">
                                 <thead>
                                 <tr>
@@ -50,7 +50,10 @@
                                 </tbody>
                             </table>
                         </div>
+                    <div class="card-footer text-right">
+                            <button id="submit-btn" class="btn btn-success" disabled="disabled">Send</button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -74,6 +77,7 @@
                 let kitOrders=[]
                 let deleteBtn = ''
                 let $tableRef = $('#kitOrdersTable').DataTable({
+                    pageLength: 200,
                     dom: 'Brtip',
                 })
                 // let tableRef = DataTable()
@@ -102,7 +106,34 @@
                     } catch (err) {
                         console.log("Error:",err)
                     }
+                }
 
+                async function deleteData(order){
+                    try {
+                        const response = await fetch("{{route('orders.deleteLCN')}}", {
+                            method: 'DELETE',
+                            body:JSON.stringify(order),
+                            headers: headers
+                        })
+                        const data = await response.json()
+                        return data
+                    } catch (err) {
+                        console.log("Error:",err)
+                    }
+                }
+
+                async function postData(order){
+                    try {
+                        const response = await fetch("{{route('orders.postLCNs')}}", {
+                            method: 'POST',
+                            body:JSON.stringify(order),
+                            headers: headers
+                        })
+                        const data = await response.json()
+                        return data
+                    } catch (err) {
+                        console.log("Error:",err)
+                    }
                 }
 
                 inputLCN.addEventListener('keyup',async (e)=>{
@@ -120,15 +151,9 @@
                                     res.sku_optiontype,
                                    `<button class="btn btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>`,
                             ]).draw()
+                                document.getElementById('submit-btn').removeAttribute("disabled");
                             }else{
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'warning',
-                                    title: 'Error',
-                                    text: "No Information",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
+                                orderError("No Information")
                                 console.log($tableRef)
                             }
                         }
@@ -137,17 +162,90 @@
                 })
 
 
-                $(document).on('click', '.delete-btn', function (e) {
+                $(document).on('click', '.delete-btn', function  (e) {
                     e.preventDefault()
                     let $tr = $(this).parents('tr');
                     let row = $tableRef.row($tr).data();
-                    let lcn = row[0];
-                    kitOrders = kitOrders.filter(item=>item !== lcn)
-                    $tableRef.row( $tr ).remove().draw()
-                    console.log(kitOrders)
+                    // let lcn = row[0]
+                    let order = {
+                        'orderID': row[1],
+                        'skuLCN': row[2],
+                        'type': row[3],
+                    }
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const res = await deleteData(order)
+                            if(res){
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                kitOrders = kitOrders.filter(item=>item !== lcn)
+                                $tableRef.row( $tr ).remove().draw()
+                                console.log(kitOrders)
+                            }else{
+                                Swal.fire(
+                                    'Error!',
+                                    'Something happen!.',
+                                    'error'
+                                )
+                            }
+                        }
+                    })
                 });
 
+                $(document).on('click', '#submit-btn', async function  (e){
+                    let data = $tableRef
+                        .rows()
+                        .data().toArray();
+                    const arrayData = data.map((item)=>[item[0],item[1]])
+                    const res = await postData(arrayData)
+                    if(res){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'The information has been saved',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload();
+                            }
+                        })
+                    }
 
+                  console.log(res)
+                })
+
+                function orderSuccess(message){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Error',
+                        text: message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                function orderError(message){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Error',
+                        text: message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
 
 
             </script>
