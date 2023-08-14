@@ -198,6 +198,7 @@ Route::middleware('auth')
         Route::post('/orders/getLCN',[OrdersHelperController::class,'getLCN'])->name('orders.getLCN');
         Route::delete('/orders/deleteLCN',[OrdersHelperController::class,'deleteLCN'])->name('orders.deleteLCN');
         Route::post('/orders/postLCNs',[OrdersHelperController::class,'postLCNs'])->name('orders.postLCNs');
+        Route::delete('/orders/deleteAllLCN',[OrdersHelperController::class,'deleteAllLCN'])->name('orders.deleteAllLCN');
 
     });
 

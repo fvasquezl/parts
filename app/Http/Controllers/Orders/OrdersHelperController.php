@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrdersHelperController extends Controller
 {
-    public function GetLCN(Request $request)
+    public function GetLCN(Request $request): \Illuminate\Http\JsonResponse
     {
         try{
             $lcn = $request->lcn;
@@ -26,7 +26,7 @@ class OrdersHelperController extends Controller
         }
     }
 
-    public function deleteLCN(Request $request)
+    public function deleteLCN(Request $request): \Illuminate\Http\JsonResponse
     {
 
         try{
@@ -49,7 +49,7 @@ class OrdersHelperController extends Controller
         }
     }
 
-    public function postLCNs(Request $request)
+    public function postLCNs(Request $request): \Illuminate\Http\JsonResponse
     {
        $user= auth()->id();
        foreach ($request->all() as $item){
@@ -59,6 +59,19 @@ class OrdersHelperController extends Controller
             'status' => 200,
             'message' => 'Data has been update successfully',
         ]);
+    }
+
+    public function deleteAllLCN(Request $request): \Illuminate\Http\JsonResponse
+    {
+//        dd($request->all());
+        foreach ($request->all() as $item){
+            $data = DB::delete("EXEC [ord].[sp_deleteScannedKitLCN] '{$item[0]}', '{$item[1]}', '{$item[2]}'");
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data has been update successfully',
+        ]);
+
     }
 
 

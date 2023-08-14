@@ -25,13 +25,13 @@
                 <div class="card mb-4 shadow-sm card-outline card-success">
                     <div class="card-header ">
                         <h3 class="card-title mt-1">
-                            Kit Orders
-                        </h3>
-                        <div class="card-tools">
                             <div class=" form-inline">
                                 <label for="kitLcn">Scan LCN: </label>
                                 <input type="text" class="form-control" name="kitLcn" id="kitLcn"/>
                             </div>
+                        </h3>
+                        <div class="card-tools">
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,8 +50,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    <div class="card-footer text-right">
-                            <button id="submit-btn" class="btn btn-success" disabled="disabled">Send</button>
+                    <div class="card-footer">
+                        <button id="submit-btn" class="btn btn-primary" disabled="disabled">Save</button>
+                        <button id="cancel-btn" class="btn btn-danger" >Cancel</button>
                     </div>
 
                 </div>
@@ -94,6 +95,23 @@
                     inputLCN.focus();
                 }
 
+
+                // function handleUnload(event) {
+                //     // Realiza aquí la acción que deseas antes de que se cierre la pestaña
+                //     // Por ejemplo, puedes mostrar un mensaje de confirmación
+                //     const confirmationMessage = 'Estás a punto de salir de la página. ¿Deseas continuar?';
+                //     event.returnValue = confirmationMessage; // Para mostrar el mensaje de confirmación (en algunos navegadores)
+                // }
+                //
+                //
+                // // Agregar el evento beforeunload al objeto window
+                // window.addEventListener('beforeunload', handleUnload);
+                //
+                // Agregar el evento unload al objeto window
+                // window.addEventListener('unload', function() {
+                //    alert('detente')
+                // });
+
                 async function getData(value){
                     try {
                         const response = await fetch("{{route('orders.getLCN')}}", {
@@ -108,9 +126,9 @@
                     }
                 }
 
-                async function deleteData(order){
+                async function deleteData(order, url){
                     try {
-                        const response = await fetch("{{route('orders.deleteLCN')}}", {
+                        const response = await fetch(url, {
                             method: 'DELETE',
                             body:JSON.stringify(order),
                             headers: headers
@@ -166,7 +184,8 @@
                     e.preventDefault()
                     let $tr = $(this).parents('tr');
                     let row = $tableRef.row($tr).data();
-                    // let lcn = row[0]
+                    let lcn = row[0]
+                    let url = "{{route('orders.deleteLCN')}}"
                     let order = {
                         'orderID': row[1],
                         'skuLCN': row[2],
@@ -183,7 +202,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then(async (result) => {
                         if (result.isConfirmed) {
-                            const res = await deleteData(order)
+                            const res = await deleteData(order,url)
                             if(res){
                                 Swal.fire(
                                     'Deleted!',
@@ -225,6 +244,67 @@
 
                   console.log(res)
                 })
+
+                $(document).on('click', '#cancel-btn', async function  (e){
+                    let data = $tableRef
+                        .rows()
+                        .data().toArray();
+                    const arrayData = data.map((item)=>[item[1],item[2],item[3]])
+                    const url ="{{route('orders.deleteAllLCN')}}"
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const res = await deleteData(arrayData, url)
+                            if(res){
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                if ( window.history.replaceState ) {
+                                    window.history.replaceState( null, null, window.location.href );
+                                }
+                                window.location = window.location.href;
+                            }else{
+                                Swal.fire(
+                                    'Error!',
+                                    'Something happen!.',
+                                    'error'
+                                )
+                            }
+                        }
+                    })
+
+
+
+                        // Swal.fire({
+                        //     icon: 'success',
+                        //     title: 'Success',
+                        //     text: 'the information has been successfully removed',
+                        //     confirmButtonText: 'OK'
+                        // }).then((result) => {
+                        //     if (result.isConfirmed) {
+                        //         if ( window.history.replaceState ) {
+                        //             window.history.replaceState( null, null, window.location.href );
+                        //         }
+                        //         window.location = window.location.href;
+                        //         // window.location.reload(true);
+                        //     }
+                        // })
+
+                })
+
+
+
+
 
                 function orderSuccess(message){
                     Swal.fire({
