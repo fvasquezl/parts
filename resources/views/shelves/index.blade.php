@@ -92,7 +92,7 @@
                     {data: 'shelf_name_new',name: 'shelf_name_new'},
                     {data: 'shelf_name',name: 'shelf_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
-                    {data: 'boxes',name: 'boxes'},
+                    {data: 'boxes',name: 'boxes' , orderable: false, searchable: false},
                     {data: 'created_at',name: 'created_at'},
                 ]
             });
@@ -130,23 +130,23 @@
 
         });
 
-        document.getElementById('create_shelf').addEventListener('click',function (){
-            fetch('shelves', {
-                method: 'POST',
-                headers:headers
-            }).then(response=>{
-                return response.json()
-            }).then(data =>{
-                printQr(data.shelf_id)
-                $('#shelfTable').DataTable().ajax.reload();
+        {{--document.getElementById('create_shelf').addEventListener('click',function (){--}}
+        {{--    fetch('shelves', {--}}
+        {{--        method: 'POST',--}}
+        {{--        headers:headers--}}
+        {{--    }).then(response=>{--}}
+        {{--        return response.json()--}}
+        {{--    }).then(data =>{--}}
+        {{--        printQr(data.shelf_id)--}}
+        {{--        $('#shelfTable').DataTable().ajax.reload();--}}
 
-            }).catch(error => console.log(error))
-        })
-        function printQr(id) {
-            let url = "{{route('qrcode.shelf',':id')}}"
-            url = url.replace(':id',id);
-            document.getElementById('printf').src = url;
-        }
+        {{--    }).catch(error => console.log(error))--}}
+        {{--})--}}
+        {{--function printQr(id) {--}}
+        {{--    let url = "{{route('qrcode.shelf',':id')}}"--}}
+        {{--    url = url.replace(':id',id);--}}
+        {{--    document.getElementById('printf').src = url;--}}
+        {{--}--}}
 
 
     </script>
