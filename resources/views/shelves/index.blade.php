@@ -88,7 +88,7 @@
 
                 ajax: "{{route('shelves.index')}}",
                 columns: [
-                    {data: 'shelf_name',name: 'shelf_name'},
+                    {data: 'shelf_name_new',name: 'shelf_name_new'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'boxes',name: 'boxes'},
                     {data: 'created_at',name: 'created_at'},

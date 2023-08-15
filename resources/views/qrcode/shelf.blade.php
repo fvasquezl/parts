@@ -10,14 +10,12 @@
     <title>Document</title>
 </head>
 <body onload=window.print()>
-<div class="text-center">
-    - SHELF -
-</div>
+
 <div class="visible-print text-center">
-    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate('SHELF'.$shelf->shelf_id)}}
+    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate($shelf->shelf_name_new)}}
 </div>
 <div class="text-center">
-{{'SHELF'.$shelf->shelf_id}}
+{{$shelf->shelf_name_new}}
 </div>
 </body>
 </html>

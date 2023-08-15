@@ -91,26 +91,22 @@
 
                 const inputLCN = document.getElementById("kitLcn");
 
+
                 window.onload = function () {
                     inputLCN.focus();
+                    window.addEventListener("beforeunload", (e) => {
+                        const confirmationMessage = "\\o/";
+                        // Gecko + IE
+                        (e || window.event).returnValue = confirmationMessage;
+
+                        // Safari, Chrome, and other WebKit-derived browsers
+                        return confirmationMessage;
+                        
+                    });
                 }
 
 
-                // function handleUnload(event) {
-                //     // Realiza aquí la acción que deseas antes de que se cierre la pestaña
-                //     // Por ejemplo, puedes mostrar un mensaje de confirmación
-                //     const confirmationMessage = 'Estás a punto de salir de la página. ¿Deseas continuar?';
-                //     event.returnValue = confirmationMessage; // Para mostrar el mensaje de confirmación (en algunos navegadores)
-                // }
-                //
-                //
-                // // Agregar el evento beforeunload al objeto window
-                // window.addEventListener('beforeunload', handleUnload);
-                //
-                // Agregar el evento unload al objeto window
-                // window.addEventListener('unload', function() {
-                //    alert('detente')
-                // });
+
 
                 async function getData(value){
                     try {
