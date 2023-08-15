@@ -38,6 +38,7 @@
                             <thead>
                             <tr>
                                 <th>Shelf ID</th>
+                                <th>Shelf ID Old</th>
                                 <th>Actions</th>
                                 <th>Boxes</th>
                                 <th>Created At</th>
@@ -89,6 +90,7 @@
                 ajax: "{{route('shelves.index')}}",
                 columns: [
                     {data: 'shelf_name_new',name: 'shelf_name_new'},
+                    {data: 'shelf_name',name: 'shelf_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                     {data: 'boxes',name: 'boxes'},
                     {data: 'created_at',name: 'created_at'},
