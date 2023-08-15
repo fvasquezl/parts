@@ -29,7 +29,7 @@
                             Shelves Listing
                         </h3>
                         <div class="card-tools">
-                            <button class="btn btn-success" id="create_shelf" ><i class="fa fa-plus"></i> Create Shelf</button>
+{{--                            <button class="btn btn-success" id="create_shelf" ><i class="fa fa-plus"></i> Create Shelf</button>--}}
                         </div>
                     </div>
 
