@@ -30,11 +30,32 @@
                                 <input type="text" class="form-control" name="kitLcn" id="kitLcn"/>
                             </div>
                         </h3>
-                        <div class="card-tools">
 
-                        </div>
+
                     </div>
+
+
+
                     <div class="card-body">
+                        <table class=" table table-striped table-hover table-bordered nowrap" id="kitOrderLCNs">
+                            <thead>
+                            <tr>
+                                <th>OrderID</th>
+                                <th>Channel</th>
+                                <th>RefOrderId</th>
+                                <th>OrderStatus</th>
+                                <th>FullFillBy</th>
+                                <th>FullFillAt</th>
+                                <th>ScannedLCN</th>
+                                <th>ScannedAt</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+
                             <table class="table table-striped table-hover table-bordered" id="kitOrdersTable">
                                 <thead>
                                 <tr>
@@ -77,6 +98,32 @@
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let kitOrders=[]
                 let deleteBtn = ''
+
+
+                let $tableLCN = $('#kitOrderLCNs').DataTable({
+                    order: [[0, 'desc']],
+                    pageLength: 100,
+                    processing: true,
+                    serverSide: true,
+                    scrollY: "30vh",
+
+                    dom: 'Brtip',
+                    ajax: {
+                        url: "{{route('order-Fulfillment.index')}}",
+                    },
+                    columns: [
+                        {data: 'order_id',name:'order_id'},
+                        {data: 'channel',name:'channel'},
+                        {data: 'reforder_id',name:'reforder_id'},
+                        {data: 'order_status',name:'order_status'},
+                        {data: 'fulfill_by',name:'fulfill_by'},
+                        {data: 'fulfilled_at',name:'fulfilled_at'},
+                        {data: 'Scanned LCN',name:'Scanned LCN'},
+                        {data: 'Scanned At',name:'Scanned At'},
+                    ],
+
+                })
+
                 let $tableRef = $('#kitOrdersTable').DataTable({
                     pageLength: 200,
                     dom: 'Brtip',
@@ -94,19 +141,7 @@
 
                 window.onload = function () {
                     inputLCN.focus();
-                    window.addEventListener("beforeunload", (e) => {
-                        const confirmationMessage = "\\o/";
-                        // Gecko + IE
-                        (e || window.event).returnValue = confirmationMessage;
-
-                        // Safari, Chrome, and other WebKit-derived browsers
-                        return confirmationMessage;
-                        
-                    });
                 }
-
-
-
 
                 async function getData(value){
                     try {
@@ -166,6 +201,7 @@
                                    `<button class="btn btn-danger delete-btn"><i class="fas fa-trash-alt"></i></button>`,
                             ]).draw()
                                 document.getElementById('submit-btn').removeAttribute("disabled");
+                                $tableLCN.ajax.reload()
                             }else{
                                 orderError("No Information")
                                 console.log($tableRef)
@@ -207,6 +243,7 @@
                                 )
                                 kitOrders = kitOrders.filter(item=>item !== lcn)
                                 $tableRef.row( $tr ).remove().draw()
+                                $tableLCN.ajax.reload()
                                 console.log(kitOrders)
                             }else{
                                 Swal.fire(

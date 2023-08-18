@@ -74,5 +74,4 @@ class OrdersHelperController extends Controller
 
     }
 
-
 }
