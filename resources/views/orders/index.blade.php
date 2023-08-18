@@ -59,6 +59,8 @@
                     </div>
 
                 </div>
+                <div class="card">
+                    <div class="card-body">
 
                 <table class=" table table-striped table-hover table-bordered nowrap" id="kitOrderLCNs">
                     <thead>
@@ -77,6 +79,8 @@
 
                     </tbody>
                 </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -107,7 +111,7 @@
                     serverSide: true,
                     scrollY: "30vh",
 
-                    dom: 'Brtip',
+                    dom: 'Brftip',
                     ajax: {
                         url: "{{route('order-Fulfillment.index')}}",
                     },
