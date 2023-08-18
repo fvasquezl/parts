@@ -12,7 +12,7 @@
 <body onload=window.print()>
 
 <div class="visible-print text-center">
-    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate($shelf->shelf_name_new)}}
+    {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(40)->generate($shelf->shelf_id)}}
 </div>
 <div class="text-center">
 {{$shelf->shelf_name_new}}

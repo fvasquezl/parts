@@ -34,26 +34,8 @@
 
                     </div>
 
-
-
                     <div class="card-body">
-                        <table class=" table table-striped table-hover table-bordered nowrap" id="kitOrderLCNs">
-                            <thead>
-                            <tr>
-                                <th>OrderID</th>
-                                <th>Channel</th>
-                                <th>RefOrderId</th>
-                                <th>OrderStatus</th>
-                                <th>FullFillBy</th>
-                                <th>FullFillAt</th>
-                                <th>ScannedLCN</th>
-                                <th>ScannedAt</th>
-                            </tr>
-                            </thead>
-                            <tbody>
 
-                            </tbody>
-                        </table>
 
 
                             <table class="table table-striped table-hover table-bordered" id="kitOrdersTable">
@@ -77,6 +59,24 @@
                     </div>
 
                 </div>
+
+                <table class=" table table-striped table-hover table-bordered nowrap" id="kitOrderLCNs">
+                    <thead>
+                    <tr>
+                        <th>OrderID</th>
+                        <th>Channel</th>
+                        <th>RefOrderId</th>
+                        <th>OrderStatus</th>
+                        <th>FullFillBy</th>
+                        <th>FullFillAt</th>
+                        <th>ScannedLCN</th>
+                        <th>ScannedAt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -101,7 +101,7 @@
 
 
                 let $tableLCN = $('#kitOrderLCNs').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[7, 'desc']],
                     pageLength: 100,
                     processing: true,
                     serverSide: true,
