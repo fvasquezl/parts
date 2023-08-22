@@ -99,6 +99,31 @@
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
             <script>
+
+               window.addEventListener("beforeunload",()=>{
+                   console.log("cerrando el navegador")
+                   let data = $tableRef
+                       .rows()
+                       .data().toArray();
+                   const arrayData = data.map((item)=>[item[1],item[2],item[3]])
+                   if(data.length>0){
+                       deleteRows(arrayData)
+                       console.log('si hay datos')
+
+                   }else{
+                       console.log("No hay datos")
+                   }
+                   // debugger;
+                   // window.open('http://ionicframework.com', '_blank')
+               })
+
+               async function deleteRows(arrayData){
+                   const url ="{{route('orders.deleteAllLCN')}}"
+                   const res = await deleteData(arrayData, url)
+                   console.log(res)
+                   return true
+               }
+
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 let kitOrders=[]
                 let deleteBtn = ''
@@ -141,7 +166,6 @@
                 }
 
                 const inputLCN = document.getElementById("kitLcn");
-
 
                 window.onload = function () {
                     inputLCN.focus();
