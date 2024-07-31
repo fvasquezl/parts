@@ -23,9 +23,9 @@ class OCHelperController extends Controller
             if ($request->brand) {
                 $brand = $request->brand;
                 $model = $request->model;
-                $tv = Tv::where('brand', $brand)->where('model', $model)->first();
+                $tv = Tv::where('Brand', $brand)->where('Model', $model)->first();
                 $data = DB::select(
-                    DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCConfiguredList]('{$tv->id}')")
+                    DB::raw("select * from [PartsProcessing].[oc].[fn_GetOCConfiguredList]('{$tv->SKU}')")
                 );
             } else {
                 $data = [];

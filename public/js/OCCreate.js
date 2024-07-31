@@ -62,10 +62,10 @@ displayMsg = (msg) => {
 clearForm = (input) => {
     if (input === 1) {
         document.getElementById('partNumber').innerHTML = `<option value="">PartNumber</option>`
-        document.getElementById('manufacturer').value = ''
+        document.getElementById('manufacturer').value = '';
         $("#mitSku").val(0).trigger('change');
     } else if (input === 2) {
-        document.getElementById('manufacturer').value = ''
+        document.getElementById('manufacturer').value = '';
         $("#mitSku").val(0).trigger('change');
     } else if (input === 3) {
         $("#mitSku").val(0).trigger('change');
@@ -117,7 +117,7 @@ async function getManufacturerFromPartNumber(element) {
     $partNumberSelected = element
     const data = await manageData('/oc/getManufacturer', 'POST', {$partNumberSelected})
     document.getElementById('manufacturer').value = data
-    clearForm(3)
+     clearForm(3)
 }
 
 async function getSKUsFromPartNumber(element) {
@@ -135,10 +135,7 @@ async function getSKUsFromPartNumber(element) {
         skuOptions += `<option value="${e.MITSKU}">${e.ProductSKU}</option>`
     })
     document.getElementById('mitSku').innerHTML = skuOptions
-    clearForm(2)
-
-
-
+    // clearForm(3)
 }
 
 

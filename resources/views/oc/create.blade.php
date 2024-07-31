@@ -345,9 +345,8 @@
         $('#partNumber').select2({
             theme: 'bootstrap4',
         }).on("change", function () {
-            getManufacturerFromPartNumber($(this).val());
-
             getSKUsFromPartNumber($(this).val());
+            getManufacturerFromPartNumber($(this).val());
 
         }).on('select2:select', function () {
             $('#mitSku').focus()
@@ -356,7 +355,7 @@
         $('#mitSku').select2({
             theme: 'bootstrap4',
         }).on("change", function () {
-            clearForm(4)
+             clearForm(4)
         }).on('select2:select', function () {
             $('#instructions').focus()
         })
