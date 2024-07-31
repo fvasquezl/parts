@@ -76,14 +76,32 @@ class OcDataController extends Controller
     {
         Debugbar::info($request->all());
 
-        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
+
+//        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
+//        $tv = "";
+
+        $sku = \DB::scalar("SELECT [prt].[fn_GetOC_TVID] ('{$request->brand}', '{$request->model}')");
 
         if ($request->missing('id')) {
-             $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+             $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]'{$sku}', $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
         }else{
-             $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$request->id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+             $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]'{$sku}', $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
             $rowInserted = $request->id;
         }
+
+//        if($rowInserted == "Record Exists"){
+//            return response()->json([
+//                'status' => 400,
+//                'message' => 'The OcConfig Exists',
+//            ]);
+//        }
+
+//        if ($request->missing('id')) {
+//            $rowInserted = \DB::scalar("EXEC [oc].[sp_Create_OCConfig]$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+//        }else{
+//            $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfig]$request->id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}',''");
+//            $rowInserted = $request->id;
+//        }
 
         if ($request->file('assemblyGuide')) {
             $file = $request->file('assemblyGuide');
@@ -97,6 +115,7 @@ class OcDataController extends Controller
             $occonfig->update();
         }else{
             $files= Storage::disk('sftp')->allFiles($rowInserted);
+
             foreach ($files as $file){
                 Storage::disk('sftp')->delete($file);
             }
@@ -109,13 +128,14 @@ class OcDataController extends Controller
                     'accessory_id' => $rowInserted
                 ]
             ]);
-
     }
 
     public function update(Request $request)
     {
-        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
-        $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfigWithNoAttachement]$request->id,$tv->id, $request->partNumber, '{$request->mitSku}', '{$request->instructions}'");
+//        $tv = Tv::select('id')->where('brand', $request->brand)->where('model', $request->model)->first();
+        $sku = \DB::scalar("SELECT [prt].[fn_GetOC_TVID] ('{$request->brand}', '{$request->model}')");
+
+        $rowUpdated = \DB::scalar("EXEC [oc].[sp_Update_OCConfigWithNoAttachement]$request->id,{$sku}, $request->partNumber, '{$request->mitSku}', '{$request->instructions}'");
         $rowInserted = $request->id;
 
         if ($request->file('assemblyGuide')) {
