@@ -369,6 +369,7 @@
             $('#ocAccModal')
                 .on('shown.bs.modal', function () {
                     $('#ocId').val(OcConfigId)
+
                     getMPartName()
                     $aPartName.select2({theme: 'bootstrap4'})
                     $mitSKU.select2({theme: 'bootstrap4'})
